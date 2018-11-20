@@ -1,0 +1,562 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Model.Store" Provider="Oracle.ManagedDataAccess.Client" ProviderManifestToken="10.2" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="TB_CADASTRO">
+          <Key>
+            <PropertyRef Name="COD_CADASTRO" />
+          </Key>
+          <Property Name="COD_CADASTRO" Type="number" Precision="6" Scale="0" Nullable="false" />
+          <Property Name="COD_MOTIVO" Type="number" Precision="6" Scale="0" />
+          <Property Name="COD_TIPO_CADASTRO" Type="number" Precision="6" Scale="0" Nullable="false" />
+          <Property Name="COD_REGIAO" Type="number" Precision="6" Scale="0" />
+          <Property Name="COD_PAIS" Type="number" Precision="6" Scale="0" />
+          <Property Name="COD_ESTADO_CIVIL" Type="number" Precision="6" Scale="0" />
+          <Property Name="COD_RAMO" Type="number" Precision="6" Scale="0" />
+          <Property Name="COD_ESTADO" Type="char" MaxLength="2" />
+          <Property Name="NOME" Type="varchar2" MaxLength="60" Nullable="false" />
+          <Property Name="DESC_ENDERECO" Type="varchar2" MaxLength="60" />
+          <Property Name="DESC_CIDADE" Type="varchar2" MaxLength="30" />
+          <Property Name="DESC_CEP" Type="varchar2" MaxLength="10" />
+          <Property Name="NUM_CGC_CPF" Type="varchar2" MaxLength="18" />
+          <Property Name="NUM_INSCRICAO" Type="varchar2" MaxLength="20" />
+          <Property Name="DT_CADASTRO" Type="date" Nullable="false" />
+          <Property Name="IND_SEXO_CATEGORIA" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="NUM_CAIXA_POSTAL" Type="number" Precision="6" Scale="0" />
+          <Property Name="DT_CANCELAMENTO" Type="date" />
+          <Property Name="DESC_TELEFONE" Type="varchar2" MaxLength="15" />
+          <Property Name="DESC_CELULAR" Type="varchar2" MaxLength="12" />
+          <Property Name="NOME_CONTATO" Type="varchar2" MaxLength="30" />
+          <Property Name="DT_NASCIMENTO" Type="date" />
+          <Property Name="DESC_BAIRRO" Type="varchar2" MaxLength="60" />
+          <Property Name="PERC_FUNRURAL" Type="number" Precision="5" Scale="2" />
+          <Property Name="VAL_LIMITE" Type="number" Precision="11" Scale="2" />
+          <Property Name="DESC_FANTASIA" Type="varchar2" MaxLength="30" />
+          <Property Name="DESC_CIDADE_COBRANCA" Type="varchar2" MaxLength="30" />
+          <Property Name="DESC_ENDERECO_COBRANCA" Type="varchar2" MaxLength="40" />
+          <Property Name="DESC_ESTADO_COBRANCA" Type="varchar2" MaxLength="2" />
+          <Property Name="DESC_CEP_COBRANCA" Type="varchar2" MaxLength="9" />
+          <Property Name="DESC_TELEFONE_COMERCIAL" Type="varchar2" MaxLength="12" />
+          <Property Name="NUM_JUNTA" Type="number" Precision="6" Scale="0" />
+          <Property Name="DT_FUNDACAO" Type="date" />
+          <Property Name="DT_JUNTA" Type="date" />
+          <Property Name="DESC_FAX" Type="varchar2" MaxLength="14" />
+          <Property Name="NOME_MAE" Type="varchar2" MaxLength="40" />
+          <Property Name="NOME_PAI" Type="varchar2" MaxLength="40" />
+          <Property Name="DESC_NATURALIDADE" Type="varchar2" MaxLength="30" />
+          <Property Name="DESC_ESTADO_NATURAL" Type="varchar2" MaxLength="2" />
+          <Property Name="DT_EXPEDICAO_IDENTIDADE" Type="date" />
+          <Property Name="DESC_E_MAIL" Type="varchar2" MaxLength="70" />
+          <Property Name="DESC_FAX_COBRANCA" Type="varchar2" MaxLength="12" />
+          <Property Name="IND_SEPROC_SIMNAO" Type="char" MaxLength="1" />
+          <Property Name="DESC_INSCRICAO_MUNICIPAL" Type="varchar2" MaxLength="15" />
+          <Property Name="NOME_CONJUGE" Type="varchar2" MaxLength="40" />
+          <Property Name="DESC_CPF_CONJUGE" Type="varchar2" MaxLength="15" />
+          <Property Name="DESC_IDENTIDADE_CONJUGE" Type="varchar2" MaxLength="15" />
+          <Property Name="COD_CLASS_CADASTRO" Type="number" Precision="6" Scale="0" />
+          <Property Name="COD_BANCO_AGENCIA" Type="number" Precision="7" Scale="0" />
+          <Property Name="COD_OPERACAO_CC" Type="number" Precision="6" Scale="0" />
+          <Property Name="DT_NASCIMENTO_CONTATO" Type="date" />
+          <Property Name="NOME_CONTATO2" Type="varchar2" MaxLength="30" />
+          <Property Name="DT_NASCIMENTO2" Type="date" />
+          <Property Name="COD_VENDEDOR" Type="number" Precision="6" Scale="0" />
+          <Property Name="PERC_COMISSAO" Type="number" Precision="5" Scale="2" />
+          <Property Name="DESC_COMPLEMENTO" Type="varchar2" MaxLength="40" />
+          <Property Name="IND_FISICA_JURIDICA" Type="char" MaxLength="1" />
+          <Property Name="DESC_ENDERECO_ENTREGA" Type="varchar2" MaxLength="40" />
+          <Property Name="DESC_CIDADE_ENTREGA" Type="varchar2" MaxLength="30" />
+          <Property Name="DESC_BAIRRO_ENTREGA" Type="varchar2" MaxLength="20" />
+          <Property Name="DESC_OBS" Type="varchar2" MaxLength="60" />
+          <Property Name="DESC_OBS1" Type="varchar2" MaxLength="60" />
+          <Property Name="DESC_OBS2" Type="varchar2" MaxLength="60" />
+          <Property Name="DESC_FORMA_COMPRA" Type="varchar2" MaxLength="15" />
+          <Property Name="COD_USUARIO" Type="number" Precision="6" Scale="0" />
+          <Property Name="DESC_REF_COMERCIAL1" Type="varchar2" MaxLength="40" />
+          <Property Name="DESC_REF_COMERCIAL2" Type="varchar2" MaxLength="40" />
+          <Property Name="DESC_REF_COMERCIAL3" Type="varchar2" MaxLength="40" />
+          <Property Name="DESC_REF_BANCO1" Type="varchar2" MaxLength="40" />
+          <Property Name="DESC_REF_BANCO2" Type="varchar2" MaxLength="40" />
+          <Property Name="DESC_REF_BANCO3" Type="varchar2" MaxLength="40" />
+          <Property Name="DESC_REF_PARENTE_NOME" Type="varchar2" MaxLength="40" />
+          <Property Name="DESC_REF_PARENTE_ENDERECO" Type="varchar2" MaxLength="40" />
+          <Property Name="DESC_REF_PARENTE_CIDADE" Type="varchar2" MaxLength="40" />
+          <Property Name="DESC_REF_PARENTE_TELEFONE" Type="varchar2" MaxLength="15" />
+          <Property Name="DESC_REF_OUTRAS" Type="varchar2" MaxLength="400" />
+          <Property Name="COD_CADASTRO_NOVO" Type="number" Precision="6" Scale="0" />
+          <Property Name="DESC_ORGAO_EMISSOR" Type="varchar2" MaxLength="7" />
+          <Property Name="DESC_INSCRICAO_INSS" Type="varchar2" MaxLength="15" />
+          <Property Name="DESC_CARTEIRA" Type="varchar2" MaxLength="15" />
+          <Property Name="DT_EXPEDICAO_CARTEIRA" Type="date" />
+          <Property Name="COD_VENDEDOR_PREPOSTO" Type="number" Precision="6" Scale="0" />
+          <Property Name="COD_CIDADE" Type="number" Precision="6" Scale="0" />
+          <Property Name="IND_LIBERA_VENDA" Type="char" MaxLength="3" />
+          <Property Name="IND_REGIME_ESPECIAL" Type="char" MaxLength="3" />
+          <Property Name="DESC_HOBBIE" Type="varchar2" MaxLength="40" />
+          <Property Name="DESC_DESTRITO" Type="varchar2" MaxLength="30" />
+          <Property Name="DESC_CONTA_CORRENTE" Type="varchar2" MaxLength="10" />
+          <Property Name="COD_OPERACAO_CC1" Type="number" Precision="6" Scale="0" />
+          <Property Name="COD_OPERACAO_CC2" Type="number" Precision="6" Scale="0" />
+          <Property Name="DESC_PLACA" Type="varchar2" MaxLength="8" />
+          <Property Name="PERC_DESCONTO" Type="number" Precision="5" Scale="2" />
+          <Property Name="IND_LIBERA_BLOQUETO" Type="char" MaxLength="3" />
+          <Property Name="DT_CONSULTA_SINTREGA" Type="date" />
+          <Property Name="DT_CONSULTA_SINTEGRA" Type="date" />
+          <Property Name="DESC_PROFISSAO_CONJUGE" Type="varchar2" MaxLength="30" />
+          <Property Name="DT_NASCIMENTO_CONJUGE" Type="date" />
+          <Property Name="DESC_EMPRESA_CONJUGE" Type="varchar2" MaxLength="30" />
+          <Property Name="VL_SALARIO_CONJUGE" Type="number" Precision="11" Scale="2" />
+          <Property Name="DESC_FUNCAO" Type="varchar2" MaxLength="30" />
+          <Property Name="DESC_EMPRESA" Type="varchar2" MaxLength="30" />
+          <Property Name="DESC_FONE_EMPRESA" Type="varchar2" MaxLength="12" />
+          <Property Name="DESC_TEMPO" Type="varchar2" MaxLength="10" />
+          <Property Name="DESC_PLACA_CARRETA1" Type="varchar2" MaxLength="8" />
+          <Property Name="DESC_PLACA_CARRETA2" Type="varchar2" MaxLength="8" />
+          <Property Name="DESC_BAIRRO_COBRANCA" Type="varchar2" MaxLength="20" />
+          <Property Name="VAL_SALARIO" Type="number" Precision="11" Scale="2" />
+          <Property Name="DESC_AGENCIA" Type="varchar2" MaxLength="7" />
+          <Property Name="DESC_GARANTIAS" Type="varchar2" MaxLength="10" />
+          <Property Name="NOME_AUTORIZADO1" Type="varchar2" MaxLength="100" />
+          <Property Name="NOME_AUTORIZADO2" Type="varchar2" MaxLength="100" />
+          <Property Name="NOME_AUTORIZADO3" Type="varchar2" MaxLength="100" />
+          <Property Name="DESC_CPF_AUTORIZADO1" Type="varchar2" MaxLength="11" />
+          <Property Name="DESC_CPF_AUTORIZADO2" Type="varchar2" MaxLength="11" />
+          <Property Name="DESC_CPF_AUTORIZADO3" Type="varchar2" MaxLength="11" />
+          <Property Name="DESC_GARANTIAS_OUTRAS" Type="varchar2" MaxLength="20" />
+          <Property Name="DESC_COMPLEMENTO_SINTEGRA" Type="varchar2" MaxLength="14" />
+          <Property Name="DT_SEPROCADO" Type="date" />
+          <Property Name="PERC_META" Type="number" Precision="5" Scale="2" />
+          <Property Name="COD_PRAZO_VENCIMENTO" Type="number" Precision="6" Scale="0" />
+          <Property Name="IND_SOJICULTOR_PARTICIPANTE" Type="char" MaxLength="3" />
+          <Property Name="NUM_DIA_VISITA" Type="number" Precision="1" Scale="0" />
+          <Property Name="DESC_FREQUENCIA_VISITA" Type="char" MaxLength="1" />
+          <Property Name="NUM_HORA_VISITA" Type="number" Precision="4" Scale="0" />
+          <Property Name="NUM_DIA_VENCTO" Type="number" Precision="2" Scale="0" />
+          <Property Name="NOME_TITULAR" Type="varchar2" MaxLength="30" />
+          <Property Name="DESC_CRC" Type="varchar2" MaxLength="10" />
+          <Property Name="DESC_SUFRAMA" Type="varchar2" MaxLength="9" />
+          <Property Name="DESC_QUALIFICACAO" Type="varchar2" MaxLength="100" />
+          <Property Name="PERC_ESPECIAL_PECA" Type="number" Precision="5" Scale="2" />
+          <Property Name="PERC_ESPECIAL_SERVICO" Type="number" Precision="5" Scale="2" />
+          <Property Name="DT_ALTERACAO" Type="date" />
+          <Property Name="IND_ATACADO_VAREJO" Type="char" MaxLength="1" />
+          <Property Name="DT_ULT_ALTERACAO" Type="date" />
+          <Property Name="PERC_SENAR" Type="number" Precision="5" Scale="2" />
+          <Property Name="NUM_LIBERA_LIMITE" Type="number" Precision="4" Scale="0" />
+          <Property Name="DESC_E_MAIL1" Type="varchar2" MaxLength="70" />
+          <Property Name="COD_UF_VEICULO" Type="char" MaxLength="2" />
+          <Property Name="DESC_DISTRITO" Type="varchar2" MaxLength="30" />
+          <Property Name="COD_AVALISTA" Type="number" Precision="6" Scale="0" />
+          <Property Name="IND_ISS_RETIDO" Type="number" Precision="1" Scale="0" />
+          <Property Name="PERC_BASE_SUBSTITUICAO" Type="number" Precision="5" Scale="2" />
+          <Property Name="PERC_ALIQ_SUBSTITUICAO" Type="number" Precision="5" Scale="2" />
+          <Property Name="DESC_LEI_SUBSTITUICAO" Type="varchar2" MaxLength="50" />
+          <Property Name="IND_REGIME_TRIBUTARIO" Type="number" Precision="1" Scale="0" />
+          <Property Name="PERC_DESCONTO2" Type="number" Precision="5" Scale="2" />
+          <Property Name="PERC_DEDUCAO_NFSE" Type="number" Precision="5" Scale="2" />
+          <Property Name="COD_QUALIFICACAO_SOCIO" Type="char" MaxLength="2" />
+          <Property Name="PERC_CAP_TOT" Type="number" Precision="4" Scale="2" />
+          <Property Name="PERC_CAP_VOT" Type="number" Precision="4" Scale="2" />
+          <Property Name="IND_PIS_COFINS_RETIDO" Type="char" MaxLength="3" />
+          <Property Name="COD_CADASTRO_WEB" Type="number" Precision="9" Scale="0" />
+          <Property Name="LOCAL_ULTIMA_ALTERACAO" Type="varchar2" MaxLength="10" />
+          <Property Name="NUM_CGC_CPF_TITULAR_CONTA" Type="varchar2" MaxLength="18" />
+          <Property Name="COD_TABELA_PRECO_CAB" Type="number" Precision="6" Scale="0" />
+          <Property Name="IND_CONSUMIDOR_FINAL" Type="char" MaxLength="1" />
+          <Property Name="IND_CONTRIBUINTE" Type="char" MaxLength="3" />
+          <Property Name="DT_VENCIMENTO_TABELA_PRECO" Type="date" />
+          <Property Name="DESC_OPERADORA_CELULAR" Type="varchar2" MaxLength="8" />
+          <Property Name="NUM_SEQ_CRC" Type="varchar2" MaxLength="20" />
+          <Property Name="DT_CRC" Type="date" />
+          <Property Name="PERC_ROYALTIES" Type="number" Precision="5" Scale="2" />
+          <Property Name="IND_TIPO_PROPRIETARIO" Type="number" Precision="1" Scale="0" Nullable="false" />
+          <Property Name="DESC_RNTRC" Type="varchar2" MaxLength="8" />
+          <Property Name="DESC_TAF" Type="varchar2" MaxLength="12" />
+          <Property Name="DESC_NRO_REG_ESTADUAL" Type="varchar2" MaxLength="25" />
+        </EntityType>
+        <EntityContainer Name="ModelStoreContainer">
+          <EntitySet Name="TB_CADASTRO" EntityType="Self.TB_CADASTRO" Schema="SISTEMA" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="TB_CADASTRO">
+          <Key>
+            <PropertyRef Name="COD_CADASTRO" />
+          </Key>
+          <Property Name="COD_CADASTRO" Type="Int32" Nullable="false" />
+          <Property Name="COD_MOTIVO" Type="Int32" />
+          <Property Name="COD_TIPO_CADASTRO" Type="Int32" Nullable="false" />
+          <Property Name="COD_REGIAO" Type="Int32" />
+          <Property Name="COD_PAIS" Type="Int32" />
+          <Property Name="COD_ESTADO_CIVIL" Type="Int32" />
+          <Property Name="COD_RAMO" Type="Int32" />
+          <Property Name="COD_ESTADO" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="NOME" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DESC_ENDERECO" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_CIDADE" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_CEP" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="NUM_CGC_CPF" Type="String" MaxLength="18" FixedLength="false" Unicode="false" />
+          <Property Name="NUM_INSCRICAO" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="DT_CADASTRO" Type="DateTime" Nullable="false" />
+          <Property Name="IND_SEXO_CATEGORIA" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="NUM_CAIXA_POSTAL" Type="Int32" />
+          <Property Name="DT_CANCELAMENTO" Type="DateTime" />
+          <Property Name="DESC_TELEFONE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_CELULAR" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="NOME_CONTATO" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="DT_NASCIMENTO" Type="DateTime" />
+          <Property Name="DESC_BAIRRO" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="PERC_FUNRURAL" Type="Decimal" Precision="5" Scale="2" />
+          <Property Name="VAL_LIMITE" Type="Decimal" Precision="11" Scale="2" />
+          <Property Name="DESC_FANTASIA" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_CIDADE_COBRANCA" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_ENDERECO_COBRANCA" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_ESTADO_COBRANCA" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_CEP_COBRANCA" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_TELEFONE_COMERCIAL" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="NUM_JUNTA" Type="Int32" />
+          <Property Name="DT_FUNDACAO" Type="DateTime" />
+          <Property Name="DT_JUNTA" Type="DateTime" />
+          <Property Name="DESC_FAX" Type="String" MaxLength="14" FixedLength="false" Unicode="false" />
+          <Property Name="NOME_MAE" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="NOME_PAI" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_NATURALIDADE" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_ESTADO_NATURAL" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="DT_EXPEDICAO_IDENTIDADE" Type="DateTime" />
+          <Property Name="DESC_E_MAIL" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_FAX_COBRANCA" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="IND_SEPROC_SIMNAO" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="DESC_INSCRICAO_MUNICIPAL" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="NOME_CONJUGE" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_CPF_CONJUGE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_IDENTIDADE_CONJUGE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="COD_CLASS_CADASTRO" Type="Int32" />
+          <Property Name="COD_BANCO_AGENCIA" Type="Int32" />
+          <Property Name="COD_OPERACAO_CC" Type="Int32" />
+          <Property Name="DT_NASCIMENTO_CONTATO" Type="DateTime" />
+          <Property Name="NOME_CONTATO2" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="DT_NASCIMENTO2" Type="DateTime" />
+          <Property Name="COD_VENDEDOR" Type="Int32" />
+          <Property Name="PERC_COMISSAO" Type="Decimal" Precision="5" Scale="2" />
+          <Property Name="DESC_COMPLEMENTO" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="IND_FISICA_JURIDICA" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="DESC_ENDERECO_ENTREGA" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_CIDADE_ENTREGA" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_BAIRRO_ENTREGA" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_OBS" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_OBS1" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_OBS2" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_FORMA_COMPRA" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="COD_USUARIO" Type="Int32" />
+          <Property Name="DESC_REF_COMERCIAL1" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_REF_COMERCIAL2" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_REF_COMERCIAL3" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_REF_BANCO1" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_REF_BANCO2" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_REF_BANCO3" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_REF_PARENTE_NOME" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_REF_PARENTE_ENDERECO" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_REF_PARENTE_CIDADE" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_REF_PARENTE_TELEFONE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_REF_OUTRAS" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+          <Property Name="COD_CADASTRO_NOVO" Type="Int32" />
+          <Property Name="DESC_ORGAO_EMISSOR" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_INSCRICAO_INSS" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_CARTEIRA" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="DT_EXPEDICAO_CARTEIRA" Type="DateTime" />
+          <Property Name="COD_VENDEDOR_PREPOSTO" Type="Int32" />
+          <Property Name="COD_CIDADE" Type="Int32" />
+          <Property Name="IND_LIBERA_VENDA" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Name="IND_REGIME_ESPECIAL" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Name="DESC_HOBBIE" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_DESTRITO" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_CONTA_CORRENTE" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="COD_OPERACAO_CC1" Type="Int32" />
+          <Property Name="COD_OPERACAO_CC2" Type="Int32" />
+          <Property Name="DESC_PLACA" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="PERC_DESCONTO" Type="Decimal" Precision="5" Scale="2" />
+          <Property Name="IND_LIBERA_BLOQUETO" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Name="DT_CONSULTA_SINTREGA" Type="DateTime" />
+          <Property Name="DT_CONSULTA_SINTEGRA" Type="DateTime" />
+          <Property Name="DESC_PROFISSAO_CONJUGE" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="DT_NASCIMENTO_CONJUGE" Type="DateTime" />
+          <Property Name="DESC_EMPRESA_CONJUGE" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="VL_SALARIO_CONJUGE" Type="Decimal" Precision="11" Scale="2" />
+          <Property Name="DESC_FUNCAO" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_EMPRESA" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_FONE_EMPRESA" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_TEMPO" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_PLACA_CARRETA1" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_PLACA_CARRETA2" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_BAIRRO_COBRANCA" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="VAL_SALARIO" Type="Decimal" Precision="11" Scale="2" />
+          <Property Name="DESC_AGENCIA" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_GARANTIAS" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="NOME_AUTORIZADO1" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="NOME_AUTORIZADO2" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="NOME_AUTORIZADO3" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_CPF_AUTORIZADO1" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_CPF_AUTORIZADO2" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_CPF_AUTORIZADO3" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_GARANTIAS_OUTRAS" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_COMPLEMENTO_SINTEGRA" Type="String" MaxLength="14" FixedLength="false" Unicode="false" />
+          <Property Name="DT_SEPROCADO" Type="DateTime" />
+          <Property Name="PERC_META" Type="Decimal" Precision="5" Scale="2" />
+          <Property Name="COD_PRAZO_VENCIMENTO" Type="Int32" />
+          <Property Name="IND_SOJICULTOR_PARTICIPANTE" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Name="NUM_DIA_VISITA" Type="Boolean" />
+          <Property Name="DESC_FREQUENCIA_VISITA" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="NUM_HORA_VISITA" Type="Int16" />
+          <Property Name="NUM_DIA_VENCTO" Type="Byte" />
+          <Property Name="NOME_TITULAR" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_CRC" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_SUFRAMA" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_QUALIFICACAO" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PERC_ESPECIAL_PECA" Type="Decimal" Precision="5" Scale="2" />
+          <Property Name="PERC_ESPECIAL_SERVICO" Type="Decimal" Precision="5" Scale="2" />
+          <Property Name="DT_ALTERACAO" Type="DateTime" />
+          <Property Name="IND_ATACADO_VAREJO" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="DT_ULT_ALTERACAO" Type="DateTime" />
+          <Property Name="PERC_SENAR" Type="Decimal" Precision="5" Scale="2" />
+          <Property Name="NUM_LIBERA_LIMITE" Type="Int16" />
+          <Property Name="DESC_E_MAIL1" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+          <Property Name="COD_UF_VEICULO" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="DESC_DISTRITO" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="COD_AVALISTA" Type="Int32" />
+          <Property Name="IND_ISS_RETIDO" Type="Boolean" />
+          <Property Name="PERC_BASE_SUBSTITUICAO" Type="Decimal" Precision="5" Scale="2" />
+          <Property Name="PERC_ALIQ_SUBSTITUICAO" Type="Decimal" Precision="5" Scale="2" />
+          <Property Name="DESC_LEI_SUBSTITUICAO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IND_REGIME_TRIBUTARIO" Type="Boolean" />
+          <Property Name="PERC_DESCONTO2" Type="Decimal" Precision="5" Scale="2" />
+          <Property Name="PERC_DEDUCAO_NFSE" Type="Decimal" Precision="5" Scale="2" />
+          <Property Name="COD_QUALIFICACAO_SOCIO" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="PERC_CAP_TOT" Type="Decimal" Precision="4" Scale="2" />
+          <Property Name="PERC_CAP_VOT" Type="Decimal" Precision="4" Scale="2" />
+          <Property Name="IND_PIS_COFINS_RETIDO" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Name="COD_CADASTRO_WEB" Type="Int32" />
+          <Property Name="LOCAL_ULTIMA_ALTERACAO" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="NUM_CGC_CPF_TITULAR_CONTA" Type="String" MaxLength="18" FixedLength="false" Unicode="false" />
+          <Property Name="COD_TABELA_PRECO_CAB" Type="Int32" />
+          <Property Name="IND_CONSUMIDOR_FINAL" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="IND_CONTRIBUINTE" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Name="DT_VENCIMENTO_TABELA_PRECO" Type="DateTime" />
+          <Property Name="DESC_OPERADORA_CELULAR" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="NUM_SEQ_CRC" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="DT_CRC" Type="DateTime" />
+          <Property Name="PERC_ROYALTIES" Type="Decimal" Precision="5" Scale="2" />
+          <Property Name="IND_TIPO_PROPRIETARIO" Type="Boolean" Nullable="false" />
+          <Property Name="DESC_RNTRC" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_TAF" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_NRO_REG_ESTADUAL" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="TB_CADASTRO" EntityType="Self.TB_CADASTRO" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="TB_CADASTRO">
+            <EntityTypeMapping TypeName="Model.TB_CADASTRO">
+              <MappingFragment StoreEntitySet="TB_CADASTRO">
+                <ScalarProperty Name="COD_CADASTRO" ColumnName="COD_CADASTRO" />
+                <ScalarProperty Name="COD_MOTIVO" ColumnName="COD_MOTIVO" />
+                <ScalarProperty Name="COD_TIPO_CADASTRO" ColumnName="COD_TIPO_CADASTRO" />
+                <ScalarProperty Name="COD_REGIAO" ColumnName="COD_REGIAO" />
+                <ScalarProperty Name="COD_PAIS" ColumnName="COD_PAIS" />
+                <ScalarProperty Name="COD_ESTADO_CIVIL" ColumnName="COD_ESTADO_CIVIL" />
+                <ScalarProperty Name="COD_RAMO" ColumnName="COD_RAMO" />
+                <ScalarProperty Name="COD_ESTADO" ColumnName="COD_ESTADO" />
+                <ScalarProperty Name="NOME" ColumnName="NOME" />
+                <ScalarProperty Name="DESC_ENDERECO" ColumnName="DESC_ENDERECO" />
+                <ScalarProperty Name="DESC_CIDADE" ColumnName="DESC_CIDADE" />
+                <ScalarProperty Name="DESC_CEP" ColumnName="DESC_CEP" />
+                <ScalarProperty Name="NUM_CGC_CPF" ColumnName="NUM_CGC_CPF" />
+                <ScalarProperty Name="NUM_INSCRICAO" ColumnName="NUM_INSCRICAO" />
+                <ScalarProperty Name="DT_CADASTRO" ColumnName="DT_CADASTRO" />
+                <ScalarProperty Name="IND_SEXO_CATEGORIA" ColumnName="IND_SEXO_CATEGORIA" />
+                <ScalarProperty Name="NUM_CAIXA_POSTAL" ColumnName="NUM_CAIXA_POSTAL" />
+                <ScalarProperty Name="DT_CANCELAMENTO" ColumnName="DT_CANCELAMENTO" />
+                <ScalarProperty Name="DESC_TELEFONE" ColumnName="DESC_TELEFONE" />
+                <ScalarProperty Name="DESC_CELULAR" ColumnName="DESC_CELULAR" />
+                <ScalarProperty Name="NOME_CONTATO" ColumnName="NOME_CONTATO" />
+                <ScalarProperty Name="DT_NASCIMENTO" ColumnName="DT_NASCIMENTO" />
+                <ScalarProperty Name="DESC_BAIRRO" ColumnName="DESC_BAIRRO" />
+                <ScalarProperty Name="PERC_FUNRURAL" ColumnName="PERC_FUNRURAL" />
+                <ScalarProperty Name="VAL_LIMITE" ColumnName="VAL_LIMITE" />
+                <ScalarProperty Name="DESC_FANTASIA" ColumnName="DESC_FANTASIA" />
+                <ScalarProperty Name="DESC_CIDADE_COBRANCA" ColumnName="DESC_CIDADE_COBRANCA" />
+                <ScalarProperty Name="DESC_ENDERECO_COBRANCA" ColumnName="DESC_ENDERECO_COBRANCA" />
+                <ScalarProperty Name="DESC_ESTADO_COBRANCA" ColumnName="DESC_ESTADO_COBRANCA" />
+                <ScalarProperty Name="DESC_CEP_COBRANCA" ColumnName="DESC_CEP_COBRANCA" />
+                <ScalarProperty Name="DESC_TELEFONE_COMERCIAL" ColumnName="DESC_TELEFONE_COMERCIAL" />
+                <ScalarProperty Name="NUM_JUNTA" ColumnName="NUM_JUNTA" />
+                <ScalarProperty Name="DT_FUNDACAO" ColumnName="DT_FUNDACAO" />
+                <ScalarProperty Name="DT_JUNTA" ColumnName="DT_JUNTA" />
+                <ScalarProperty Name="DESC_FAX" ColumnName="DESC_FAX" />
+                <ScalarProperty Name="NOME_MAE" ColumnName="NOME_MAE" />
+                <ScalarProperty Name="NOME_PAI" ColumnName="NOME_PAI" />
+                <ScalarProperty Name="DESC_NATURALIDADE" ColumnName="DESC_NATURALIDADE" />
+                <ScalarProperty Name="DESC_ESTADO_NATURAL" ColumnName="DESC_ESTADO_NATURAL" />
+                <ScalarProperty Name="DT_EXPEDICAO_IDENTIDADE" ColumnName="DT_EXPEDICAO_IDENTIDADE" />
+                <ScalarProperty Name="DESC_E_MAIL" ColumnName="DESC_E_MAIL" />
+                <ScalarProperty Name="DESC_FAX_COBRANCA" ColumnName="DESC_FAX_COBRANCA" />
+                <ScalarProperty Name="IND_SEPROC_SIMNAO" ColumnName="IND_SEPROC_SIMNAO" />
+                <ScalarProperty Name="DESC_INSCRICAO_MUNICIPAL" ColumnName="DESC_INSCRICAO_MUNICIPAL" />
+                <ScalarProperty Name="NOME_CONJUGE" ColumnName="NOME_CONJUGE" />
+                <ScalarProperty Name="DESC_CPF_CONJUGE" ColumnName="DESC_CPF_CONJUGE" />
+                <ScalarProperty Name="DESC_IDENTIDADE_CONJUGE" ColumnName="DESC_IDENTIDADE_CONJUGE" />
+                <ScalarProperty Name="COD_CLASS_CADASTRO" ColumnName="COD_CLASS_CADASTRO" />
+                <ScalarProperty Name="COD_BANCO_AGENCIA" ColumnName="COD_BANCO_AGENCIA" />
+                <ScalarProperty Name="COD_OPERACAO_CC" ColumnName="COD_OPERACAO_CC" />
+                <ScalarProperty Name="DT_NASCIMENTO_CONTATO" ColumnName="DT_NASCIMENTO_CONTATO" />
+                <ScalarProperty Name="NOME_CONTATO2" ColumnName="NOME_CONTATO2" />
+                <ScalarProperty Name="DT_NASCIMENTO2" ColumnName="DT_NASCIMENTO2" />
+                <ScalarProperty Name="COD_VENDEDOR" ColumnName="COD_VENDEDOR" />
+                <ScalarProperty Name="PERC_COMISSAO" ColumnName="PERC_COMISSAO" />
+                <ScalarProperty Name="DESC_COMPLEMENTO" ColumnName="DESC_COMPLEMENTO" />
+                <ScalarProperty Name="IND_FISICA_JURIDICA" ColumnName="IND_FISICA_JURIDICA" />
+                <ScalarProperty Name="DESC_ENDERECO_ENTREGA" ColumnName="DESC_ENDERECO_ENTREGA" />
+                <ScalarProperty Name="DESC_CIDADE_ENTREGA" ColumnName="DESC_CIDADE_ENTREGA" />
+                <ScalarProperty Name="DESC_BAIRRO_ENTREGA" ColumnName="DESC_BAIRRO_ENTREGA" />
+                <ScalarProperty Name="DESC_OBS" ColumnName="DESC_OBS" />
+                <ScalarProperty Name="DESC_OBS1" ColumnName="DESC_OBS1" />
+                <ScalarProperty Name="DESC_OBS2" ColumnName="DESC_OBS2" />
+                <ScalarProperty Name="DESC_FORMA_COMPRA" ColumnName="DESC_FORMA_COMPRA" />
+                <ScalarProperty Name="COD_USUARIO" ColumnName="COD_USUARIO" />
+                <ScalarProperty Name="DESC_REF_COMERCIAL1" ColumnName="DESC_REF_COMERCIAL1" />
+                <ScalarProperty Name="DESC_REF_COMERCIAL2" ColumnName="DESC_REF_COMERCIAL2" />
+                <ScalarProperty Name="DESC_REF_COMERCIAL3" ColumnName="DESC_REF_COMERCIAL3" />
+                <ScalarProperty Name="DESC_REF_BANCO1" ColumnName="DESC_REF_BANCO1" />
+                <ScalarProperty Name="DESC_REF_BANCO2" ColumnName="DESC_REF_BANCO2" />
+                <ScalarProperty Name="DESC_REF_BANCO3" ColumnName="DESC_REF_BANCO3" />
+                <ScalarProperty Name="DESC_REF_PARENTE_NOME" ColumnName="DESC_REF_PARENTE_NOME" />
+                <ScalarProperty Name="DESC_REF_PARENTE_ENDERECO" ColumnName="DESC_REF_PARENTE_ENDERECO" />
+                <ScalarProperty Name="DESC_REF_PARENTE_CIDADE" ColumnName="DESC_REF_PARENTE_CIDADE" />
+                <ScalarProperty Name="DESC_REF_PARENTE_TELEFONE" ColumnName="DESC_REF_PARENTE_TELEFONE" />
+                <ScalarProperty Name="DESC_REF_OUTRAS" ColumnName="DESC_REF_OUTRAS" />
+                <ScalarProperty Name="COD_CADASTRO_NOVO" ColumnName="COD_CADASTRO_NOVO" />
+                <ScalarProperty Name="DESC_ORGAO_EMISSOR" ColumnName="DESC_ORGAO_EMISSOR" />
+                <ScalarProperty Name="DESC_INSCRICAO_INSS" ColumnName="DESC_INSCRICAO_INSS" />
+                <ScalarProperty Name="DESC_CARTEIRA" ColumnName="DESC_CARTEIRA" />
+                <ScalarProperty Name="DT_EXPEDICAO_CARTEIRA" ColumnName="DT_EXPEDICAO_CARTEIRA" />
+                <ScalarProperty Name="COD_VENDEDOR_PREPOSTO" ColumnName="COD_VENDEDOR_PREPOSTO" />
+                <ScalarProperty Name="COD_CIDADE" ColumnName="COD_CIDADE" />
+                <ScalarProperty Name="IND_LIBERA_VENDA" ColumnName="IND_LIBERA_VENDA" />
+                <ScalarProperty Name="IND_REGIME_ESPECIAL" ColumnName="IND_REGIME_ESPECIAL" />
+                <ScalarProperty Name="DESC_HOBBIE" ColumnName="DESC_HOBBIE" />
+                <ScalarProperty Name="DESC_DESTRITO" ColumnName="DESC_DESTRITO" />
+                <ScalarProperty Name="DESC_CONTA_CORRENTE" ColumnName="DESC_CONTA_CORRENTE" />
+                <ScalarProperty Name="COD_OPERACAO_CC1" ColumnName="COD_OPERACAO_CC1" />
+                <ScalarProperty Name="COD_OPERACAO_CC2" ColumnName="COD_OPERACAO_CC2" />
+                <ScalarProperty Name="DESC_PLACA" ColumnName="DESC_PLACA" />
+                <ScalarProperty Name="PERC_DESCONTO" ColumnName="PERC_DESCONTO" />
+                <ScalarProperty Name="IND_LIBERA_BLOQUETO" ColumnName="IND_LIBERA_BLOQUETO" />
+                <ScalarProperty Name="DT_CONSULTA_SINTREGA" ColumnName="DT_CONSULTA_SINTREGA" />
+                <ScalarProperty Name="DT_CONSULTA_SINTEGRA" ColumnName="DT_CONSULTA_SINTEGRA" />
+                <ScalarProperty Name="DESC_PROFISSAO_CONJUGE" ColumnName="DESC_PROFISSAO_CONJUGE" />
+                <ScalarProperty Name="DT_NASCIMENTO_CONJUGE" ColumnName="DT_NASCIMENTO_CONJUGE" />
+                <ScalarProperty Name="DESC_EMPRESA_CONJUGE" ColumnName="DESC_EMPRESA_CONJUGE" />
+                <ScalarProperty Name="VL_SALARIO_CONJUGE" ColumnName="VL_SALARIO_CONJUGE" />
+                <ScalarProperty Name="DESC_FUNCAO" ColumnName="DESC_FUNCAO" />
+                <ScalarProperty Name="DESC_EMPRESA" ColumnName="DESC_EMPRESA" />
+                <ScalarProperty Name="DESC_FONE_EMPRESA" ColumnName="DESC_FONE_EMPRESA" />
+                <ScalarProperty Name="DESC_TEMPO" ColumnName="DESC_TEMPO" />
+                <ScalarProperty Name="DESC_PLACA_CARRETA1" ColumnName="DESC_PLACA_CARRETA1" />
+                <ScalarProperty Name="DESC_PLACA_CARRETA2" ColumnName="DESC_PLACA_CARRETA2" />
+                <ScalarProperty Name="DESC_BAIRRO_COBRANCA" ColumnName="DESC_BAIRRO_COBRANCA" />
+                <ScalarProperty Name="VAL_SALARIO" ColumnName="VAL_SALARIO" />
+                <ScalarProperty Name="DESC_AGENCIA" ColumnName="DESC_AGENCIA" />
+                <ScalarProperty Name="DESC_GARANTIAS" ColumnName="DESC_GARANTIAS" />
+                <ScalarProperty Name="NOME_AUTORIZADO1" ColumnName="NOME_AUTORIZADO1" />
+                <ScalarProperty Name="NOME_AUTORIZADO2" ColumnName="NOME_AUTORIZADO2" />
+                <ScalarProperty Name="NOME_AUTORIZADO3" ColumnName="NOME_AUTORIZADO3" />
+                <ScalarProperty Name="DESC_CPF_AUTORIZADO1" ColumnName="DESC_CPF_AUTORIZADO1" />
+                <ScalarProperty Name="DESC_CPF_AUTORIZADO2" ColumnName="DESC_CPF_AUTORIZADO2" />
+                <ScalarProperty Name="DESC_CPF_AUTORIZADO3" ColumnName="DESC_CPF_AUTORIZADO3" />
+                <ScalarProperty Name="DESC_GARANTIAS_OUTRAS" ColumnName="DESC_GARANTIAS_OUTRAS" />
+                <ScalarProperty Name="DESC_COMPLEMENTO_SINTEGRA" ColumnName="DESC_COMPLEMENTO_SINTEGRA" />
+                <ScalarProperty Name="DT_SEPROCADO" ColumnName="DT_SEPROCADO" />
+                <ScalarProperty Name="PERC_META" ColumnName="PERC_META" />
+                <ScalarProperty Name="COD_PRAZO_VENCIMENTO" ColumnName="COD_PRAZO_VENCIMENTO" />
+                <ScalarProperty Name="IND_SOJICULTOR_PARTICIPANTE" ColumnName="IND_SOJICULTOR_PARTICIPANTE" />
+                <ScalarProperty Name="NUM_DIA_VISITA" ColumnName="NUM_DIA_VISITA" />
+                <ScalarProperty Name="DESC_FREQUENCIA_VISITA" ColumnName="DESC_FREQUENCIA_VISITA" />
+                <ScalarProperty Name="NUM_HORA_VISITA" ColumnName="NUM_HORA_VISITA" />
+                <ScalarProperty Name="NUM_DIA_VENCTO" ColumnName="NUM_DIA_VENCTO" />
+                <ScalarProperty Name="NOME_TITULAR" ColumnName="NOME_TITULAR" />
+                <ScalarProperty Name="DESC_CRC" ColumnName="DESC_CRC" />
+                <ScalarProperty Name="DESC_SUFRAMA" ColumnName="DESC_SUFRAMA" />
+                <ScalarProperty Name="DESC_QUALIFICACAO" ColumnName="DESC_QUALIFICACAO" />
+                <ScalarProperty Name="PERC_ESPECIAL_PECA" ColumnName="PERC_ESPECIAL_PECA" />
+                <ScalarProperty Name="PERC_ESPECIAL_SERVICO" ColumnName="PERC_ESPECIAL_SERVICO" />
+                <ScalarProperty Name="DT_ALTERACAO" ColumnName="DT_ALTERACAO" />
+                <ScalarProperty Name="IND_ATACADO_VAREJO" ColumnName="IND_ATACADO_VAREJO" />
+                <ScalarProperty Name="DT_ULT_ALTERACAO" ColumnName="DT_ULT_ALTERACAO" />
+                <ScalarProperty Name="PERC_SENAR" ColumnName="PERC_SENAR" />
+                <ScalarProperty Name="NUM_LIBERA_LIMITE" ColumnName="NUM_LIBERA_LIMITE" />
+                <ScalarProperty Name="DESC_E_MAIL1" ColumnName="DESC_E_MAIL1" />
+                <ScalarProperty Name="COD_UF_VEICULO" ColumnName="COD_UF_VEICULO" />
+                <ScalarProperty Name="DESC_DISTRITO" ColumnName="DESC_DISTRITO" />
+                <ScalarProperty Name="COD_AVALISTA" ColumnName="COD_AVALISTA" />
+                <ScalarProperty Name="IND_ISS_RETIDO" ColumnName="IND_ISS_RETIDO" />
+                <ScalarProperty Name="PERC_BASE_SUBSTITUICAO" ColumnName="PERC_BASE_SUBSTITUICAO" />
+                <ScalarProperty Name="PERC_ALIQ_SUBSTITUICAO" ColumnName="PERC_ALIQ_SUBSTITUICAO" />
+                <ScalarProperty Name="DESC_LEI_SUBSTITUICAO" ColumnName="DESC_LEI_SUBSTITUICAO" />
+                <ScalarProperty Name="IND_REGIME_TRIBUTARIO" ColumnName="IND_REGIME_TRIBUTARIO" />
+                <ScalarProperty Name="PERC_DESCONTO2" ColumnName="PERC_DESCONTO2" />
+                <ScalarProperty Name="PERC_DEDUCAO_NFSE" ColumnName="PERC_DEDUCAO_NFSE" />
+                <ScalarProperty Name="COD_QUALIFICACAO_SOCIO" ColumnName="COD_QUALIFICACAO_SOCIO" />
+                <ScalarProperty Name="PERC_CAP_TOT" ColumnName="PERC_CAP_TOT" />
+                <ScalarProperty Name="PERC_CAP_VOT" ColumnName="PERC_CAP_VOT" />
+                <ScalarProperty Name="IND_PIS_COFINS_RETIDO" ColumnName="IND_PIS_COFINS_RETIDO" />
+                <ScalarProperty Name="COD_CADASTRO_WEB" ColumnName="COD_CADASTRO_WEB" />
+                <ScalarProperty Name="LOCAL_ULTIMA_ALTERACAO" ColumnName="LOCAL_ULTIMA_ALTERACAO" />
+                <ScalarProperty Name="NUM_CGC_CPF_TITULAR_CONTA" ColumnName="NUM_CGC_CPF_TITULAR_CONTA" />
+                <ScalarProperty Name="COD_TABELA_PRECO_CAB" ColumnName="COD_TABELA_PRECO_CAB" />
+                <ScalarProperty Name="IND_CONSUMIDOR_FINAL" ColumnName="IND_CONSUMIDOR_FINAL" />
+                <ScalarProperty Name="IND_CONTRIBUINTE" ColumnName="IND_CONTRIBUINTE" />
+                <ScalarProperty Name="DT_VENCIMENTO_TABELA_PRECO" ColumnName="DT_VENCIMENTO_TABELA_PRECO" />
+                <ScalarProperty Name="DESC_OPERADORA_CELULAR" ColumnName="DESC_OPERADORA_CELULAR" />
+                <ScalarProperty Name="NUM_SEQ_CRC" ColumnName="NUM_SEQ_CRC" />
+                <ScalarProperty Name="DT_CRC" ColumnName="DT_CRC" />
+                <ScalarProperty Name="PERC_ROYALTIES" ColumnName="PERC_ROYALTIES" />
+                <ScalarProperty Name="IND_TIPO_PROPRIETARIO" ColumnName="IND_TIPO_PROPRIETARIO" />
+                <ScalarProperty Name="DESC_RNTRC" ColumnName="DESC_RNTRC" />
+                <ScalarProperty Name="DESC_TAF" ColumnName="DESC_TAF" />
+                <ScalarProperty Name="DESC_NRO_REG_ESTADUAL" ColumnName="DESC_NRO_REG_ESTADUAL" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
