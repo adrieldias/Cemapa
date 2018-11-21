@@ -180,5 +180,18 @@ namespace Cemapa.Models
         public string DESC_RNTRC { get; set; }
         public string DESC_TAF { get; set; }
         public string DESC_NRO_REG_ESTADUAL { get; set; }
+    
+        public virtual TB_CIDADE TB_CIDADE { get; set; }
+        public virtual TB_TIPO_CADASTRO TB_TIPO_CADASTRO { get; set; }
+        public virtual TB_CLASS_CADASTRO TB_CLASS_CADASTRO { get; set; }
+        public virtual TB_ESTADO TB_ESTADO { get; set; }
+        public virtual TB_ESTADO_CIVIL TB_ESTADO_CIVIL { get; set; }
+        public virtual TB_ESTADO TB_ESTADO1 { get; set; }
+        public virtual TB_MOTIVO TB_MOTIVO { get; set; }
+        public virtual TB_PAIS TB_PAIS { get; set; }
+        public virtual TB_REGIAO TB_REGIAO { get; set; }
+        public virtual TB_USUARIO TB_USUARIO { get; set; }
+        public virtual TB_VENDEDOR TB_VENDEDOR { get; set; }
+        public virtual TB_TABELA_PRECO_CAB TB_TABELA_PRECO_CAB { get; set; }
     }
 }

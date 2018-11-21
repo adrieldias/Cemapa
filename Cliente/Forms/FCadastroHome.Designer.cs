@@ -1,6 +1,6 @@
 ﻿namespace Cliente.Forms
 {
-    partial class FCadastro
+    partial class FCadastroHome
     {
         /// <summary>
         /// Required designer variable.
@@ -29,14 +29,14 @@
         private void InitializeComponent()
         {
             this.btPesquisar = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.pCabecalho.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // btPesquisar
             // 
-            this.btPesquisar.Location = new System.Drawing.Point(308, 92);
+            this.btPesquisar.Location = new System.Drawing.Point(466, 170);
             this.btPesquisar.Name = "btPesquisar";
             this.btPesquisar.Size = new System.Drawing.Size(62, 37);
             this.btPesquisar.TabIndex = 0;
@@ -44,42 +44,38 @@
             this.btPesquisar.UseVisualStyleBackColor = true;
             this.btPesquisar.Click += new System.EventHandler(this.btPesquisar_Click);
             // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(12, 92);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(290, 101);
-            this.textBox1.TabIndex = 1;
-            // 
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(12, 212);
+            this.dataGridView1.Location = new System.Drawing.Point(12, 155);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(397, 150);
+            this.dataGridView1.Size = new System.Drawing.Size(397, 250);
             this.dataGridView1.TabIndex = 2;
             // 
-            // FCadastro
+            // FCadastroHome
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(421, 450);
+            this.ClientSize = new System.Drawing.Size(830, 437);
             this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.btPesquisar);
-            this.Name = "FCadastro";
-            this.Text = "FCadastro";
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable;
+            this.Name = "FCadastroHome";
+            this.Text = "FCadastroHome";
+            this.Load += new System.EventHandler(this.FCadastroHome_Load);
+            this.Controls.SetChildIndex(this.btPesquisar, 0);
+            this.Controls.SetChildIndex(this.dataGridView1, 0);
+            this.Controls.SetChildIndex(this.pCabecalho, 0);
+            this.pCabecalho.ResumeLayout(false);
+            this.pCabecalho.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
         private System.Windows.Forms.Button btPesquisar;
-        private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.DataGridView dataGridView1;
     }
 }

@@ -26,5 +26,16 @@ namespace Cemapa.Models
         }
     
         public virtual DbSet<TB_CADASTRO> TB_CADASTRO { get; set; }
+        public virtual DbSet<TB_CIDADE> TB_CIDADE { get; set; }
+        public virtual DbSet<TB_TIPO_CADASTRO> TB_TIPO_CADASTRO { get; set; }
+        public virtual DbSet<TB_CLASS_CADASTRO> TB_CLASS_CADASTRO { get; set; }
+        public virtual DbSet<TB_ESTADO> TB_ESTADO { get; set; }
+        public virtual DbSet<TB_ESTADO_CIVIL> TB_ESTADO_CIVIL { get; set; }
+        public virtual DbSet<TB_MOTIVO> TB_MOTIVO { get; set; }
+        public virtual DbSet<TB_PAIS> TB_PAIS { get; set; }
+        public virtual DbSet<TB_REGIAO> TB_REGIAO { get; set; }
+        public virtual DbSet<TB_TABELA_PRECO_CAB> TB_TABELA_PRECO_CAB { get; set; }
+        public virtual DbSet<TB_USUARIO> TB_USUARIO { get; set; }
+        public virtual DbSet<TB_VENDEDOR> TB_VENDEDOR { get; set; }
     }
 }

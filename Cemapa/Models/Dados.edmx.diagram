@@ -4,8 +4,33 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="912c242cfcbe4301bb4c503ca9fbf7eb" Name="Diagram1" ZoomLevel="17">
-        <EntityTypeShape EntityType="Model.TB_CADASTRO" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+      <Diagram DiagramId="912c242cfcbe4301bb4c503ca9fbf7eb" Name="Diagram1" ZoomLevel="50">
+        <EntityTypeShape EntityType="Model.TB_CADASTRO" Width="1.5" PointX="2.25" PointY="1.5" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.TB_CIDADE" Width="1.5" PointX="12" PointY="5.5" IsExpanded="false" />
+        <AssociationConnector Association="Model.FK_CADASTROXCIDADE" />
+        <EntityTypeShape EntityType="Model.TB_TIPO_CADASTRO" Width="1.5" PointX="0.5" PointY="5.5" IsExpanded="false" />
+        <AssociationConnector Association="Model.FK_CADASTROXTIPO_CADASTRO" />
+        <EntityTypeShape EntityType="Model.TB_CLASS_CADASTRO" Width="1.5" PointX="5.75" PointY="5.5" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.TB_ESTADO" Width="1.5" PointX="8.75" PointY="2.25" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.TB_ESTADO_CIVIL" Width="1.5" PointX="8.125" PointY="3.125" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.TB_MOTIVO" Width="1.5" PointX="13.75" PointY="1.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.TB_PAIS" Width="1.5" PointX="12.875" PointY="3" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.TB_REGIAO" Width="1.5" PointX="10.875" PointY="3.625" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.TB_TABELA_PRECO_CAB" Width="1.5" PointX="4" PointY="5.5" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.TB_USUARIO" Width="1.5" PointX="2.25" PointY="5.5" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.TB_VENDEDOR" Width="1.5" PointX="7.625" PointY="5.5" IsExpanded="false" />
+        <AssociationConnector Association="Model.FK_CADASTROXCLASS_CADASTRO" />
+        <AssociationConnector Association="Model.FK_CADASTROXESTADO" />
+        <AssociationConnector Association="Model.FK_CADASTROXESTADO_CIVIL" />
+        <AssociationConnector Association="Model.FK_CADASTROXESTADOVEIC" />
+        <AssociationConnector Association="Model.FK_CADASTROXMOTIVO" />
+        <AssociationConnector Association="Model.FK_CADASTROXPAIS" />
+        <AssociationConnector Association="Model.FK_CADASTROXREGIAO" />
+        <AssociationConnector Association="Model.FK_CADASTROXUSUARIO" />
+        <AssociationConnector Association="Model.FK_CADASTROXVENDEDOR" />
+        <AssociationConnector Association="Model.FK_TABELA_PRECO_CABXCADASTRO" />
+        <AssociationConnector Association="Model.FK_MUNICIPIOXESTADO" />
+        <AssociationConnector Association="Model.FK_VENDEDORXESTADO" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -154,6 +154,39 @@
     <Compile Include="Models\TB_CADASTRO.cs">
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TB_CIDADE.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_CLASS_CADASTRO.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_ESTADO.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_ESTADO_CIVIL.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_MOTIVO.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_PAIS.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_REGIAO.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_TABELA_PRECO_CAB.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_TIPO_CADASTRO.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_USUARIO.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_VENDEDOR.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
