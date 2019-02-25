@@ -1,6 +1,6 @@
 ﻿namespace Cliente.Forms.Modelo
 {
-    partial class FModeloHome
+    partial class FModeloCad
     {
         /// <summary>
         /// Required designer variable.
@@ -32,10 +32,9 @@
             this.btMinimize = new System.Windows.Forms.Button();
             this.btCloseForm = new System.Windows.Forms.Button();
             this.lbNome = new System.Windows.Forms.Label();
-            this.btNovo = new System.Windows.Forms.Button();
-            this.btAlterar = new System.Windows.Forms.Button();
-            this.btExcluir = new System.Windows.Forms.Button();
-            this.btVisualizar = new System.Windows.Forms.Button();
+            this.btFechar = new System.Windows.Forms.Button();
+            this.btCancelar = new System.Windows.Forms.Button();
+            this.btSalvar = new System.Windows.Forms.Button();
             this.pCabecalho.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -50,7 +49,7 @@
             this.pCabecalho.Location = new System.Drawing.Point(0, 0);
             this.pCabecalho.Name = "pCabecalho";
             this.pCabecalho.Size = new System.Drawing.Size(830, 52);
-            this.pCabecalho.TabIndex = 2;
+            this.pCabecalho.TabIndex = 3;
             this.pCabecalho.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pCabecalho_MouseDown);
             this.pCabecalho.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pCabecalho_MouseMove);
             this.pCabecalho.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pCabecalho_MouseUp);
@@ -60,13 +59,12 @@
             this.btMinimize.Dock = System.Windows.Forms.DockStyle.Right;
             this.btMinimize.FlatAppearance.BorderColor = System.Drawing.Color.SteelBlue;
             this.btMinimize.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btMinimize.Font = new System.Drawing.Font("Arial", 13F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btMinimize.Font = new System.Drawing.Font("Arial", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btMinimize.ForeColor = System.Drawing.Color.White;
-            this.btMinimize.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btMinimize.Location = new System.Drawing.Point(724, 0);
             this.btMinimize.Name = "btMinimize";
             this.btMinimize.Size = new System.Drawing.Size(53, 52);
-            this.btMinimize.TabIndex = 4;
+            this.btMinimize.TabIndex = 9;
             this.btMinimize.Text = "_";
             this.btMinimize.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btMinimize.UseVisualStyleBackColor = true;
@@ -82,7 +80,7 @@
             this.btCloseForm.Location = new System.Drawing.Point(777, 0);
             this.btCloseForm.Name = "btCloseForm";
             this.btCloseForm.Size = new System.Drawing.Size(53, 52);
-            this.btCloseForm.TabIndex = 3;
+            this.btCloseForm.TabIndex = 8;
             this.btCloseForm.Text = "X";
             this.btCloseForm.UseVisualStyleBackColor = true;
             this.btCloseForm.Click += new System.EventHandler(this.btCloseForm_Click);
@@ -98,80 +96,67 @@
             this.lbNome.TabIndex = 0;
             this.lbNome.Text = "NOME DO FORMULÁRIO";
             // 
-            // btNovo
+            // btFechar
             // 
-            this.btNovo.AutoSize = true;
-            this.btNovo.BackColor = System.Drawing.Color.LightSlateGray;
-            this.btNovo.FlatAppearance.BorderColor = System.Drawing.Color.Gainsboro;
-            this.btNovo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btNovo.ForeColor = System.Drawing.Color.White;
-            this.btNovo.Location = new System.Drawing.Point(1, 53);
-            this.btNovo.Name = "btNovo";
-            this.btNovo.Padding = new System.Windows.Forms.Padding(0, 5, 0, 5);
-            this.btNovo.Size = new System.Drawing.Size(80, 39);
-            this.btNovo.TabIndex = 3;
-            this.btNovo.Text = "NOVO";
-            this.btNovo.UseVisualStyleBackColor = false;
+            this.btFechar.AutoSize = true;
+            this.btFechar.BackColor = System.Drawing.Color.Tomato;
+            this.btFechar.FlatAppearance.BorderColor = System.Drawing.Color.Gainsboro;
+            this.btFechar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btFechar.ForeColor = System.Drawing.Color.White;
+            this.btFechar.Location = new System.Drawing.Point(172, 53);
+            this.btFechar.Margin = new System.Windows.Forms.Padding(1);
+            this.btFechar.Name = "btFechar";
+            this.btFechar.Padding = new System.Windows.Forms.Padding(0, 5, 0, 5);
+            this.btFechar.Size = new System.Drawing.Size(86, 42);
+            this.btFechar.TabIndex = 10;
+            this.btFechar.Text = "FECHAR";
+            this.btFechar.UseVisualStyleBackColor = false;
             // 
-            // btAlterar
+            // btCancelar
             // 
-            this.btAlterar.AutoSize = true;
-            this.btAlterar.BackColor = System.Drawing.Color.LightSlateGray;
-            this.btAlterar.FlatAppearance.BorderColor = System.Drawing.Color.Gainsboro;
-            this.btAlterar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btAlterar.ForeColor = System.Drawing.Color.White;
-            this.btAlterar.Location = new System.Drawing.Point(82, 53);
-            this.btAlterar.Name = "btAlterar";
-            this.btAlterar.Padding = new System.Windows.Forms.Padding(0, 5, 0, 5);
-            this.btAlterar.Size = new System.Drawing.Size(80, 39);
-            this.btAlterar.TabIndex = 4;
-            this.btAlterar.Text = "ALTERAR";
-            this.btAlterar.UseVisualStyleBackColor = false;
+            this.btCancelar.AutoSize = true;
+            this.btCancelar.BackColor = System.Drawing.Color.Tomato;
+            this.btCancelar.FlatAppearance.BorderColor = System.Drawing.Color.Gainsboro;
+            this.btCancelar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btCancelar.ForeColor = System.Drawing.Color.White;
+            this.btCancelar.Location = new System.Drawing.Point(86, 53);
+            this.btCancelar.Margin = new System.Windows.Forms.Padding(1);
+            this.btCancelar.Name = "btCancelar";
+            this.btCancelar.Padding = new System.Windows.Forms.Padding(0, 5, 0, 5);
+            this.btCancelar.Size = new System.Drawing.Size(86, 42);
+            this.btCancelar.TabIndex = 9;
+            this.btCancelar.Text = "CANCELAR";
+            this.btCancelar.UseVisualStyleBackColor = false;
             // 
-            // btExcluir
+            // btSalvar
             // 
-            this.btExcluir.AutoSize = true;
-            this.btExcluir.BackColor = System.Drawing.Color.Tomato;
-            this.btExcluir.FlatAppearance.BorderColor = System.Drawing.Color.Gainsboro;
-            this.btExcluir.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btExcluir.ForeColor = System.Drawing.Color.White;
-            this.btExcluir.Location = new System.Drawing.Point(246, 53);
-            this.btExcluir.Name = "btExcluir";
-            this.btExcluir.Padding = new System.Windows.Forms.Padding(0, 5, 0, 5);
-            this.btExcluir.Size = new System.Drawing.Size(80, 39);
-            this.btExcluir.TabIndex = 5;
-            this.btExcluir.Text = "EXCLUIR";
-            this.btExcluir.UseVisualStyleBackColor = false;
+            this.btSalvar.AutoSize = true;
+            this.btSalvar.BackColor = System.Drawing.Color.LightSlateGray;
+            this.btSalvar.FlatAppearance.BorderColor = System.Drawing.Color.Gainsboro;
+            this.btSalvar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btSalvar.ForeColor = System.Drawing.Color.White;
+            this.btSalvar.Location = new System.Drawing.Point(0, 53);
+            this.btSalvar.Margin = new System.Windows.Forms.Padding(1);
+            this.btSalvar.Name = "btSalvar";
+            this.btSalvar.Padding = new System.Windows.Forms.Padding(0, 5, 0, 5);
+            this.btSalvar.Size = new System.Drawing.Size(86, 42);
+            this.btSalvar.TabIndex = 8;
+            this.btSalvar.Text = "SALVAR";
+            this.btSalvar.UseVisualStyleBackColor = false;
             // 
-            // btVisualizar
-            // 
-            this.btVisualizar.AutoSize = true;
-            this.btVisualizar.BackColor = System.Drawing.Color.LightSlateGray;
-            this.btVisualizar.FlatAppearance.BorderColor = System.Drawing.Color.Gainsboro;
-            this.btVisualizar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btVisualizar.ForeColor = System.Drawing.Color.White;
-            this.btVisualizar.Location = new System.Drawing.Point(163, 53);
-            this.btVisualizar.Name = "btVisualizar";
-            this.btVisualizar.Padding = new System.Windows.Forms.Padding(0, 5, 0, 5);
-            this.btVisualizar.Size = new System.Drawing.Size(82, 39);
-            this.btVisualizar.TabIndex = 6;
-            this.btVisualizar.Text = "VISUALIZAR";
-            this.btVisualizar.UseVisualStyleBackColor = false;
-            // 
-            // FModeloHome
+            // FModeloCad
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.LightGray;
-            this.ClientSize = new System.Drawing.Size(830, 437);
-            this.Controls.Add(this.btVisualizar);
-            this.Controls.Add(this.btExcluir);
-            this.Controls.Add(this.btAlterar);
-            this.Controls.Add(this.btNovo);
+            this.BackColor = System.Drawing.Color.Silver;
+            this.ClientSize = new System.Drawing.Size(830, 376);
+            this.Controls.Add(this.btFechar);
+            this.Controls.Add(this.btCancelar);
+            this.Controls.Add(this.btSalvar);
             this.Controls.Add(this.pCabecalho);
-            this.Name = "FModeloHome";
-            this.Text = "FModeloHome";
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.FModeloHome_Paint);
+            this.Name = "FModeloCad";
+            this.Text = "FModeloCad";
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.FModeloCad_Paint);
             this.pCabecalho.ResumeLayout(false);
             this.pCabecalho.PerformLayout();
             this.ResumeLayout(false);
@@ -180,13 +165,13 @@
         }
 
         #endregion
-        private System.Windows.Forms.Button btMinimize;
-        private System.Windows.Forms.Button btCloseForm;
-        public System.Windows.Forms.Label lbNome;
+
         public System.Windows.Forms.Panel pCabecalho;
-        protected System.Windows.Forms.Button btAlterar;
-        protected System.Windows.Forms.Button btExcluir;
-        protected System.Windows.Forms.Button btVisualizar;
-        protected System.Windows.Forms.Button btNovo;
+        public System.Windows.Forms.Label lbNome;
+        private System.Windows.Forms.Button btCloseForm;
+        private System.Windows.Forms.Button btMinimize;
+        protected System.Windows.Forms.Button btFechar;
+        protected System.Windows.Forms.Button btCancelar;
+        protected System.Windows.Forms.Button btSalvar;
     }
 }

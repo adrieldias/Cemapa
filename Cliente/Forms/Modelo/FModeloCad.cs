@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
@@ -8,12 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Reflection;
-
+using System.Collections;
 
 namespace Cliente.Forms.Modelo
 {
-    public partial class FModeloHome : Form
+    public partial class FModeloCad : Form
     {
         public const int cGrip = 16;      // Grip size
         public const int cCaption = 32;   // Caption bar height;
@@ -22,9 +20,9 @@ namespace Cliente.Forms.Modelo
         public int cX, cY;
 
         public virtual object Dados { get; set; }
-        private Hashtable LinhaSelecionada = new Hashtable();
+        public Hashtable ChaveConsulta = new Hashtable();
 
-        public FModeloHome()
+        public FModeloCad()
         {
             InitializeComponent();
             this.FormBorderStyle = FormBorderStyle.None;
@@ -32,17 +30,17 @@ namespace Cliente.Forms.Modelo
             this.SetStyle(ControlStyles.ResizeRedraw, true);
         }
 
-        public void btMinimize_Click(object sender, EventArgs e)
+        private void btMinimize_Click(object sender, EventArgs e)
         {
             this.WindowState = FormWindowState.Minimized;
         }
 
-        public void btCloseForm_Click(object sender, EventArgs e)
+        private void btCloseForm_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
-        public void pCabecalho_MouseDown(object sender, MouseEventArgs e)
+        private void pCabecalho_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
@@ -52,13 +50,13 @@ namespace Cliente.Forms.Modelo
             }
         }
 
-        public void pCabecalho_MouseUp(object sender, MouseEventArgs e)
+        private void pCabecalho_MouseUp(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
                 mover = false;
         }
 
-        public void pCabecalho_MouseMove(object sender, MouseEventArgs e)
+        private void pCabecalho_MouseMove(object sender, MouseEventArgs e)
         {
             if (mover)
             {
@@ -67,7 +65,7 @@ namespace Cliente.Forms.Modelo
             }
         }
 
-        public void FModeloHome_Paint(object sender, PaintEventArgs e)
+        private void FModeloCad_Paint(object sender, PaintEventArgs e)
         {
             Rectangle rc = new Rectangle(this.ClientSize.Width - cGrip, this.ClientSize.Height - cGrip, cGrip, cGrip);
             ControlPaint.DrawSizeGrip(e.Graphics, this.BackColor, rc);
@@ -96,45 +94,11 @@ namespace Cliente.Forms.Modelo
         protected T Cast<T>(object obj, T tipo)
         {
             return (T)obj;
-        }
-
-        private void AddEventGridView()
-        {
-            foreach(Control c in this.Controls)
-            {
-                if(c.GetType().Name.Equals("DataGridView"))
-                {
-                    ((DataGridView)c).RowEnter += FModeloHome_RowEnter;
-                }
-            }
-        }
-
-        private void FModeloHome_RowEnter(object sender, DataGridViewCellEventArgs e)
-        {
-            LinhaSelecionada.Clear();
-            if ((((DataGridView)sender).Rows != null) && (((DataGridView)sender).Rows.Count > 0))
-                if (((DataGridView)sender).SelectedRows.Count > 0)
-                {
-                    foreach (DataGridViewColumn c in ((DataGridView)sender).Columns)
-                    {
-                        if (((DataGridView)sender).SelectedRows[0].Cells[c.Name].Value != null)
-                            LinhaSelecionada.Add(c.Name.ToLower(), ((DataGridView)sender).SelectedRows[0].Cells[c.Name].Value);                            
-                    }
-                }
-        }
-
-        public string ValorSelecionado(string coluna)
-        {
-            if (LinhaSelecionada.ContainsKey(coluna.ToLower()))
-                return LinhaSelecionada[coluna.ToLower()].ToString();
-            else
-                return string.Empty;
-        }
+        }        
 
         public void Inicializa()
         {
-            PersonalizaForm.Instancia.Personaliza(this);
-            AddEventGridView();
+            PersonalizaForm.Instancia.Personaliza(this);            
         }
     }
 }

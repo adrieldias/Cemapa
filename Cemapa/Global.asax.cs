@@ -12,6 +12,13 @@ namespace Cemapa
         protected void Application_Start()
         {
             GlobalConfiguration.Configure(WebApiConfig.Register);
+
+            // Para corrigir erros de loop de referência nos arquivos JSON.
+            // Ex: TB_CADASTRO carrega a TB_CIDADE que por sua vez carrega novamente a TB_CADASTRO.
+            HttpConfiguration config = GlobalConfiguration.Configuration;
+            config.Formatters.JsonFormatter
+                .SerializerSettings
+                .ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
         }
     }
 }
