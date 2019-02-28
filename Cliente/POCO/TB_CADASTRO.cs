@@ -9,7 +9,7 @@ namespace Cliente.POCO
     /// <summary>
     /// Classe que representa a tabela TB_CADASTRO do banco de dados no sistema
     /// </summary>
-    public class Cadastro
+    public class TB_CADASTRO
     {
         public int COD_CADASTRO { get; set; }
         public Nullable<int> COD_MOTIVO { get; set; }
@@ -179,7 +179,7 @@ namespace Cliente.POCO
         public string DESC_NRO_REG_ESTADUAL { get; set; }
 
         //public virtual TB_CIDADE TB_CIDADE { get; set; }
-        //public virtual TB_TIPO_CADASTRO TB_TIPO_CADASTRO { get; set; }
+        public virtual TB_TIPO_CADASTRO TB_TIPO_CADASTRO { get; set; }
         //public virtual TB_CLASS_CADASTRO TB_CLASS_CADASTRO { get; set; }
         //public virtual TB_ESTADO TB_ESTADO { get; set; }
         //public virtual TB_ESTADO_CIVIL TB_ESTADO_CIVIL { get; set; }

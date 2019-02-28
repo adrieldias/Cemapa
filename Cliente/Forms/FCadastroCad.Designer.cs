@@ -40,17 +40,11 @@
             this.txbNome = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.txbFantasia = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.cbTipoCadastro = new System.Windows.Forms.ComboBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.cbFisicaJuridica = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
             this.txbTelefone = new System.Windows.Forms.TextBox();
-            this.txbCelular = new System.Windows.Forms.TextBox();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.tabControlLateral1 = new TabControlLateral.TabControlLateral(this.components);
             this.label8 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.txbCelular = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.txbEmailXML = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
@@ -58,6 +52,10 @@
             this.cbClassificacao = new System.Windows.Forms.ComboBox();
             this.label11 = new System.Windows.Forms.Label();
             this.cbVendedor = new System.Windows.Forms.ComboBox();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.tabControlLateral1 = new TabControlLateral.TabControlLateral(this.components);
+            this.cbsTipoCadastro = new Componentes.ComboBoxSimples();
+            this.cbsFisicaJuridica = new Componentes.ComboBoxSimples();
             this.pCabecalho.SuspendLayout();
             this.tabControlLateral2.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -76,6 +74,7 @@
             // btCancelar
             // 
             this.btCancelar.FlatAppearance.BorderColor = System.Drawing.Color.Gainsboro;
+            this.btCancelar.Click += new System.EventHandler(this.btCancelar_Click);
             // 
             // btSalvar
             // 
@@ -130,35 +129,32 @@
             this.tableLayoutPanel1.Controls.Add(this.txbCodigo, 0, 3);
             this.tableLayoutPanel1.Controls.Add(this.label1, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.pictureBox1, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.label2, 0, 6);
-            this.tableLayoutPanel1.Controls.Add(this.txbNome, 0, 7);
-            this.tableLayoutPanel1.Controls.Add(this.label4, 5, 6);
-            this.tableLayoutPanel1.Controls.Add(this.txbFantasia, 5, 7);
-            this.tableLayoutPanel1.Controls.Add(this.label3, 0, 4);
-            this.tableLayoutPanel1.Controls.Add(this.cbTipoCadastro, 0, 5);
-            this.tableLayoutPanel1.Controls.Add(this.label5, 5, 4);
-            this.tableLayoutPanel1.Controls.Add(this.cbFisicaJuridica, 5, 5);
-            this.tableLayoutPanel1.Controls.Add(this.label6, 0, 8);
-            this.tableLayoutPanel1.Controls.Add(this.txbTelefone, 0, 9);
-            this.tableLayoutPanel1.Controls.Add(this.label8, 0, 10);
-            this.tableLayoutPanel1.Controls.Add(this.label7, 2, 8);
-            this.tableLayoutPanel1.Controls.Add(this.txbCelular, 2, 9);
-            this.tableLayoutPanel1.Controls.Add(this.label9, 4, 8);
-            this.tableLayoutPanel1.Controls.Add(this.txbEmailXML, 4, 9);
-            this.tableLayoutPanel1.Controls.Add(this.label10, 7, 8);
-            this.tableLayoutPanel1.Controls.Add(this.txbEmailContato, 7, 9);
-            this.tableLayoutPanel1.Controls.Add(this.cbClassificacao, 0, 11);
-            this.tableLayoutPanel1.Controls.Add(this.label11, 3, 10);
-            this.tableLayoutPanel1.Controls.Add(this.cbVendedor, 3, 11);
+            this.tableLayoutPanel1.Controls.Add(this.label2, 0, 5);
+            this.tableLayoutPanel1.Controls.Add(this.txbNome, 0, 6);
+            this.tableLayoutPanel1.Controls.Add(this.label4, 5, 5);
+            this.tableLayoutPanel1.Controls.Add(this.txbFantasia, 5, 6);
+            this.tableLayoutPanel1.Controls.Add(this.label6, 0, 7);
+            this.tableLayoutPanel1.Controls.Add(this.txbTelefone, 0, 8);
+            this.tableLayoutPanel1.Controls.Add(this.label8, 0, 9);
+            this.tableLayoutPanel1.Controls.Add(this.label7, 2, 7);
+            this.tableLayoutPanel1.Controls.Add(this.txbCelular, 2, 8);
+            this.tableLayoutPanel1.Controls.Add(this.label9, 4, 7);
+            this.tableLayoutPanel1.Controls.Add(this.txbEmailXML, 4, 8);
+            this.tableLayoutPanel1.Controls.Add(this.label10, 7, 7);
+            this.tableLayoutPanel1.Controls.Add(this.txbEmailContato, 7, 8);
+            this.tableLayoutPanel1.Controls.Add(this.cbClassificacao, 0, 10);
+            this.tableLayoutPanel1.Controls.Add(this.label11, 3, 9);
+            this.tableLayoutPanel1.Controls.Add(this.cbVendedor, 3, 10);
+            this.tableLayoutPanel1.Controls.Add(this.cbsTipoCadastro, 0, 4);
+            this.tableLayoutPanel1.Controls.Add(this.cbsFisicaJuridica, 5, 4);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(6, 6);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 14;
+            this.tableLayoutPanel1.RowCount = 13;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 150F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 16F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 16F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 16F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 16F));
@@ -208,7 +204,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.label2.Location = new System.Drawing.Point(0, 269);
+            this.label2.Location = new System.Drawing.Point(0, 275);
             this.label2.Margin = new System.Windows.Forms.Padding(0, 0, 3, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(72, 13);
@@ -219,7 +215,7 @@
             // 
             this.txbNome.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanel1.SetColumnSpan(this.txbNome, 5);
-            this.txbNome.Location = new System.Drawing.Point(3, 286);
+            this.txbNome.Location = new System.Drawing.Point(3, 292);
             this.txbNome.Name = "txbNome";
             this.txbNome.Size = new System.Drawing.Size(369, 20);
             this.txbNome.TabIndex = 3;
@@ -229,7 +225,7 @@
             this.label4.AutoSize = true;
             this.tableLayoutPanel1.SetColumnSpan(this.label4, 2);
             this.label4.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.label4.Location = new System.Drawing.Point(375, 269);
+            this.label4.Location = new System.Drawing.Point(375, 275);
             this.label4.Margin = new System.Windows.Forms.Padding(0, 0, 3, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(147, 13);
@@ -240,94 +236,131 @@
             // 
             this.txbFantasia.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanel1.SetColumnSpan(this.txbFantasia, 5);
-            this.txbFantasia.Location = new System.Drawing.Point(378, 286);
+            this.txbFantasia.Location = new System.Drawing.Point(378, 292);
             this.txbFantasia.Name = "txbFantasia";
             this.txbFantasia.Size = new System.Drawing.Size(369, 20);
             this.txbFantasia.TabIndex = 9;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.tableLayoutPanel1.SetColumnSpan(this.label3, 2);
-            this.label3.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.label3.Location = new System.Drawing.Point(0, 225);
-            this.label3.Margin = new System.Windows.Forms.Padding(0, 0, 3, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(147, 13);
-            this.label3.TabIndex = 7;
-            this.label3.Text = "Tipo de Cadastro";
-            // 
-            // cbTipoCadastro
-            // 
-            this.cbTipoCadastro.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tableLayoutPanel1.SetColumnSpan(this.cbTipoCadastro, 5);
-            this.cbTipoCadastro.FormattingEnabled = true;
-            this.cbTipoCadastro.Location = new System.Drawing.Point(3, 241);
-            this.cbTipoCadastro.Name = "cbTipoCadastro";
-            this.cbTipoCadastro.Size = new System.Drawing.Size(369, 21);
-            this.cbTipoCadastro.TabIndex = 6;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.tableLayoutPanel1.SetColumnSpan(this.label5, 2);
-            this.label5.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.label5.Location = new System.Drawing.Point(375, 225);
-            this.label5.Margin = new System.Windows.Forms.Padding(0, 0, 3, 0);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(147, 13);
-            this.label5.TabIndex = 10;
-            this.label5.Text = "Tipo de Pessoa";
-            // 
-            // cbFisicaJuridica
-            // 
-            this.cbFisicaJuridica.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tableLayoutPanel1.SetColumnSpan(this.cbFisicaJuridica, 5);
-            this.cbFisicaJuridica.FormattingEnabled = true;
-            this.cbFisicaJuridica.Location = new System.Drawing.Point(378, 241);
-            this.cbFisicaJuridica.Name = "cbFisicaJuridica";
-            this.cbFisicaJuridica.Size = new System.Drawing.Size(369, 21);
-            this.cbFisicaJuridica.TabIndex = 11;
             // 
             // label6
             // 
             this.label6.AutoSize = true;
             this.label6.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.label6.Location = new System.Drawing.Point(3, 313);
+            this.label6.Location = new System.Drawing.Point(3, 319);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(69, 13);
             this.label6.TabIndex = 12;
             this.label6.Text = "Telefone";
             // 
+            // txbTelefone
+            // 
+            this.txbTelefone.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanel1.SetColumnSpan(this.txbTelefone, 2);
+            this.txbTelefone.Location = new System.Drawing.Point(3, 336);
+            this.txbTelefone.Name = "txbTelefone";
+            this.txbTelefone.Size = new System.Drawing.Size(144, 20);
+            this.txbTelefone.TabIndex = 14;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.tableLayoutPanel1.SetColumnSpan(this.label8, 2);
+            this.label8.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.label8.Location = new System.Drawing.Point(3, 363);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(144, 13);
+            this.label8.TabIndex = 16;
+            this.label8.Text = "Classificação";
+            // 
             // label7
             // 
             this.label7.AutoSize = true;
             this.label7.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.label7.Location = new System.Drawing.Point(153, 313);
+            this.label7.Location = new System.Drawing.Point(153, 319);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(69, 13);
             this.label7.TabIndex = 13;
             this.label7.Text = "Celular";
             // 
-            // txbTelefone
-            // 
-            this.txbTelefone.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.tableLayoutPanel1.SetColumnSpan(this.txbTelefone, 2);
-            this.txbTelefone.Location = new System.Drawing.Point(3, 330);
-            this.txbTelefone.Name = "txbTelefone";
-            this.txbTelefone.Size = new System.Drawing.Size(144, 20);
-            this.txbTelefone.TabIndex = 14;
-            // 
             // txbCelular
             // 
             this.txbCelular.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanel1.SetColumnSpan(this.txbCelular, 2);
-            this.txbCelular.Location = new System.Drawing.Point(153, 330);
+            this.txbCelular.Location = new System.Drawing.Point(153, 336);
             this.txbCelular.Name = "txbCelular";
             this.txbCelular.Size = new System.Drawing.Size(144, 20);
             this.txbCelular.TabIndex = 15;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.tableLayoutPanel1.SetColumnSpan(this.label9, 2);
+            this.label9.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.label9.Location = new System.Drawing.Point(303, 319);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(144, 13);
+            this.label9.TabIndex = 17;
+            this.label9.Text = "E-Mail para XML";
+            // 
+            // txbEmailXML
+            // 
+            this.txbEmailXML.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanel1.SetColumnSpan(this.txbEmailXML, 3);
+            this.txbEmailXML.Location = new System.Drawing.Point(303, 335);
+            this.txbEmailXML.Name = "txbEmailXML";
+            this.txbEmailXML.Size = new System.Drawing.Size(219, 20);
+            this.txbEmailXML.TabIndex = 18;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.tableLayoutPanel1.SetColumnSpan(this.label10, 2);
+            this.label10.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.label10.Location = new System.Drawing.Point(528, 319);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(144, 13);
+            this.label10.TabIndex = 19;
+            this.label10.Text = "E-Mail para Contato";
+            // 
+            // txbEmailContato
+            // 
+            this.txbEmailContato.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanel1.SetColumnSpan(this.txbEmailContato, 3);
+            this.txbEmailContato.Location = new System.Drawing.Point(528, 335);
+            this.txbEmailContato.Name = "txbEmailContato";
+            this.txbEmailContato.Size = new System.Drawing.Size(219, 20);
+            this.txbEmailContato.TabIndex = 20;
+            // 
+            // cbClassificacao
+            // 
+            this.cbClassificacao.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanel1.SetColumnSpan(this.cbClassificacao, 3);
+            this.cbClassificacao.FormattingEnabled = true;
+            this.cbClassificacao.Location = new System.Drawing.Point(3, 379);
+            this.cbClassificacao.Name = "cbClassificacao";
+            this.cbClassificacao.Size = new System.Drawing.Size(219, 21);
+            this.cbClassificacao.TabIndex = 21;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(228, 360);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(53, 13);
+            this.label11.TabIndex = 22;
+            this.label11.Text = "Vendedor";
+            // 
+            // cbVendedor
+            // 
+            this.cbVendedor.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanel1.SetColumnSpan(this.cbVendedor, 4);
+            this.cbVendedor.FormattingEnabled = true;
+            this.cbVendedor.Location = new System.Drawing.Point(228, 379);
+            this.cbVendedor.Name = "cbVendedor";
+            this.cbVendedor.Size = new System.Drawing.Size(294, 21);
+            this.cbVendedor.TabIndex = 23;
             // 
             // tabPage3
             // 
@@ -355,88 +388,43 @@
             this.tabControlLateral1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.tabControlLateral1.TabIndex = 0;
             // 
-            // label8
+            // cbsTipoCadastro
             // 
-            this.label8.AutoSize = true;
-            this.tableLayoutPanel1.SetColumnSpan(this.label8, 2);
-            this.label8.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.label8.Location = new System.Drawing.Point(3, 357);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(144, 13);
-            this.label8.TabIndex = 16;
-            this.label8.Text = "Classificação";
+            this.cbsTipoCadastro.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbsTipoCadastro.AutoSize = true;
+            this.cbsTipoCadastro.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.cbsTipoCadastro.BindingSource = null;
+            this.tableLayoutPanel1.SetColumnSpan(this.cbsTipoCadastro, 5);
+            this.cbsTipoCadastro.DisplayMember = "";
+            this.cbsTipoCadastro.Label = "TIPO DE CADASTRO";
+            this.cbsTipoCadastro.Location = new System.Drawing.Point(3, 225);
+            this.cbsTipoCadastro.Name = "cbsTipoCadastro";
+            this.cbsTipoCadastro.SelectedText = null;
+            this.cbsTipoCadastro.SelectedValue = null;
+            this.cbsTipoCadastro.Size = new System.Drawing.Size(369, 44);
+            this.cbsTipoCadastro.TabIndex = 24;
+            this.cbsTipoCadastro.ValueMember = "";
             // 
-            // label9
+            // cbsFisicaJuridica
             // 
-            this.label9.AutoSize = true;
-            this.tableLayoutPanel1.SetColumnSpan(this.label9, 2);
-            this.label9.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.label9.Location = new System.Drawing.Point(303, 313);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(144, 13);
-            this.label9.TabIndex = 17;
-            this.label9.Text = "E-Mail para XML";
-            // 
-            // txbEmailXML
-            // 
-            this.txbEmailXML.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tableLayoutPanel1.SetColumnSpan(this.txbEmailXML, 3);
-            this.txbEmailXML.Location = new System.Drawing.Point(303, 329);
-            this.txbEmailXML.Name = "txbEmailXML";
-            this.txbEmailXML.Size = new System.Drawing.Size(219, 20);
-            this.txbEmailXML.TabIndex = 18;
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.tableLayoutPanel1.SetColumnSpan(this.label10, 2);
-            this.label10.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.label10.Location = new System.Drawing.Point(528, 313);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(144, 13);
-            this.label10.TabIndex = 19;
-            this.label10.Text = "E-Mail para Contato";
-            // 
-            // txbEmailContato
-            // 
-            this.txbEmailContato.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tableLayoutPanel1.SetColumnSpan(this.txbEmailContato, 3);
-            this.txbEmailContato.Location = new System.Drawing.Point(528, 329);
-            this.txbEmailContato.Name = "txbEmailContato";
-            this.txbEmailContato.Size = new System.Drawing.Size(219, 20);
-            this.txbEmailContato.TabIndex = 20;
-            // 
-            // cbClassificacao
-            // 
-            this.cbClassificacao.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.tableLayoutPanel1.SetColumnSpan(this.cbClassificacao, 3);
-            this.cbClassificacao.FormattingEnabled = true;
-            this.cbClassificacao.Location = new System.Drawing.Point(3, 373);
-            this.cbClassificacao.Name = "cbClassificacao";
-            this.cbClassificacao.Size = new System.Drawing.Size(219, 21);
-            this.cbClassificacao.TabIndex = 21;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(228, 354);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(53, 13);
-            this.label11.TabIndex = 22;
-            this.label11.Text = "Vendedor";
-            // 
-            // cbVendedor
-            // 
-            this.cbVendedor.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tableLayoutPanel1.SetColumnSpan(this.cbVendedor, 4);
-            this.cbVendedor.FormattingEnabled = true;
-            this.cbVendedor.Location = new System.Drawing.Point(228, 373);
-            this.cbVendedor.Name = "cbVendedor";
-            this.cbVendedor.Size = new System.Drawing.Size(294, 21);
-            this.cbVendedor.TabIndex = 23;
+            this.cbsFisicaJuridica.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbsFisicaJuridica.AutoSize = true;
+            this.cbsFisicaJuridica.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.cbsFisicaJuridica.BindingSource = null;
+            this.tableLayoutPanel1.SetColumnSpan(this.cbsFisicaJuridica, 5);
+            this.cbsFisicaJuridica.DisplayMember = "DESC_FISICA_JURIDICA";
+            this.cbsFisicaJuridica.Label = "PESSOA FÍSICA/JURÍDICA";
+            this.cbsFisicaJuridica.Location = new System.Drawing.Point(378, 225);
+            this.cbsFisicaJuridica.Name = "cbsFisicaJuridica";
+            this.cbsFisicaJuridica.SelectedText = null;
+            this.cbsFisicaJuridica.SelectedValue = null;
+            this.cbsFisicaJuridica.Size = new System.Drawing.Size(369, 44);
+            this.cbsFisicaJuridica.TabIndex = 25;
+            this.cbsFisicaJuridica.ValueMember = "IND_FISICA_JURIDICA";
+            this.cbsFisicaJuridica.ComboBoxDropDownClosed += new System.EventHandler(this.cbsFisicaJuridica_ComboBoxDropDownClosed);
+            this.cbsFisicaJuridica.SelectedValueChanged += new System.EventHandler(this.cbsFisicaJuridica_SelectedValueChanged);
+            this.cbsFisicaJuridica.KeyUp += new System.Windows.Forms.KeyEventHandler(this.cbsFisicaJuridica_KeyUp);
+            this.cbsFisicaJuridica.Leave += new System.EventHandler(this.cbsFisicaJuridica_Leave);
             // 
             // FCadastroCad
             // 
@@ -474,12 +462,8 @@
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.ComboBox cbTipoCadastro;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox txbFantasia;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.ComboBox cbFisicaJuridica;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox txbTelefone;
@@ -492,5 +476,7 @@
         private System.Windows.Forms.ComboBox cbClassificacao;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.ComboBox cbVendedor;
+        private Componentes.ComboBoxSimples cbsTipoCadastro;
+        private Componentes.ComboBoxSimples cbsFisicaJuridica;
     }
 }

@@ -19,7 +19,6 @@ namespace Cliente.Forms.Modelo
         public bool mover;
         public int cX, cY;
 
-        public virtual object Dados { get; set; }
         public Hashtable ChaveConsulta = new Hashtable();
 
         public FModeloCad()

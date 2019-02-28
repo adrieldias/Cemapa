@@ -57,7 +57,7 @@ namespace Cemapa.Controllers
             {
                 var query = (from c in db.TB_CADASTRO
                                  //.Include("TB_CIDADE")
-                                 //.Include("TB_TIPO_CADASTRO")
+                                 .Include("TB_TIPO_CADASTRO")
                                  //.Include("TB_CLASS_CADASTRO")
                                  //.Include("TB_USUARIO")
                              where (c.COD_CADASTRO.Equals(codigo))
@@ -79,34 +79,8 @@ namespace Cemapa.Controllers
             db.TB_CADASTRO.Add(cadastro);
             db.SaveChanges();
             
-        }
-
-        protected T Cast<T>(object obj, T tipo)
-        {
-            return (T)obj;
-        }
+        }       
     }
 
-    public class Cadastro
-    {
-        public string COD_TIPO_CADASTRO { get; set; }
-        public string NOME { get; set; }
-        public string DESC_TELEFONE { get; set; }
-        public string DESC_CELULAR { get; set; }
-        public string NUM_CGC_CPF { get; set; }
-        public string DESC_ENDERECO { get; set; }
-        public int COD_CIDADE { get; set; }        
-        public string DESC_BAIRRO { get; set; }
-        public string NUM_INSCRICAO { get; set; }
-        public string DESC_FANTASIA { get; set; }
-        public string COD_CLASS_CADASTRO { get; set; }
-
-    }
-
-    public class TipoCadastro
-    {
-        public int COD_TIPO_CADASTRO { get; set; }
-        public string DESC_TIPO_CADASTRO { get; set; }
-        public Cadastro TB_CADASTRO { get; set; }
-    }
+   
 }
