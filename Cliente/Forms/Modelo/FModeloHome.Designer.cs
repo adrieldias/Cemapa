@@ -101,10 +101,10 @@
             // btNovo
             // 
             this.btNovo.AutoSize = true;
-            this.btNovo.BackColor = System.Drawing.Color.LightSlateGray;
+            this.btNovo.BackColor = System.Drawing.Color.WhiteSmoke;
             this.btNovo.FlatAppearance.BorderColor = System.Drawing.Color.Gainsboro;
             this.btNovo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btNovo.ForeColor = System.Drawing.Color.White;
+            this.btNovo.ForeColor = System.Drawing.Color.Gray;
             this.btNovo.Location = new System.Drawing.Point(1, 53);
             this.btNovo.Name = "btNovo";
             this.btNovo.Padding = new System.Windows.Forms.Padding(0, 5, 0, 5);
@@ -116,10 +116,10 @@
             // btAlterar
             // 
             this.btAlterar.AutoSize = true;
-            this.btAlterar.BackColor = System.Drawing.Color.LightSlateGray;
+            this.btAlterar.BackColor = System.Drawing.Color.WhiteSmoke;
             this.btAlterar.FlatAppearance.BorderColor = System.Drawing.Color.Gainsboro;
             this.btAlterar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btAlterar.ForeColor = System.Drawing.Color.White;
+            this.btAlterar.ForeColor = System.Drawing.Color.Gray;
             this.btAlterar.Location = new System.Drawing.Point(82, 53);
             this.btAlterar.Name = "btAlterar";
             this.btAlterar.Padding = new System.Windows.Forms.Padding(0, 5, 0, 5);
@@ -146,10 +146,10 @@
             // btVisualizar
             // 
             this.btVisualizar.AutoSize = true;
-            this.btVisualizar.BackColor = System.Drawing.Color.LightSlateGray;
+            this.btVisualizar.BackColor = System.Drawing.Color.WhiteSmoke;
             this.btVisualizar.FlatAppearance.BorderColor = System.Drawing.Color.Gainsboro;
             this.btVisualizar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btVisualizar.ForeColor = System.Drawing.Color.White;
+            this.btVisualizar.ForeColor = System.Drawing.Color.Gray;
             this.btVisualizar.Location = new System.Drawing.Point(163, 53);
             this.btVisualizar.Name = "btVisualizar";
             this.btVisualizar.Padding = new System.Windows.Forms.Padding(0, 5, 0, 5);

@@ -73,35 +73,7 @@ namespace Cliente.Forms
             dataGridView1.DataSource = this.Dados;
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            //var obj = this.Cast(this.Dados, new[] 
-            //{
-            //    new
-            //    {
-            //        Codigo = 0,
-            //        Tipo = string.Empty,
-            //        Nome = string.Empty,
-            //        Telefone = string.Empty,
-            //        Celular = string.Empty,
-            //        CGC_CPF = string.Empty,
-            //        Endereco = string.Empty,
-            //        CodCidade = string.Empty,
-            //        Cidade = string.Empty,
-            //        Bairro = string.Empty,
-            //        Inscricao = string.Empty,
-            //        Fantasia = string.Empty,
-            //        Classificacao = string.Empty
-            //    }
-            //});
-
-            
-
-            //MessageBox.Show(obj[0].Nome);
-
-            MessageBox.Show(this.ValorSelecionado("nome"));
-
-        }
+        
 
         private void btNovo_Click(object sender, EventArgs e)
         {
@@ -115,7 +87,7 @@ namespace Cliente.Forms
 
         private void btVisualizar_Click(object sender, EventArgs e)
         {
-            FCadastroCad f = new FCadastroCad();
+            FCadastroCad f = new FCadastroCad("VISUALIZAR");
             f.ChaveConsulta.Add("Codigo", this.ValorSelecionado("Codigo"));
             f.Show();
         }

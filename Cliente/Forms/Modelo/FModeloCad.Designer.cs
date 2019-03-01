@@ -99,10 +99,10 @@
             // btFechar
             // 
             this.btFechar.AutoSize = true;
-            this.btFechar.BackColor = System.Drawing.Color.Tomato;
+            this.btFechar.BackColor = System.Drawing.Color.WhiteSmoke;
             this.btFechar.FlatAppearance.BorderColor = System.Drawing.Color.Gainsboro;
             this.btFechar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btFechar.ForeColor = System.Drawing.Color.White;
+            this.btFechar.ForeColor = System.Drawing.Color.Gray;
             this.btFechar.Location = new System.Drawing.Point(172, 53);
             this.btFechar.Margin = new System.Windows.Forms.Padding(1);
             this.btFechar.Name = "btFechar";
@@ -111,6 +111,7 @@
             this.btFechar.TabIndex = 10;
             this.btFechar.Text = "FECHAR";
             this.btFechar.UseVisualStyleBackColor = false;
+            this.btFechar.Click += new System.EventHandler(this.btFechar_Click);
             // 
             // btCancelar
             // 
@@ -131,10 +132,10 @@
             // btSalvar
             // 
             this.btSalvar.AutoSize = true;
-            this.btSalvar.BackColor = System.Drawing.Color.LightSlateGray;
+            this.btSalvar.BackColor = System.Drawing.Color.WhiteSmoke;
             this.btSalvar.FlatAppearance.BorderColor = System.Drawing.Color.Gainsboro;
             this.btSalvar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btSalvar.ForeColor = System.Drawing.Color.White;
+            this.btSalvar.ForeColor = System.Drawing.Color.Gray;
             this.btSalvar.Location = new System.Drawing.Point(0, 53);
             this.btSalvar.Margin = new System.Windows.Forms.Padding(1);
             this.btSalvar.Name = "btSalvar";
@@ -157,6 +158,7 @@
             this.Name = "FModeloCad";
             this.Text = "FModeloCad";
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.FModeloCad_Paint);
+            this.Resize += new System.EventHandler(this.FModeloCad_Resize);
             this.pCabecalho.ResumeLayout(false);
             this.pCabecalho.PerformLayout();
             this.ResumeLayout(false);

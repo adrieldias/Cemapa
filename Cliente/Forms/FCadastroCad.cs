@@ -22,12 +22,12 @@ namespace Cliente.Forms
         public List<TB_TIPO_CADASTRO> TipoCadastro { get; set; }
         public BindingSource TipoCadastroBindingSource { get; set; }
 
-        public FCadastroCad()
+        public FCadastroCad(string layout) : base(layout)
         {
             InitializeComponent();
-            this.Inicializa();           
+            this.Inicializa();
         }
-
+        
         static async Task<string> RunAsync(int codCadastro)
         {
             using (var client = new HttpClient())
@@ -78,13 +78,14 @@ namespace Cliente.Forms
 
         private void atualizaTela()
         {
-            txbCodigo.DataBindings.Add("Text", this.Cadastro, "COD_CADASTRO");
-            txbNome.DataBindings.Add("Text", this.Cadastro, "NOME");
-            txbFantasia.DataBindings.Add("Text", this.Cadastro, "DESC_FANTASIA");
-            txbTelefone.DataBindings.Add("Text", this.Cadastro, "DESC_TELEFONE");
-            txbCelular.DataBindings.Add("Text", this.Cadastro, "DESC_CELULAR");
-            txbEmailXML.DataBindings.Add("Text", this.Cadastro, "DESC_E_MAIL");
-            txbEmailContato.DataBindings.Add("Text", this.Cadastro, "DESC_E_MAIL1");
+            txbsCodigo.DataBindings.Add("Text", this.Cadastro, "COD_CADASTRO");
+            //txbNome.DataBindings.Add("Text", this.Cadastro, "NOME");
+            txbsNome.DataBindings.Add("Text", this.Cadastro, "NOME");
+            txbsNomeFantasia.DataBindings.Add("Text", this.Cadastro, "DESC_FANTASIA");
+            txbsTelefone.DataBindings.Add("Text", this.Cadastro, "DESC_TELEFONE");
+            txbsCelular.DataBindings.Add("Text", this.Cadastro, "DESC_CELULAR");
+            txbsEmailXML.DataBindings.Add("Text", this.Cadastro, "DESC_E_MAIL");
+            txbsEmailContato.DataBindings.Add("Text", this.Cadastro, "DESC_E_MAIL1");
 
 
             TipoCadastroBindingSource = new BindingSource();
@@ -92,6 +93,7 @@ namespace Cliente.Forms
             var obj = TipoCadastroBindingSource.List.OfType<TB_TIPO_CADASTRO>().First(c => c.COD_TIPO_CADASTRO == Cadastro.TB_TIPO_CADASTRO.COD_TIPO_CADASTRO);
             var pos = TipoCadastroBindingSource.IndexOf(obj);
             TipoCadastroBindingSource.Position = pos;
+            
             //this.cbTipoCadastro.DataSource = TipoCadastroBindingSource;
             //this.cbTipoCadastro.DisplayMember = "DESC_TIPO_CADASTRO";
 
@@ -102,24 +104,21 @@ namespace Cliente.Forms
             obj = null;
             pos = 0;
 
-
-
-
             List<FisicaJuridica> ListaFisicaJuridica = new List<FisicaJuridica>();
             var f = new FisicaJuridica();
             f.IND_FISICA_JURIDICA = "F";
-            f.DESC_FISICA_JURIDICA = "FÍSICA";
+            f.DESC_FISICA_JURIDICA = "FISICA";
             var j = new FisicaJuridica();
             j.IND_FISICA_JURIDICA = "J";
-            j.DESC_FISICA_JURIDICA = "JURÍDICA";
+            j.DESC_FISICA_JURIDICA = "JURIDICA";
             ListaFisicaJuridica.Add(f);
             ListaFisicaJuridica.Add(j);
             BindingSource fisicaJuridicaBindingSource = new BindingSource();
             fisicaJuridicaBindingSource.DataSource = ListaFisicaJuridica;
             cbsFisicaJuridica.BindingSource = fisicaJuridicaBindingSource;
-            //var obj = fisicaJuridicaBindingSource.List.OfType<FisicaJuridica>().First(p => p.IND_FISICA_JURIDICA == Cadastro.IND_FISICA_JURIDICA);
-            //var pos = fisicaJuridicaBindingSource.IndexOf(obj);
-            //fisicaJuridicaBindingSource.Position = pos;
+            var obj2 = fisicaJuridicaBindingSource.List.OfType<FisicaJuridica>().First(p => p.IND_FISICA_JURIDICA == Cadastro.IND_FISICA_JURIDICA);
+            pos = fisicaJuridicaBindingSource.IndexOf(obj2);
+            fisicaJuridicaBindingSource.Position = pos;
         }
 
         private void btCancelar_Click(object sender, EventArgs e)
@@ -147,6 +146,12 @@ namespace Cliente.Forms
         private void cbsFisicaJuridica_ComboBoxDropDownClosed(object sender, EventArgs e)
         {
             MessageBox.Show(cbsFisicaJuridica.SelectedValue + " " + cbsFisicaJuridica.SelectedText);
+        }
+
+        private void FCadastroCad_Load(object sender, EventArgs e)
+        {
+            if (LayoutTela.Equals("VISUALIZAR"))
+                buscaDados();
         }
     }   
 

@@ -57,7 +57,8 @@ namespace Componentes
             EventHandler handler = this.SelectedValueChanged;
             if (handler != null)
             {
-                this.SelectedValue = comboBox1.SelectedValue.ToString();
+                if (comboBox1.SelectedValue != null)
+                    this.SelectedValue = comboBox1.SelectedValue.ToString();
                 this.SelectedText = comboBox1.SelectedText;
                 handler(this, e);
             }
@@ -77,7 +78,7 @@ namespace Componentes
 
         public string SelectedText { get; set; }
 
-        public string Text
+        public new string Text
         {
             get => this.comboBox1.Text;            
         }
@@ -123,14 +124,27 @@ namespace Componentes
 
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
-            ControlPaint.DrawBorder(e.Graphics, this.panel1.ClientRectangle, Color.SteelBlue, ButtonBorderStyle.Solid);
-        }
+            //ControlPaint.DrawBorder(e.Graphics, this.panel1.ClientRectangle, Color.SteelBlue, ButtonBorderStyle.Solid);
 
-        private void comboBox1_TextChanged(object sender, EventArgs e)
-        {
-            int Pos = comboBox1.SelectionStart;
-            comboBox1.Text = comboBox1.Text.ToUpper();
-            comboBox1.SelectionStart = Pos;
+            var borderColor = Color.SteelBlue;
+            var borderStyle = ButtonBorderStyle.Solid;
+            var borderWidth = 0;
+
+            ControlPaint.DrawBorder(
+                                e.Graphics,
+                                this.panel1.ClientRectangle,
+                                borderColor,
+                                borderWidth,
+                                borderStyle,
+                                borderColor,
+                                borderWidth,
+                                borderStyle,
+                                borderColor,
+                                borderWidth,
+                                borderStyle,
+                                borderColor,
+                                borderWidth,
+                                borderStyle);
         }
 
         private void comboBox1_KeyUp(object sender, KeyEventArgs e)
@@ -146,8 +160,14 @@ namespace Componentes
         /// <param name="e"></param>
         private void comboBox1_DropDownClosed(object sender, EventArgs e)
         {   
-            this.SelectedValue = comboBox1.SelectedValue.ToString();
+            if (comboBox1.SelectedValue != null)
+                this.SelectedValue = comboBox1.SelectedValue.ToString();
             this.SelectedText = comboBox1.SelectedText;
+        }
+
+        private void comboBox1_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.KeyChar = e.KeyChar.ToString().ToUpper()[0];            
         }
     }
 }

@@ -30,16 +30,18 @@
         {
             this.panel1 = new System.Windows.Forms.Panel();
             this.comboBoxSimples1 = new Componentes.ComboBoxSimples();
+            this.textBoxSimples1 = new Componentes.TextBoxSimples();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.White;
+            this.panel1.Controls.Add(this.textBoxSimples1);
             this.panel1.Controls.Add(this.comboBoxSimples1);
             this.panel1.Location = new System.Drawing.Point(62, 84);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(559, 100);
+            this.panel1.Size = new System.Drawing.Size(559, 196);
             this.panel1.TabIndex = 1;
             // 
             // comboBoxSimples1
@@ -56,6 +58,17 @@
             this.comboBoxSimples1.TabIndex = 0;
             this.comboBoxSimples1.ValueMember = "";
             this.comboBoxSimples1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.comboBoxSimples1_MouseUp);
+            // 
+            // textBoxSimples1
+            // 
+            this.textBoxSimples1.Font = new System.Drawing.Font("Calibri Light", 12F);
+            this.textBoxSimples1.Label = "NOME DO CAMPO";
+            this.textBoxSimples1.Location = new System.Drawing.Point(95, 105);
+            this.textBoxSimples1.Margin = new System.Windows.Forms.Padding(4);
+            this.textBoxSimples1.Name = "textBoxSimples1";
+            this.textBoxSimples1.Size = new System.Drawing.Size(401, 49);
+            this.textBoxSimples1.TabIndex = 1;
+            this.textBoxSimples1.Value = "";
             // 
             // FormParaTeste
             // 
@@ -75,5 +88,6 @@
 
         private System.Windows.Forms.Panel panel1;
         private ComboBoxSimples comboBoxSimples1;
+        private TextBoxSimples textBoxSimples1;
     }
 }

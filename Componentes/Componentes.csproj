@@ -35,6 +35,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -60,6 +61,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TextBoxSimples.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TextBoxSimples.Designer.cs">
+      <DependentUpon>TextBoxSimples.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="ComboBoxSimples.resx">
       <DependentUpon>ComboBoxSimples.cs</DependentUpon>
     </EmbeddedResource>
@@ -75,6 +82,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="TextBoxSimples.resx">
+      <DependentUpon>TextBoxSimples.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

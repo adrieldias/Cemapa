@@ -20,13 +20,33 @@ namespace Cliente.Forms.Modelo
         public int cX, cY;
 
         public Hashtable ChaveConsulta = new Hashtable();
+        
+        /// <summary>
+        /// Muda layout da tela conforme string passada por parâmetro
+        /// INSERIR, ALTERAR, VISUALIZAR
+        /// </summary>
+        public string LayoutTela { get; set; }
 
-        public FModeloCad()
-        {
+        protected FModeloCad() { InitializeComponent(); }
+
+        public FModeloCad(string layout)
+        {            
             InitializeComponent();
             this.FormBorderStyle = FormBorderStyle.None;
             this.DoubleBuffered = true;
             this.SetStyle(ControlStyles.ResizeRedraw, true);
+            this.LayoutTela = layout;
+            arrumaLayout();
+        }
+
+        private void arrumaLayout()
+        {
+            if (LayoutTela.Equals("VISUALIZAR"))
+            {
+                btFechar.Left = btSalvar.Left;                
+                btSalvar.Visible = false;
+                btCancelar.Visible = false;
+            }
         }
 
         private void btMinimize_Click(object sender, EventArgs e)
@@ -93,7 +113,18 @@ namespace Cliente.Forms.Modelo
         protected T Cast<T>(object obj, T tipo)
         {
             return (T)obj;
-        }        
+        }
+
+        private void FModeloCad_Resize(object sender, EventArgs e)
+        {
+            this.Refresh();
+            Application.DoEvents();
+        }
+
+        private void btFechar_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
 
         public void Inicializa()
         {
