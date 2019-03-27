@@ -14,6 +14,7 @@ public class SlickBlueTabControl : TabControl
     {
         //Dock = DockStyle.Fill;
         Dock = DockStyle.None;
+        Anchor = AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom | AnchorStyles.Left;
         DoubleBuffered = true;
         SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw | ControlStyles.UserPaint, true);
         SizeMode = TabSizeMode.Fixed;

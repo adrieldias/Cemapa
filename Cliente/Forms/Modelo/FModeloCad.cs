@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Collections;
+using System.Runtime.InteropServices;
 
 namespace Cliente.Forms.Modelo
 {
@@ -20,7 +21,17 @@ namespace Cliente.Forms.Modelo
         public int cX, cY;
 
         public Hashtable ChaveConsulta = new Hashtable();
-        
+
+        [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
+        private static extern IntPtr CreateRoundRectRgn(
+            int nLeftRect,
+            int nTopRect,
+            int nRightRect,
+            int nBottonRect,
+            int nWidthEllipse,
+            int nHeightEllipse
+            );
+
         /// <summary>
         /// Muda layout da tela conforme string passada por parâmetro
         /// INSERIR, ALTERAR, VISUALIZAR
@@ -117,6 +128,15 @@ namespace Cliente.Forms.Modelo
 
         private void FModeloCad_Resize(object sender, EventArgs e)
         {
+            this.Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(
+                0,
+                0,
+                Width,
+                Height,
+                16,
+                16
+                ));
+
             this.Refresh();
             Application.DoEvents();
         }

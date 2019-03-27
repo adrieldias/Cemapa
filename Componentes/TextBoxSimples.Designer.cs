@@ -39,7 +39,7 @@
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel1.Controls.Add(this.textBox1);
-            this.panel1.Location = new System.Drawing.Point(2, 9);
+            this.panel1.Location = new System.Drawing.Point(2, 8);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(396, 36);
             this.panel1.TabIndex = 0;
@@ -71,10 +71,10 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
             this.Controls.Add(this.lbNome);
             this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("Calibri Light", 12F);
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "TextBoxSimples";
             this.Size = new System.Drawing.Size(401, 49);
             this.Enter += new System.EventHandler(this.TextBoxSimples_Enter);

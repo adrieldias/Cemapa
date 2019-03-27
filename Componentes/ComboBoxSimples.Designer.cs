@@ -40,7 +40,7 @@
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel1.Controls.Add(this.comboBox1);
             this.panel1.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.panel1.Location = new System.Drawing.Point(2, 9);
+            this.panel1.Location = new System.Drawing.Point(2, 8);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(396, 36);
             this.panel1.TabIndex = 0;
@@ -77,6 +77,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
             this.Controls.Add(this.lbNome);
             this.Controls.Add(this.panel1);
             this.Name = "ComboBoxSimples";

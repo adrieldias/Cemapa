@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Reflection;
+using System.Runtime.InteropServices;
 
 
 namespace Cliente.Forms.Modelo
@@ -23,6 +24,17 @@ namespace Cliente.Forms.Modelo
 
         public virtual object Dados { get; set; }
         private Hashtable LinhaSelecionada = new Hashtable();
+
+        [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
+        private static extern IntPtr CreateRoundRectRgn(
+            int nLeftRect,
+            int nTopRect,
+            int nRightRect,
+            int nBottonRect,
+            int nWidthEllipse,
+            int nHeightEllipse
+            );
+        
 
         public FModeloHome()
         {
@@ -129,6 +141,18 @@ namespace Cliente.Forms.Modelo
                 return LinhaSelecionada[coluna.ToLower()].ToString();
             else
                 return string.Empty;
+        }
+
+        private void FModeloHome_Resize(object sender, EventArgs e)
+        {
+            this.Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(
+                0,
+                0,
+                Width,
+                Height,
+                16,
+                16
+                ));
         }
 
         public void Inicializa()

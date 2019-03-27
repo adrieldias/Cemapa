@@ -287,10 +287,10 @@ namespace Cliente
                 button.ForeColor = Color.WhiteSmoke;
             }
             else
-            {
-                //button.BackColor = Color.LightSlateGray;
+            {                
                 button.BackColor = Color.WhiteSmoke;
-                button.ForeColor = Color.Gray;
+                //button.ForeColor = Color.Gray;
+                button.ForeColor = Color.DarkSlateGray;
             }
                 
                 

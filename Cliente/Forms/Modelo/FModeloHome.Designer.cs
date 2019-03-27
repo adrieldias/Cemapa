@@ -172,6 +172,7 @@
             this.Name = "FModeloHome";
             this.Text = "FModeloHome";
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.FModeloHome_Paint);
+            this.Resize += new System.EventHandler(this.FModeloHome_Resize);
             this.pCabecalho.ResumeLayout(false);
             this.pCabecalho.PerformLayout();
             this.ResumeLayout(false);
