@@ -44,14 +44,18 @@
             this.txbsEmailXML = new Componentes.TextBoxSimples();
             this.txbsEmailContato = new Componentes.TextBoxSimples();
             this.cbsClassificacao = new Componentes.ComboBoxSimples();
+            this.cbsVendedor = new Componentes.ComboBoxSimples();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.tabControlLateral1 = new TabControlLateral.TabControlLateral(this.components);
-            this.cbsVendedor = new Componentes.ComboBoxSimples();
+            this.slickBlueTabControl1 = new SlickBlueTabControl();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
             this.pCabecalho.SuspendLayout();
             this.tabControlLateral2.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.slickBlueTabControl1.SuspendLayout();
             this.SuspendLayout();
             // 
             // pCabecalho
@@ -86,7 +90,7 @@
             this.tabControlLateral2.Multiline = true;
             this.tabControlLateral2.Name = "tabControlLateral2";
             this.tabControlLateral2.SelectedIndex = 0;
-            this.tabControlLateral2.Size = new System.Drawing.Size(900, 470);
+            this.tabControlLateral2.Size = new System.Drawing.Size(386, 438);
             this.tabControlLateral2.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.tabControlLateral2.TabIndex = 12;
             // 
@@ -96,7 +100,7 @@
             this.tabPage1.Location = new System.Drawing.Point(134, 4);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(762, 462);
+            this.tabPage1.Size = new System.Drawing.Size(248, 430);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Dados";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -143,7 +147,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(750, 456);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(236, 424);
             this.tableLayoutPanel1.TabIndex = 1;
             // 
             // pictureBox1
@@ -157,7 +161,7 @@
             this.pictureBox1.InitialImage = null;
             this.pictureBox1.Location = new System.Drawing.Point(3, 3);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(144, 144);
+            this.pictureBox1.Size = new System.Drawing.Size(40, 144);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 4;
             this.pictureBox1.TabStop = false;
@@ -175,7 +179,7 @@
             this.cbsTipoCadastro.Name = "cbsTipoCadastro";
             this.cbsTipoCadastro.SelectedText = null;
             this.cbsTipoCadastro.SelectedValue = null;
-            this.cbsTipoCadastro.Size = new System.Drawing.Size(369, 44);
+            this.cbsTipoCadastro.Size = new System.Drawing.Size(109, 44);
             this.cbsTipoCadastro.TabIndex = 24;
             this.cbsTipoCadastro.ValueMember = "";
             // 
@@ -188,11 +192,11 @@
             this.tableLayoutPanel1.SetColumnSpan(this.cbsFisicaJuridica, 5);
             this.cbsFisicaJuridica.DisplayMember = "DESC_FISICA_JURIDICA";
             this.cbsFisicaJuridica.Label = "PESSOA FÍSICA/JURÍDICA";
-            this.cbsFisicaJuridica.Location = new System.Drawing.Point(378, 213);
+            this.cbsFisicaJuridica.Location = new System.Drawing.Point(118, 213);
             this.cbsFisicaJuridica.Name = "cbsFisicaJuridica";
             this.cbsFisicaJuridica.SelectedText = null;
             this.cbsFisicaJuridica.SelectedValue = null;
-            this.cbsFisicaJuridica.Size = new System.Drawing.Size(369, 44);
+            this.cbsFisicaJuridica.Size = new System.Drawing.Size(115, 44);
             this.cbsFisicaJuridica.TabIndex = 25;
             this.cbsFisicaJuridica.ValueMember = "IND_FISICA_JURIDICA";
             this.cbsFisicaJuridica.ComboBoxDropDownClosed += new System.EventHandler(this.cbsFisicaJuridica_ComboBoxDropDownClosed);
@@ -210,7 +214,7 @@
             this.txbsNome.Margin = new System.Windows.Forms.Padding(4);
             this.txbsNome.Name = "txbsNome";
             this.txbsNome.PasswordChar = '\0';
-            this.txbsNome.Size = new System.Drawing.Size(367, 42);
+            this.txbsNome.Size = new System.Drawing.Size(107, 42);
             this.txbsNome.TabIndex = 26;
             this.txbsNome.Value = "";
             // 
@@ -220,11 +224,11 @@
             this.tableLayoutPanel1.SetColumnSpan(this.txbsNomeFantasia, 5);
             this.txbsNomeFantasia.Font = new System.Drawing.Font("Calibri Light", 12F);
             this.txbsNomeFantasia.Label = "NOME FANTASIA";
-            this.txbsNomeFantasia.Location = new System.Drawing.Point(379, 264);
+            this.txbsNomeFantasia.Location = new System.Drawing.Point(119, 264);
             this.txbsNomeFantasia.Margin = new System.Windows.Forms.Padding(4);
             this.txbsNomeFantasia.Name = "txbsNomeFantasia";
             this.txbsNomeFantasia.PasswordChar = '\0';
-            this.txbsNomeFantasia.Size = new System.Drawing.Size(367, 42);
+            this.txbsNomeFantasia.Size = new System.Drawing.Size(113, 42);
             this.txbsNomeFantasia.TabIndex = 27;
             this.txbsNomeFantasia.Value = "";
             // 
@@ -237,7 +241,7 @@
             this.txbsCodigo.Margin = new System.Windows.Forms.Padding(4);
             this.txbsCodigo.Name = "txbsCodigo";
             this.txbsCodigo.PasswordChar = '\0';
-            this.txbsCodigo.Size = new System.Drawing.Size(142, 42);
+            this.txbsCodigo.Size = new System.Drawing.Size(38, 42);
             this.txbsCodigo.TabIndex = 28;
             this.txbsCodigo.Value = "";
             // 
@@ -251,7 +255,7 @@
             this.txbsTelefone.Margin = new System.Windows.Forms.Padding(4);
             this.txbsTelefone.Name = "txbsTelefone";
             this.txbsTelefone.PasswordChar = '\0';
-            this.txbsTelefone.Size = new System.Drawing.Size(142, 42);
+            this.txbsTelefone.Size = new System.Drawing.Size(38, 42);
             this.txbsTelefone.TabIndex = 29;
             this.txbsTelefone.Value = "";
             // 
@@ -261,11 +265,11 @@
             this.tableLayoutPanel1.SetColumnSpan(this.txbsCelular, 2);
             this.txbsCelular.Font = new System.Drawing.Font("Calibri Light", 12F);
             this.txbsCelular.Label = "CELULAR";
-            this.txbsCelular.Location = new System.Drawing.Point(154, 314);
+            this.txbsCelular.Location = new System.Drawing.Point(50, 314);
             this.txbsCelular.Margin = new System.Windows.Forms.Padding(4);
             this.txbsCelular.Name = "txbsCelular";
             this.txbsCelular.PasswordChar = '\0';
-            this.txbsCelular.Size = new System.Drawing.Size(142, 42);
+            this.txbsCelular.Size = new System.Drawing.Size(38, 42);
             this.txbsCelular.TabIndex = 30;
             this.txbsCelular.Value = "";
             // 
@@ -275,11 +279,11 @@
             this.tableLayoutPanel1.SetColumnSpan(this.txbsEmailXML, 3);
             this.txbsEmailXML.Font = new System.Drawing.Font("Calibri Light", 12F);
             this.txbsEmailXML.Label = "E-MAIL PARA XML";
-            this.txbsEmailXML.Location = new System.Drawing.Point(304, 314);
+            this.txbsEmailXML.Location = new System.Drawing.Point(96, 314);
             this.txbsEmailXML.Margin = new System.Windows.Forms.Padding(4);
             this.txbsEmailXML.Name = "txbsEmailXML";
             this.txbsEmailXML.PasswordChar = '\0';
-            this.txbsEmailXML.Size = new System.Drawing.Size(217, 42);
+            this.txbsEmailXML.Size = new System.Drawing.Size(61, 42);
             this.txbsEmailXML.TabIndex = 31;
             this.txbsEmailXML.Value = "";
             // 
@@ -289,11 +293,11 @@
             this.tableLayoutPanel1.SetColumnSpan(this.txbsEmailContato, 3);
             this.txbsEmailContato.Font = new System.Drawing.Font("Calibri Light", 12F);
             this.txbsEmailContato.Label = "E-MAIL PARA CONTATO";
-            this.txbsEmailContato.Location = new System.Drawing.Point(529, 314);
+            this.txbsEmailContato.Location = new System.Drawing.Point(165, 314);
             this.txbsEmailContato.Margin = new System.Windows.Forms.Padding(4);
             this.txbsEmailContato.Name = "txbsEmailContato";
             this.txbsEmailContato.PasswordChar = '\0';
-            this.txbsEmailContato.Size = new System.Drawing.Size(217, 42);
+            this.txbsEmailContato.Size = new System.Drawing.Size(67, 42);
             this.txbsEmailContato.TabIndex = 32;
             this.txbsEmailContato.Value = "";
             // 
@@ -308,16 +312,30 @@
             this.cbsClassificacao.Name = "cbsClassificacao";
             this.cbsClassificacao.SelectedText = null;
             this.cbsClassificacao.SelectedValue = null;
-            this.cbsClassificacao.Size = new System.Drawing.Size(219, 44);
+            this.cbsClassificacao.Size = new System.Drawing.Size(63, 44);
             this.cbsClassificacao.TabIndex = 33;
             this.cbsClassificacao.ValueMember = "";
+            // 
+            // cbsVendedor
+            // 
+            this.cbsVendedor.BindingSource = null;
+            this.tableLayoutPanel1.SetColumnSpan(this.cbsVendedor, 4);
+            this.cbsVendedor.DisplayMember = "";
+            this.cbsVendedor.Label = "VENDEDOR";
+            this.cbsVendedor.Location = new System.Drawing.Point(72, 363);
+            this.cbsVendedor.Name = "cbsVendedor";
+            this.cbsVendedor.SelectedText = null;
+            this.cbsVendedor.SelectedValue = null;
+            this.cbsVendedor.Size = new System.Drawing.Size(86, 44);
+            this.cbsVendedor.TabIndex = 34;
+            this.cbsVendedor.ValueMember = "";
             // 
             // tabPage3
             // 
             this.tabPage3.Location = new System.Drawing.Point(134, 4);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(762, 462);
+            this.tabPage3.Size = new System.Drawing.Size(248, 430);
             this.tabPage3.TabIndex = 1;
             this.tabPage3.Text = "Endereço";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -338,25 +356,47 @@
             this.tabControlLateral1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.tabControlLateral1.TabIndex = 0;
             // 
-            // cbsVendedor
+            // slickBlueTabControl1
             // 
-            this.cbsVendedor.BindingSource = null;
-            this.tableLayoutPanel1.SetColumnSpan(this.cbsVendedor, 4);
-            this.cbsVendedor.DisplayMember = "";
-            this.cbsVendedor.Label = "VENDEDOR";
-            this.cbsVendedor.Location = new System.Drawing.Point(228, 363);
-            this.cbsVendedor.Name = "cbsVendedor";
-            this.cbsVendedor.SelectedText = null;
-            this.cbsVendedor.SelectedValue = null;
-            this.cbsVendedor.Size = new System.Drawing.Size(294, 44);
-            this.cbsVendedor.TabIndex = 34;
-            this.cbsVendedor.ValueMember = "";
+            this.slickBlueTabControl1.Alignment = System.Windows.Forms.TabAlignment.Left;
+            this.slickBlueTabControl1.Controls.Add(this.tabPage2);
+            this.slickBlueTabControl1.Controls.Add(this.tabPage4);
+            this.slickBlueTabControl1.Font = new System.Drawing.Font("Calibri Light", 10F);
+            this.slickBlueTabControl1.ItemSize = new System.Drawing.Size(40, 130);
+            this.slickBlueTabControl1.Location = new System.Drawing.Point(392, 113);
+            this.slickBlueTabControl1.Multiline = true;
+            this.slickBlueTabControl1.Name = "slickBlueTabControl1";
+            this.slickBlueTabControl1.SelectedIndex = 0;
+            this.slickBlueTabControl1.Size = new System.Drawing.Size(496, 434);
+            this.slickBlueTabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
+            this.slickBlueTabControl1.TabIndex = 13;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Location = new System.Drawing.Point(134, 4);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(358, 426);
+            this.tabPage2.TabIndex = 0;
+            this.tabPage2.Text = "tabPage2";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // tabPage4
+            // 
+            this.tabPage4.Location = new System.Drawing.Point(134, 4);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage4.Size = new System.Drawing.Size(62, 92);
+            this.tabPage4.TabIndex = 1;
+            this.tabPage4.Text = "tabPage4";
+            this.tabPage4.UseVisualStyleBackColor = true;
             // 
             // FCadastroCad
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(900, 600);
+            this.Controls.Add(this.slickBlueTabControl1);
             this.Controls.Add(this.tabControlLateral2);
             this.Name = "FCadastroCad";
             this.Text = "FCadastroCad";
@@ -366,6 +406,7 @@
             this.Controls.SetChildIndex(this.btCancelar, 0);
             this.Controls.SetChildIndex(this.btFechar, 0);
             this.Controls.SetChildIndex(this.pCabecalho, 0);
+            this.Controls.SetChildIndex(this.slickBlueTabControl1, 0);
             this.pCabecalho.ResumeLayout(false);
             this.pCabecalho.PerformLayout();
             this.tabControlLateral2.ResumeLayout(false);
@@ -373,6 +414,7 @@
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.slickBlueTabControl1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -396,5 +438,8 @@
         private Componentes.TextBoxSimples txbsEmailContato;
         private Componentes.ComboBoxSimples cbsClassificacao;
         private Componentes.ComboBoxSimples cbsVendedor;
+        private SlickBlueTabControl slickBlueTabControl1;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabPage tabPage4;
     }
 }

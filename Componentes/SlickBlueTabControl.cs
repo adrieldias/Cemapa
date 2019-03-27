@@ -26,7 +26,8 @@ public class SlickBlueTabControl : TabControl
     {        
         Bitmap b = new Bitmap(Width, Height);
         Graphics g = Graphics.FromImage(b);
-        g.Clear(FromHex("#2c3e50"));
+        //g.Clear(FromHex("#2c3e50"));
+        g.Clear(FromHex("#EEE9E9"));
         for (int i = 0; i <= TabCount - 1; i++)
         {
             Rectangle tabRect = GetTabRect(i);
@@ -34,35 +35,35 @@ public class SlickBlueTabControl : TabControl
             {                
                 if (i == 0)
                 {
-                    g.FillRectangle(new SolidBrush(FromHex("#34495e")), 0, 0, tabRect.Width + 2, tabRect.Height + 2);
-                    g.FillRectangle(Brushes.DodgerBlue, 0, 0, 4, tabRect.Height + 2);                    
+                    g.FillRectangle(new SolidBrush(/*FromHex("#34495e")*/FromHex("#EEE9E9")), 0, 0, tabRect.Width + 2, tabRect.Height + 2);
+                    g.FillRectangle(Brushes.SteelBlue, 0, 0, 4, tabRect.Height + 2);                    
                 }
                 else
                 {
-                    g.FillRectangle(new SolidBrush(FromHex("#34495e")), tabRect);
-                    g.FillRectangle(Brushes.DodgerBlue, tabRect.X - 2, tabRect.Y, 4, tabRect.Height);
+                    g.FillRectangle(new SolidBrush(/*FromHex("#34495e")*/FromHex("#EEE9E9")), tabRect);
+                    g.FillRectangle(Brushes.SteelBlue, tabRect.X - 2, tabRect.Y, 4, tabRect.Height);
                 }
             }
             else if (!(_mouseOverTabIndex == -1) & i == _mouseOverTabIndex)
             {
                 if (i == 0)
                 {
-                    g.FillRectangle(new SolidBrush(FromHex("#435363")), 0, 0, tabRect.Width + 3, tabRect.Height + 2);
+                    g.FillRectangle(new SolidBrush(/*FromHex("#435363")*/Color.LightGray), 0, 0, tabRect.Width + 3, tabRect.Height + 2);
                 }
                 else
                 {
-                    g.FillRectangle(new SolidBrush(FromHex("#435363")), 0, tabRect.Y, tabRect.Width + 3, tabRect.Height);
+                    g.FillRectangle(new SolidBrush(/*FromHex("#435363")*/Color.LightGray), 0, tabRect.Y, tabRect.Width + 3, tabRect.Height);
                 }
             }
             else
             {
-                g.FillRectangle(new SolidBrush(FromHex("#2c3e50")), tabRect);
+                g.FillRectangle(new SolidBrush(/*FromHex("#2c3e50")*/FromHex("#EEE9E9")), tabRect);
             }
 
             
                 string drawString = this.TabPages[i].Text;
                 System.Drawing.Font drawFont = new System.Drawing.Font("Calibri Light", 10);
-                System.Drawing.SolidBrush drawBrush = new System.Drawing.SolidBrush(System.Drawing.Color.WhiteSmoke);
+                System.Drawing.SolidBrush drawBrush = new System.Drawing.SolidBrush(System.Drawing.Color.SteelBlue);
                 float x = tabRect.Width / 2 - 55;
                 float y = tabRect.Y + tabRect.Height / 2 - 8;          
                 System.Drawing.StringFormat drawFormat = new System.Drawing.StringFormat();
