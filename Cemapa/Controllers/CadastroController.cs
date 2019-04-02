@@ -18,9 +18,7 @@ namespace Cemapa.Controllers
         public JsonResult Get()
         {
             var query = (from c in db.TB_CADASTRO
-                            .Include("TB_CIDADE")                            
-                            .Include("TB_TIPO_CADASTRO")
-                            .Include("TB_CLASS_CADASTRO")                        
+                            //.Include("TB_CIDADE")                            
                         orderby c.DT_CADASTRO descending
                         //select c //traz todos os campos
                         select new
@@ -55,10 +53,7 @@ namespace Cemapa.Controllers
             int.TryParse(id, out codigo);
             if (codigo > 0)
             {
-                var query = (from c in db.TB_CADASTRO
-                                 //.Include("TB_CIDADE")
-                                 .Include("TB_TIPO_CADASTRO")
-                                 //.Include("TB_CLASS_CADASTRO")
+                var query = (from c in db.TB_CADASTRO                                 
                                  //.Include("TB_USUARIO")
                              where (c.COD_CADASTRO.Equals(codigo))
                              orderby c.DT_CADASTRO

@@ -146,7 +146,7 @@ namespace Cliente.Forms.Modelo
             this.Close();
         }
 
-        public void Inicializa()
+        public void Personaliza()
         {
             PersonalizaForm.Instancia.Personaliza(this);            
         }

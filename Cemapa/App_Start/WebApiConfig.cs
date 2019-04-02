@@ -22,8 +22,8 @@ namespace Cemapa
             );
             config.Routes.MapHttpRoute(
                 name: "RotaComAction",
-                routeTemplate: "api/{controller}/{action}/{id}",
-                defaults: new { id = RouteParameter.Optional }
+                routeTemplate: "api/{controller}/{action}/{value}",
+                defaults: new { value = RouteParameter.Optional }
             );
         }
     }

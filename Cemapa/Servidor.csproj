@@ -133,7 +133,14 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\CadastroController.cs" />
+    <Compile Include="Controllers\CidadeController.cs" />
+    <Compile Include="Controllers\ClassCadastroController.cs" />
+    <Compile Include="Controllers\EstadoController.cs" />
+    <Compile Include="Controllers\PaisController.cs" />
+    <Compile Include="Controllers\QualificacaoSocioController.cs" />
     <Compile Include="Controllers\TipoCadastroController.cs" />
+    <Compile Include="Controllers\TipoPropriedadeController.cs" />
+    <Compile Include="Controllers\VendedorController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -173,6 +180,12 @@
     <Compile Include="Models\TB_PAIS.cs">
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TB_PROPRIEDADE.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_QUALIFICACAO_SOCIO.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TB_REGIAO.cs">
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
@@ -180,6 +193,9 @@
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TB_TIPO_CADASTRO.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_TIPO_PROPRIEDADE.cs">
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TB_USUARIO.cs">

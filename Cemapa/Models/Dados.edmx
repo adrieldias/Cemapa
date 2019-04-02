@@ -124,17 +124,18 @@
           <Property Name="DESC_CPF_AUTORIZADO1" Type="varchar2" MaxLength="11" />
           <Property Name="DESC_CPF_AUTORIZADO2" Type="varchar2" MaxLength="11" />
           <Property Name="DESC_CPF_AUTORIZADO3" Type="varchar2" MaxLength="11" />
+          <Property Name="DESC_OUTRAS_GRANTIAS" Type="varchar2" MaxLength="20" />
           <Property Name="DESC_GARANTIAS_OUTRAS" Type="varchar2" MaxLength="20" />
-          <Property Name="DESC_COMPLEMENTO_SINTEGRA" Type="varchar2" MaxLength="14" />
-          <Property Name="DT_SEPROCADO" Type="date" />
-          <Property Name="PERC_META" Type="number" Precision="5" Scale="2" />
-          <Property Name="COD_PRAZO_VENCIMENTO" Type="number" Precision="6" Scale="0" />
-          <Property Name="IND_SOJICULTOR_PARTICIPANTE" Type="char" MaxLength="3" />
           <Property Name="NUM_DIA_VISITA" Type="number" Precision="1" Scale="0" />
           <Property Name="DESC_FREQUENCIA_VISITA" Type="char" MaxLength="1" />
           <Property Name="NUM_HORA_VISITA" Type="number" Precision="4" Scale="0" />
           <Property Name="NUM_DIA_VENCTO" Type="number" Precision="2" Scale="0" />
           <Property Name="NOME_TITULAR" Type="varchar2" MaxLength="30" />
+          <Property Name="DT_SEPROCADO" Type="date" />
+          <Property Name="PERC_META" Type="number" Precision="5" Scale="2" />
+          <Property Name="COD_PRAZO_VENCIMENTO" Type="number" Precision="6" Scale="0" />
+          <Property Name="IND_SOJICULTOR_PARTICIPANTE" Type="char" MaxLength="3" />
+          <Property Name="DESC_COMPLEMENTO_SINTEGRA" Type="varchar2" MaxLength="15" />
           <Property Name="DESC_CRC" Type="varchar2" MaxLength="10" />
           <Property Name="DESC_SUFRAMA" Type="varchar2" MaxLength="9" />
           <Property Name="DESC_QUALIFICACAO" Type="varchar2" MaxLength="100" />
@@ -172,9 +173,10 @@
           <Property Name="DT_CRC" Type="date" />
           <Property Name="PERC_ROYALTIES" Type="number" Precision="5" Scale="2" />
           <Property Name="IND_TIPO_PROPRIETARIO" Type="number" Precision="1" Scale="0" Nullable="false" />
-          <Property Name="DESC_RNTRC" Type="varchar2" MaxLength="8" />
+          <Property Name="DESC_RNTRC" Type="varchar2" MaxLength="10" />
           <Property Name="DESC_TAF" Type="varchar2" MaxLength="12" />
           <Property Name="DESC_NRO_REG_ESTADUAL" Type="varchar2" MaxLength="25" />
+          <Property Name="IND_SINC_MAX_ROTEIRIZADOR" Type="char" MaxLength="1" />
         </EntityType>
         <EntityType Name="TB_CIDADE">
           <Key>
@@ -187,6 +189,7 @@
           <Property Name="COD_DFC" Type="number" Precision="6" Scale="0" />
           <Property Name="COD_MUNICIPIO_SC" Type="number" Precision="5" Scale="0" />
           <Property Name="COD_CIDADE_IBGE" Type="varchar2" MaxLength="5" />
+          <Property Name="PERC_DEDUCAO_NFSE" Type="number" Precision="5" Scale="2" />
         </EntityType>
         <EntityType Name="TB_CLASS_CADASTRO">
           <Key>
@@ -245,6 +248,59 @@
           <Property Name="COD_PAIS_IBGE" Type="number" Precision="4" Scale="0" />
           <Property Name="COD_PAIS_SISCOMEX" Type="number" Precision="3" Scale="0" />
         </EntityType>
+        <EntityType Name="TB_PROPRIEDADE">
+          <Key>
+            <PropertyRef Name="COD_PROPRIEDADE" />
+          </Key>
+          <Property Name="COD_PROPRIEDADE" Type="number" Precision="6" Scale="0" Nullable="false" />
+          <Property Name="COD_CADASTRO" Type="number" Precision="6" Scale="0" />
+          <Property Name="COD_TIPO_PROPRIEDADE" Type="number" Precision="6" Scale="0" />
+          <Property Name="DESC_PROPRIEDADE" Type="varchar2" MaxLength="40" />
+          <Property Name="NUM_ANO" Type="number" Precision="4" Scale="0" />
+          <Property Name="VAL_PROPRIEDADE" Type="number" Precision="11" Scale="2" />
+          <Property Name="NUM_AREA" Type="number" Precision="11" Scale="3" />
+          <Property Name="DESC_LOCALIDADE" Type="varchar2" MaxLength="30" />
+          <Property Name="DESC_OBSERVACAO" Type="varchar2" MaxLength="40" />
+          <Property Name="IND_HIPOTECA" Type="varchar2" MaxLength="3" />
+          <Property Name="DESC_GRAU_HIPOTECA" Type="varchar2" MaxLength="3" />
+          <Property Name="VAL_HIPOTECA" Type="number" Precision="11" Scale="2" />
+          <Property Name="DESC_FAVORECIDO_HIPOTECA" Type="varchar2" MaxLength="30" />
+          <Property Name="DT_VENC_HIPOTECA" Type="date" />
+          <Property Name="COD_CIDADE" Type="number" Precision="6" Scale="0" />
+          <Property Name="DESC_BAIRRO" Type="varchar2" MaxLength="20" />
+          <Property Name="DESC_CEP" Type="varchar2" MaxLength="9" />
+          <Property Name="NUM_MATRICULA" Type="number" Precision="8" Scale="0" />
+          <Property Name="IND_TIPO_IMOVEL" Type="char" MaxLength="3" />
+          <Property Name="QT_RENDA_SAFRA" Type="number" Precision="5" Scale="0" />
+          <Property Name="QT_RENDA_SAFRINHA" Type="number" Precision="5" Scale="0" />
+          <Property Name="VAL_HIPOTECA2" Type="number" Precision="11" Scale="2" />
+          <Property Name="VAL_HIPOTECA3" Type="number" Precision="11" Scale="2" />
+          <Property Name="VAL_HIPOTECA4" Type="number" Precision="11" Scale="2" />
+          <Property Name="VAL_HIPOTECA5" Type="number" Precision="11" Scale="2" />
+          <Property Name="VAL_HIPOTECA6" Type="number" Precision="11" Scale="2" />
+          <Property Name="DT_VENC_HIPOTECA2" Type="date" />
+          <Property Name="DT_VENC_HIPOTECA3" Type="date" />
+          <Property Name="DT_VENC_HIPOTECA4" Type="date" />
+          <Property Name="DT_VENC_HIPOTECA5" Type="date" />
+          <Property Name="DT_VENC_HIPOTECA6" Type="date" />
+          <Property Name="DESC_FAVORECIDO_HIPOTECA2" Type="varchar2" MaxLength="30" />
+          <Property Name="DESC_FAVORECIDO_HIPOTECA3" Type="varchar2" MaxLength="30" />
+          <Property Name="DESC_FAVORECIDO_HIPOTECA4" Type="varchar2" MaxLength="30" />
+          <Property Name="DESC_FAVORECIDO_HIPOTECA5" Type="varchar2" MaxLength="30" />
+          <Property Name="DESC_FAVORECIDO_HIPOTECA6" Type="varchar2" MaxLength="30" />
+          <Property Name="DESC_CRI" Type="varchar2" MaxLength="20" />
+          <Property Name="DT_VENC_CONTRATO" Type="date" />
+          <Property Name="COD_CADASTRO_PROPRIETARIO" Type="number" Precision="6" Scale="0" />
+        </EntityType>
+        <EntityType Name="TB_QUALIFICACAO_SOCIO">
+          <Key>
+            <PropertyRef Name="COD_QUALIFICACAO_SOCIO" />
+          </Key>
+          <Property Name="COD_QUALIFICACAO_SOCIO" Type="char" MaxLength="2" Nullable="false" />
+          <Property Name="DESC_QUALIFICACAO_SOCIO" Type="varchar2" MaxLength="100" Nullable="false" />
+          <Property Name="IND_PAIS" Type="varchar2" MaxLength="10" Nullable="false" />
+          <Property Name="IND_TIPO" Type="char" MaxLength="2" Nullable="false" />
+        </EntityType>
         <EntityType Name="TB_REGIAO">
           <Key>
             <PropertyRef Name="COD_REGIAO" />
@@ -268,6 +324,13 @@
           </Key>
           <Property Name="COD_TIPO_CADASTRO" Type="number" Precision="6" Scale="0" Nullable="false" />
           <Property Name="DESC_TIPO_CADASTRO" Type="varchar2" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TB_TIPO_PROPRIEDADE">
+          <Key>
+            <PropertyRef Name="COD_TIPO_PROPRIEDADE" />
+          </Key>
+          <Property Name="COD_TIPO_PROPRIEDADE" Type="number" Precision="6" Scale="0" Nullable="false" />
+          <Property Name="DESC_TIPO_PROPRIEDADE" Type="varchar2" MaxLength="40" Nullable="false" />
         </EntityType>
         <EntityType Name="TB_USUARIO">
           <Key>
@@ -358,54 +421,6 @@
           <Property Name="PERC_COMISSAO4" Type="number" Precision="5" Scale="2" />
           <Property Name="DESC_E_MAIL1" Type="varchar2" MaxLength="70" />
         </EntityType>
-        <Association Name="FK_CADASTROXCIDADE">
-          <End Role="TB_CIDADE" Type="Self.TB_CIDADE" Multiplicity="0..1" />
-          <End Role="TB_CADASTRO" Type="Self.TB_CADASTRO" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TB_CIDADE">
-              <PropertyRef Name="COD_CIDADE" />
-            </Principal>
-            <Dependent Role="TB_CADASTRO">
-              <PropertyRef Name="COD_CIDADE" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CADASTROXCLASS_CADASTRO">
-          <End Role="TB_CLASS_CADASTRO" Type="Self.TB_CLASS_CADASTRO" Multiplicity="0..1" />
-          <End Role="TB_CADASTRO" Type="Self.TB_CADASTRO" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TB_CLASS_CADASTRO">
-              <PropertyRef Name="COD_CLASS_CADASTRO" />
-            </Principal>
-            <Dependent Role="TB_CADASTRO">
-              <PropertyRef Name="COD_CLASS_CADASTRO" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CADASTROXESTADO">
-          <End Role="TB_ESTADO" Type="Self.TB_ESTADO" Multiplicity="0..1" />
-          <End Role="TB_CADASTRO" Type="Self.TB_CADASTRO" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TB_ESTADO">
-              <PropertyRef Name="COD_ESTADO" />
-            </Principal>
-            <Dependent Role="TB_CADASTRO">
-              <PropertyRef Name="COD_ESTADO" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CADASTROXESTADO_CIVIL">
-          <End Role="TB_ESTADO_CIVIL" Type="Self.TB_ESTADO_CIVIL" Multiplicity="0..1" />
-          <End Role="TB_CADASTRO" Type="Self.TB_CADASTRO" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TB_ESTADO_CIVIL">
-              <PropertyRef Name="COD_ESTADO_CIVIL" />
-            </Principal>
-            <Dependent Role="TB_CADASTRO">
-              <PropertyRef Name="COD_ESTADO_CIVIL" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_CADASTROXESTADOVEIC">
           <End Role="TB_ESTADO" Type="Self.TB_ESTADO" Multiplicity="0..1" />
           <End Role="TB_CADASTRO" Type="Self.TB_CADASTRO" Multiplicity="*" />
@@ -418,87 +433,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_CADASTROXMOTIVO">
-          <End Role="TB_MOTIVO" Type="Self.TB_MOTIVO" Multiplicity="0..1" />
+        <Association Name="FK_CADASTROXQUALIFICACAOSOCIO">
+          <End Role="TB_QUALIFICACAO_SOCIO" Type="Self.TB_QUALIFICACAO_SOCIO" Multiplicity="0..1" />
           <End Role="TB_CADASTRO" Type="Self.TB_CADASTRO" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="TB_MOTIVO">
-              <PropertyRef Name="COD_MOTIVO" />
+            <Principal Role="TB_QUALIFICACAO_SOCIO">
+              <PropertyRef Name="COD_QUALIFICACAO_SOCIO" />
             </Principal>
             <Dependent Role="TB_CADASTRO">
-              <PropertyRef Name="COD_MOTIVO" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CADASTROXPAIS">
-          <End Role="TB_PAIS" Type="Self.TB_PAIS" Multiplicity="0..1" />
-          <End Role="TB_CADASTRO" Type="Self.TB_CADASTRO" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TB_PAIS">
-              <PropertyRef Name="COD_PAIS" />
-            </Principal>
-            <Dependent Role="TB_CADASTRO">
-              <PropertyRef Name="COD_PAIS" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CADASTROXREGIAO">
-          <End Role="TB_REGIAO" Type="Self.TB_REGIAO" Multiplicity="0..1" />
-          <End Role="TB_CADASTRO" Type="Self.TB_CADASTRO" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TB_REGIAO">
-              <PropertyRef Name="COD_REGIAO" />
-            </Principal>
-            <Dependent Role="TB_CADASTRO">
-              <PropertyRef Name="COD_REGIAO" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CADASTROXTIPO_CADASTRO">
-          <End Role="TB_TIPO_CADASTRO" Type="Self.TB_TIPO_CADASTRO" Multiplicity="1" />
-          <End Role="TB_CADASTRO" Type="Self.TB_CADASTRO" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TB_TIPO_CADASTRO">
-              <PropertyRef Name="COD_TIPO_CADASTRO" />
-            </Principal>
-            <Dependent Role="TB_CADASTRO">
-              <PropertyRef Name="COD_TIPO_CADASTRO" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CADASTROXUSUARIO">
-          <End Role="TB_USUARIO" Type="Self.TB_USUARIO" Multiplicity="0..1" />
-          <End Role="TB_CADASTRO" Type="Self.TB_CADASTRO" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TB_USUARIO">
-              <PropertyRef Name="COD_USUARIO" />
-            </Principal>
-            <Dependent Role="TB_CADASTRO">
-              <PropertyRef Name="COD_USUARIO" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CADASTROXVENDEDOR">
-          <End Role="TB_VENDEDOR" Type="Self.TB_VENDEDOR" Multiplicity="0..1" />
-          <End Role="TB_CADASTRO" Type="Self.TB_CADASTRO" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TB_VENDEDOR">
-              <PropertyRef Name="COD_VENDEDOR" />
-            </Principal>
-            <Dependent Role="TB_CADASTRO">
-              <PropertyRef Name="COD_VENDEDOR" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_MUNICIPIOXESTADO">
-          <End Role="TB_ESTADO" Type="Self.TB_ESTADO" Multiplicity="1" />
-          <End Role="TB_CIDADE" Type="Self.TB_CIDADE" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TB_ESTADO">
-              <PropertyRef Name="COD_ESTADO" />
-            </Principal>
-            <Dependent Role="TB_CIDADE">
-              <PropertyRef Name="COD_ESTADO" />
+              <PropertyRef Name="COD_QUALIFICACAO_SOCIO" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -514,18 +457,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_VENDEDORXESTADO">
-          <End Role="TB_ESTADO" Type="Self.TB_ESTADO" Multiplicity="0..1" />
-          <End Role="TB_VENDEDOR" Type="Self.TB_VENDEDOR" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TB_ESTADO">
-              <PropertyRef Name="COD_ESTADO" />
-            </Principal>
-            <Dependent Role="TB_VENDEDOR">
-              <PropertyRef Name="COD_ESTADO" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="ModelStoreContainer">
           <EntitySet Name="TB_CADASTRO" EntityType="Self.TB_CADASTRO" Schema="SISTEMA" store:Type="Tables" />
           <EntitySet Name="TB_CIDADE" EntityType="Self.TB_CIDADE" Schema="SISTEMA" store:Type="Tables" />
@@ -534,66 +465,25 @@
           <EntitySet Name="TB_ESTADO_CIVIL" EntityType="Self.TB_ESTADO_CIVIL" Schema="SISTEMA" store:Type="Tables" />
           <EntitySet Name="TB_MOTIVO" EntityType="Self.TB_MOTIVO" Schema="SISTEMA" store:Type="Tables" />
           <EntitySet Name="TB_PAIS" EntityType="Self.TB_PAIS" Schema="SISTEMA" store:Type="Tables" />
+          <EntitySet Name="TB_PROPRIEDADE" EntityType="Self.TB_PROPRIEDADE" Schema="SISTEMA" store:Type="Tables" />
+          <EntitySet Name="TB_QUALIFICACAO_SOCIO" EntityType="Self.TB_QUALIFICACAO_SOCIO" Schema="SISTEMA" store:Type="Tables" />
           <EntitySet Name="TB_REGIAO" EntityType="Self.TB_REGIAO" Schema="SISTEMA" store:Type="Tables" />
           <EntitySet Name="TB_TABELA_PRECO_CAB" EntityType="Self.TB_TABELA_PRECO_CAB" Schema="SISTEMA" store:Type="Tables" />
           <EntitySet Name="TB_TIPO_CADASTRO" EntityType="Self.TB_TIPO_CADASTRO" Schema="SISTEMA" store:Type="Tables" />
+          <EntitySet Name="TB_TIPO_PROPRIEDADE" EntityType="Self.TB_TIPO_PROPRIEDADE" Schema="SISTEMA" store:Type="Tables" />
           <EntitySet Name="TB_USUARIO" EntityType="Self.TB_USUARIO" Schema="SISTEMA" store:Type="Tables" />
           <EntitySet Name="TB_VENDEDOR" EntityType="Self.TB_VENDEDOR" Schema="SISTEMA" store:Type="Tables" />
-          <AssociationSet Name="FK_CADASTROXCIDADE" Association="Self.FK_CADASTROXCIDADE">
-            <End Role="TB_CIDADE" EntitySet="TB_CIDADE" />
-            <End Role="TB_CADASTRO" EntitySet="TB_CADASTRO" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CADASTROXCLASS_CADASTRO" Association="Self.FK_CADASTROXCLASS_CADASTRO">
-            <End Role="TB_CLASS_CADASTRO" EntitySet="TB_CLASS_CADASTRO" />
-            <End Role="TB_CADASTRO" EntitySet="TB_CADASTRO" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CADASTROXESTADO" Association="Self.FK_CADASTROXESTADO">
-            <End Role="TB_ESTADO" EntitySet="TB_ESTADO" />
-            <End Role="TB_CADASTRO" EntitySet="TB_CADASTRO" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CADASTROXESTADO_CIVIL" Association="Self.FK_CADASTROXESTADO_CIVIL">
-            <End Role="TB_ESTADO_CIVIL" EntitySet="TB_ESTADO_CIVIL" />
-            <End Role="TB_CADASTRO" EntitySet="TB_CADASTRO" />
-          </AssociationSet>
           <AssociationSet Name="FK_CADASTROXESTADOVEIC" Association="Self.FK_CADASTROXESTADOVEIC">
             <End Role="TB_ESTADO" EntitySet="TB_ESTADO" />
             <End Role="TB_CADASTRO" EntitySet="TB_CADASTRO" />
           </AssociationSet>
-          <AssociationSet Name="FK_CADASTROXMOTIVO" Association="Self.FK_CADASTROXMOTIVO">
-            <End Role="TB_MOTIVO" EntitySet="TB_MOTIVO" />
+          <AssociationSet Name="FK_CADASTROXQUALIFICACAOSOCIO" Association="Self.FK_CADASTROXQUALIFICACAOSOCIO">
+            <End Role="TB_QUALIFICACAO_SOCIO" EntitySet="TB_QUALIFICACAO_SOCIO" />
             <End Role="TB_CADASTRO" EntitySet="TB_CADASTRO" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CADASTROXPAIS" Association="Self.FK_CADASTROXPAIS">
-            <End Role="TB_PAIS" EntitySet="TB_PAIS" />
-            <End Role="TB_CADASTRO" EntitySet="TB_CADASTRO" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CADASTROXREGIAO" Association="Self.FK_CADASTROXREGIAO">
-            <End Role="TB_REGIAO" EntitySet="TB_REGIAO" />
-            <End Role="TB_CADASTRO" EntitySet="TB_CADASTRO" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CADASTROXTIPO_CADASTRO" Association="Self.FK_CADASTROXTIPO_CADASTRO">
-            <End Role="TB_TIPO_CADASTRO" EntitySet="TB_TIPO_CADASTRO" />
-            <End Role="TB_CADASTRO" EntitySet="TB_CADASTRO" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CADASTROXUSUARIO" Association="Self.FK_CADASTROXUSUARIO">
-            <End Role="TB_USUARIO" EntitySet="TB_USUARIO" />
-            <End Role="TB_CADASTRO" EntitySet="TB_CADASTRO" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CADASTROXVENDEDOR" Association="Self.FK_CADASTROXVENDEDOR">
-            <End Role="TB_VENDEDOR" EntitySet="TB_VENDEDOR" />
-            <End Role="TB_CADASTRO" EntitySet="TB_CADASTRO" />
-          </AssociationSet>
-          <AssociationSet Name="FK_MUNICIPIOXESTADO" Association="Self.FK_MUNICIPIOXESTADO">
-            <End Role="TB_ESTADO" EntitySet="TB_ESTADO" />
-            <End Role="TB_CIDADE" EntitySet="TB_CIDADE" />
           </AssociationSet>
           <AssociationSet Name="FK_TABELA_PRECO_CABXCADASTRO" Association="Self.FK_TABELA_PRECO_CABXCADASTRO">
             <End Role="TB_TABELA_PRECO_CAB" EntitySet="TB_TABELA_PRECO_CAB" />
             <End Role="TB_CADASTRO" EntitySet="TB_CADASTRO" />
-          </AssociationSet>
-          <AssociationSet Name="FK_VENDEDORXESTADO" Association="Self.FK_VENDEDORXESTADO">
-            <End Role="TB_ESTADO" EntitySet="TB_ESTADO" />
-            <End Role="TB_VENDEDOR" EntitySet="TB_VENDEDOR" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -782,6 +672,9 @@
           <NavigationProperty Name="TB_USUARIO" Relationship="Model.FK_CADASTROXUSUARIO" FromRole="TB_CADASTRO" ToRole="TB_USUARIO" />
           <NavigationProperty Name="TB_VENDEDOR" Relationship="Model.FK_CADASTROXVENDEDOR" FromRole="TB_CADASTRO" ToRole="TB_VENDEDOR" />
           <NavigationProperty Name="TB_TABELA_PRECO_CAB" Relationship="Model.FK_TABELA_PRECO_CABXCADASTRO" FromRole="TB_CADASTRO" ToRole="TB_TABELA_PRECO_CAB" />
+          <Property Name="DESC_OUTRAS_GRANTIAS" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="IND_SINC_MAX_ROTEIRIZADOR" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="TB_QUALIFICACAO_SOCIO" Relationship="Model.FK_CADASTROXQUALIFICACAOSOCIO" FromRole="TB_CADASTRO" ToRole="TB_QUALIFICACAO_SOCIO" />
         </EntityType>
         <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="TB_CADASTRO" EntityType="Self.TB_CADASTRO" />
@@ -852,6 +745,13 @@
             <End Role="TB_ESTADO" EntitySet="TB_ESTADO" />
             <End Role="TB_VENDEDOR" EntitySet="TB_VENDEDOR" />
           </AssociationSet>
+          <EntitySet Name="TB_TIPO_PROPRIEDADE" EntityType="Model.TB_TIPO_PROPRIEDADE" />
+          <EntitySet Name="TB_PROPRIEDADE" EntityType="Model.TB_PROPRIEDADE" />
+          <EntitySet Name="TB_QUALIFICACAO_SOCIO" EntityType="Model.TB_QUALIFICACAO_SOCIO" />
+          <AssociationSet Name="FK_CADASTROXQUALIFICACAOSOCIO" Association="Model.FK_CADASTROXQUALIFICACAOSOCIO">
+            <End Role="TB_QUALIFICACAO_SOCIO" EntitySet="TB_QUALIFICACAO_SOCIO" />
+            <End Role="TB_CADASTRO" EntitySet="TB_CADASTRO" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="TB_CIDADE">
           <Key>
@@ -866,6 +766,7 @@
           <Property Name="COD_CIDADE_IBGE" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="TB_CADASTRO" Relationship="Model.FK_CADASTROXCIDADE" FromRole="TB_CIDADE" ToRole="TB_CADASTRO" />
           <NavigationProperty Name="TB_ESTADO" Relationship="Model.FK_MUNICIPIOXESTADO" FromRole="TB_CIDADE" ToRole="TB_ESTADO" />
+          <Property Name="PERC_DEDUCAO_NFSE" Type="Decimal" Precision="5" Scale="2" />
         </EntityType>
         <Association Name="FK_CADASTROXCIDADE">
           <End Type="Model.TB_CIDADE" Role="TB_CIDADE" Multiplicity="0..1" />
@@ -1219,6 +1120,79 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="TB_TIPO_PROPRIEDADE">
+          <Key>
+            <PropertyRef Name="COD_TIPO_PROPRIEDADE" />
+          </Key>
+          <Property Name="COD_TIPO_PROPRIEDADE" Type="Int32" Nullable="false" />
+          <Property Name="DESC_TIPO_PROPRIEDADE" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="TB_PROPRIEDADE">
+          <Key>
+            <PropertyRef Name="COD_PROPRIEDADE" />
+          </Key>
+          <Property Name="COD_PROPRIEDADE" Type="Int32" Nullable="false" />
+          <Property Name="COD_CADASTRO" Type="Int32" />
+          <Property Name="COD_TIPO_PROPRIEDADE" Type="Int32" />
+          <Property Name="DESC_PROPRIEDADE" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="NUM_ANO" Type="Int16" />
+          <Property Name="VAL_PROPRIEDADE" Type="Decimal" Precision="11" Scale="2" />
+          <Property Name="NUM_AREA" Type="Decimal" Precision="11" Scale="3" />
+          <Property Name="DESC_LOCALIDADE" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_OBSERVACAO" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="IND_HIPOTECA" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_GRAU_HIPOTECA" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="VAL_HIPOTECA" Type="Decimal" Precision="11" Scale="2" />
+          <Property Name="DESC_FAVORECIDO_HIPOTECA" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="DT_VENC_HIPOTECA" Type="DateTime" />
+          <Property Name="COD_CIDADE" Type="Int32" />
+          <Property Name="DESC_BAIRRO" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_CEP" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Name="NUM_MATRICULA" Type="Int32" />
+          <Property Name="IND_TIPO_IMOVEL" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Name="QT_RENDA_SAFRA" Type="Int16" />
+          <Property Name="QT_RENDA_SAFRINHA" Type="Int16" />
+          <Property Name="VAL_HIPOTECA2" Type="Decimal" Precision="11" Scale="2" />
+          <Property Name="VAL_HIPOTECA3" Type="Decimal" Precision="11" Scale="2" />
+          <Property Name="VAL_HIPOTECA4" Type="Decimal" Precision="11" Scale="2" />
+          <Property Name="VAL_HIPOTECA5" Type="Decimal" Precision="11" Scale="2" />
+          <Property Name="VAL_HIPOTECA6" Type="Decimal" Precision="11" Scale="2" />
+          <Property Name="DT_VENC_HIPOTECA2" Type="DateTime" />
+          <Property Name="DT_VENC_HIPOTECA3" Type="DateTime" />
+          <Property Name="DT_VENC_HIPOTECA4" Type="DateTime" />
+          <Property Name="DT_VENC_HIPOTECA5" Type="DateTime" />
+          <Property Name="DT_VENC_HIPOTECA6" Type="DateTime" />
+          <Property Name="DESC_FAVORECIDO_HIPOTECA2" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_FAVORECIDO_HIPOTECA3" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_FAVORECIDO_HIPOTECA4" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_FAVORECIDO_HIPOTECA5" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_FAVORECIDO_HIPOTECA6" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_CRI" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="DT_VENC_CONTRATO" Type="DateTime" />
+          <Property Name="COD_CADASTRO_PROPRIETARIO" Type="Int32" />
+        </EntityType>
+        <EntityType Name="TB_QUALIFICACAO_SOCIO">
+          <Key>
+            <PropertyRef Name="COD_QUALIFICACAO_SOCIO" />
+          </Key>
+          <Property Name="COD_QUALIFICACAO_SOCIO" Type="String" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="DESC_QUALIFICACAO_SOCIO" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="IND_PAIS" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="IND_TIPO" Type="String" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="TB_CADASTRO" Relationship="Model.FK_CADASTROXQUALIFICACAOSOCIO" FromRole="TB_QUALIFICACAO_SOCIO" ToRole="TB_CADASTRO" />
+        </EntityType>
+        <Association Name="FK_CADASTROXQUALIFICACAOSOCIO">
+          <End Type="Model.TB_QUALIFICACAO_SOCIO" Role="TB_QUALIFICACAO_SOCIO" Multiplicity="0..1" />
+          <End Type="Model.TB_CADASTRO" Role="TB_CADASTRO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_QUALIFICACAO_SOCIO">
+              <PropertyRef Name="COD_QUALIFICACAO_SOCIO" />
+            </Principal>
+            <Dependent Role="TB_CADASTRO">
+              <PropertyRef Name="COD_QUALIFICACAO_SOCIO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1228,6 +1202,8 @@
           <EntitySetMapping Name="TB_CADASTRO">
             <EntityTypeMapping TypeName="Model.TB_CADASTRO">
               <MappingFragment StoreEntitySet="TB_CADASTRO">
+                <ScalarProperty Name="IND_SINC_MAX_ROTEIRIZADOR" ColumnName="IND_SINC_MAX_ROTEIRIZADOR" />
+                <ScalarProperty Name="DESC_OUTRAS_GRANTIAS" ColumnName="DESC_OUTRAS_GRANTIAS" />
                 <ScalarProperty Name="COD_CADASTRO" ColumnName="COD_CADASTRO" />
                 <ScalarProperty Name="COD_MOTIVO" ColumnName="COD_MOTIVO" />
                 <ScalarProperty Name="COD_TIPO_CADASTRO" ColumnName="COD_TIPO_CADASTRO" />
@@ -1400,6 +1376,7 @@
           <EntitySetMapping Name="TB_CIDADE">
             <EntityTypeMapping TypeName="Model.TB_CIDADE">
               <MappingFragment StoreEntitySet="TB_CIDADE">
+                <ScalarProperty Name="PERC_DEDUCAO_NFSE" ColumnName="PERC_DEDUCAO_NFSE" />
                 <ScalarProperty Name="COD_CIDADE_IBGE" ColumnName="COD_CIDADE_IBGE" />
                 <ScalarProperty Name="COD_MUNICIPIO_SC" ColumnName="COD_MUNICIPIO_SC" />
                 <ScalarProperty Name="COD_DFC" ColumnName="COD_DFC" />
@@ -1587,6 +1564,69 @@
                 <ScalarProperty Name="NOME" ColumnName="NOME" />
                 <ScalarProperty Name="COD_ESTADO" ColumnName="COD_ESTADO" />
                 <ScalarProperty Name="COD_VENDEDOR" ColumnName="COD_VENDEDOR" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TB_TIPO_PROPRIEDADE">
+            <EntityTypeMapping TypeName="Model.TB_TIPO_PROPRIEDADE">
+              <MappingFragment StoreEntitySet="TB_TIPO_PROPRIEDADE">
+                <ScalarProperty Name="DESC_TIPO_PROPRIEDADE" ColumnName="DESC_TIPO_PROPRIEDADE" />
+                <ScalarProperty Name="COD_TIPO_PROPRIEDADE" ColumnName="COD_TIPO_PROPRIEDADE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TB_PROPRIEDADE">
+            <EntityTypeMapping TypeName="Model.TB_PROPRIEDADE">
+              <MappingFragment StoreEntitySet="TB_PROPRIEDADE">
+                <ScalarProperty Name="COD_CADASTRO_PROPRIETARIO" ColumnName="COD_CADASTRO_PROPRIETARIO" />
+                <ScalarProperty Name="DT_VENC_CONTRATO" ColumnName="DT_VENC_CONTRATO" />
+                <ScalarProperty Name="DESC_CRI" ColumnName="DESC_CRI" />
+                <ScalarProperty Name="DESC_FAVORECIDO_HIPOTECA6" ColumnName="DESC_FAVORECIDO_HIPOTECA6" />
+                <ScalarProperty Name="DESC_FAVORECIDO_HIPOTECA5" ColumnName="DESC_FAVORECIDO_HIPOTECA5" />
+                <ScalarProperty Name="DESC_FAVORECIDO_HIPOTECA4" ColumnName="DESC_FAVORECIDO_HIPOTECA4" />
+                <ScalarProperty Name="DESC_FAVORECIDO_HIPOTECA3" ColumnName="DESC_FAVORECIDO_HIPOTECA3" />
+                <ScalarProperty Name="DESC_FAVORECIDO_HIPOTECA2" ColumnName="DESC_FAVORECIDO_HIPOTECA2" />
+                <ScalarProperty Name="DT_VENC_HIPOTECA6" ColumnName="DT_VENC_HIPOTECA6" />
+                <ScalarProperty Name="DT_VENC_HIPOTECA5" ColumnName="DT_VENC_HIPOTECA5" />
+                <ScalarProperty Name="DT_VENC_HIPOTECA4" ColumnName="DT_VENC_HIPOTECA4" />
+                <ScalarProperty Name="DT_VENC_HIPOTECA3" ColumnName="DT_VENC_HIPOTECA3" />
+                <ScalarProperty Name="DT_VENC_HIPOTECA2" ColumnName="DT_VENC_HIPOTECA2" />
+                <ScalarProperty Name="VAL_HIPOTECA6" ColumnName="VAL_HIPOTECA6" />
+                <ScalarProperty Name="VAL_HIPOTECA5" ColumnName="VAL_HIPOTECA5" />
+                <ScalarProperty Name="VAL_HIPOTECA4" ColumnName="VAL_HIPOTECA4" />
+                <ScalarProperty Name="VAL_HIPOTECA3" ColumnName="VAL_HIPOTECA3" />
+                <ScalarProperty Name="VAL_HIPOTECA2" ColumnName="VAL_HIPOTECA2" />
+                <ScalarProperty Name="QT_RENDA_SAFRINHA" ColumnName="QT_RENDA_SAFRINHA" />
+                <ScalarProperty Name="QT_RENDA_SAFRA" ColumnName="QT_RENDA_SAFRA" />
+                <ScalarProperty Name="IND_TIPO_IMOVEL" ColumnName="IND_TIPO_IMOVEL" />
+                <ScalarProperty Name="NUM_MATRICULA" ColumnName="NUM_MATRICULA" />
+                <ScalarProperty Name="DESC_CEP" ColumnName="DESC_CEP" />
+                <ScalarProperty Name="DESC_BAIRRO" ColumnName="DESC_BAIRRO" />
+                <ScalarProperty Name="COD_CIDADE" ColumnName="COD_CIDADE" />
+                <ScalarProperty Name="DT_VENC_HIPOTECA" ColumnName="DT_VENC_HIPOTECA" />
+                <ScalarProperty Name="DESC_FAVORECIDO_HIPOTECA" ColumnName="DESC_FAVORECIDO_HIPOTECA" />
+                <ScalarProperty Name="VAL_HIPOTECA" ColumnName="VAL_HIPOTECA" />
+                <ScalarProperty Name="DESC_GRAU_HIPOTECA" ColumnName="DESC_GRAU_HIPOTECA" />
+                <ScalarProperty Name="IND_HIPOTECA" ColumnName="IND_HIPOTECA" />
+                <ScalarProperty Name="DESC_OBSERVACAO" ColumnName="DESC_OBSERVACAO" />
+                <ScalarProperty Name="DESC_LOCALIDADE" ColumnName="DESC_LOCALIDADE" />
+                <ScalarProperty Name="NUM_AREA" ColumnName="NUM_AREA" />
+                <ScalarProperty Name="VAL_PROPRIEDADE" ColumnName="VAL_PROPRIEDADE" />
+                <ScalarProperty Name="NUM_ANO" ColumnName="NUM_ANO" />
+                <ScalarProperty Name="DESC_PROPRIEDADE" ColumnName="DESC_PROPRIEDADE" />
+                <ScalarProperty Name="COD_TIPO_PROPRIEDADE" ColumnName="COD_TIPO_PROPRIEDADE" />
+                <ScalarProperty Name="COD_CADASTRO" ColumnName="COD_CADASTRO" />
+                <ScalarProperty Name="COD_PROPRIEDADE" ColumnName="COD_PROPRIEDADE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TB_QUALIFICACAO_SOCIO">
+            <EntityTypeMapping TypeName="Model.TB_QUALIFICACAO_SOCIO">
+              <MappingFragment StoreEntitySet="TB_QUALIFICACAO_SOCIO">
+                <ScalarProperty Name="IND_TIPO" ColumnName="IND_TIPO" />
+                <ScalarProperty Name="IND_PAIS" ColumnName="IND_PAIS" />
+                <ScalarProperty Name="DESC_QUALIFICACAO_SOCIO" ColumnName="DESC_QUALIFICACAO_SOCIO" />
+                <ScalarProperty Name="COD_QUALIFICACAO_SOCIO" ColumnName="COD_QUALIFICACAO_SOCIO" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

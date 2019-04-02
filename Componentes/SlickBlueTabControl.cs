@@ -31,7 +31,7 @@ public class SlickBlueTabControl : TabControl
         g.Clear(FromHex("#EEE9E9"));
         for (int i = 0; i <= TabCount - 1; i++)
         {
-            Rectangle tabRect = GetTabRect(i);
+            Rectangle tabRect = GetTabRect(i);            
             if (i == SelectedIndex)
             {                
                 if (i == 0)
@@ -55,18 +55,29 @@ public class SlickBlueTabControl : TabControl
                 {
                     g.FillRectangle(new SolidBrush(/*FromHex("#435363")*/Color.LightGray), 0, tabRect.Y, tabRect.Width + 3, tabRect.Height);
                 }
+
+                //ToolTipText
+                //string drawToolTip = this.TabPages[i].ToolTipText;
+                //System.Drawing.Font drawToolTipFont = new System.Drawing.Font("Calibri Light", 6);
+                //System.Drawing.SolidBrush drawToolTipBrush = new System.Drawing.SolidBrush(System.Drawing.Color.Gray);
+                //float xToolTip = tabRect.Left;
+                //float yToolTip = tabRect.Bottom - 12;
+                //System.Drawing.StringFormat drawToolTipFormat = new System.Drawing.StringFormat();
+                //g.DrawString(drawToolTip.ToUpper(), drawToolTipFont, drawToolTipBrush, xToolTip, yToolTip, drawToolTipFormat);
+                //drawToolTipFont.Dispose();
+                //drawToolTipBrush.Dispose();                
             }
             else
             {
                 g.FillRectangle(new SolidBrush(/*FromHex("#2c3e50")*/FromHex("#EEE9E9")), tabRect);
             }
 
-            
+                //Labels das abas
                 string drawString = this.TabPages[i].Text;
-                System.Drawing.Font drawFont = new System.Drawing.Font("Calibri Light", 10);
+                System.Drawing.Font drawFont = new System.Drawing.Font("Calibri Light", 9);
                 System.Drawing.SolidBrush drawBrush = new System.Drawing.SolidBrush(System.Drawing.Color.SteelBlue);
                 float x = tabRect.Width / 2 - 55;
-                float y = tabRect.Y + tabRect.Height / 2 - 8;          
+                float y = tabRect.Y + tabRect.Height / 2 - 6;          
                 System.Drawing.StringFormat drawFormat = new System.Drawing.StringFormat();
                 g.DrawString(drawString.ToUpper(), drawFont, drawBrush, x, y, drawFormat);
                 drawFont.Dispose();

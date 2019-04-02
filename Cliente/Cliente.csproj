@@ -37,6 +37,7 @@
       <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
@@ -83,7 +84,12 @@
     </Compile>
     <Compile Include="POCO\FisicaJuridica.cs" />
     <Compile Include="POCO\TB_CADASTRO.cs" />
+    <Compile Include="POCO\TB_CIDADE.cs" />
+    <Compile Include="POCO\TB_CLASS_CADASTRO.cs" />
+    <Compile Include="POCO\TB_ESTADO.cs" />
+    <Compile Include="POCO\TB_PAIS.cs" />
     <Compile Include="POCO\TB_TIPO_CADASTRO.cs" />
+    <Compile Include="POCO\TB_VENDEDOR.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Forms\FCadastroCad.resx">
@@ -122,6 +128,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Cemapa\Servidor.csproj">
+      <Project>{c86a3b98-c0c5-4e6c-8b46-c73c5aed9207}</Project>
+      <Name>Servidor</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Componentes\Componentes.csproj">
       <Project>{8d6291ca-7834-4798-a379-6023091934e2}</Project>
       <Name>Componentes</Name>

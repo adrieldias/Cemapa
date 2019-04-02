@@ -37,5 +37,8 @@ namespace Cemapa.Models
         public virtual DbSet<TB_TABELA_PRECO_CAB> TB_TABELA_PRECO_CAB { get; set; }
         public virtual DbSet<TB_USUARIO> TB_USUARIO { get; set; }
         public virtual DbSet<TB_VENDEDOR> TB_VENDEDOR { get; set; }
+        public virtual DbSet<TB_TIPO_PROPRIEDADE> TB_TIPO_PROPRIEDADE { get; set; }
+        public virtual DbSet<TB_PROPRIEDADE> TB_PROPRIEDADE { get; set; }
+        public virtual DbSet<TB_QUALIFICACAO_SOCIO> TB_QUALIFICACAO_SOCIO { get; set; }
     }
 }

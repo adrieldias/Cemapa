@@ -103,7 +103,7 @@
             this.btFechar.FlatAppearance.BorderColor = System.Drawing.Color.Gainsboro;
             this.btFechar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btFechar.ForeColor = System.Drawing.Color.Gray;
-            this.btFechar.Location = new System.Drawing.Point(172, 53);
+            this.btFechar.Location = new System.Drawing.Point(173, 53);
             this.btFechar.Margin = new System.Windows.Forms.Padding(1);
             this.btFechar.Name = "btFechar";
             this.btFechar.Padding = new System.Windows.Forms.Padding(0, 5, 0, 5);
@@ -120,7 +120,7 @@
             this.btCancelar.FlatAppearance.BorderColor = System.Drawing.Color.Gainsboro;
             this.btCancelar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btCancelar.ForeColor = System.Drawing.Color.White;
-            this.btCancelar.Location = new System.Drawing.Point(86, 53);
+            this.btCancelar.Location = new System.Drawing.Point(87, 53);
             this.btCancelar.Margin = new System.Windows.Forms.Padding(1);
             this.btCancelar.Name = "btCancelar";
             this.btCancelar.Padding = new System.Windows.Forms.Padding(0, 5, 0, 5);
@@ -136,7 +136,7 @@
             this.btSalvar.FlatAppearance.BorderColor = System.Drawing.Color.Gainsboro;
             this.btSalvar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btSalvar.ForeColor = System.Drawing.Color.Gray;
-            this.btSalvar.Location = new System.Drawing.Point(0, 53);
+            this.btSalvar.Location = new System.Drawing.Point(1, 53);
             this.btSalvar.Margin = new System.Windows.Forms.Padding(1);
             this.btSalvar.Name = "btSalvar";
             this.btSalvar.Padding = new System.Windows.Forms.Padding(0, 5, 0, 5);

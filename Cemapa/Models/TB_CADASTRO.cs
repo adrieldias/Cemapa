@@ -180,6 +180,8 @@ namespace Cemapa.Models
         public string DESC_RNTRC { get; set; }
         public string DESC_TAF { get; set; }
         public string DESC_NRO_REG_ESTADUAL { get; set; }
+        public string DESC_OUTRAS_GRANTIAS { get; set; }
+        public string IND_SINC_MAX_ROTEIRIZADOR { get; set; }
     
         public virtual TB_CIDADE TB_CIDADE { get; set; }
         public virtual TB_TIPO_CADASTRO TB_TIPO_CADASTRO { get; set; }
@@ -193,5 +195,6 @@ namespace Cemapa.Models
         public virtual TB_USUARIO TB_USUARIO { get; set; }
         public virtual TB_VENDEDOR TB_VENDEDOR { get; set; }
         public virtual TB_TABELA_PRECO_CAB TB_TABELA_PRECO_CAB { get; set; }
+        public virtual TB_QUALIFICACAO_SOCIO TB_QUALIFICACAO_SOCIO { get; set; }
     }
 }

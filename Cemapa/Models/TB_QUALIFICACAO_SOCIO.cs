@@ -12,25 +12,20 @@ namespace Cemapa.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class TB_CIDADE
+    public partial class TB_QUALIFICACAO_SOCIO
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public TB_CIDADE()
+        public TB_QUALIFICACAO_SOCIO()
         {
             this.TB_CADASTRO = new HashSet<TB_CADASTRO>();
         }
     
-        public int COD_CIDADE { get; set; }
-        public string DESC_CIDADE { get; set; }
-        public string COD_ESTADO { get; set; }
-        public string COD_PRACA { get; set; }
-        public Nullable<int> COD_DFC { get; set; }
-        public Nullable<short> COD_MUNICIPIO_SC { get; set; }
-        public string COD_CIDADE_IBGE { get; set; }
-        public Nullable<decimal> PERC_DEDUCAO_NFSE { get; set; }
+        public string COD_QUALIFICACAO_SOCIO { get; set; }
+        public string DESC_QUALIFICACAO_SOCIO { get; set; }
+        public string IND_PAIS { get; set; }
+        public string IND_TIPO { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TB_CADASTRO> TB_CADASTRO { get; set; }
-        public virtual TB_ESTADO TB_ESTADO { get; set; }
     }
 }
