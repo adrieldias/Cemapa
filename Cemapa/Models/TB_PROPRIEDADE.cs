@@ -53,5 +53,7 @@ namespace Cemapa.Models
         public string DESC_CRI { get; set; }
         public Nullable<System.DateTime> DT_VENC_CONTRATO { get; set; }
         public Nullable<int> COD_CADASTRO_PROPRIETARIO { get; set; }
+    
+        public virtual TB_CIDADE TB_CIDADE { get; set; }
     }
 }

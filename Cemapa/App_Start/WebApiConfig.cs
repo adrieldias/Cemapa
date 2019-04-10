@@ -8,22 +8,21 @@ namespace Cemapa
     public static class WebApiConfig
     {
         public static void Register(HttpConfiguration config)
-        {
-            
-            // Serviços e configuração da API da Web
+        {   
 
-            // Rotas da API da Web
+            // Habilita o mapeamento de atributo (Data annotation nas actions)
             config.MapHttpAttributeRoutes();
 
+            // Rotas             
+            config.Routes.MapHttpRoute(
+                name: "RotaComAction",
+                routeTemplate: "api/{controller}/{action}/{id}",
+                defaults: new { action = "Get", id = RouteParameter.Optional }
+            );
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
-            );
-            config.Routes.MapHttpRoute(
-                name: "RotaComAction",
-                routeTemplate: "api/{controller}/{action}/{value}",
-                defaults: new { value = RouteParameter.Optional }
             );
         }
     }

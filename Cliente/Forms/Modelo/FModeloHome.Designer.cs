@@ -59,6 +59,7 @@
             // 
             this.btMinimize.Dock = System.Windows.Forms.DockStyle.Right;
             this.btMinimize.FlatAppearance.BorderColor = System.Drawing.Color.SteelBlue;
+            this.btMinimize.FlatAppearance.BorderSize = 0;
             this.btMinimize.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btMinimize.Font = new System.Drawing.Font("Arial", 13F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btMinimize.ForeColor = System.Drawing.Color.White;
@@ -76,6 +77,7 @@
             // 
             this.btCloseForm.Dock = System.Windows.Forms.DockStyle.Right;
             this.btCloseForm.FlatAppearance.BorderColor = System.Drawing.Color.SteelBlue;
+            this.btCloseForm.FlatAppearance.BorderSize = 0;
             this.btCloseForm.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btCloseForm.Font = new System.Drawing.Font("Arial", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btCloseForm.ForeColor = System.Drawing.Color.White;
@@ -103,6 +105,7 @@
             this.btNovo.AutoSize = true;
             this.btNovo.BackColor = System.Drawing.Color.WhiteSmoke;
             this.btNovo.FlatAppearance.BorderColor = System.Drawing.Color.Gainsboro;
+            this.btNovo.FlatAppearance.BorderSize = 0;
             this.btNovo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btNovo.ForeColor = System.Drawing.Color.Gray;
             this.btNovo.Location = new System.Drawing.Point(1, 53);
@@ -118,6 +121,7 @@
             this.btAlterar.AutoSize = true;
             this.btAlterar.BackColor = System.Drawing.Color.WhiteSmoke;
             this.btAlterar.FlatAppearance.BorderColor = System.Drawing.Color.Gainsboro;
+            this.btAlterar.FlatAppearance.BorderSize = 0;
             this.btAlterar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btAlterar.ForeColor = System.Drawing.Color.Gray;
             this.btAlterar.Location = new System.Drawing.Point(82, 53);
@@ -133,6 +137,7 @@
             this.btExcluir.AutoSize = true;
             this.btExcluir.BackColor = System.Drawing.Color.Tomato;
             this.btExcluir.FlatAppearance.BorderColor = System.Drawing.Color.Gainsboro;
+            this.btExcluir.FlatAppearance.BorderSize = 0;
             this.btExcluir.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btExcluir.ForeColor = System.Drawing.Color.White;
             this.btExcluir.Location = new System.Drawing.Point(246, 53);
@@ -148,6 +153,7 @@
             this.btVisualizar.AutoSize = true;
             this.btVisualizar.BackColor = System.Drawing.Color.WhiteSmoke;
             this.btVisualizar.FlatAppearance.BorderColor = System.Drawing.Color.Gainsboro;
+            this.btVisualizar.FlatAppearance.BorderSize = 0;
             this.btVisualizar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btVisualizar.ForeColor = System.Drawing.Color.Gray;
             this.btVisualizar.Location = new System.Drawing.Point(163, 53);
@@ -171,6 +177,8 @@
             this.Controls.Add(this.pCabecalho);
             this.Name = "FModeloHome";
             this.Text = "FModeloHome";
+            this.Activated += new System.EventHandler(this.FModeloHome_Activated);
+            this.Deactivate += new System.EventHandler(this.FModeloHome_Deactivate);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.FModeloHome_Paint);
             this.Resize += new System.EventHandler(this.FModeloHome_Resize);
             this.pCabecalho.ResumeLayout(false);

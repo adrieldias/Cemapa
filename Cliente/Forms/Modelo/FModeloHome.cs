@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Reflection;
 using System.Runtime.InteropServices;
-
+using System.Net.Http;
 
 namespace Cliente.Forms.Modelo
 {
@@ -34,7 +34,90 @@ namespace Cliente.Forms.Modelo
             int nWidthEllipse,
             int nHeightEllipse
             );
-        
+
+
+        #region Acesso assíncrono ao servidor
+
+        public static async Task<string> RunAsyncGet(string uri, int codigo)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(uri + codigo);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+
+                // HTTP GET
+                HttpResponseMessage response = await client.GetAsync("");
+                if (response.IsSuccessStatusCode)
+                {
+                    var resposta = response.Content.ReadAsStringAsync();
+                    client.Dispose();
+                    response.Dispose();
+                    return await resposta;
+                }
+                else
+                {
+                    client.Dispose();
+                    response.Dispose();
+                    return "ERRO";
+                }
+            }
+        }
+
+        public static async Task<string> RunAsyncGet(string uri, string valor)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(uri);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+
+                // HTTP GET
+                HttpResponseMessage response = await client.GetAsync(string.Format("{0}/{1}", uri, valor));
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var resposta = response.Content.ReadAsStringAsync();
+                    client.Dispose();
+                    response.Dispose();
+                    return await resposta;
+                }
+                else
+                {
+                    client.Dispose();
+                    response.Dispose();
+                    return "ERRO";
+                }
+            }
+        }
+
+        public static async Task<string> RunAsyncGet(string uri)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(uri);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+
+                // HTTP GET
+                HttpResponseMessage response = await client.GetAsync("");
+                if (response.IsSuccessStatusCode)
+                {
+                    var resposta = response.Content.ReadAsStringAsync();
+                    response.Dispose();
+                    client.Dispose();
+                    return await resposta;
+                }
+                else
+                {
+                    response.Dispose();
+                    client.Dispose();
+                    return "ERRO";
+                }
+            }
+        }
+        #endregion
+
 
         public FModeloHome()
         {
@@ -159,6 +242,37 @@ namespace Cliente.Forms.Modelo
         {
             PersonalizaForm.Instancia.Personaliza(this);
             AddEventGridView();
+        }
+
+        private void FModeloHome_Activated(object sender, EventArgs e)
+        {
+            pCabecalho.BackColor = Color.SteelBlue;
+            btMinimize.FlatAppearance.BorderColor = Color.SteelBlue;
+            btCloseForm.FlatAppearance.BorderColor = Color.SteelBlue;
+        }
+
+        private void FModeloHome_Deactivate(object sender, EventArgs e)
+        {
+            pCabecalho.BackColor = Color.LightSlateGray;
+            btMinimize.FlatAppearance.BorderColor = Color.LightSlateGray;
+            btCloseForm.FlatAppearance.BorderColor = Color.LightSlateGray;
+        }
+
+        public string[] ObterValoresTipoAnonimo(Object objeto)
+        {
+            if (objeto == null)
+                return new string[] { };
+            var lista = new List<string>();
+            var p = objeto.GetType().GetProperties();
+
+            foreach (PropertyInfo pop in p)
+            {
+                var valor = pop.GetValue(objeto, null);
+                if (valor != null)
+                    lista.Add(valor.ToString());
+            }
+
+            return lista.ToArray();
         }
     }
 }

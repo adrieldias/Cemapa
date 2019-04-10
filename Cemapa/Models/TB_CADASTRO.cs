@@ -14,6 +14,12 @@ namespace Cemapa.Models
     
     public partial class TB_CADASTRO
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public TB_CADASTRO()
+        {
+            this.TB_CADASTRO_ENDERECOS = new HashSet<TB_CADASTRO_ENDERECOS>();
+        }
+    
         public int COD_CADASTRO { get; set; }
         public Nullable<int> COD_MOTIVO { get; set; }
         public int COD_TIPO_CADASTRO { get; set; }
@@ -196,5 +202,7 @@ namespace Cemapa.Models
         public virtual TB_VENDEDOR TB_VENDEDOR { get; set; }
         public virtual TB_TABELA_PRECO_CAB TB_TABELA_PRECO_CAB { get; set; }
         public virtual TB_QUALIFICACAO_SOCIO TB_QUALIFICACAO_SOCIO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TB_CADASTRO_ENDERECOS> TB_CADASTRO_ENDERECOS { get; set; }
     }
 }

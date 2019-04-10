@@ -17,31 +17,21 @@ using System.Reflection;
 namespace Cliente.Forms
 {
     public partial class FCadastroHome : FModeloHome
-    {        
+    {
+        public BindingSource CadastroBindingSource { get; set; }
 
         public FCadastroHome()
         {
             InitializeComponent();
-            this.Inicializa();            
-        }        
+            this.Inicializa();
+            if (CadastroBindingSource == null)
+                CadastroBindingSource = new BindingSource();
+            CadastroBindingSource.CurrentChanged += new EventHandler(CadastroBindingSource_CurrentChanged);
+        }
 
-        static async Task<string> RunAsync()
+        private void CadastroBindingSource_CurrentChanged(object sender, EventArgs e)
         {
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri("http://localhost:53233/API/Cadastro");
-                //client.BaseAddress = new Uri("http://localhost:53233/API/Cadastro/GetCadastro/988056");
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-
-                // HTTP GET
-                HttpResponseMessage response = await client.GetAsync("");
-                //HttpResponseMessage response = client.GetAsync("").Result;
-                if (response.IsSuccessStatusCode)
-                    return await response.Content.ReadAsStringAsync();
-                else
-                    return "ERRO";
-            }
+            
         }
 
         private async void FCadastroHome_Load(object sender, EventArgs e)
@@ -50,27 +40,28 @@ namespace Cliente.Forms
             {
                 Data = new[] {
                     new {
-                        Codigo = 0,
-                        Tipo = string.Empty,
-                        Nome = string.Empty,
-                        Telefone = string.Empty,
-                        Celular = string.Empty,
-                        CGC_CPF = string.Empty,
-                        Endereco = string.Empty,
-                        CodCidade = string.Empty,
-                        Cidade = string.Empty,
-                        Bairro = string.Empty,
-                        Inscricao = string.Empty,
-                        Fantasia = string.Empty,
-                        Classificacao = string.Empty
+                        CODIGO = 0,
+                        TIPO = string.Empty,
+                        NOME = string.Empty,
+                        TELEFONE = string.Empty,
+                        CELULAR = string.Empty,
+                        CNPJ_CPF = string.Empty,
+                        ENDERECO = string.Empty,
+                        //CodCidade = string.Empty,
+                        CIDADE = string.Empty,
+                        BAIRRO = string.Empty,
+                        INSCRICAO = string.Empty,
+                        FANTASIA = string.Empty,
+                        CLASSIFICACAO = string.Empty
                     }
                 }
             };
-
+            
             // Busca os dados no servidor
-            var anonymousType = JsonConvert.DeserializeAnonymousType((await RunAsync()), definition);
-            this.Dados = anonymousType.Data;            
-            dataGridView1.DataSource = this.Dados;
+            var anonymousType = JsonConvert.DeserializeAnonymousType(
+                (await RunAsyncGet("http://localhost:53233/API/Cadastro/GetPersonalizado")), definition);
+            CadastroBindingSource.DataSource = anonymousType.Data;
+            dataGridView1.DataSource = CadastroBindingSource.DataSource;
         }
 
         
@@ -88,8 +79,9 @@ namespace Cliente.Forms
         private void btVisualizar_Click(object sender, EventArgs e)
         {
             FCadastroCad f = new FCadastroCad("VISUALIZAR");
-            f.ChaveConsulta.Add("Codigo", this.ValorSelecionado("Codigo"));
-            f.Show();
+            MessageBox.Show(ObterValoresTipoAnonimo(CadastroBindingSource.Current)[0]);
+            //f.ChaveConsulta.Add("Codigo", ObterValoresTipoAnonimo(CadastroBindingSource.Current)[0]);
+            //f.Show();
         }
     }
 }

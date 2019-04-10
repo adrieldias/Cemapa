@@ -40,5 +40,6 @@ namespace Cemapa.Models
         public virtual DbSet<TB_TIPO_PROPRIEDADE> TB_TIPO_PROPRIEDADE { get; set; }
         public virtual DbSet<TB_PROPRIEDADE> TB_PROPRIEDADE { get; set; }
         public virtual DbSet<TB_QUALIFICACAO_SOCIO> TB_QUALIFICACAO_SOCIO { get; set; }
+        public virtual DbSet<TB_CADASTRO_ENDERECOS> TB_CADASTRO_ENDERECOS { get; set; }
     }
 }

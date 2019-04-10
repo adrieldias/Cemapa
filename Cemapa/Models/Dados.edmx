@@ -178,6 +178,25 @@
           <Property Name="DESC_NRO_REG_ESTADUAL" Type="varchar2" MaxLength="25" />
           <Property Name="IND_SINC_MAX_ROTEIRIZADOR" Type="char" MaxLength="1" />
         </EntityType>
+        <EntityType Name="TB_CADASTRO_ENDERECOS">
+          <Key>
+            <PropertyRef Name="COD_CADASTRO" />
+            <PropertyRef Name="DESC_CADPRO" />
+          </Key>
+          <Property Name="COD_CADASTRO" Type="number" Precision="6" Scale="0" Nullable="false" />
+          <Property Name="DESC_CADPRO" Type="varchar2" MaxLength="15" Nullable="false" />
+          <Property Name="DESC_ENDERECO" Type="varchar2" MaxLength="40" Nullable="false" />
+          <Property Name="COD_CIDADE" Type="number" Precision="6" Scale="0" />
+          <Property Name="DESC_CIDADE" Type="varchar2" MaxLength="30" Nullable="false" />
+          <Property Name="COD_ESTADO" Type="varchar2" MaxLength="2" />
+          <Property Name="DESC_BAIRRO" Type="varchar2" MaxLength="20" />
+          <Property Name="NUM_CAIXA_POSTAL" Type="number" Precision="6" Scale="0" />
+          <Property Name="DESC_CEP" Type="varchar2" MaxLength="9" />
+          <Property Name="COD_PAIS" Type="number" Precision="6" Scale="0" />
+          <Property Name="DESC_DISTRITO" Type="varchar2" MaxLength="15" />
+          <Property Name="DESC_E_MAIL_COMERCIAL" Type="varchar2" MaxLength="70" />
+          <Property Name="DESC_E_MAIL_FINANCEIRO" Type="varchar2" MaxLength="70" />
+        </EntityType>
         <EntityType Name="TB_CIDADE">
           <Key>
             <PropertyRef Name="COD_CIDADE" />
@@ -421,6 +440,20 @@
           <Property Name="PERC_COMISSAO4" Type="number" Precision="5" Scale="2" />
           <Property Name="DESC_E_MAIL1" Type="varchar2" MaxLength="70" />
         </EntityType>
+        <Association Name="FK_CADASTRO_ENDERECOSXCADASTRO">
+          <End Role="TB_CADASTRO" Type="Self.TB_CADASTRO" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TB_CADASTRO_ENDERECOS" Type="Self.TB_CADASTRO_ENDERECOS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_CADASTRO">
+              <PropertyRef Name="COD_CADASTRO" />
+            </Principal>
+            <Dependent Role="TB_CADASTRO_ENDERECOS">
+              <PropertyRef Name="COD_CADASTRO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_CADASTROXESTADOVEIC">
           <End Role="TB_ESTADO" Type="Self.TB_ESTADO" Multiplicity="0..1" />
           <End Role="TB_CADASTRO" Type="Self.TB_CADASTRO" Multiplicity="*" />
@@ -445,6 +478,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_PROPRIEDADEXCIDADE">
+          <End Role="TB_CIDADE" Type="Self.TB_CIDADE" Multiplicity="0..1" />
+          <End Role="TB_PROPRIEDADE" Type="Self.TB_PROPRIEDADE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_CIDADE">
+              <PropertyRef Name="COD_CIDADE" />
+            </Principal>
+            <Dependent Role="TB_PROPRIEDADE">
+              <PropertyRef Name="COD_CIDADE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_TABELA_PRECO_CABXCADASTRO">
           <End Role="TB_TABELA_PRECO_CAB" Type="Self.TB_TABELA_PRECO_CAB" Multiplicity="0..1" />
           <End Role="TB_CADASTRO" Type="Self.TB_CADASTRO" Multiplicity="*" />
@@ -459,6 +504,7 @@
         </Association>
         <EntityContainer Name="ModelStoreContainer">
           <EntitySet Name="TB_CADASTRO" EntityType="Self.TB_CADASTRO" Schema="SISTEMA" store:Type="Tables" />
+          <EntitySet Name="TB_CADASTRO_ENDERECOS" EntityType="Self.TB_CADASTRO_ENDERECOS" Schema="SISTEMA" store:Type="Tables" />
           <EntitySet Name="TB_CIDADE" EntityType="Self.TB_CIDADE" Schema="SISTEMA" store:Type="Tables" />
           <EntitySet Name="TB_CLASS_CADASTRO" EntityType="Self.TB_CLASS_CADASTRO" Schema="SISTEMA" store:Type="Tables" />
           <EntitySet Name="TB_ESTADO" EntityType="Self.TB_ESTADO" Schema="SISTEMA" store:Type="Tables" />
@@ -473,6 +519,10 @@
           <EntitySet Name="TB_TIPO_PROPRIEDADE" EntityType="Self.TB_TIPO_PROPRIEDADE" Schema="SISTEMA" store:Type="Tables" />
           <EntitySet Name="TB_USUARIO" EntityType="Self.TB_USUARIO" Schema="SISTEMA" store:Type="Tables" />
           <EntitySet Name="TB_VENDEDOR" EntityType="Self.TB_VENDEDOR" Schema="SISTEMA" store:Type="Tables" />
+          <AssociationSet Name="FK_CADASTRO_ENDERECOSXCADASTRO" Association="Self.FK_CADASTRO_ENDERECOSXCADASTRO">
+            <End Role="TB_CADASTRO" EntitySet="TB_CADASTRO" />
+            <End Role="TB_CADASTRO_ENDERECOS" EntitySet="TB_CADASTRO_ENDERECOS" />
+          </AssociationSet>
           <AssociationSet Name="FK_CADASTROXESTADOVEIC" Association="Self.FK_CADASTROXESTADOVEIC">
             <End Role="TB_ESTADO" EntitySet="TB_ESTADO" />
             <End Role="TB_CADASTRO" EntitySet="TB_CADASTRO" />
@@ -480,6 +530,10 @@
           <AssociationSet Name="FK_CADASTROXQUALIFICACAOSOCIO" Association="Self.FK_CADASTROXQUALIFICACAOSOCIO">
             <End Role="TB_QUALIFICACAO_SOCIO" EntitySet="TB_QUALIFICACAO_SOCIO" />
             <End Role="TB_CADASTRO" EntitySet="TB_CADASTRO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PROPRIEDADEXCIDADE" Association="Self.FK_PROPRIEDADEXCIDADE">
+            <End Role="TB_CIDADE" EntitySet="TB_CIDADE" />
+            <End Role="TB_PROPRIEDADE" EntitySet="TB_PROPRIEDADE" />
           </AssociationSet>
           <AssociationSet Name="FK_TABELA_PRECO_CABXCADASTRO" Association="Self.FK_TABELA_PRECO_CABXCADASTRO">
             <End Role="TB_TABELA_PRECO_CAB" EntitySet="TB_TABELA_PRECO_CAB" />
@@ -675,6 +729,7 @@
           <Property Name="DESC_OUTRAS_GRANTIAS" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="IND_SINC_MAX_ROTEIRIZADOR" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <NavigationProperty Name="TB_QUALIFICACAO_SOCIO" Relationship="Model.FK_CADASTROXQUALIFICACAOSOCIO" FromRole="TB_CADASTRO" ToRole="TB_QUALIFICACAO_SOCIO" />
+          <NavigationProperty Name="TB_CADASTRO_ENDERECOS" Relationship="Model.FK_CADASTRO_ENDERECOSXCADASTRO" FromRole="TB_CADASTRO" ToRole="TB_CADASTRO_ENDERECOS" />
         </EntityType>
         <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="TB_CADASTRO" EntityType="Self.TB_CADASTRO" />
@@ -752,6 +807,15 @@
             <End Role="TB_QUALIFICACAO_SOCIO" EntitySet="TB_QUALIFICACAO_SOCIO" />
             <End Role="TB_CADASTRO" EntitySet="TB_CADASTRO" />
           </AssociationSet>
+          <EntitySet Name="TB_CADASTRO_ENDERECOS" EntityType="Model.TB_CADASTRO_ENDERECOS" />
+          <AssociationSet Name="FK_CADASTRO_ENDERECOSXCADASTRO" Association="Model.FK_CADASTRO_ENDERECOSXCADASTRO">
+            <End Role="TB_CADASTRO" EntitySet="TB_CADASTRO" />
+            <End Role="TB_CADASTRO_ENDERECOS" EntitySet="TB_CADASTRO_ENDERECOS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PROPRIEDADEXCIDADE" Association="Model.FK_PROPRIEDADEXCIDADE">
+            <End Role="TB_CIDADE" EntitySet="TB_CIDADE" />
+            <End Role="TB_PROPRIEDADE" EntitySet="TB_PROPRIEDADE" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="TB_CIDADE">
           <Key>
@@ -767,6 +831,7 @@
           <NavigationProperty Name="TB_CADASTRO" Relationship="Model.FK_CADASTROXCIDADE" FromRole="TB_CIDADE" ToRole="TB_CADASTRO" />
           <NavigationProperty Name="TB_ESTADO" Relationship="Model.FK_MUNICIPIOXESTADO" FromRole="TB_CIDADE" ToRole="TB_ESTADO" />
           <Property Name="PERC_DEDUCAO_NFSE" Type="Decimal" Precision="5" Scale="2" />
+          <NavigationProperty Name="TB_PROPRIEDADE" Relationship="Model.FK_PROPRIEDADEXCIDADE" FromRole="TB_CIDADE" ToRole="TB_PROPRIEDADE" />
         </EntityType>
         <Association Name="FK_CADASTROXCIDADE">
           <End Type="Model.TB_CIDADE" Role="TB_CIDADE" Multiplicity="0..1" />
@@ -1170,6 +1235,7 @@
           <Property Name="DESC_CRI" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="DT_VENC_CONTRATO" Type="DateTime" />
           <Property Name="COD_CADASTRO_PROPRIETARIO" Type="Int32" />
+          <NavigationProperty Name="TB_CIDADE" Relationship="Model.FK_PROPRIEDADEXCIDADE" FromRole="TB_PROPRIEDADE" ToRole="TB_CIDADE" />
         </EntityType>
         <EntityType Name="TB_QUALIFICACAO_SOCIO">
           <Key>
@@ -1190,6 +1256,52 @@
             </Principal>
             <Dependent Role="TB_CADASTRO">
               <PropertyRef Name="COD_QUALIFICACAO_SOCIO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="TB_CADASTRO_ENDERECOS">
+          <Key>
+            <PropertyRef Name="COD_CADASTRO" />
+            <PropertyRef Name="DESC_CADPRO" />
+          </Key>
+          <Property Name="COD_CADASTRO" Type="Int32" Nullable="false" />
+          <Property Name="DESC_CADPRO" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_ENDERECO" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="COD_CIDADE" Type="Int32" />
+          <Property Name="DESC_CIDADE" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="COD_ESTADO" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_BAIRRO" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="NUM_CAIXA_POSTAL" Type="Int32" />
+          <Property Name="DESC_CEP" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Name="COD_PAIS" Type="Int32" />
+          <Property Name="DESC_DISTRITO" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_E_MAIL_COMERCIAL" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_E_MAIL_FINANCEIRO" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TB_CADASTRO" Relationship="Model.FK_CADASTRO_ENDERECOSXCADASTRO" FromRole="TB_CADASTRO_ENDERECOS" ToRole="TB_CADASTRO" />
+        </EntityType>
+        <Association Name="FK_CADASTRO_ENDERECOSXCADASTRO">
+          <End Type="Model.TB_CADASTRO" Role="TB_CADASTRO" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Model.TB_CADASTRO_ENDERECOS" Role="TB_CADASTRO_ENDERECOS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_CADASTRO">
+              <PropertyRef Name="COD_CADASTRO" />
+            </Principal>
+            <Dependent Role="TB_CADASTRO_ENDERECOS">
+              <PropertyRef Name="COD_CADASTRO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PROPRIEDADEXCIDADE">
+          <End Type="Model.TB_CIDADE" Role="TB_CIDADE" Multiplicity="0..1" />
+          <End Type="Model.TB_PROPRIEDADE" Role="TB_PROPRIEDADE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_CIDADE">
+              <PropertyRef Name="COD_CIDADE" />
+            </Principal>
+            <Dependent Role="TB_PROPRIEDADE">
+              <PropertyRef Name="COD_CIDADE" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1627,6 +1739,25 @@
                 <ScalarProperty Name="IND_PAIS" ColumnName="IND_PAIS" />
                 <ScalarProperty Name="DESC_QUALIFICACAO_SOCIO" ColumnName="DESC_QUALIFICACAO_SOCIO" />
                 <ScalarProperty Name="COD_QUALIFICACAO_SOCIO" ColumnName="COD_QUALIFICACAO_SOCIO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TB_CADASTRO_ENDERECOS">
+            <EntityTypeMapping TypeName="Model.TB_CADASTRO_ENDERECOS">
+              <MappingFragment StoreEntitySet="TB_CADASTRO_ENDERECOS">
+                <ScalarProperty Name="DESC_E_MAIL_FINANCEIRO" ColumnName="DESC_E_MAIL_FINANCEIRO" />
+                <ScalarProperty Name="DESC_E_MAIL_COMERCIAL" ColumnName="DESC_E_MAIL_COMERCIAL" />
+                <ScalarProperty Name="DESC_DISTRITO" ColumnName="DESC_DISTRITO" />
+                <ScalarProperty Name="COD_PAIS" ColumnName="COD_PAIS" />
+                <ScalarProperty Name="DESC_CEP" ColumnName="DESC_CEP" />
+                <ScalarProperty Name="NUM_CAIXA_POSTAL" ColumnName="NUM_CAIXA_POSTAL" />
+                <ScalarProperty Name="DESC_BAIRRO" ColumnName="DESC_BAIRRO" />
+                <ScalarProperty Name="COD_ESTADO" ColumnName="COD_ESTADO" />
+                <ScalarProperty Name="DESC_CIDADE" ColumnName="DESC_CIDADE" />
+                <ScalarProperty Name="COD_CIDADE" ColumnName="COD_CIDADE" />
+                <ScalarProperty Name="DESC_ENDERECO" ColumnName="DESC_ENDERECO" />
+                <ScalarProperty Name="DESC_CADPRO" ColumnName="DESC_CADPRO" />
+                <ScalarProperty Name="COD_CADASTRO" ColumnName="COD_CADASTRO" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

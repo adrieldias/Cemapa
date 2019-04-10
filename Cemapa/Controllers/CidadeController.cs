@@ -20,13 +20,13 @@ namespace Cemapa.Controllers
                         select c;
             return query.ToList();
         }
-
+        
         [HttpGet]
-        public IList<TB_CIDADE> GetCidadesPorEstado(string value)
+        public IList<TB_CIDADE> GetCidadesPorEstado(string id)
         {
             db.Configuration.LazyLoadingEnabled = false;
             var query = from c in db.TB_CIDADE
-                        where (c.COD_ESTADO.Equals(value))
+                        where (c.COD_ESTADO.Equals(id))
                         orderby c.DESC_CIDADE
                         select c;
             return query.ToList();

@@ -41,20 +41,24 @@
             // btAlterar
             // 
             this.btAlterar.FlatAppearance.BorderColor = System.Drawing.Color.Gainsboro;
+            this.btAlterar.FlatAppearance.BorderSize = 0;
             this.btAlterar.Click += new System.EventHandler(this.btAlterar_Click);
             // 
             // btExcluir
             // 
             this.btExcluir.FlatAppearance.BorderColor = System.Drawing.Color.Gainsboro;
+            this.btExcluir.FlatAppearance.BorderSize = 0;
             // 
             // btVisualizar
             // 
             this.btVisualizar.FlatAppearance.BorderColor = System.Drawing.Color.Gainsboro;
+            this.btVisualizar.FlatAppearance.BorderSize = 0;
             this.btVisualizar.Click += new System.EventHandler(this.btVisualizar_Click);
             // 
             // btNovo
             // 
             this.btNovo.FlatAppearance.BorderColor = System.Drawing.Color.Gainsboro;
+            this.btNovo.FlatAppearance.BorderSize = 0;
             this.btNovo.Click += new System.EventHandler(this.btNovo_Click);
             // 
             // dataGridView1
@@ -63,10 +67,10 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(0, 98);
+            this.dataGridView1.Location = new System.Drawing.Point(1, 98);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(830, 316);
-            this.dataGridView1.TabIndex = 2;
+            this.dataGridView1.Size = new System.Drawing.Size(829, 316);
+            this.dataGridView1.TabIndex = 7;
             // 
             // FCadastroHome
             // 
@@ -82,8 +86,8 @@
             this.Controls.SetChildIndex(this.btAlterar, 0);
             this.Controls.SetChildIndex(this.btExcluir, 0);
             this.Controls.SetChildIndex(this.btVisualizar, 0);
-            this.Controls.SetChildIndex(this.dataGridView1, 0);
             this.Controls.SetChildIndex(this.pCabecalho, 0);
+            this.Controls.SetChildIndex(this.dataGridView1, 0);
             this.pCabecalho.ResumeLayout(false);
             this.pCabecalho.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
@@ -93,6 +97,7 @@
         }
 
         #endregion
+
         private System.Windows.Forms.DataGridView dataGridView1;
     }
 }

@@ -63,6 +63,12 @@
     <Compile Include="Forms\FCadastroCad.Designer.cs">
       <DependentUpon>FCadastroCad.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\FPropriedadeCad.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FPropriedadeCad.Designer.cs">
+      <DependentUpon>FPropriedadeCad.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Modelo\FModeloCad.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -84,10 +90,12 @@
     </Compile>
     <Compile Include="POCO\FisicaJuridica.cs" />
     <Compile Include="POCO\TB_CADASTRO.cs" />
+    <Compile Include="POCO\TB_CADASTRO_ENDERECOS.cs" />
     <Compile Include="POCO\TB_CIDADE.cs" />
     <Compile Include="POCO\TB_CLASS_CADASTRO.cs" />
     <Compile Include="POCO\TB_ESTADO.cs" />
     <Compile Include="POCO\TB_PAIS.cs" />
+    <Compile Include="POCO\TB_PROPRIEDADE.cs" />
     <Compile Include="POCO\TB_TIPO_CADASTRO.cs" />
     <Compile Include="POCO\TB_VENDEDOR.cs" />
     <Compile Include="Program.cs" />
@@ -97,6 +105,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FCadastroHome.resx">
       <DependentUpon>FCadastroHome.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FPropriedadeCad.resx">
+      <DependentUpon>FPropriedadeCad.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Modelo\FModeloCad.resx">
       <DependentUpon>FModeloCad.cs</DependentUpon>
@@ -125,7 +136,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Cemapa\Servidor.csproj">

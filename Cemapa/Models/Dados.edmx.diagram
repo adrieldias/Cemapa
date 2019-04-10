@@ -32,9 +32,12 @@
         <AssociationConnector Association="Model.FK_MUNICIPIOXESTADO" />
         <AssociationConnector Association="Model.FK_VENDEDORXESTADO" />
         <EntityTypeShape EntityType="Model.TB_TIPO_PROPRIEDADE" Width="1.5" PointX="0.875" PointY="2.75" />
-        <EntityTypeShape EntityType="Model.TB_PROPRIEDADE" Width="1.75" PointX="3" PointY="2.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.TB_PROPRIEDADE" Width="1.75" PointX="3" PointY="3.5" IsExpanded="false" />
         <EntityTypeShape EntityType="Model.TB_QUALIFICACAO_SOCIO" Width="1.5" PointX="0.75" PointY="6.875" />
         <AssociationConnector Association="Model.FK_CADASTROXQUALIFICACAOSOCIO" />
+        <EntityTypeShape EntityType="Model.TB_CADASTRO_ENDERECOS" Width="1.5" PointX="4.625" PointY="7.125" />
+        <AssociationConnector Association="Model.FK_CADASTRO_ENDERECOSXCADASTRO" />
+        <AssociationConnector Association="Model.FK_PROPRIEDADEXCIDADE" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

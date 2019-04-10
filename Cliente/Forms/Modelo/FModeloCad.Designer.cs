@@ -58,6 +58,7 @@
             // 
             this.btMinimize.Dock = System.Windows.Forms.DockStyle.Right;
             this.btMinimize.FlatAppearance.BorderColor = System.Drawing.Color.SteelBlue;
+            this.btMinimize.FlatAppearance.BorderSize = 0;
             this.btMinimize.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btMinimize.Font = new System.Drawing.Font("Arial", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btMinimize.ForeColor = System.Drawing.Color.White;
@@ -74,6 +75,7 @@
             // 
             this.btCloseForm.Dock = System.Windows.Forms.DockStyle.Right;
             this.btCloseForm.FlatAppearance.BorderColor = System.Drawing.Color.SteelBlue;
+            this.btCloseForm.FlatAppearance.BorderSize = 0;
             this.btCloseForm.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btCloseForm.Font = new System.Drawing.Font("Arial", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btCloseForm.ForeColor = System.Drawing.Color.White;
@@ -101,6 +103,7 @@
             this.btFechar.AutoSize = true;
             this.btFechar.BackColor = System.Drawing.Color.WhiteSmoke;
             this.btFechar.FlatAppearance.BorderColor = System.Drawing.Color.Gainsboro;
+            this.btFechar.FlatAppearance.BorderSize = 0;
             this.btFechar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btFechar.ForeColor = System.Drawing.Color.Gray;
             this.btFechar.Location = new System.Drawing.Point(173, 53);
@@ -118,6 +121,7 @@
             this.btCancelar.AutoSize = true;
             this.btCancelar.BackColor = System.Drawing.Color.Tomato;
             this.btCancelar.FlatAppearance.BorderColor = System.Drawing.Color.Gainsboro;
+            this.btCancelar.FlatAppearance.BorderSize = 0;
             this.btCancelar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btCancelar.ForeColor = System.Drawing.Color.White;
             this.btCancelar.Location = new System.Drawing.Point(87, 53);
@@ -134,6 +138,7 @@
             this.btSalvar.AutoSize = true;
             this.btSalvar.BackColor = System.Drawing.Color.WhiteSmoke;
             this.btSalvar.FlatAppearance.BorderColor = System.Drawing.Color.Gainsboro;
+            this.btSalvar.FlatAppearance.BorderSize = 0;
             this.btSalvar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btSalvar.ForeColor = System.Drawing.Color.Gray;
             this.btSalvar.Location = new System.Drawing.Point(1, 53);
@@ -157,6 +162,8 @@
             this.Controls.Add(this.pCabecalho);
             this.Name = "FModeloCad";
             this.Text = "FModeloCad";
+            this.Activated += new System.EventHandler(this.FModeloCad_Activated);
+            this.Deactivate += new System.EventHandler(this.FModeloCad_Deactivate);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.FModeloCad_Paint);
             this.Resize += new System.EventHandler(this.FModeloCad_Resize);
             this.pCabecalho.ResumeLayout(false);

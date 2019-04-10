@@ -140,7 +140,7 @@ namespace Cliente
                     }
                 }
 
-                if (c.GetType().Name.Equals("TabControlLateral"))
+                if (c.GetType().Name.Equals("SlickBlueTabControl"))
                 {
                     foreach (Control ci in c.Controls) // TabControl
                     {
@@ -173,6 +173,30 @@ namespace Cliente
                                     PersonalizaComboBox((ComboBox)ciii);
                                 }
                             }
+                            if (cii.GetType().Name.Equals("TextBox"))
+                            {
+                                PersonalizaTextBox((TextBox)cii);
+                            }
+
+                            if (cii.GetType().Name.Equals("DataGridView"))
+                            {
+                                PersonalizaGridView((DataGridView)cii);
+                            }
+
+                            if (cii.GetType().Name.Equals("Label"))
+                            {
+                                PersonalizaLabel((Label)cii);
+                            }
+
+                            if (cii.GetType().Name.Equals("Button"))
+                            {
+                                PersonalizaButton((Button)cii);
+                            }
+
+                            if (cii.GetType().Name.Equals("ComboBox"))
+                            {
+                                PersonalizaComboBox((ComboBox)cii);
+                            }
                         }
                     }
                 }
@@ -204,11 +228,19 @@ namespace Cliente
             dataGridView.ReadOnly = true;
             dataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridView.BackgroundColor = Color.White;
+
+            dataGridView.AdvancedCellBorderStyle.Left = DataGridViewAdvancedCellBorderStyle.None;
+            dataGridView.AdvancedCellBorderStyle.Right = DataGridViewAdvancedCellBorderStyle.None;
+            dataGridView.AdvancedCellBorderStyle.Bottom = DataGridViewAdvancedCellBorderStyle.None;
+            dataGridView.AdvancedCellBorderStyle.Top = DataGridViewAdvancedCellBorderStyle.None;
+            dataGridView.RowHeadersVisible = false;
+            dataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None;
+            dataGridView.AllowUserToResizeRows = false;
         }
 
         private void DataGridView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-            e.CellStyle.SelectionBackColor = Color.LightSlateGray;
+            e.CellStyle.SelectionBackColor = Color.SteelBlue;
             if((e.Value != null) 
                 && ((e.Value.ToString().ToUpper().Contains("SEPROCAD"))
                     || (e.Value.ToString().ToUpper().Contains("CANCELAD"))

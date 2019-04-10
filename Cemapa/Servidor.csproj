@@ -137,6 +137,7 @@
     <Compile Include="Controllers\ClassCadastroController.cs" />
     <Compile Include="Controllers\EstadoController.cs" />
     <Compile Include="Controllers\PaisController.cs" />
+    <Compile Include="Controllers\PropriedadeController.cs" />
     <Compile Include="Controllers\QualificacaoSocioController.cs" />
     <Compile Include="Controllers\TipoCadastroController.cs" />
     <Compile Include="Controllers\TipoPropriedadeController.cs" />
@@ -160,6 +161,9 @@
       <DependentUpon>Dados.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\TB_CADASTRO.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_CADASTRO_ENDERECOS.cs">
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TB_CIDADE.cs">
