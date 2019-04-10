@@ -78,10 +78,9 @@ namespace Cliente.Forms
 
         private void btVisualizar_Click(object sender, EventArgs e)
         {
-            FCadastroCad f = new FCadastroCad("VISUALIZAR");
-            MessageBox.Show(ObterValoresTipoAnonimo(CadastroBindingSource.Current)[0]);
-            //f.ChaveConsulta.Add("Codigo", ObterValoresTipoAnonimo(CadastroBindingSource.Current)[0]);
-            //f.Show();
+            FCadastroCad f = new FCadastroCad("VISUALIZAR");            
+            f.ChaveConsulta.Add("Codigo", dataGridView1.CurrentRow.Cells["CODIGO"].Value.ToString());
+            f.Show();
         }
     }
 }
