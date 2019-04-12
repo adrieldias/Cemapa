@@ -38,6 +38,7 @@
         <EntityTypeShape EntityType="Model.TB_CADASTRO_ENDERECOS" Width="1.5" PointX="4.625" PointY="7.125" />
         <AssociationConnector Association="Model.FK_CADASTRO_ENDERECOSXCADASTRO" />
         <AssociationConnector Association="Model.FK_PROPRIEDADEXCIDADE" />
+        <AssociationConnector Association="Model.PROPEXTIPOPROP" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

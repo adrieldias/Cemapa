@@ -14,7 +14,16 @@ namespace Cemapa.Models
     
     public partial class TB_TIPO_PROPRIEDADE
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public TB_TIPO_PROPRIEDADE()
+        {
+            this.TB_PROPRIEDADE = new HashSet<TB_PROPRIEDADE>();
+        }
+    
         public int COD_TIPO_PROPRIEDADE { get; set; }
         public string DESC_TIPO_PROPRIEDADE { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TB_PROPRIEDADE> TB_PROPRIEDADE { get; set; }
     }
 }

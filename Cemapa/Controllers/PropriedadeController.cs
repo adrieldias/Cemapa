@@ -13,14 +13,14 @@ namespace Cemapa.Controllers
         private Entities db = new Entities();
 
         [HttpGet]
-        public List<TB_PROPRIEDADE> Get(int? id)
+        public TB_PROPRIEDADE Get(int? id)
         {
             db.Configuration.LazyLoadingEnabled = false;
             var query = from p in db.TB_PROPRIEDADE
-                            .Include("TB_CIDADE")
+                            //.Include("TB_CIDADE")
                         where (id == null || p.COD_PROPRIEDADE == id)
                         select p;
-            return query.ToList();
+            return query.FirstOrDefault();
         }
 
         [HttpGet]
@@ -33,6 +33,7 @@ namespace Cemapa.Controllers
                 {
                     var query = (from p in db.TB_PROPRIEDADE
                             .Include("TB_CIDADE")
+                            .Include("TB_TIPO_PROPRIEDADE")
                                 where (id.COD_PROPRIEDADE == 0 || p.COD_PROPRIEDADE == id.COD_PROPRIEDADE)
                                 where (id.COD_CADASTRO == null || p.COD_CADASTRO == id.COD_CADASTRO)
                                 where (id.DESC_PROPRIEDADE == string.Empty || p.DESC_PROPRIEDADE == id.DESC_PROPRIEDADE)
@@ -49,7 +50,7 @@ namespace Cemapa.Controllers
                                     VALOR = p.VAL_PROPRIEDADE,
                                     MATRICULA = p.NUM_MATRICULA,
                                     CRI = p.DESC_CRI,
-                                    TIPO = p.COD_TIPO_PROPRIEDADE,
+                                    TIPO = p.TB_TIPO_PROPRIEDADE.DESC_TIPO_PROPRIEDADE,
                                     PROPRIO = p.IND_TIPO_IMOVEL                                    
                                 });
                     return new System.Web.Mvc.JsonResult()

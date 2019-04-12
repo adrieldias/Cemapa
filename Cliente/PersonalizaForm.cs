@@ -100,7 +100,7 @@ namespace Cliente
                         {
                             PersonalizaComboBox((ComboBox)ci);
                         }
-                    }
+                    }                    
                 }
 
                 if(c.GetType().Name.Equals("TabControl"))

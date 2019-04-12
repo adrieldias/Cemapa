@@ -45,9 +45,7 @@ namespace Cliente.Forms
         /// </summary>
         private async void BuscaDadosPropriedade()
         {   
-            this.EstadoPropriedade = JsonConvert.DeserializeAnonymousType((await RunAsyncGet(
-                ConfigurationManager.AppSettings["UriEstado"]
-                )), new List<TB_ESTADO>());
+            
 
             var definition = new
             {
@@ -228,10 +226,6 @@ namespace Cliente.Forms
             cbsEstado.ValueMember = "COD_ESTADO";
             objEst = null;
             pos = 0;
-            
-
-            //BuscaCidades(((TB_ESTADO)EstadoBindingSource.Current).COD_ESTADO);
-            
 
             //cbsPais
             if (PaisBindingSource == null)
@@ -262,11 +256,11 @@ namespace Cliente.Forms
                         CIDADE = string.Empty,
                         BAIRRO = string.Empty,
                         CEP = string.Empty,
-                        AREA = 0.0,
-                        VALOR = 0.0,
+                        AREA = 0.00,
+                        VALOR = 0.00,
                         MATRICULA = 0,
                         CRI = string.Empty,
-                        TIPO = DBNull.Value,
+                        TIPO = string.Empty,
                         PROPRIO = string.Empty
                     }
                 }
@@ -367,12 +361,15 @@ namespace Cliente.Forms
         private void FCadastroCad_Load(object sender, EventArgs e)
         {
             Inicializa();
-        }        
+        }
 
-        private void btAlterar_Click(object sender, EventArgs e)
-        {   
-            FPropriedadeCad f = new FPropriedadeCad("CADASTRAR");            
-            f.ChaveConsulta.Add("Codigo", ObterValoresTipoAnonimo(PropriedadeBindingSource.Current)[0]);
+        private void btAlterarProriedade_Click(object sender, EventArgs e)
+        {
+            if (PropriedadeBindingSource.Current == null)
+                return;
+            FPropriedadeCad f = new FPropriedadeCad("ALTERAR");
+            f.ChaveConsulta.Add("Codigo", 
+                this.ObterValoresTipoAnonimo(PropriedadeBindingSource.Current)[0]);
             f.Show();
         }
     }   

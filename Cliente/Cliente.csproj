@@ -52,9 +52,6 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="TabControlLateral">
-      <HintPath>..\..\TabControlLateral\TabControlLateral\bin\Debug\TabControlLateral.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Forms\FCadastroCad.cs">
@@ -97,6 +94,7 @@
     <Compile Include="POCO\TB_PAIS.cs" />
     <Compile Include="POCO\TB_PROPRIEDADE.cs" />
     <Compile Include="POCO\TB_TIPO_CADASTRO.cs" />
+    <Compile Include="POCO\TB_TIPO_PROPRIEDADE.cs" />
     <Compile Include="POCO\TB_VENDEDOR.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

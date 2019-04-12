@@ -32,8 +32,8 @@
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.tbsNomePropriedade = new Componentes.TextBoxSimples();
             this.tbsEnderecoPropriedade = new Componentes.TextBoxSimples();
-            this.cbsEstadoPropriedade = new Componentes.ComboBoxSimples();
-            this.cbsCidadePropriedade = new Componentes.ComboBoxSimples();
+            this.cbsEstado = new Componentes.ComboBoxSimples();
+            this.cbsCidade = new Componentes.ComboBoxSimples();
             this.tbsBairroPropriedade = new Componentes.TextBoxSimples();
             this.tbsCepPropriedade = new Componentes.TextBoxSimples();
             this.tbsArea = new Componentes.TextBoxSimples();
@@ -54,14 +54,17 @@
             // btFechar
             // 
             this.btFechar.FlatAppearance.BorderColor = System.Drawing.Color.Gainsboro;
+            this.btFechar.FlatAppearance.BorderSize = 0;
             // 
             // btCancelar
             // 
             this.btCancelar.FlatAppearance.BorderColor = System.Drawing.Color.Gainsboro;
+            this.btCancelar.FlatAppearance.BorderSize = 0;
             // 
             // btSalvar
             // 
             this.btSalvar.FlatAppearance.BorderColor = System.Drawing.Color.Gainsboro;
+            this.btSalvar.FlatAppearance.BorderSize = 0;
             // 
             // panel1
             // 
@@ -87,8 +90,8 @@
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
             this.tableLayoutPanel3.Controls.Add(this.tbsNomePropriedade, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.tbsEnderecoPropriedade, 5, 0);
-            this.tableLayoutPanel3.Controls.Add(this.cbsEstadoPropriedade, 0, 1);
-            this.tableLayoutPanel3.Controls.Add(this.cbsCidadePropriedade, 3, 1);
+            this.tableLayoutPanel3.Controls.Add(this.cbsEstado, 0, 1);
+            this.tableLayoutPanel3.Controls.Add(this.cbsCidade, 3, 1);
             this.tableLayoutPanel3.Controls.Add(this.tbsBairroPropriedade, 7, 1);
             this.tableLayoutPanel3.Controls.Add(this.tbsCepPropriedade, 0, 2);
             this.tableLayoutPanel3.Controls.Add(this.tbsArea, 3, 2);
@@ -140,39 +143,39 @@
             this.tbsEnderecoPropriedade.TabIndex = 1;
             this.tbsEnderecoPropriedade.Value = "";
             // 
-            // cbsEstadoPropriedade
+            // cbsEstado
             // 
-            this.cbsEstadoPropriedade.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.cbsEstado.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.cbsEstadoPropriedade.AutoSize = true;
-            this.cbsEstadoPropriedade.BindingSource = null;
-            this.tableLayoutPanel3.SetColumnSpan(this.cbsEstadoPropriedade, 3);
-            this.cbsEstadoPropriedade.DisplayMember = "";
-            this.cbsEstadoPropriedade.Label = "ESTADO";
-            this.cbsEstadoPropriedade.Location = new System.Drawing.Point(3, 53);
-            this.cbsEstadoPropriedade.Name = "cbsEstadoPropriedade";
-            this.cbsEstadoPropriedade.SelectedText = null;
-            this.cbsEstadoPropriedade.SelectedValue = null;
-            this.cbsEstadoPropriedade.Size = new System.Drawing.Size(252, 44);
-            this.cbsEstadoPropriedade.TabIndex = 2;
-            this.cbsEstadoPropriedade.ValueMember = "";
+            this.cbsEstado.AutoSize = true;
+            this.cbsEstado.BindingSource = null;
+            this.tableLayoutPanel3.SetColumnSpan(this.cbsEstado, 3);
+            this.cbsEstado.DisplayMember = "";
+            this.cbsEstado.Label = "ESTADO";
+            this.cbsEstado.Location = new System.Drawing.Point(3, 53);
+            this.cbsEstado.Name = "cbsEstado";
+            this.cbsEstado.SelectedText = null;
+            this.cbsEstado.SelectedValue = null;
+            this.cbsEstado.Size = new System.Drawing.Size(252, 44);
+            this.cbsEstado.TabIndex = 2;
+            this.cbsEstado.ValueMember = "";
             // 
-            // cbsCidadePropriedade
+            // cbsCidade
             // 
-            this.cbsCidadePropriedade.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.cbsCidade.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.cbsCidadePropriedade.AutoSize = true;
-            this.cbsCidadePropriedade.BindingSource = null;
-            this.tableLayoutPanel3.SetColumnSpan(this.cbsCidadePropriedade, 4);
-            this.cbsCidadePropriedade.DisplayMember = "";
-            this.cbsCidadePropriedade.Label = "CIDADE";
-            this.cbsCidadePropriedade.Location = new System.Drawing.Point(261, 53);
-            this.cbsCidadePropriedade.Name = "cbsCidadePropriedade";
-            this.cbsCidadePropriedade.SelectedText = null;
-            this.cbsCidadePropriedade.SelectedValue = null;
-            this.cbsCidadePropriedade.Size = new System.Drawing.Size(338, 44);
-            this.cbsCidadePropriedade.TabIndex = 3;
-            this.cbsCidadePropriedade.ValueMember = "";
+            this.cbsCidade.AutoSize = true;
+            this.cbsCidade.BindingSource = null;
+            this.tableLayoutPanel3.SetColumnSpan(this.cbsCidade, 4);
+            this.cbsCidade.DisplayMember = "";
+            this.cbsCidade.Label = "CIDADE";
+            this.cbsCidade.Location = new System.Drawing.Point(261, 53);
+            this.cbsCidade.Name = "cbsCidade";
+            this.cbsCidade.SelectedText = null;
+            this.cbsCidade.SelectedValue = null;
+            this.cbsCidade.Size = new System.Drawing.Size(338, 44);
+            this.cbsCidade.TabIndex = 3;
+            this.cbsCidade.ValueMember = "";
             // 
             // tbsBairroPropriedade
             // 
@@ -306,6 +309,7 @@
             this.Controls.Add(this.panel1);
             this.Name = "FPropriedadeCad";
             this.Text = "FPropriedadeCad";
+            this.Load += new System.EventHandler(this.FPropriedadeCad_Load);
             this.Controls.SetChildIndex(this.pCabecalho, 0);
             this.Controls.SetChildIndex(this.btSalvar, 0);
             this.Controls.SetChildIndex(this.btCancelar, 0);
@@ -327,8 +331,8 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private Componentes.TextBoxSimples tbsNomePropriedade;
         private Componentes.TextBoxSimples tbsEnderecoPropriedade;
-        private Componentes.ComboBoxSimples cbsEstadoPropriedade;
-        private Componentes.ComboBoxSimples cbsCidadePropriedade;
+        private Componentes.ComboBoxSimples cbsEstado;
+        private Componentes.ComboBoxSimples cbsCidade;
         private Componentes.TextBoxSimples tbsBairroPropriedade;
         private Componentes.TextBoxSimples tbsCepPropriedade;
         private Componentes.TextBoxSimples tbsArea;

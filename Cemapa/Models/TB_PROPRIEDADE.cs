@@ -55,5 +55,6 @@ namespace Cemapa.Models
         public Nullable<int> COD_CADASTRO_PROPRIETARIO { get; set; }
     
         public virtual TB_CIDADE TB_CIDADE { get; set; }
+        public virtual TB_TIPO_PROPRIEDADE TB_TIPO_PROPRIEDADE { get; set; }
     }
 }

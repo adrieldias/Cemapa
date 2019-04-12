@@ -29,8 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FCadastroCad));
-            this.tabControlLateral1 = new TabControlLateral.TabControlLateral(this.components);
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FCadastroCad));            
             this.slickBlueTabControl1 = new SlickBlueTabControl();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -56,8 +55,8 @@
             this.cbsCidade = new Componentes.ComboBoxSimples();
             this.tbsBairro = new Componentes.TextBoxSimples();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.btExcluir = new System.Windows.Forms.Button();
-            this.btAlterar = new System.Windows.Forms.Button();
+            this.btExcluirPropriedade = new System.Windows.Forms.Button();
+            this.btAlterarProriedade = new System.Windows.Forms.Button();
             this.btNovaPropriedade = new System.Windows.Forms.Button();
             this.dgvPropriedades = new System.Windows.Forms.DataGridView();
             this.tabPage3 = new System.Windows.Forms.TabPage();
@@ -105,23 +104,7 @@
             // 
             this.btSalvar.FlatAppearance.BorderColor = System.Drawing.Color.Gainsboro;
             this.btSalvar.FlatAppearance.BorderSize = 0;
-            this.btSalvar.Click += new System.EventHandler(this.btSalvar_Click);
-            // 
-            // tabControlLateral1
-            // 
-            this.tabControlLateral1.Alignment = System.Windows.Forms.TabAlignment.Left;
-            this.tabControlLateral1.Appearance = System.Windows.Forms.TabAppearance.Buttons;
-            this.tabControlLateral1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControlLateral1.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
-            this.tabControlLateral1.Font = new System.Drawing.Font("Segoe UI Semilight", 9F);
-            this.tabControlLateral1.ItemSize = new System.Drawing.Size(140, 20);
-            this.tabControlLateral1.Location = new System.Drawing.Point(0, 0);
-            this.tabControlLateral1.Multiline = true;
-            this.tabControlLateral1.Name = "tabControlLateral1";
-            this.tabControlLateral1.SelectedIndex = 0;
-            this.tabControlLateral1.Size = new System.Drawing.Size(200, 100);
-            this.tabControlLateral1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
-            this.tabControlLateral1.TabIndex = 0;
+            this.btSalvar.Click += new System.EventHandler(this.btSalvar_Click);            
             // 
             // slickBlueTabControl1
             // 
@@ -543,8 +526,8 @@
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.btExcluir);
-            this.tabPage1.Controls.Add(this.btAlterar);
+            this.tabPage1.Controls.Add(this.btExcluirPropriedade);
+            this.tabPage1.Controls.Add(this.btAlterarProriedade);
             this.tabPage1.Controls.Add(this.btNovaPropriedade);
             this.tabPage1.Controls.Add(this.dgvPropriedades);
             this.tabPage1.Location = new System.Drawing.Point(134, 4);
@@ -555,24 +538,24 @@
             this.tabPage1.Text = "Propriedade";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // btExcluir
+            // btExcluirPropriedade
             // 
-            this.btExcluir.Location = new System.Drawing.Point(192, 6);
-            this.btExcluir.Name = "btExcluir";
-            this.btExcluir.Size = new System.Drawing.Size(86, 42);
-            this.btExcluir.TabIndex = 16;
-            this.btExcluir.Text = "Excluir";
-            this.btExcluir.UseVisualStyleBackColor = true;
+            this.btExcluirPropriedade.Location = new System.Drawing.Point(192, 6);
+            this.btExcluirPropriedade.Name = "btExcluirPropriedade";
+            this.btExcluirPropriedade.Size = new System.Drawing.Size(86, 42);
+            this.btExcluirPropriedade.TabIndex = 16;
+            this.btExcluirPropriedade.Text = "Excluir";
+            this.btExcluirPropriedade.UseVisualStyleBackColor = true;
             // 
-            // btAlterar
+            // btAlterarProriedade
             // 
-            this.btAlterar.Location = new System.Drawing.Point(100, 6);
-            this.btAlterar.Name = "btAlterar";
-            this.btAlterar.Size = new System.Drawing.Size(86, 42);
-            this.btAlterar.TabIndex = 15;
-            this.btAlterar.Text = "Alterar";
-            this.btAlterar.UseVisualStyleBackColor = true;
-            this.btAlterar.Click += new System.EventHandler(this.btAlterar_Click);
+            this.btAlterarProriedade.Location = new System.Drawing.Point(100, 6);
+            this.btAlterarProriedade.Name = "btAlterarProriedade";
+            this.btAlterarProriedade.Size = new System.Drawing.Size(86, 42);
+            this.btAlterarProriedade.TabIndex = 15;
+            this.btAlterarProriedade.Text = "Alterar";
+            this.btAlterarProriedade.UseVisualStyleBackColor = true;
+            this.btAlterarProriedade.Click += new System.EventHandler(this.btAlterarProriedade_Click);
             // 
             // btNovaPropriedade
             // 
@@ -843,7 +826,7 @@
         }
 
         #endregion
-        private TabControlLateral.TabControlLateral tabControlLateral1;
+        
         private SlickBlueTabControl slickBlueTabControl1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.TabPage tabPage4;
@@ -884,7 +867,7 @@
         private Componentes.TextBoxSimples tbsPercParticCapitalVolante;
         private System.Windows.Forms.DataGridView dgvPropriedades;
         private System.Windows.Forms.Button btNovaPropriedade;
-        private System.Windows.Forms.Button btExcluir;
-        private System.Windows.Forms.Button btAlterar;
+        private System.Windows.Forms.Button btExcluirPropriedade;
+        private System.Windows.Forms.Button btAlterarProriedade;
     }
 }

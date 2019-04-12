@@ -502,6 +502,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="PROPEXTIPOPROP">
+          <End Role="TB_TIPO_PROPRIEDADE" Type="Self.TB_TIPO_PROPRIEDADE" Multiplicity="0..1" />
+          <End Role="TB_PROPRIEDADE" Type="Self.TB_PROPRIEDADE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_TIPO_PROPRIEDADE">
+              <PropertyRef Name="COD_TIPO_PROPRIEDADE" />
+            </Principal>
+            <Dependent Role="TB_PROPRIEDADE">
+              <PropertyRef Name="COD_TIPO_PROPRIEDADE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="ModelStoreContainer">
           <EntitySet Name="TB_CADASTRO" EntityType="Self.TB_CADASTRO" Schema="SISTEMA" store:Type="Tables" />
           <EntitySet Name="TB_CADASTRO_ENDERECOS" EntityType="Self.TB_CADASTRO_ENDERECOS" Schema="SISTEMA" store:Type="Tables" />
@@ -538,6 +550,10 @@
           <AssociationSet Name="FK_TABELA_PRECO_CABXCADASTRO" Association="Self.FK_TABELA_PRECO_CABXCADASTRO">
             <End Role="TB_TABELA_PRECO_CAB" EntitySet="TB_TABELA_PRECO_CAB" />
             <End Role="TB_CADASTRO" EntitySet="TB_CADASTRO" />
+          </AssociationSet>
+          <AssociationSet Name="PROPEXTIPOPROP" Association="Self.PROPEXTIPOPROP">
+            <End Role="TB_TIPO_PROPRIEDADE" EntitySet="TB_TIPO_PROPRIEDADE" />
+            <End Role="TB_PROPRIEDADE" EntitySet="TB_PROPRIEDADE" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -814,6 +830,10 @@
           </AssociationSet>
           <AssociationSet Name="FK_PROPRIEDADEXCIDADE" Association="Model.FK_PROPRIEDADEXCIDADE">
             <End Role="TB_CIDADE" EntitySet="TB_CIDADE" />
+            <End Role="TB_PROPRIEDADE" EntitySet="TB_PROPRIEDADE" />
+          </AssociationSet>
+          <AssociationSet Name="PROPEXTIPOPROP" Association="Model.PROPEXTIPOPROP">
+            <End Role="TB_TIPO_PROPRIEDADE" EntitySet="TB_TIPO_PROPRIEDADE" />
             <End Role="TB_PROPRIEDADE" EntitySet="TB_PROPRIEDADE" />
           </AssociationSet>
         </EntityContainer>
@@ -1191,6 +1211,7 @@
           </Key>
           <Property Name="COD_TIPO_PROPRIEDADE" Type="Int32" Nullable="false" />
           <Property Name="DESC_TIPO_PROPRIEDADE" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TB_PROPRIEDADE" Relationship="Model.PROPEXTIPOPROP" FromRole="TB_TIPO_PROPRIEDADE" ToRole="TB_PROPRIEDADE" />
         </EntityType>
         <EntityType Name="TB_PROPRIEDADE">
           <Key>
@@ -1236,6 +1257,7 @@
           <Property Name="DT_VENC_CONTRATO" Type="DateTime" />
           <Property Name="COD_CADASTRO_PROPRIETARIO" Type="Int32" />
           <NavigationProperty Name="TB_CIDADE" Relationship="Model.FK_PROPRIEDADEXCIDADE" FromRole="TB_PROPRIEDADE" ToRole="TB_CIDADE" />
+          <NavigationProperty Name="TB_TIPO_PROPRIEDADE" Relationship="Model.PROPEXTIPOPROP" FromRole="TB_PROPRIEDADE" ToRole="TB_TIPO_PROPRIEDADE" />
         </EntityType>
         <EntityType Name="TB_QUALIFICACAO_SOCIO">
           <Key>
@@ -1302,6 +1324,18 @@
             </Principal>
             <Dependent Role="TB_PROPRIEDADE">
               <PropertyRef Name="COD_CIDADE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PROPEXTIPOPROP">
+          <End Type="Model.TB_TIPO_PROPRIEDADE" Role="TB_TIPO_PROPRIEDADE" Multiplicity="0..1" />
+          <End Type="Model.TB_PROPRIEDADE" Role="TB_PROPRIEDADE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_TIPO_PROPRIEDADE">
+              <PropertyRef Name="COD_TIPO_PROPRIEDADE" />
+            </Principal>
+            <Dependent Role="TB_PROPRIEDADE">
+              <PropertyRef Name="COD_TIPO_PROPRIEDADE" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
