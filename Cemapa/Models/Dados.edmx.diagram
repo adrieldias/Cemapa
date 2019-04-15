@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="912c242cfcbe4301bb4c503ca9fbf7eb" Name="Diagram1" ZoomLevel="111">
+      <Diagram DiagramId="912c242cfcbe4301bb4c503ca9fbf7eb" Name="Diagram1" ZoomLevel="83">
         <EntityTypeShape EntityType="Model.TB_CADASTRO" Width="1.5" PointX="2.25" PointY="1.5" IsExpanded="false" />
         <EntityTypeShape EntityType="Model.TB_CIDADE" Width="1.5" PointX="12" PointY="5.5" IsExpanded="true" />
         <AssociationConnector Association="Model.FK_CADASTROXCIDADE" />
@@ -40,6 +40,9 @@
         <AssociationConnector Association="Model.FK_PROPRIEDADEXCIDADE" />
         <AssociationConnector Association="Model.PROPEXTIPOPROP" />
         <AssociationConnector Association="Model.FK_PROPRIEDADEXCADASTRO" />
+        <EntityTypeShape EntityType="Model.TB_PRODUTO" Width="1.5" PointX="3.375" PointY="6.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.TB_CLASSE" Width="1.5" PointX="1.125" PointY="10" />
+        <AssociationConnector Association="Model.FK_PRODUTOXCLASSE" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

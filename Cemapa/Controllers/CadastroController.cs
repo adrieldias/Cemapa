@@ -37,7 +37,7 @@ namespace Cemapa.Controllers
                             BAIRRO = c.DESC_BAIRRO,
                             INSCRICAO = c.NUM_INSCRICAO,
                             FANTASIA = c.DESC_FANTASIA,
-                            CLASSIFICACAO = c.TB_CLASS_CADASTRO.DESC_CLASSIFICACAO
+                            CLASSIFICACAO = c.TB_CLASS_CADASTRO.DESC_CLASSIFICACAO                            
                         }).Take(100);
 
             return new System.Web.Mvc.JsonResult()
