@@ -56,5 +56,6 @@ namespace Cemapa.Models
     
         public virtual TB_CIDADE TB_CIDADE { get; set; }
         public virtual TB_TIPO_PROPRIEDADE TB_TIPO_PROPRIEDADE { get; set; }
+        public virtual TB_CADASTRO TB_CADASTRO { get; set; }
     }
 }

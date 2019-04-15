@@ -18,6 +18,7 @@ namespace Cemapa.Models
         public TB_CADASTRO()
         {
             this.TB_CADASTRO_ENDERECOS = new HashSet<TB_CADASTRO_ENDERECOS>();
+            this.TB_PROPRIEDADE = new HashSet<TB_PROPRIEDADE>();
         }
     
         public int COD_CADASTRO { get; set; }
@@ -188,6 +189,8 @@ namespace Cemapa.Models
         public string DESC_NRO_REG_ESTADUAL { get; set; }
         public string DESC_OUTRAS_GRANTIAS { get; set; }
         public string IND_SINC_MAX_ROTEIRIZADOR { get; set; }
+        public string DESC_E_MAIL_CONJUGE { get; set; }
+        public string DESC_TELEFONE_CONJUGE { get; set; }
     
         public virtual TB_CIDADE TB_CIDADE { get; set; }
         public virtual TB_TIPO_CADASTRO TB_TIPO_CADASTRO { get; set; }
@@ -204,5 +207,7 @@ namespace Cemapa.Models
         public virtual TB_QUALIFICACAO_SOCIO TB_QUALIFICACAO_SOCIO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TB_CADASTRO_ENDERECOS> TB_CADASTRO_ENDERECOS { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TB_PROPRIEDADE> TB_PROPRIEDADE { get; set; }
     }
 }

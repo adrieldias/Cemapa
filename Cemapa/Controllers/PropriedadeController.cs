@@ -74,5 +74,27 @@ namespace Cemapa.Controllers
                 JsonRequestBehavior = System.Web.Mvc.JsonRequestBehavior.AllowGet
             };
         }
+
+        [HttpPost]
+        public System.Web.Mvc.JsonResult Save([FromBody] TB_PROPRIEDADE propriedade)
+        {
+
+            Entities db = new Entities();
+            db.Configuration.LazyLoadingEnabled = false;
+            if (ModelState.IsValid)
+            {
+                return new System.Web.Mvc.JsonResult()
+                {
+                    Data = propriedade.DESC_PROPRIEDADE,
+                    JsonRequestBehavior = System.Web.Mvc.JsonRequestBehavior.AllowGet
+                };
+            }
+
+            return new System.Web.Mvc.JsonResult()
+            {
+                Data = "ERRO",
+                JsonRequestBehavior = System.Web.Mvc.JsonRequestBehavior.AllowGet
+            };
+        }
     }
 }

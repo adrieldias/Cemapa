@@ -6,7 +6,7 @@
     <edmx:Diagrams>
       <Diagram DiagramId="912c242cfcbe4301bb4c503ca9fbf7eb" Name="Diagram1" ZoomLevel="111">
         <EntityTypeShape EntityType="Model.TB_CADASTRO" Width="1.5" PointX="2.25" PointY="1.5" IsExpanded="false" />
-        <EntityTypeShape EntityType="Model.TB_CIDADE" Width="1.5" PointX="12" PointY="5.5" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.TB_CIDADE" Width="1.5" PointX="12" PointY="5.5" IsExpanded="true" />
         <AssociationConnector Association="Model.FK_CADASTROXCIDADE" />
         <EntityTypeShape EntityType="Model.TB_TIPO_CADASTRO" Width="1.5" PointX="0.5" PointY="5.5" IsExpanded="false" />
         <AssociationConnector Association="Model.FK_CADASTROXTIPO_CADASTRO" />
@@ -35,10 +35,11 @@
         <EntityTypeShape EntityType="Model.TB_PROPRIEDADE" Width="1.75" PointX="3" PointY="3.5" IsExpanded="false" />
         <EntityTypeShape EntityType="Model.TB_QUALIFICACAO_SOCIO" Width="1.5" PointX="0.75" PointY="6.875" />
         <AssociationConnector Association="Model.FK_CADASTROXQUALIFICACAOSOCIO" />
-        <EntityTypeShape EntityType="Model.TB_CADASTRO_ENDERECOS" Width="1.5" PointX="4.625" PointY="7.125" />
+        <EntityTypeShape EntityType="Model.TB_CADASTRO_ENDERECOS" Width="1.5" PointX="8.25" PointY="7.125" />
         <AssociationConnector Association="Model.FK_CADASTRO_ENDERECOSXCADASTRO" />
         <AssociationConnector Association="Model.FK_PROPRIEDADEXCIDADE" />
         <AssociationConnector Association="Model.PROPEXTIPOPROP" />
+        <AssociationConnector Association="Model.FK_PROPRIEDADEXCADASTRO" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

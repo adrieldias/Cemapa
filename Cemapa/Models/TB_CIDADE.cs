@@ -28,7 +28,7 @@ namespace Cemapa.Models
         public Nullable<int> COD_DFC { get; set; }
         public Nullable<short> COD_MUNICIPIO_SC { get; set; }
         public string COD_CIDADE_IBGE { get; set; }
-        public Nullable<decimal> PERC_DEDUCAO_NFSE { get; set; }
+        public string IND_SINC_MAX_ROTEIRIZADOR { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TB_CADASTRO> TB_CADASTRO { get; set; }

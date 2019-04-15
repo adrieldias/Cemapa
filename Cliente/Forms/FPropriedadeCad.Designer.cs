@@ -65,6 +65,7 @@
             // 
             this.btSalvar.FlatAppearance.BorderColor = System.Drawing.Color.Gainsboro;
             this.btSalvar.FlatAppearance.BorderSize = 0;
+            this.btSalvar.Click += new System.EventHandler(this.btSalvar_Click);
             // 
             // panel1
             // 

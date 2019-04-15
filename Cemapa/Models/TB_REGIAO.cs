@@ -23,6 +23,7 @@ namespace Cemapa.Models
         public int COD_REGIAO { get; set; }
         public string DESC_REGIAO { get; set; }
         public Nullable<int> QT_POPULACAO { get; set; }
+        public string IND_SINC_MAX_ROTEIRIZADOR { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TB_CADASTRO> TB_CADASTRO { get; set; }

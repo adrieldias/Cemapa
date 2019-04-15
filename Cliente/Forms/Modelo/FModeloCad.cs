@@ -132,6 +132,17 @@ namespace Cliente.Forms.Modelo
                 }
             }
         }
+
+        public static async Task<string> RunAsyncPost(string Uri, Object valor)
+        {
+            using (var client = new HttpClient())
+            {                
+                client.DefaultRequestHeaders.Accept.Clear();
+                var response = await client.PostAsJsonAsync(new Uri(Uri), valor);
+                return await response.Content.ReadAsStringAsync();
+            }            
+        }
+
         #endregion
 
         private void arrumaLayout()

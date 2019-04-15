@@ -141,6 +141,8 @@
           <Property Name="DESC_QUALIFICACAO" Type="varchar2" MaxLength="100" />
           <Property Name="PERC_ESPECIAL_PECA" Type="number" Precision="5" Scale="2" />
           <Property Name="PERC_ESPECIAL_SERVICO" Type="number" Precision="5" Scale="2" />
+          <Property Name="DESC_E_MAIL_CONJUGE" Type="varchar2" MaxLength="40" />
+          <Property Name="DESC_TELEFONE_CONJUGE" Type="varchar2" MaxLength="12" />
           <Property Name="DT_ALTERACAO" Type="date" />
           <Property Name="IND_ATACADO_VAREJO" Type="char" MaxLength="1" />
           <Property Name="DT_ULT_ALTERACAO" Type="date" />
@@ -208,7 +210,7 @@
           <Property Name="COD_DFC" Type="number" Precision="6" Scale="0" />
           <Property Name="COD_MUNICIPIO_SC" Type="number" Precision="5" Scale="0" />
           <Property Name="COD_CIDADE_IBGE" Type="varchar2" MaxLength="5" />
-          <Property Name="PERC_DEDUCAO_NFSE" Type="number" Precision="5" Scale="2" />
+          <Property Name="IND_SINC_MAX_ROTEIRIZADOR" Type="char" MaxLength="1" />
         </EntityType>
         <EntityType Name="TB_CLASS_CADASTRO">
           <Key>
@@ -327,6 +329,7 @@
           <Property Name="COD_REGIAO" Type="number" Precision="6" Scale="0" Nullable="false" />
           <Property Name="DESC_REGIAO" Type="varchar2" MaxLength="30" Nullable="false" />
           <Property Name="QT_POPULACAO" Type="number" Precision="10" Scale="0" />
+          <Property Name="IND_SINC_MAX_ROTEIRIZADOR" Type="char" MaxLength="1" />
         </EntityType>
         <EntityType Name="TB_TABELA_PRECO_CAB">
           <Key>
@@ -436,9 +439,10 @@
           <Property Name="IND_AMOSTRA" Type="char" MaxLength="1" />
           <Property Name="IND_SEM_NOTA" Type="char" MaxLength="1" />
           <Property Name="DESC_BAIRRO" Type="varchar2" MaxLength="20" />
+          <Property Name="DESC_E_MAIL1" Type="varchar2" MaxLength="70" />
           <Property Name="PERC_COMISSAO3" Type="number" Precision="5" Scale="2" />
           <Property Name="PERC_COMISSAO4" Type="number" Precision="5" Scale="2" />
-          <Property Name="DESC_E_MAIL1" Type="varchar2" MaxLength="70" />
+          <Property Name="IND_SINC_MAX_ROTEIRIZADOR" Type="char" MaxLength="1" />
         </EntityType>
         <Association Name="FK_CADASTRO_ENDERECOSXCADASTRO">
           <End Role="TB_CADASTRO" Type="Self.TB_CADASTRO" Multiplicity="1">
@@ -454,6 +458,54 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_CADASTROXCIDADE">
+          <End Role="TB_CIDADE" Type="Self.TB_CIDADE" Multiplicity="0..1" />
+          <End Role="TB_CADASTRO" Type="Self.TB_CADASTRO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_CIDADE">
+              <PropertyRef Name="COD_CIDADE" />
+            </Principal>
+            <Dependent Role="TB_CADASTRO">
+              <PropertyRef Name="COD_CIDADE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CADASTROXCLASS_CADASTRO">
+          <End Role="TB_CLASS_CADASTRO" Type="Self.TB_CLASS_CADASTRO" Multiplicity="0..1" />
+          <End Role="TB_CADASTRO" Type="Self.TB_CADASTRO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_CLASS_CADASTRO">
+              <PropertyRef Name="COD_CLASS_CADASTRO" />
+            </Principal>
+            <Dependent Role="TB_CADASTRO">
+              <PropertyRef Name="COD_CLASS_CADASTRO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CADASTROXESTADO">
+          <End Role="TB_ESTADO" Type="Self.TB_ESTADO" Multiplicity="0..1" />
+          <End Role="TB_CADASTRO" Type="Self.TB_CADASTRO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_ESTADO">
+              <PropertyRef Name="COD_ESTADO" />
+            </Principal>
+            <Dependent Role="TB_CADASTRO">
+              <PropertyRef Name="COD_ESTADO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CADASTROXESTADO_CIVIL">
+          <End Role="TB_ESTADO_CIVIL" Type="Self.TB_ESTADO_CIVIL" Multiplicity="0..1" />
+          <End Role="TB_CADASTRO" Type="Self.TB_CADASTRO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_ESTADO_CIVIL">
+              <PropertyRef Name="COD_ESTADO_CIVIL" />
+            </Principal>
+            <Dependent Role="TB_CADASTRO">
+              <PropertyRef Name="COD_ESTADO_CIVIL" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_CADASTROXESTADOVEIC">
           <End Role="TB_ESTADO" Type="Self.TB_ESTADO" Multiplicity="0..1" />
           <End Role="TB_CADASTRO" Type="Self.TB_CADASTRO" Multiplicity="*" />
@@ -463,6 +515,30 @@
             </Principal>
             <Dependent Role="TB_CADASTRO">
               <PropertyRef Name="COD_UF_VEICULO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CADASTROXMOTIVO">
+          <End Role="TB_MOTIVO" Type="Self.TB_MOTIVO" Multiplicity="0..1" />
+          <End Role="TB_CADASTRO" Type="Self.TB_CADASTRO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_MOTIVO">
+              <PropertyRef Name="COD_MOTIVO" />
+            </Principal>
+            <Dependent Role="TB_CADASTRO">
+              <PropertyRef Name="COD_MOTIVO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CADASTROXPAIS">
+          <End Role="TB_PAIS" Type="Self.TB_PAIS" Multiplicity="0..1" />
+          <End Role="TB_CADASTRO" Type="Self.TB_CADASTRO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_PAIS">
+              <PropertyRef Name="COD_PAIS" />
+            </Principal>
+            <Dependent Role="TB_CADASTRO">
+              <PropertyRef Name="COD_PAIS" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -478,6 +554,78 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_CADASTROXREGIAO">
+          <End Role="TB_REGIAO" Type="Self.TB_REGIAO" Multiplicity="0..1" />
+          <End Role="TB_CADASTRO" Type="Self.TB_CADASTRO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_REGIAO">
+              <PropertyRef Name="COD_REGIAO" />
+            </Principal>
+            <Dependent Role="TB_CADASTRO">
+              <PropertyRef Name="COD_REGIAO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CADASTROXTIPO_CADASTRO">
+          <End Role="TB_TIPO_CADASTRO" Type="Self.TB_TIPO_CADASTRO" Multiplicity="1" />
+          <End Role="TB_CADASTRO" Type="Self.TB_CADASTRO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_TIPO_CADASTRO">
+              <PropertyRef Name="COD_TIPO_CADASTRO" />
+            </Principal>
+            <Dependent Role="TB_CADASTRO">
+              <PropertyRef Name="COD_TIPO_CADASTRO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CADASTROXUSUARIO">
+          <End Role="TB_USUARIO" Type="Self.TB_USUARIO" Multiplicity="0..1" />
+          <End Role="TB_CADASTRO" Type="Self.TB_CADASTRO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_USUARIO">
+              <PropertyRef Name="COD_USUARIO" />
+            </Principal>
+            <Dependent Role="TB_CADASTRO">
+              <PropertyRef Name="COD_USUARIO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CADASTROXVENDEDOR">
+          <End Role="TB_VENDEDOR" Type="Self.TB_VENDEDOR" Multiplicity="0..1" />
+          <End Role="TB_CADASTRO" Type="Self.TB_CADASTRO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_VENDEDOR">
+              <PropertyRef Name="COD_VENDEDOR" />
+            </Principal>
+            <Dependent Role="TB_CADASTRO">
+              <PropertyRef Name="COD_VENDEDOR" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MUNICIPIOXESTADO">
+          <End Role="TB_ESTADO" Type="Self.TB_ESTADO" Multiplicity="1" />
+          <End Role="TB_CIDADE" Type="Self.TB_CIDADE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_ESTADO">
+              <PropertyRef Name="COD_ESTADO" />
+            </Principal>
+            <Dependent Role="TB_CIDADE">
+              <PropertyRef Name="COD_ESTADO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PROPRIEDADEXCADASTRO">
+          <End Role="TB_CADASTRO" Type="Self.TB_CADASTRO" Multiplicity="0..1" />
+          <End Role="TB_PROPRIEDADE" Type="Self.TB_PROPRIEDADE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_CADASTRO">
+              <PropertyRef Name="COD_CADASTRO" />
+            </Principal>
+            <Dependent Role="TB_PROPRIEDADE">
+              <PropertyRef Name="COD_CADASTRO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_PROPRIEDADEXCIDADE">
           <End Role="TB_CIDADE" Type="Self.TB_CIDADE" Multiplicity="0..1" />
           <End Role="TB_PROPRIEDADE" Type="Self.TB_PROPRIEDADE" Multiplicity="*" />
@@ -487,6 +635,18 @@
             </Principal>
             <Dependent Role="TB_PROPRIEDADE">
               <PropertyRef Name="COD_CIDADE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PROPRIEDADEXTIPO_PROP">
+          <End Role="TB_TIPO_PROPRIEDADE" Type="Self.TB_TIPO_PROPRIEDADE" Multiplicity="0..1" />
+          <End Role="TB_PROPRIEDADE" Type="Self.TB_PROPRIEDADE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_TIPO_PROPRIEDADE">
+              <PropertyRef Name="COD_TIPO_PROPRIEDADE" />
+            </Principal>
+            <Dependent Role="TB_PROPRIEDADE">
+              <PropertyRef Name="COD_TIPO_PROPRIEDADE" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -502,15 +662,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="PROPEXTIPOPROP">
-          <End Role="TB_TIPO_PROPRIEDADE" Type="Self.TB_TIPO_PROPRIEDADE" Multiplicity="0..1" />
-          <End Role="TB_PROPRIEDADE" Type="Self.TB_PROPRIEDADE" Multiplicity="*" />
+        <Association Name="FK_VENDEDORXESTADO">
+          <End Role="TB_ESTADO" Type="Self.TB_ESTADO" Multiplicity="0..1" />
+          <End Role="TB_VENDEDOR" Type="Self.TB_VENDEDOR" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="TB_TIPO_PROPRIEDADE">
-              <PropertyRef Name="COD_TIPO_PROPRIEDADE" />
+            <Principal Role="TB_ESTADO">
+              <PropertyRef Name="COD_ESTADO" />
             </Principal>
-            <Dependent Role="TB_PROPRIEDADE">
-              <PropertyRef Name="COD_TIPO_PROPRIEDADE" />
+            <Dependent Role="TB_VENDEDOR">
+              <PropertyRef Name="COD_ESTADO" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -535,25 +695,77 @@
             <End Role="TB_CADASTRO" EntitySet="TB_CADASTRO" />
             <End Role="TB_CADASTRO_ENDERECOS" EntitySet="TB_CADASTRO_ENDERECOS" />
           </AssociationSet>
+          <AssociationSet Name="FK_CADASTROXCIDADE" Association="Self.FK_CADASTROXCIDADE">
+            <End Role="TB_CIDADE" EntitySet="TB_CIDADE" />
+            <End Role="TB_CADASTRO" EntitySet="TB_CADASTRO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CADASTROXCLASS_CADASTRO" Association="Self.FK_CADASTROXCLASS_CADASTRO">
+            <End Role="TB_CLASS_CADASTRO" EntitySet="TB_CLASS_CADASTRO" />
+            <End Role="TB_CADASTRO" EntitySet="TB_CADASTRO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CADASTROXESTADO" Association="Self.FK_CADASTROXESTADO">
+            <End Role="TB_ESTADO" EntitySet="TB_ESTADO" />
+            <End Role="TB_CADASTRO" EntitySet="TB_CADASTRO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CADASTROXESTADO_CIVIL" Association="Self.FK_CADASTROXESTADO_CIVIL">
+            <End Role="TB_ESTADO_CIVIL" EntitySet="TB_ESTADO_CIVIL" />
+            <End Role="TB_CADASTRO" EntitySet="TB_CADASTRO" />
+          </AssociationSet>
           <AssociationSet Name="FK_CADASTROXESTADOVEIC" Association="Self.FK_CADASTROXESTADOVEIC">
             <End Role="TB_ESTADO" EntitySet="TB_ESTADO" />
+            <End Role="TB_CADASTRO" EntitySet="TB_CADASTRO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CADASTROXMOTIVO" Association="Self.FK_CADASTROXMOTIVO">
+            <End Role="TB_MOTIVO" EntitySet="TB_MOTIVO" />
+            <End Role="TB_CADASTRO" EntitySet="TB_CADASTRO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CADASTROXPAIS" Association="Self.FK_CADASTROXPAIS">
+            <End Role="TB_PAIS" EntitySet="TB_PAIS" />
             <End Role="TB_CADASTRO" EntitySet="TB_CADASTRO" />
           </AssociationSet>
           <AssociationSet Name="FK_CADASTROXQUALIFICACAOSOCIO" Association="Self.FK_CADASTROXQUALIFICACAOSOCIO">
             <End Role="TB_QUALIFICACAO_SOCIO" EntitySet="TB_QUALIFICACAO_SOCIO" />
             <End Role="TB_CADASTRO" EntitySet="TB_CADASTRO" />
           </AssociationSet>
+          <AssociationSet Name="FK_CADASTROXREGIAO" Association="Self.FK_CADASTROXREGIAO">
+            <End Role="TB_REGIAO" EntitySet="TB_REGIAO" />
+            <End Role="TB_CADASTRO" EntitySet="TB_CADASTRO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CADASTROXTIPO_CADASTRO" Association="Self.FK_CADASTROXTIPO_CADASTRO">
+            <End Role="TB_TIPO_CADASTRO" EntitySet="TB_TIPO_CADASTRO" />
+            <End Role="TB_CADASTRO" EntitySet="TB_CADASTRO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CADASTROXUSUARIO" Association="Self.FK_CADASTROXUSUARIO">
+            <End Role="TB_USUARIO" EntitySet="TB_USUARIO" />
+            <End Role="TB_CADASTRO" EntitySet="TB_CADASTRO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CADASTROXVENDEDOR" Association="Self.FK_CADASTROXVENDEDOR">
+            <End Role="TB_VENDEDOR" EntitySet="TB_VENDEDOR" />
+            <End Role="TB_CADASTRO" EntitySet="TB_CADASTRO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MUNICIPIOXESTADO" Association="Self.FK_MUNICIPIOXESTADO">
+            <End Role="TB_ESTADO" EntitySet="TB_ESTADO" />
+            <End Role="TB_CIDADE" EntitySet="TB_CIDADE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PROPRIEDADEXCADASTRO" Association="Self.FK_PROPRIEDADEXCADASTRO">
+            <End Role="TB_CADASTRO" EntitySet="TB_CADASTRO" />
+            <End Role="TB_PROPRIEDADE" EntitySet="TB_PROPRIEDADE" />
+          </AssociationSet>
           <AssociationSet Name="FK_PROPRIEDADEXCIDADE" Association="Self.FK_PROPRIEDADEXCIDADE">
             <End Role="TB_CIDADE" EntitySet="TB_CIDADE" />
+            <End Role="TB_PROPRIEDADE" EntitySet="TB_PROPRIEDADE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PROPRIEDADEXTIPO_PROP" Association="Self.FK_PROPRIEDADEXTIPO_PROP">
+            <End Role="TB_TIPO_PROPRIEDADE" EntitySet="TB_TIPO_PROPRIEDADE" />
             <End Role="TB_PROPRIEDADE" EntitySet="TB_PROPRIEDADE" />
           </AssociationSet>
           <AssociationSet Name="FK_TABELA_PRECO_CABXCADASTRO" Association="Self.FK_TABELA_PRECO_CABXCADASTRO">
             <End Role="TB_TABELA_PRECO_CAB" EntitySet="TB_TABELA_PRECO_CAB" />
             <End Role="TB_CADASTRO" EntitySet="TB_CADASTRO" />
           </AssociationSet>
-          <AssociationSet Name="PROPEXTIPOPROP" Association="Self.PROPEXTIPOPROP">
-            <End Role="TB_TIPO_PROPRIEDADE" EntitySet="TB_TIPO_PROPRIEDADE" />
-            <End Role="TB_PROPRIEDADE" EntitySet="TB_PROPRIEDADE" />
+          <AssociationSet Name="FK_VENDEDORXESTADO" Association="Self.FK_VENDEDORXESTADO">
+            <End Role="TB_ESTADO" EntitySet="TB_ESTADO" />
+            <End Role="TB_VENDEDOR" EntitySet="TB_VENDEDOR" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -746,6 +958,9 @@
           <Property Name="IND_SINC_MAX_ROTEIRIZADOR" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <NavigationProperty Name="TB_QUALIFICACAO_SOCIO" Relationship="Model.FK_CADASTROXQUALIFICACAOSOCIO" FromRole="TB_CADASTRO" ToRole="TB_QUALIFICACAO_SOCIO" />
           <NavigationProperty Name="TB_CADASTRO_ENDERECOS" Relationship="Model.FK_CADASTRO_ENDERECOSXCADASTRO" FromRole="TB_CADASTRO" ToRole="TB_CADASTRO_ENDERECOS" />
+          <Property Name="DESC_E_MAIL_CONJUGE" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_TELEFONE_CONJUGE" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TB_PROPRIEDADE" Relationship="Model.FK_PROPRIEDADEXCADASTRO" FromRole="TB_CADASTRO" ToRole="TB_PROPRIEDADE" />
         </EntityType>
         <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="TB_CADASTRO" EntityType="Self.TB_CADASTRO" />
@@ -836,6 +1051,10 @@
             <End Role="TB_TIPO_PROPRIEDADE" EntitySet="TB_TIPO_PROPRIEDADE" />
             <End Role="TB_PROPRIEDADE" EntitySet="TB_PROPRIEDADE" />
           </AssociationSet>
+          <AssociationSet Name="FK_PROPRIEDADEXCADASTRO" Association="Model.FK_PROPRIEDADEXCADASTRO">
+            <End Role="TB_CADASTRO" EntitySet="TB_CADASTRO" />
+            <End Role="TB_PROPRIEDADE" EntitySet="TB_PROPRIEDADE" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="TB_CIDADE">
           <Key>
@@ -850,8 +1069,8 @@
           <Property Name="COD_CIDADE_IBGE" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="TB_CADASTRO" Relationship="Model.FK_CADASTROXCIDADE" FromRole="TB_CIDADE" ToRole="TB_CADASTRO" />
           <NavigationProperty Name="TB_ESTADO" Relationship="Model.FK_MUNICIPIOXESTADO" FromRole="TB_CIDADE" ToRole="TB_ESTADO" />
-          <Property Name="PERC_DEDUCAO_NFSE" Type="Decimal" Precision="5" Scale="2" />
           <NavigationProperty Name="TB_PROPRIEDADE" Relationship="Model.FK_PROPRIEDADEXCIDADE" FromRole="TB_CIDADE" ToRole="TB_PROPRIEDADE" />
+          <Property Name="IND_SINC_MAX_ROTEIRIZADOR" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
         </EntityType>
         <Association Name="FK_CADASTROXCIDADE">
           <End Type="Model.TB_CIDADE" Role="TB_CIDADE" Multiplicity="0..1" />
@@ -958,6 +1177,7 @@
           <Property Name="DESC_REGIAO" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="QT_POPULACAO" Type="Int32" />
           <NavigationProperty Name="TB_CADASTRO" Relationship="Model.FK_CADASTROXREGIAO" FromRole="TB_REGIAO" ToRole="TB_CADASTRO" />
+          <Property Name="IND_SINC_MAX_ROTEIRIZADOR" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
         </EntityType>
         <EntityType Name="TB_TABELA_PRECO_CAB">
           <Key>
@@ -1060,6 +1280,7 @@
           <Property Name="DESC_E_MAIL1" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="TB_CADASTRO" Relationship="Model.FK_CADASTROXVENDEDOR" FromRole="TB_VENDEDOR" ToRole="TB_CADASTRO" />
           <NavigationProperty Name="TB_ESTADO" Relationship="Model.FK_VENDEDORXESTADO" FromRole="TB_VENDEDOR" ToRole="TB_ESTADO" />
+          <Property Name="IND_SINC_MAX_ROTEIRIZADOR" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
         </EntityType>
         <Association Name="FK_CADASTROXCLASS_CADASTRO">
           <End Type="Model.TB_CLASS_CADASTRO" Role="TB_CLASS_CADASTRO" Multiplicity="0..1" />
@@ -1258,6 +1479,7 @@
           <Property Name="COD_CADASTRO_PROPRIETARIO" Type="Int32" />
           <NavigationProperty Name="TB_CIDADE" Relationship="Model.FK_PROPRIEDADEXCIDADE" FromRole="TB_PROPRIEDADE" ToRole="TB_CIDADE" />
           <NavigationProperty Name="TB_TIPO_PROPRIEDADE" Relationship="Model.PROPEXTIPOPROP" FromRole="TB_PROPRIEDADE" ToRole="TB_TIPO_PROPRIEDADE" />
+          <NavigationProperty Name="TB_CADASTRO" Relationship="Model.FK_PROPRIEDADEXCADASTRO" FromRole="TB_PROPRIEDADE" ToRole="TB_CADASTRO" />
         </EntityType>
         <EntityType Name="TB_QUALIFICACAO_SOCIO">
           <Key>
@@ -1339,6 +1561,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_PROPRIEDADEXCADASTRO">
+          <End Type="Model.TB_CADASTRO" Role="TB_CADASTRO" Multiplicity="0..1" />
+          <End Type="Model.TB_PROPRIEDADE" Role="TB_PROPRIEDADE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_CADASTRO">
+              <PropertyRef Name="COD_CADASTRO" />
+            </Principal>
+            <Dependent Role="TB_PROPRIEDADE">
+              <PropertyRef Name="COD_CADASTRO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1348,6 +1582,8 @@
           <EntitySetMapping Name="TB_CADASTRO">
             <EntityTypeMapping TypeName="Model.TB_CADASTRO">
               <MappingFragment StoreEntitySet="TB_CADASTRO">
+                <ScalarProperty Name="DESC_TELEFONE_CONJUGE" ColumnName="DESC_TELEFONE_CONJUGE" />
+                <ScalarProperty Name="DESC_E_MAIL_CONJUGE" ColumnName="DESC_E_MAIL_CONJUGE" />
                 <ScalarProperty Name="IND_SINC_MAX_ROTEIRIZADOR" ColumnName="IND_SINC_MAX_ROTEIRIZADOR" />
                 <ScalarProperty Name="DESC_OUTRAS_GRANTIAS" ColumnName="DESC_OUTRAS_GRANTIAS" />
                 <ScalarProperty Name="COD_CADASTRO" ColumnName="COD_CADASTRO" />
@@ -1522,7 +1758,7 @@
           <EntitySetMapping Name="TB_CIDADE">
             <EntityTypeMapping TypeName="Model.TB_CIDADE">
               <MappingFragment StoreEntitySet="TB_CIDADE">
-                <ScalarProperty Name="PERC_DEDUCAO_NFSE" ColumnName="PERC_DEDUCAO_NFSE" />
+                <ScalarProperty Name="IND_SINC_MAX_ROTEIRIZADOR" ColumnName="IND_SINC_MAX_ROTEIRIZADOR" />
                 <ScalarProperty Name="COD_CIDADE_IBGE" ColumnName="COD_CIDADE_IBGE" />
                 <ScalarProperty Name="COD_MUNICIPIO_SC" ColumnName="COD_MUNICIPIO_SC" />
                 <ScalarProperty Name="COD_DFC" ColumnName="COD_DFC" />
@@ -1606,6 +1842,7 @@
           <EntitySetMapping Name="TB_REGIAO">
             <EntityTypeMapping TypeName="Model.TB_REGIAO">
               <MappingFragment StoreEntitySet="TB_REGIAO">
+                <ScalarProperty Name="IND_SINC_MAX_ROTEIRIZADOR" ColumnName="IND_SINC_MAX_ROTEIRIZADOR" />
                 <ScalarProperty Name="QT_POPULACAO" ColumnName="QT_POPULACAO" />
                 <ScalarProperty Name="DESC_REGIAO" ColumnName="DESC_REGIAO" />
                 <ScalarProperty Name="COD_REGIAO" ColumnName="COD_REGIAO" />
@@ -1666,6 +1903,7 @@
           <EntitySetMapping Name="TB_VENDEDOR">
             <EntityTypeMapping TypeName="Model.TB_VENDEDOR">
               <MappingFragment StoreEntitySet="TB_VENDEDOR">
+                <ScalarProperty Name="IND_SINC_MAX_ROTEIRIZADOR" ColumnName="IND_SINC_MAX_ROTEIRIZADOR" />
                 <ScalarProperty Name="DESC_E_MAIL1" ColumnName="DESC_E_MAIL1" />
                 <ScalarProperty Name="PERC_COMISSAO4" ColumnName="PERC_COMISSAO4" />
                 <ScalarProperty Name="PERC_COMISSAO3" ColumnName="PERC_COMISSAO3" />

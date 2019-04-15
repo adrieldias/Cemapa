@@ -93,13 +93,9 @@ namespace Cliente.Forms
             List<String> ListaPropria = new List<string>() {"SIM", "NAO"};            
             BindingSource TipoImovelBindingSource = new BindingSource();
             TipoImovelBindingSource.DataSource = ListaPropria;
-            cbsPropriedadePropria.BindingSource = TipoImovelBindingSource;            
-            //var objPP = TipoImovelBindingSource.List.OfType<List<string>>().First(p => p. == ((TB_CADASTRO)CadastroBindingSource.Current).IND_FISICA_JURIDICA);
-            //pos = fisicaJuridicaBindingSource.IndexOf(objFJ);
-            //fisicaJuridicaBindingSource.Position = pos;
-            //objFJ = null;
-            //pos = 0;
-
+            cbsPropriedadePropria.BindingSource = TipoImovelBindingSource;
+            TipoImovelBindingSource.Position =
+                TipoImovelBindingSource.IndexOf(((TB_PROPRIEDADE)PropriedadeBindingSource.Current).IND_TIPO_IMOVEL);                
         }
 
         private async void BuscaCidades(string estado)
@@ -151,6 +147,16 @@ namespace Cliente.Forms
             if("VISUALIZAR ALTERAR".Contains(this.LayoutTela))            
                 BuscaDados();
            
+        }
+
+        private async void btSalvar_Click(object sender, EventArgs e)
+        {
+            var retorno = await RunAsyncPost(
+                string.Format("{0}/{1}/"
+                    , ConfigurationManager.AppSettings["UriPropriedade"]
+                    , "Save")
+                    , (TB_PROPRIEDADE)PropriedadeBindingSource.Current);
+            MessageBox.Show(retorno);
         }
     }
 }

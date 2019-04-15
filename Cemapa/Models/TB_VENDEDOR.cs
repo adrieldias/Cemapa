@@ -64,6 +64,7 @@ namespace Cemapa.Models
         public Nullable<decimal> PERC_COMISSAO3 { get; set; }
         public Nullable<decimal> PERC_COMISSAO4 { get; set; }
         public string DESC_E_MAIL1 { get; set; }
+        public string IND_SINC_MAX_ROTEIRIZADOR { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TB_CADASTRO> TB_CADASTRO { get; set; }
