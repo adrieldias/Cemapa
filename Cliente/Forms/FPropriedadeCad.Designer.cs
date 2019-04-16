@@ -60,6 +60,7 @@
             // 
             this.btCancelar.FlatAppearance.BorderColor = System.Drawing.Color.Gainsboro;
             this.btCancelar.FlatAppearance.BorderSize = 0;
+            this.btCancelar.Click += new System.EventHandler(this.btCancelar_Click);
             // 
             // btSalvar
             // 
@@ -71,9 +72,9 @@
             // 
             this.panel1.BackColor = System.Drawing.Color.White;
             this.panel1.Controls.Add(this.tableLayoutPanel3);
-            this.panel1.Location = new System.Drawing.Point(1, 99);
+            this.panel1.Location = new System.Drawing.Point(0, 99);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(867, 378);
+            this.panel1.Size = new System.Drawing.Size(868, 378);
             this.panel1.TabIndex = 11;
             // 
             // tableLayoutPanel3
@@ -111,7 +112,7 @@
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(867, 378);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(868, 378);
             this.tableLayoutPanel3.TabIndex = 1;
             // 
             // tbsNomePropriedade
@@ -140,7 +141,7 @@
             this.tbsEnderecoPropriedade.Location = new System.Drawing.Point(433, 3);
             this.tbsEnderecoPropriedade.Name = "tbsEnderecoPropriedade";
             this.tbsEnderecoPropriedade.PasswordChar = '\0';
-            this.tbsEnderecoPropriedade.Size = new System.Drawing.Size(431, 44);
+            this.tbsEnderecoPropriedade.Size = new System.Drawing.Size(432, 44);
             this.tbsEnderecoPropriedade.TabIndex = 1;
             this.tbsEnderecoPropriedade.Value = "";
             // 
@@ -189,7 +190,7 @@
             this.tbsBairroPropriedade.Location = new System.Drawing.Point(605, 53);
             this.tbsBairroPropriedade.Name = "tbsBairroPropriedade";
             this.tbsBairroPropriedade.PasswordChar = '\0';
-            this.tbsBairroPropriedade.Size = new System.Drawing.Size(259, 44);
+            this.tbsBairroPropriedade.Size = new System.Drawing.Size(260, 44);
             this.tbsBairroPropriedade.TabIndex = 4;
             this.tbsBairroPropriedade.Value = "";
             // 
@@ -249,7 +250,7 @@
             this.tbsValorPropriedade.Location = new System.Drawing.Point(519, 103);
             this.tbsValorPropriedade.Name = "tbsValorPropriedade";
             this.tbsValorPropriedade.PasswordChar = '\0';
-            this.tbsValorPropriedade.Size = new System.Drawing.Size(345, 44);
+            this.tbsValorPropriedade.Size = new System.Drawing.Size(346, 44);
             this.tbsValorPropriedade.TabIndex = 8;
             this.tbsValorPropriedade.Value = "";
             // 
@@ -281,7 +282,7 @@
             this.cbsTipoPropriedade.Name = "cbsTipoPropriedade";
             this.cbsTipoPropriedade.SelectedText = null;
             this.cbsTipoPropriedade.SelectedValue = null;
-            this.cbsTipoPropriedade.Size = new System.Drawing.Size(345, 44);
+            this.cbsTipoPropriedade.Size = new System.Drawing.Size(346, 44);
             this.cbsTipoPropriedade.TabIndex = 10;
             this.cbsTipoPropriedade.ValueMember = "";
             // 

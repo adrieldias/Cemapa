@@ -102,6 +102,7 @@
             // 
             this.btFechar.AutoSize = true;
             this.btFechar.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.btFechar.DialogResult = System.Windows.Forms.DialogResult.Abort;
             this.btFechar.FlatAppearance.BorderColor = System.Drawing.Color.Gainsboro;
             this.btFechar.FlatAppearance.BorderSize = 0;
             this.btFechar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -120,6 +121,7 @@
             // 
             this.btCancelar.AutoSize = true;
             this.btCancelar.BackColor = System.Drawing.Color.Tomato;
+            this.btCancelar.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btCancelar.FlatAppearance.BorderColor = System.Drawing.Color.Gainsboro;
             this.btCancelar.FlatAppearance.BorderSize = 0;
             this.btCancelar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -132,11 +134,13 @@
             this.btCancelar.TabIndex = 9;
             this.btCancelar.Text = "CANCELAR";
             this.btCancelar.UseVisualStyleBackColor = false;
+            this.btCancelar.Click += new System.EventHandler(this.btCancelar_Click);
             // 
             // btSalvar
             // 
             this.btSalvar.AutoSize = true;
             this.btSalvar.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.btSalvar.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btSalvar.FlatAppearance.BorderColor = System.Drawing.Color.Gainsboro;
             this.btSalvar.FlatAppearance.BorderSize = 0;
             this.btSalvar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -149,6 +153,7 @@
             this.btSalvar.TabIndex = 8;
             this.btSalvar.Text = "SALVAR";
             this.btSalvar.UseVisualStyleBackColor = false;
+            this.btSalvar.Click += new System.EventHandler(this.btSalvar_Click);
             // 
             // FModeloCad
             // 

@@ -13,14 +13,14 @@ namespace Cemapa.Controllers
         private Entities db = new Entities();
 
         [HttpGet]
-        public TB_PROPRIEDADE Get(int? id)
+        public List<TB_PROPRIEDADE> Get(int? id)
         {
             db.Configuration.LazyLoadingEnabled = false;
             var query = from p in db.TB_PROPRIEDADE
                             //.Include("TB_CIDADE")
-                        where (id == null || p.COD_PROPRIEDADE == id)
+                        where (id == null || p.COD_CADASTRO == id)
                         select p;
-            return query.FirstOrDefault();
+            return query.ToList();
         }
 
         [HttpGet]

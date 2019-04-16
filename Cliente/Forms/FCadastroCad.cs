@@ -134,9 +134,10 @@ namespace Cliente.Forms
             // Busca o cadastro no servidor
             if (CadastroBindingSource == null)
                 CadastroBindingSource = new BindingSource();
-            CadastroBindingSource.DataSource = JsonConvert.DeserializeAnonymousType((await RunAsyncGet(
+            var teste = JsonConvert.DeserializeAnonymousType((await RunAsyncGet(
                 ConfigurationManager.AppSettings["UriCadastro"], string.Format("{0}/{1}", "Get", this.ChaveConsulta["Codigo"])
                 )), new TB_CADASTRO());
+            CadastroBindingSource.DataSource = teste;
 
             txbsCodigo.DataBindings.Add("Text", CadastroBindingSource.Current, "COD_CADASTRO");            
             txbsNome.DataBindings.Add("Text", CadastroBindingSource.Current, "NOME");
@@ -246,32 +247,32 @@ namespace Cliente.Forms
             if (PropriedadeBindingSource == null)
                 PropriedadeBindingSource = new BindingSource();            
             dgvPropriedades.DataSource = PropriedadeBindingSource;
-            var definition = new
-            {
-                Data = new[] {
-                    new {
-                        CODIGO = 0,
-                        NOME = string.Empty,
-                        ENDERECO = string.Empty,
-                        CIDADE = string.Empty,
-                        BAIRRO = string.Empty,
-                        CEP = string.Empty,
-                        AREA = 0.00,
-                        VALOR = 0.00,
-                        MATRICULA = 0,
-                        CRI = string.Empty,
-                        TIPO = string.Empty,
-                        PROPRIO = string.Empty
-                    }
-                }
-            };            
-            var anonymousType = JsonConvert.DeserializeAnonymousType(
-                (await RunAsyncGet(
-                    ConfigurationManager.AppSettings["UriPropriedade"], 
-                    string.Format("{0}{1}", "GetPersonalizado/?COD_CADASTRO=", ((TB_CADASTRO)CadastroBindingSource.Current).COD_CADASTRO)
-                ))
-                , definition);
-            PropriedadeBindingSource.DataSource = anonymousType.Data;
+            //var definition = new
+            //{
+            //    Data = new[] {
+            //        new {
+            //            CODIGO = 0,
+            //            NOME = string.Empty,
+            //            ENDERECO = string.Empty,
+            //            CIDADE = string.Empty,
+            //            BAIRRO = string.Empty,
+            //            CEP = string.Empty,
+            //            AREA = 0.00,
+            //            VALOR = 0.00,
+            //            MATRICULA = 0,
+            //            CRI = string.Empty,
+            //            TIPO = string.Empty,
+            //            PROPRIO = string.Empty
+            //        }
+            //    }
+            //};            
+            
+            PropriedadeBindingSource.DataSource = JsonConvert.DeserializeAnonymousType((await RunAsyncGet(
+                ConfigurationManager.AppSettings["UriPropriedade"], string.Format("{0}/{1}", "Get", ((TB_CADASTRO)CadastroBindingSource.Current).COD_CADASTRO)
+                )), new List<TB_PROPRIEDADE>());            
+
+
+
         }
 
         private async void BuscaCidades(string estado)
@@ -368,9 +369,17 @@ namespace Cliente.Forms
             if (PropriedadeBindingSource.Current == null)
                 return;
             FPropriedadeCad f = new FPropriedadeCad("ALTERAR");
-            f.ChaveConsulta.Add("Codigo", 
-                this.ObterValoresTipoAnonimo(PropriedadeBindingSource.Current)[0]);
-            f.Show();
+            //f.ChaveConsulta.Add("Codigo", 
+            //    this.ObterValoresTipoAnonimo(PropriedadeBindingSource.Current)[0]);
+
+            //PropriedadeBindingSource.RaiseListChangedEvents = false;            
+            f.PropriedadeBindingSource = PropriedadeBindingSource;
+            f.Show();            
+        }
+
+        private void btNovaPropriedade_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(((TB_PROPRIEDADE)PropriedadeBindingSource.Current).IND_TIPO_IMOVEL);
         }
     }   
 
