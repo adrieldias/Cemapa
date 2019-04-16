@@ -137,6 +137,7 @@
     <Compile Include="Controllers\ClassCadastroController.cs" />
     <Compile Include="Controllers\EstadoController.cs" />
     <Compile Include="Controllers\PaisController.cs" />
+    <Compile Include="Controllers\ProdutoController.cs" />
     <Compile Include="Controllers\PropriedadeController.cs" />
     <Compile Include="Controllers\QualificacaoSocioController.cs" />
     <Compile Include="Controllers\TipoCadastroController.cs" />
@@ -169,6 +170,9 @@
     <Compile Include="Models\TB_CIDADE.cs">
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TB_CLASSE.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TB_CLASS_CADASTRO.cs">
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
@@ -182,6 +186,9 @@
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TB_PAIS.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_PRODUTO.cs">
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TB_PROPRIEDADE.cs">
