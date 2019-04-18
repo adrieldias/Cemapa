@@ -576,6 +576,7 @@
             this.dgvPropriedades.Name = "dgvPropriedades";
             this.dgvPropriedades.Size = new System.Drawing.Size(748, 408);
             this.dgvPropriedades.TabIndex = 13;
+            this.dgvPropriedades.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvPropriedades_CellFormatting);
             // 
             // tabPage3
             // 

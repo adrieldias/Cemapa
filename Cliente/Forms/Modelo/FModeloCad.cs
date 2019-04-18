@@ -153,6 +153,9 @@ namespace Cliente.Forms.Modelo
                 btSalvar.Visible = false;
                 btCancelar.Visible = false;
             }
+            else
+            if(LayoutTela.Equals("ALTERAR"))            
+                btFechar.Visible = false;
         }
 
         private void btMinimize_Click(object sender, EventArgs e)

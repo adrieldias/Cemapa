@@ -12,6 +12,7 @@ using System.Configuration;
 
 using Newtonsoft.Json;
 using Cliente.POCO;
+using System.Reflection;
 
 namespace Cliente.Forms
 {
@@ -246,31 +247,21 @@ namespace Cliente.Forms
             //dgvPropriedades
             if (PropriedadeBindingSource == null)
                 PropriedadeBindingSource = new BindingSource();            
-            dgvPropriedades.DataSource = PropriedadeBindingSource;
-            //var definition = new
-            //{
-            //    Data = new[] {
-            //        new {
-            //            CODIGO = 0,
-            //            NOME = string.Empty,
-            //            ENDERECO = string.Empty,
-            //            CIDADE = string.Empty,
-            //            BAIRRO = string.Empty,
-            //            CEP = string.Empty,
-            //            AREA = 0.00,
-            //            VALOR = 0.00,
-            //            MATRICULA = 0,
-            //            CRI = string.Empty,
-            //            TIPO = string.Empty,
-            //            PROPRIO = string.Empty
-            //        }
-            //    }
-            //};            
-            
+            dgvPropriedades.DataSource = PropriedadeBindingSource;            
             PropriedadeBindingSource.DataSource = JsonConvert.DeserializeAnonymousType((await RunAsyncGet(
                 ConfigurationManager.AppSettings["UriPropriedade"], string.Format("{0}/{1}", "Get", ((TB_CADASTRO)CadastroBindingSource.Current).COD_CADASTRO)
-                )), new List<TB_PROPRIEDADE>());            
+                )), new List<TB_PROPRIEDADE>());
 
+            //foreach (var col in dgvPropriedades.Columns)
+            //{
+            //    var colunas = "DESC_PROPRIEDADE DESC_LOCALIDADE NUM_AREA";
+            //    if (colunas.Contains(((DataGridViewColumn)col).Name))
+            //    {
+            //        ((DataGridViewColumn)col).Visible = true;
+            //    }
+            //    else
+            //        ((DataGridViewColumn)col).Visible = false;
+            //}
 
 
         }
@@ -368,11 +359,7 @@ namespace Cliente.Forms
         {
             if (PropriedadeBindingSource.Current == null)
                 return;
-            FPropriedadeCad f = new FPropriedadeCad("ALTERAR");
-            //f.ChaveConsulta.Add("Codigo", 
-            //    this.ObterValoresTipoAnonimo(PropriedadeBindingSource.Current)[0]);
-
-            //PropriedadeBindingSource.RaiseListChangedEvents = false;            
+            FPropriedadeCad f = new FPropriedadeCad("ALTERAR");                       
             f.PropriedadeBindingSource = PropriedadeBindingSource;
             f.Show();            
         }
@@ -381,6 +368,56 @@ namespace Cliente.Forms
         {
             MessageBox.Show(((TB_PROPRIEDADE)PropriedadeBindingSource.Current).IND_TIPO_IMOVEL);
         }
-    }   
+
+        private void dgvPropriedades_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if((dgvPropriedades.Rows[e.RowIndex].DataBoundItem != null)
+                && (dgvPropriedades.Columns[e.ColumnIndex].DataPropertyName.Contains("TB_")))
+            {
+                e.Value = BindProperty(
+                    dgvPropriedades.Rows[e.RowIndex].DataBoundItem,
+                    dgvPropriedades.Columns[e.ColumnIndex].DataPropertyName);
+
+            }
+        }
+
+        private string BindProperty(object property, string propertyName)
+        {
+            string retValue = "";
+
+            if (propertyName.Contains("TB_"))
+            {
+                PropertyInfo[] arrayProperties;
+                string leftPropertyName;
+
+                //leftPropertyName = propertyName.Substring(0, propertyName.IndexOf("."));
+                leftPropertyName = propertyName;
+                arrayProperties = property.GetType().GetProperties();
+
+                foreach (PropertyInfo propertyInfo in arrayProperties)
+                {
+                    //if (propertyInfo.Name == leftPropertyName)
+                    //{
+                        retValue = BindProperty(
+                          propertyInfo.GetValue(property, null),
+                          propertyName.Substring(propertyName.IndexOf(".") + 1));
+                        break;
+                    //}
+                }
+            }
+            else
+            {
+                Type propertyType;
+                PropertyInfo propertyInfo;
+
+                propertyType = property.GetType();
+                propertyInfo = propertyType.GetProperty(propertyName);
+                retValue = propertyInfo.GetValue(property, null).ToString();
+            }
+
+            return retValue;
+        }
+
+    }
 
 }

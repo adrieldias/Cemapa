@@ -126,25 +126,25 @@ namespace Componentes
         {
             //ControlPaint.DrawBorder(e.Graphics, this.panel1.ClientRectangle, Color.SteelBlue, ButtonBorderStyle.Solid);
 
-            var borderColor = Color.SteelBlue;
-            var borderStyle = ButtonBorderStyle.Solid;
-            var borderWidth = 0;
+            //var borderColor = Color.SteelBlue;
+            //var borderStyle = ButtonBorderStyle.Solid;
+            //var borderWidth = 0;
 
-            ControlPaint.DrawBorder(
-                                e.Graphics,
-                                this.panel1.ClientRectangle,
-                                borderColor,
-                                borderWidth,
-                                borderStyle,
-                                borderColor,
-                                borderWidth,
-                                borderStyle,
-                                borderColor,
-                                borderWidth,
-                                borderStyle,
-                                borderColor,
-                                borderWidth,
-                                borderStyle);
+            //ControlPaint.DrawBorder(
+            //                    e.Graphics,
+            //                    this.panel1.ClientRectangle,
+            //                    borderColor,
+            //                    borderWidth,
+            //                    borderStyle,
+            //                    borderColor,
+            //                    borderWidth,
+            //                    borderStyle,
+            //                    borderColor,
+            //                    borderWidth,
+            //                    borderStyle,
+            //                    borderColor,
+            //                    borderWidth,
+            //                    borderStyle);
         }
 
         private void comboBox1_KeyUp(object sender, KeyEventArgs e)

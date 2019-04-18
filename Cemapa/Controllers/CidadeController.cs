@@ -12,6 +12,7 @@ namespace Cemapa.Controllers
     {
         private Entities db = new Entities();
 
+
         public IList<TB_CIDADE> Get()
         {
             db.Configuration.LazyLoadingEnabled = false;
@@ -20,7 +21,17 @@ namespace Cemapa.Controllers
                         select c;
             return query.ToList();
         }
-        
+
+        public TB_CIDADE Get(int? id)
+        {
+            db.Configuration.LazyLoadingEnabled = false;
+            var query = from c in db.TB_CIDADE
+                        where c.COD_CIDADE == id
+                        orderby c.DESC_CIDADE
+                        select c;
+            return query.FirstOrDefault();
+        }
+
         [HttpGet]
         public IList<TB_CIDADE> GetCidadesPorEstado(string id)
         {

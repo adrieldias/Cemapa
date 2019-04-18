@@ -16,10 +16,10 @@ namespace Cemapa.Controllers
         public List<TB_PROPRIEDADE> Get(int? id)
         {
             db.Configuration.LazyLoadingEnabled = false;
-            var query = from p in db.TB_PROPRIEDADE
-                            //.Include("TB_CIDADE")
+            var query = from p in db.TB_PROPRIEDADE   
+                        .Include("TB_CADASTRO")
                         where (id == null || p.COD_CADASTRO == id)
-                        select p;
+                        select p;            
             return query.ToList();
         }
 

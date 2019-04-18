@@ -47,14 +47,14 @@ public class SlickBlueTabControl : TabControl
             }
             else if (!(_mouseOverTabIndex == -1) & i == _mouseOverTabIndex)
             {
-                if (i == 0)
-                {
-                    g.FillRectangle(new SolidBrush(/*FromHex("#435363")*/Color.LightGray), 0, 0, tabRect.Width + 3, tabRect.Height + 2);
-                }
-                else
-                {
-                    g.FillRectangle(new SolidBrush(/*FromHex("#435363")*/Color.LightGray), 0, tabRect.Y, tabRect.Width + 3, tabRect.Height);
-                }
+                //if (i == 0)
+                //{
+                //    g.FillRectangle(new SolidBrush(/*FromHex("#435363")*/Color.LightGray), 0, 0, tabRect.Width + 3, tabRect.Height + 2);
+                //}
+                //else
+                //{
+                //    g.FillRectangle(new SolidBrush(/*FromHex("#435363")*/Color.LightGray), 0, tabRect.Y, tabRect.Width + 3, tabRect.Height);
+                //}
 
                 //ToolTipText
                 //string drawToolTip = this.TabPages[i].ToolTipText;
@@ -92,27 +92,27 @@ public class SlickBlueTabControl : TabControl
 
     protected override void OnMouseMove(MouseEventArgs e)
     {
-        base.OnMouseMove(e);
-        for (int i = 0; i <= TabPages.Count - 1; i++)
-        {
-            if (GetTabRect(i).Contains(e.Location))
-            {
-                _mouseOverTabIndex = i;
-                break; // TODO: might not be correct. Was : Exit For
-            }
-            else
-            {
-                _mouseOverTabIndex = -1;
-            }
-        }
-        Invalidate();
+        //base.OnMouseMove(e);
+        //for (int i = 0; i <= TabPages.Count - 1; i++)
+        //{
+        //    if (GetTabRect(i).Contains(e.Location))
+        //    {
+        //        _mouseOverTabIndex = i;
+        //        break; // TODO: might not be correct. Was : Exit For
+        //    }
+        //    else
+        //    {
+        //        _mouseOverTabIndex = -1;
+        //    }
+        //}
+        //Invalidate();
     }
 
     protected override void OnMouseLeave(EventArgs e)
     {
-        base.OnMouseLeave(e);
-        _mouseOverTabIndex = -1;
-        Invalidate();
+        //base.OnMouseLeave(e);
+        //_mouseOverTabIndex = -1;
+        //Invalidate();
     }
 
     #region "Helpers"

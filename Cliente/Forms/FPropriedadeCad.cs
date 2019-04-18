@@ -25,8 +25,8 @@ namespace Cliente.Forms
         public BindingSource TipoImovelBindingSource { get; set; }
         #endregion
 
-        #region Acesso assíncrono ao servidor
-        private async void BuscaDados()
+        #region DataBindings
+        private void ConfiguraComponentes()
         {
             tbsNomePropriedade.DataBindings.Add("Text", PropriedadeBindingSource.Current, "DESC_PROPRIEDADE");
             tbsEnderecoPropriedade.DataBindings.Add("Text", PropriedadeBindingSource.Current, "DESC_LOCALIDADE");
@@ -37,36 +37,49 @@ namespace Cliente.Forms
             tbsMatriculaPropriedade.DataBindings.Add("Text", PropriedadeBindingSource.Current, "NUM_MATRICULA");
             tbsValorPropriedade.DataBindings.Add("Text", PropriedadeBindingSource.Current, "VAL_PROPRIEDADE");
 
-            // cbCidade
+            // cbsCidade
             if (CidadeBindingSource == null)
                 CidadeBindingSource = new BindingSource();
-            CidadeBindingSource.DataSource = JsonConvert.DeserializeAnonymousType((await RunAsyncGet(
-                ConfigurationManager.AppSettings["UriCidade"])), new List<TB_CIDADE>());
-            var objCid = CidadeBindingSource.List.OfType<TB_CIDADE>().First(c => c.COD_CIDADE == ((TB_PROPRIEDADE)PropriedadeBindingSource.Current).COD_CIDADE);
-            var pos = CidadeBindingSource.IndexOf(objCid);
-            CidadeBindingSource.Position = pos;
-            objCid = null;
-            pos = 0;
+            cbsCidade.BindingSource = CidadeBindingSource;            
 
             // cbsEstado
             if (EstadoBindingSource == null)
                 EstadoBindingSource = new BindingSource();
-            EstadoBindingSource.CurrentItemChanged += new EventHandler(EstadoBindingSource_CurrentChanged);
-            EstadoBindingSource.DataSource = JsonConvert.DeserializeAnonymousType((await RunAsyncGet(
-                ConfigurationManager.AppSettings["UriEstado"]
-                )), new List<TB_ESTADO>());
-            var objEst = EstadoBindingSource.List.OfType<TB_ESTADO>().First(c => c.COD_ESTADO == ((TB_CIDADE)CidadeBindingSource.Current).COD_ESTADO);
-            pos = EstadoBindingSource.IndexOf(objEst);
-            EstadoBindingSource.Position = pos;
-            cbsEstado.BindingSource = EstadoBindingSource;
-            cbsEstado.DisplayMember = "DESC_ESTADO";
-            cbsEstado.ValueMember = "COD_ESTADO";
-            objEst = null;
-            pos = 0;
+            cbsEstado.BindingSource = EstadoBindingSource;            
 
             // cbsTipoPropriedade
             if (TipoPropriedadeBindingSource == null)
                 TipoPropriedadeBindingSource = new BindingSource();
+            cbsTipoPropriedade.BindingSource = TipoPropriedadeBindingSource;
+            
+
+            // cbsPropriedadePropria
+            if(TipoImovelBindingSource == null)
+                TipoImovelBindingSource = new BindingSource();
+            cbsPropriedadePropria.BindingSource = TipoImovelBindingSource;
+        }
+        #endregion
+
+        #region Acesso assíncrono ao servidor
+        private async void BuscaDados()
+        {
+            var cidade =
+            JsonConvert.DeserializeAnonymousType((await RunAsyncGet(
+                string.Format("{0}{1}/{2}", ConfigurationManager.AppSettings["UriCidade"], "Get", ((TB_PROPRIEDADE)PropriedadeBindingSource.Current).COD_CIDADE)
+                )), new TB_CIDADE());
+            EstadoBindingSource.DataSource = JsonConvert.DeserializeAnonymousType((await RunAsyncGet(
+                ConfigurationManager.AppSettings["UriEstado"]
+                )), new List<TB_ESTADO>());
+            var objEst = EstadoBindingSource.List.OfType<TB_ESTADO>().First(c => c.COD_ESTADO == cidade.COD_ESTADO);
+            var pos = EstadoBindingSource.IndexOf(objEst);
+            EstadoBindingSource.Position = pos;
+            objEst = null;
+            pos = 0;
+            cbsEstado.DisplayMember = "DESC_ESTADO";
+            cbsEstado.ValueMember = "COD_ESTADO";
+            EstadoBindingSource.CurrentItemChanged += new EventHandler(EstadoBindingSource_CurrentChanged);
+            BuscaCidades(cidade.COD_ESTADO);
+
             TipoPropriedadeBindingSource.DataSource =
                 JsonConvert.DeserializeAnonymousType((
                     await RunAsyncGet(ConfigurationManager.AppSettings["UriTipoPropriedade"])), new List<TB_TIPO_PROPRIEDADE>());
@@ -79,23 +92,13 @@ namespace Cliente.Forms
                 objTP = null;
                 pos = 0;
             }
-            cbsTipoPropriedade.BindingSource = TipoPropriedadeBindingSource;
             cbsTipoPropriedade.DisplayMember = "DESC_TIPO_PROPRIEDADE";
             cbsTipoPropriedade.ValueMember = "COD_TIPO_PROPRIEDADE";
-            
 
-            // cbsPropriedadePropria
-            List<String> ListaPropria = new List<string>() {"SIM", "NAO"};
-            TipoImovelBindingSource = new BindingSource();
-            TipoImovelBindingSource.DataSource = ListaPropria;
-            cbsPropriedadePropria.BindingSource = TipoImovelBindingSource;
+            List<String> ListaPropria = new List<string>() {"SIM", "NAO"};            
+            TipoImovelBindingSource.DataSource = ListaPropria;            
             TipoImovelBindingSource.Position =
-                TipoImovelBindingSource.IndexOf(((TB_PROPRIEDADE)PropriedadeBindingSource.Current).IND_TIPO_IMOVEL);
-
-            //if(LayoutTela == "ALTERAR")
-            //{
-            //    ((TB_PROPRIEDADE)PropriedadeBindingSource.Current).BeginEdit();
-            //}
+                TipoImovelBindingSource.IndexOf(((TB_PROPRIEDADE)PropriedadeBindingSource.Current).IND_TIPO_IMOVEL);            
         }
 
         private async void BuscaCidades(string estado)
@@ -105,13 +108,12 @@ namespace Cliente.Forms
             var pos = EstadoBindingSource.IndexOf(objEst);
             EstadoBindingSource.Position = pos;
             objEst = null;
-            pos = 0;
-            if (CidadeBindingSource == null)
-                CidadeBindingSource = new BindingSource();
+            pos = 0;            
             CidadeBindingSource.DataSource = JsonConvert.DeserializeAnonymousType((await RunAsyncGet(
                 string.Format("{0}{1}", ConfigurationManager.AppSettings["UriCidade"], "GetCidadesPorEstado")
                 , ((TB_ESTADO)EstadoBindingSource.Current).COD_ESTADO)), new List<TB_CIDADE>());
-
+            cbsCidade.DisplayMember = "DESC_CIDADE";
+            cbsCidade.ValueMember = "COD_CIDADE";
             try
             {
                 var objCid = CidadeBindingSource.List.OfType<TB_CIDADE>().First(c => c.COD_CIDADE == ((TB_PROPRIEDADE)PropriedadeBindingSource.Current).COD_CIDADE);
@@ -123,15 +125,13 @@ namespace Cliente.Forms
             catch (Exception e)
             {
                 CidadeBindingSource.Position = 0;
-            }
-            cbsCidade.BindingSource = CidadeBindingSource;
-            cbsCidade.DisplayMember = "DESC_CIDADE";
+            }            
         }
 
         #endregion
 
         private void EstadoBindingSource_CurrentChanged(object sender, EventArgs e)
-        {
+        {            
             BuscaCidades(((TB_ESTADO)EstadoBindingSource.Current).COD_ESTADO);
         }
 
@@ -139,14 +139,15 @@ namespace Cliente.Forms
         {
             InitializeComponent();
             this.Personaliza();
-            this.lbNome.Text = "FORMULÁRIO DE PROPRIEDADE";
+            this.lbNome.Text = "FORMULÁRIO DE PROPRIEDADE";            
         }
 
         private void FPropriedadeCad_Load(object sender, EventArgs e)
         {
-            if ("VISUALIZAR ALTERAR".Contains(this.LayoutTela))
+            ConfiguraComponentes();
+            if ("ALTERAR".Contains(this.LayoutTela))
             {
-                BuscaDados();                
+                BuscaDados();
             }
         }
 
@@ -163,13 +164,10 @@ namespace Cliente.Forms
                     TipoImovelBindingSource.Current.ToString();
         }
 
-        private async void btCancelar_Click(object sender, EventArgs e)
-        {
-            //PropriedadeBindingSource.DataSource = JsonConvert.DeserializeAnonymousType((await RunAsyncGet(
-            //    ConfigurationManager.AppSettings["UriPropriedade"], string.Format("{0}/{1}", "Get", ((TB_PROPRIEDADE)PropriedadeBindingSource.Current).COD_CADASTRO)
-            //    )), new List<TB_PROPRIEDADE>());     
-            //((TB_PROPRIEDADE)PropriedadeBindingSource.Current).CancelEdit();
+        private void btCancelar_Click(object sender, EventArgs e)
+        {            
             PropriedadeBindingSource.CancelEdit();
         }
+               
     }
 }
