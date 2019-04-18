@@ -28,8 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FCadastroCad));            
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FCadastroCad));
             this.slickBlueTabControl1 = new SlickBlueTabControl();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -104,7 +103,7 @@
             // 
             this.btSalvar.FlatAppearance.BorderColor = System.Drawing.Color.Gainsboro;
             this.btSalvar.FlatAppearance.BorderSize = 0;
-            this.btSalvar.Click += new System.EventHandler(this.btSalvar_Click);            
+            this.btSalvar.Click += new System.EventHandler(this.btSalvar_Click);
             // 
             // slickBlueTabControl1
             // 
@@ -565,6 +564,7 @@
             this.btNovaPropriedade.TabIndex = 14;
             this.btNovaPropriedade.Text = "Novo";
             this.btNovaPropriedade.UseVisualStyleBackColor = true;
+            this.btNovaPropriedade.Click += new System.EventHandler(this.btNovaPropriedade_Click);
             // 
             // dgvPropriedades
             // 

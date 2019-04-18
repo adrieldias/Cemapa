@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -59,13 +60,40 @@ namespace Cemapa.Controllers
             return query;            
         }
 
-        [System.Web.Http.HttpPost]
-        public void Create([FromBody] TB_CADASTRO cadastro)
+        [HttpPost]
+        public System.Web.Mvc.JsonResult Save([FromBody] TB_CADASTRO cadastro)
         {
             db.Configuration.LazyLoadingEnabled = false;
+            if(ModelState.IsValid)
+            {
+                var id = cadastro.COD_CADASTRO;
+                if(db.TB_CADASTRO.Any(c => c.COD_CADASTRO == id))
+                {
+                    //db.TB_CADASTRO.Attach(cadastro);
+                    db.Entry(cadastro).State = EntityState.Modified;
+                }
+                else
+                {
+                    //db.TB_CADASTRO.Add(cadastro);
+                    db.Entry(cadastro).State = EntityState.Added;
+                }                
+                db.SaveChanges();
+                return new System.Web.Mvc.JsonResult()
+                {
+                    Data = cadastro.COD_CADASTRO,
+                    JsonRequestBehavior = System.Web.Mvc.JsonRequestBehavior.AllowGet
+                };
 
-            db.TB_CADASTRO.Add(cadastro);
-            db.SaveChanges();
+            }
+            else
+            {
+                return new System.Web.Mvc.JsonResult()
+                {
+                    Data = "Modelo Inválido",
+                    JsonRequestBehavior = System.Web.Mvc.JsonRequestBehavior.AllowGet
+                };
+            }
+            
             
         }       
     }

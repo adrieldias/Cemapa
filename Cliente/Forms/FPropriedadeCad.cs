@@ -22,21 +22,12 @@ namespace Cliente.Forms
         public BindingSource EstadoBindingSource { get; set; }
         public BindingSource CidadeBindingSource { get; set; }
         public BindingSource TipoPropriedadeBindingSource { get; set; }
+        public BindingSource TipoImovelBindingSource { get; set; }
         #endregion
 
         #region Acesso assíncrono ao servidor
         private async void BuscaDados()
         {
-            //Busca a propriedade no servidor
-            if (PropriedadeBindingSource == null)
-                PropriedadeBindingSource = new BindingSource();
-            PropriedadeBindingSource.DataSource =
-                JsonConvert.DeserializeAnonymousType(
-                    (await RunAsyncGet(
-                        ConfigurationManager.AppSettings["UriPropriedade"], string.Format("{0}/{1}", "Get", this.ChaveConsulta["Codigo"])
-                    ))
-                , new TB_PROPRIEDADE());
-
             tbsNomePropriedade.DataBindings.Add("Text", PropriedadeBindingSource.Current, "DESC_PROPRIEDADE");
             tbsEnderecoPropriedade.DataBindings.Add("Text", PropriedadeBindingSource.Current, "DESC_LOCALIDADE");
             tbsBairroPropriedade.DataBindings.Add("Text", PropriedadeBindingSource.Current, "DESC_BAIRRO");
@@ -79,23 +70,32 @@ namespace Cliente.Forms
             TipoPropriedadeBindingSource.DataSource =
                 JsonConvert.DeserializeAnonymousType((
                     await RunAsyncGet(ConfigurationManager.AppSettings["UriTipoPropriedade"])), new List<TB_TIPO_PROPRIEDADE>());
-            var objTP = TipoPropriedadeBindingSource.List.OfType<TB_TIPO_PROPRIEDADE>()
-                .First(c => c.COD_TIPO_PROPRIEDADE == ((TB_PROPRIEDADE)PropriedadeBindingSource.Current).COD_TIPO_PROPRIEDADE);
-            pos = TipoPropriedadeBindingSource.IndexOf(objTP);
-            TipoPropriedadeBindingSource.Position = pos;
+            if (((TB_PROPRIEDADE)PropriedadeBindingSource.Current).COD_TIPO_PROPRIEDADE != null)
+            {
+                var objTP = TipoPropriedadeBindingSource.List.OfType<TB_TIPO_PROPRIEDADE>()
+                    .First(c => c.COD_TIPO_PROPRIEDADE == ((TB_PROPRIEDADE)PropriedadeBindingSource.Current).COD_TIPO_PROPRIEDADE);
+                pos = TipoPropriedadeBindingSource.IndexOf(objTP);
+                TipoPropriedadeBindingSource.Position = pos;
+                objTP = null;
+                pos = 0;
+            }
             cbsTipoPropriedade.BindingSource = TipoPropriedadeBindingSource;
             cbsTipoPropriedade.DisplayMember = "DESC_TIPO_PROPRIEDADE";
             cbsTipoPropriedade.ValueMember = "COD_TIPO_PROPRIEDADE";
-            objTP = null;
-            pos = 0;
+            
 
             // cbsPropriedadePropria
-            List<String> ListaPropria = new List<string>() {"SIM", "NAO"};            
-            BindingSource TipoImovelBindingSource = new BindingSource();
+            List<String> ListaPropria = new List<string>() {"SIM", "NAO"};
+            TipoImovelBindingSource = new BindingSource();
             TipoImovelBindingSource.DataSource = ListaPropria;
             cbsPropriedadePropria.BindingSource = TipoImovelBindingSource;
             TipoImovelBindingSource.Position =
-                TipoImovelBindingSource.IndexOf(((TB_PROPRIEDADE)PropriedadeBindingSource.Current).IND_TIPO_IMOVEL);                
+                TipoImovelBindingSource.IndexOf(((TB_PROPRIEDADE)PropriedadeBindingSource.Current).IND_TIPO_IMOVEL);
+
+            //if(LayoutTela == "ALTERAR")
+            //{
+            //    ((TB_PROPRIEDADE)PropriedadeBindingSource.Current).BeginEdit();
+            //}
         }
 
         private async void BuscaCidades(string estado)
@@ -144,19 +144,32 @@ namespace Cliente.Forms
 
         private void FPropriedadeCad_Load(object sender, EventArgs e)
         {
-            if("VISUALIZAR ALTERAR".Contains(this.LayoutTela))            
-                BuscaDados();
-           
+            if ("VISUALIZAR ALTERAR".Contains(this.LayoutTela))
+            {
+                BuscaDados();                
+            }
         }
 
-        private async void btSalvar_Click(object sender, EventArgs e)
+        private void btSalvar_Click(object sender, EventArgs e)
         {
-            var retorno = await RunAsyncPost(
-                string.Format("{0}/{1}/"
-                    , ConfigurationManager.AppSettings["UriPropriedade"]
-                    , "Save")
-                    , (TB_PROPRIEDADE)PropriedadeBindingSource.Current);
-            MessageBox.Show(retorno);
+            // Busca as alterações feitas nos DataBindings            
+            ((TB_PROPRIEDADE)PropriedadeBindingSource.Current).COD_CIDADE =
+                ((TB_CIDADE)CidadeBindingSource.Current).COD_CIDADE;
+            if(((TB_PROPRIEDADE)PropriedadeBindingSource.Current).COD_TIPO_PROPRIEDADE != null)
+                ((TB_PROPRIEDADE)PropriedadeBindingSource.Current).COD_TIPO_PROPRIEDADE =
+                    ((TB_TIPO_PROPRIEDADE)TipoPropriedadeBindingSource.Current).COD_TIPO_PROPRIEDADE;
+            if(((TB_PROPRIEDADE)PropriedadeBindingSource.Current).IND_TIPO_IMOVEL != null)
+                ((TB_PROPRIEDADE)PropriedadeBindingSource.Current).IND_TIPO_IMOVEL =
+                    TipoImovelBindingSource.Current.ToString();
+        }
+
+        private async void btCancelar_Click(object sender, EventArgs e)
+        {
+            //PropriedadeBindingSource.DataSource = JsonConvert.DeserializeAnonymousType((await RunAsyncGet(
+            //    ConfigurationManager.AppSettings["UriPropriedade"], string.Format("{0}/{1}", "Get", ((TB_PROPRIEDADE)PropriedadeBindingSource.Current).COD_CADASTRO)
+            //    )), new List<TB_PROPRIEDADE>());     
+            //((TB_PROPRIEDADE)PropriedadeBindingSource.Current).CancelEdit();
+            PropriedadeBindingSource.CancelEdit();
         }
     }
 }
