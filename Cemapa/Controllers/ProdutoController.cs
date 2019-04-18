@@ -26,6 +26,16 @@ namespace Cemapa.Controllers
             return query;
         }
 
+        [HttpPost]
+        public void Create([FromBody] TB_PRODUTO produto)
+        {
+            db.Configuration.LazyLoadingEnabled = false;
+
+            db.TB_PRODUTO.Add(produto);
+            db.SaveChanges();
+
+        }
+
 
     }
 }
