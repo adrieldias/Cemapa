@@ -8,5 +8,6 @@ namespace Cliente.POCO
 {
     public class TB_ESTADO : Cemapa.Models.TB_ESTADO
     {
+
     }
 }

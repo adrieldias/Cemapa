@@ -290,5 +290,23 @@ namespace Cliente.Forms.Modelo
 
             return lista.ToArray();
         }
+
+        public string ObterValoresTipoAnonimo(Object objeto, string propriedade)
+        {
+            var retorno = string.Empty;
+            if (objeto == null)
+                return retorno;            
+            var p = objeto.GetType().GetProperties();
+            foreach (PropertyInfo pop in p)
+            {
+                var valor = pop.GetValue(objeto, null);
+                if (valor != null && pop.Name == propriedade)
+                {
+                    retorno = valor.ToString();
+                    break;
+                }
+            }
+            return retorno;
+        }
     }
 }

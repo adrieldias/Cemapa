@@ -17,7 +17,7 @@ namespace Cemapa.Controllers
         {
             db.Configuration.LazyLoadingEnabled = false;
             var query = from p in db.TB_PROPRIEDADE   
-                        .Include("TB_CADASTRO")
+                        .Include("TB_CIDADE")
                         where (id == null || p.COD_CADASTRO == id)
                         select p;            
             return query.ToList();

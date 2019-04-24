@@ -9,9 +9,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Configuration;
-
 using Cliente.POCO;
 using Newtonsoft.Json;
+using System.Reflection;
 
 namespace Cliente.Forms
 {
@@ -32,10 +32,12 @@ namespace Cliente.Forms
             tbsEnderecoPropriedade.DataBindings.Add("Text", PropriedadeBindingSource.Current, "DESC_LOCALIDADE");
             tbsBairroPropriedade.DataBindings.Add("Text", PropriedadeBindingSource.Current, "DESC_BAIRRO");
             tbsArea.DataBindings.Add("Text", PropriedadeBindingSource.Current, "NUM_AREA");
+            
             tbsCepPropriedade.DataBindings.Add("Text", PropriedadeBindingSource.Current, "DESC_CEP");
             tbsCri.DataBindings.Add("Text", PropriedadeBindingSource.Current, "DESC_CRI");
             tbsMatriculaPropriedade.DataBindings.Add("Text", PropriedadeBindingSource.Current, "NUM_MATRICULA");
             tbsValorPropriedade.DataBindings.Add("Text", PropriedadeBindingSource.Current, "VAL_PROPRIEDADE");
+            textBoxSimples1.DataBindings.Add("Text", PropriedadeBindingSource.Current, "Teste");
 
             // cbsCidade
             if (CidadeBindingSource == null)
@@ -165,9 +167,14 @@ namespace Cliente.Forms
         }
 
         private void btCancelar_Click(object sender, EventArgs e)
-        {            
+        {               
             PropriedadeBindingSource.CancelEdit();
         }
-               
+
+        private void tbsArea_Leave(object sender, EventArgs e)
+        {
+
+        }
+
     }
 }

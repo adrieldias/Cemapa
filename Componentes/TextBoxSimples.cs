@@ -16,7 +16,7 @@ namespace Componentes
 
         #region Propriedades
         [Description("Valor do TextBoxSimples"), Category("Cemapa")]
-        public string Value
+        public override string Text
         {
             get => textBox1.Text;
             set => textBox1.Text = value;

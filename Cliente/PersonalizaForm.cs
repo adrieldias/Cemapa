@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using System.Drawing;
 using System.Reflection;
 using System.Security;
+using Componentes;
 
 #region Informações
 /*---------Informações sobre configurações das personalizações que esta classe efetua---------*/
@@ -30,7 +31,7 @@ namespace Cliente
         static PersonalizaForm _instancia;
 
         private const string FONTE = "Calibri Light";
-        private const int TAMANHO_FONTE = 10;
+        private const int TAMANHO_FONTE = 12;
 
 
         public static PersonalizaForm Instancia
@@ -40,179 +41,110 @@ namespace Cliente
 
         private PersonalizaForm() { }
 
+        private void PersonalizaControles(Control c)
+        {
+            if (c.GetType().Name.Equals("TextBox"))
+            {
+                PersonalizaTextBox((TextBox)c);
+            }
+
+            if (c.GetType().Name.Equals("TextBoxSimples"))
+            {
+                PersonalizaTextBoxSimples((TextBoxSimples)c);
+            }
+
+            if (c.GetType().Name.Equals("DataGridView"))
+            {
+                PersonalizaGridView((DataGridView)c);
+            }
+
+            if (c.GetType().Name.Equals("Label"))
+            {
+                PersonalizaLabel((Label)c);
+            }
+
+            if (c.GetType().Name.Equals("Button"))
+            {
+                PersonalizaButton((Button)c);
+            }
+
+            if (c.GetType().Name.Equals("ComboBox"))
+            {
+                PersonalizaComboBox((ComboBox)c);
+            }
+
+            if (c.HasChildren)
+            {
+                foreach (Control ci in c.Controls)
+                {
+                    PersonalizaControles(ci);
+                }
+            }
+        }
+
         public void Personaliza(Form formulario)
         {
             formulario.FormBorderStyle = FormBorderStyle.None;
 
-            foreach (Control c in formulario.Controls)
+            // Personaliza em até três níveis (controle dentro de controle dentro de controle)
+            foreach(Control c in formulario.Controls)
             {
-                
-                if (c.GetType().Name.Equals("TextBox"))
-                {
-                    PersonalizaTextBox((TextBox)c);
-                }
-                
-                if (c.GetType().Name.Equals("DataGridView"))
-                {
-                    PersonalizaGridView((DataGridView)c);
-                }                
-
-                if(c.GetType().Name.Equals("Label"))
-                {
-                    PersonalizaLabel((Label)c);
-                }
-
-                if (c.GetType().Name.Equals("Button"))
-                {
-                    PersonalizaButton((Button)c);
-                }
-
-                if (c.GetType().Name.Equals("ComboBox"))
-                {
-                    PersonalizaComboBox((ComboBox)c);
-                }
-
-                if (c.GetType().Name.Equals("Panel"))
-                {                    
-                    foreach(Control ci in c.Controls)
-                    {   
-                        if (ci.GetType().Name.Equals("TextBox"))
-                        {
-                            PersonalizaTextBox((TextBox)ci);
-                        }
-
-                        if (ci.GetType().Name.Equals("DataGridView"))
-                        {
-                            PersonalizaGridView((DataGridView)ci);
-                        }
-
-                        if (ci.GetType().Name.Equals("Label"))
-                        {
-                            PersonalizaLabel((Label)ci);
-                        }
-
-                        if (ci.GetType().Name.Equals("Button"))
-                        {
-                            PersonalizaButton((Button)ci);
-                        }
-
-                        if (ci.GetType().Name.Equals("ComboBox"))
-                        {
-                            PersonalizaComboBox((ComboBox)ci);
-                        }
-                    }                    
-                }
-
-                if(c.GetType().Name.Equals("TabControl"))
-                {
-                    foreach (Control ci in c.Controls) // TabControl
-                    {
-                       foreach (Control cii in ci.Controls) //TabPanel
-                       {
-                            foreach (Control ciii in cii.Controls) //TableLayout
-                            {       
-                                if (ciii.GetType().Name.Equals("TextBox"))
-                                {
-                                    PersonalizaTextBox((TextBox)ciii);
-                                }
-
-                                if (ciii.GetType().Name.Equals("DataGridView"))
-                                {
-                                    PersonalizaGridView((DataGridView)ciii);
-                                }
-
-                                if (ciii.GetType().Name.Equals("Label"))
-                                {
-                                    PersonalizaLabel((Label)ciii);
-                                }
-
-                                if (ciii.GetType().Name.Equals("Button"))
-                                {
-                                    PersonalizaButton((Button)ciii);
-                                }
-
-                                if (ciii.GetType().Name.Equals("ComboBox"))
-                                {
-                                    PersonalizaComboBox((ComboBox)ciii);
-                                }
-                            }
-                       }
-                    }
-                }
-
-                if (c.GetType().Name.Equals("SlickBlueTabControl"))
-                {
-                    foreach (Control ci in c.Controls) // TabControl
-                    {
-                        foreach (Control cii in ci.Controls) //TabPanel
-                        {
-                            foreach (Control ciii in cii.Controls) //TableLayout
-                            {
-                                if (ciii.GetType().Name.Equals("TextBox"))
-                                {
-                                    PersonalizaTextBox((TextBox)ciii);
-                                }
-
-                                if (ciii.GetType().Name.Equals("DataGridView"))
-                                {
-                                    PersonalizaGridView((DataGridView)ciii);
-                                }
-
-                                if (ciii.GetType().Name.Equals("Label"))
-                                {
-                                    PersonalizaLabel((Label)ciii);
-                                }
-
-                                if (ciii.GetType().Name.Equals("Button"))
-                                {
-                                    PersonalizaButton((Button)ciii);
-                                }
-
-                                if (ciii.GetType().Name.Equals("ComboBox"))
-                                {
-                                    PersonalizaComboBox((ComboBox)ciii);
-                                }
-                            }
-                            if (cii.GetType().Name.Equals("TextBox"))
-                            {
-                                PersonalizaTextBox((TextBox)cii);
-                            }
-
-                            if (cii.GetType().Name.Equals("DataGridView"))
-                            {
-                                PersonalizaGridView((DataGridView)cii);
-                            }
-
-                            if (cii.GetType().Name.Equals("Label"))
-                            {
-                                PersonalizaLabel((Label)cii);
-                            }
-
-                            if (cii.GetType().Name.Equals("Button"))
-                            {
-                                PersonalizaButton((Button)cii);
-                            }
-
-                            if (cii.GetType().Name.Equals("ComboBox"))
-                            {
-                                PersonalizaComboBox((ComboBox)cii);
-                            }
-                        }
-                    }
-                }
-            }
-            //    if (formulario.Name.Substring(formulario.Name.Length - 4).Equals("Home"))
-            //    {  
-            //        //formulario.BackColor = System.Drawing.Color.Azure;
-            //    }
+                //foreach(Control ci in c.Controls)
+                //{
+                //    foreach (Control cii in ci.Controls)
+                //    {
+                //        foreach (Control ciii in cii.Controls)
+                //        {
+                //            PersonalizaControles(ciii);
+                //        }
+                //        PersonalizaControles(cii);
+                //    }
+                //    PersonalizaControles(ci);
+                //}
+                PersonalizaControles(c);
+            }       
         }
 
         #region TextBox
         private void PersonalizaTextBox(TextBox textBox)
         {
             textBox.CharacterCasing = CharacterCasing.Upper;
-            textBox.Font = new Font(FONTE, TAMANHO_FONTE);
-            textBox.Refresh();
+            textBox.Font = new Font(FONTE, TAMANHO_FONTE);            
+            textBox.Refresh();            
+        }
+        #endregion
+
+        #region TextBoxSimples
+        private void PersonalizaTextBoxSimples(TextBoxSimples textBoxSimples)
+        {
+            textBoxSimples.Leave += TextBoxSimples_Leave;
+        }
+
+        private void TextBoxSimples_Leave(object sender, EventArgs e)
+        {            
+            if ((sender as TextBoxSimples).DataBindings != null && (sender as TextBoxSimples).Text != string.Empty)
+            {
+                var value = ((sender as TextBoxSimples).Text);
+                var ds = (sender as TextBoxSimples).DataBindings[0].DataSource;
+                var dataMember = (sender as TextBoxSimples).DataBindings[0].BindingMemberInfo.BindingMember;
+                PropertyInfo propertyInfo = ds.GetType().GetProperty(dataMember);
+                if (propertyInfo == null)
+                {
+                    MessageBox.Show(string.Format(
+                        "O controle {0} em {1} não possui datamember"
+                        , (sender as TextBoxSimples).Name
+                        , (sender as TextBoxSimples).ParentForm.Name
+                        )
+                        , "ERRO", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                if (propertyInfo.GetValue(ds, null).ToString() != value)
+                {
+                    Type t = Nullable.GetUnderlyingType(propertyInfo.PropertyType) ?? propertyInfo.PropertyType;
+                    object safeValue = (value == null) ? null : Convert.ChangeType(value, t);
+                    propertyInfo.SetValue(ds, safeValue, null);
+                }
+            }
         }
         #endregion
 
@@ -324,14 +256,12 @@ namespace Cliente
                 //button.ForeColor = Color.Gray;
                 button.ForeColor = Color.DarkSlateGray;
             }
-                
-                
             
             button.FlatStyle = FlatStyle.Flat;            
             button.FlatAppearance.BorderSize = 0;
             //button.ForeColor = Color.White;
             
-            button.Font = new Font(FONTE, TAMANHO_FONTE);
+            button.Font = new Font(FONTE, 10);
             button.Text = button.Text.ToUpper();
         }
         #endregion

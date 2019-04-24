@@ -100,7 +100,7 @@
             this.textBoxSimples2.PasswordChar = '\0';
             this.textBoxSimples2.Size = new System.Drawing.Size(250, 49);
             this.textBoxSimples2.TabIndex = 0;
-            this.textBoxSimples2.Value = "";
+            this.textBoxSimples2.Text = "";
             // 
             // textBoxSimples1
             // 
@@ -112,7 +112,7 @@
             this.textBoxSimples1.PasswordChar = '\0';
             this.textBoxSimples1.Size = new System.Drawing.Size(401, 49);
             this.textBoxSimples1.TabIndex = 1;
-            this.textBoxSimples1.Value = "";
+            this.textBoxSimples1.Text = "";
             // 
             // comboBoxSimples1
             // 
