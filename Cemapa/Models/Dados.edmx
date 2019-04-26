@@ -403,6 +403,7 @@
           <Property Name="IND_NIR_SYNC_SITE" Type="char" MaxLength="1" />
           <Property Name="IND_SINC_MAX_ROTEIRIZADOR" Type="char" MaxLength="1" />
           <Property Name="PERC_COMISSAO_PRODUCAO" Type="number" Precision="5" Scale="2" />
+          <Property Name="IND_SYNC_SKYHUB" Type="char" MaxLength="1" />
         </EntityType>
         <EntityType Name="TB_PROPRIEDADE">
           <Key>
@@ -1848,6 +1849,7 @@
           <Property Name="IND_SINC_MAX_ROTEIRIZADOR" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="PERC_COMISSAO_PRODUCAO" Type="Decimal" Precision="5" Scale="2" />
           <NavigationProperty Name="TB_CLASSE" Relationship="Model.FK_PRODUTOXCLASSE" FromRole="TB_PRODUTO" ToRole="TB_CLASSE" />
+          <Property Name="IND_SYNC_SKYHUB" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
         </EntityType>
         <EntityType Name="TB_CLASSE">
           <Key>
@@ -2344,6 +2346,7 @@
           <EntitySetMapping Name="TB_PRODUTO">
             <EntityTypeMapping TypeName="Model.TB_PRODUTO">
               <MappingFragment StoreEntitySet="TB_PRODUTO">
+                <ScalarProperty Name="IND_SYNC_SKYHUB" ColumnName="IND_SYNC_SKYHUB" />
                 <ScalarProperty Name="PERC_COMISSAO_PRODUCAO" ColumnName="PERC_COMISSAO_PRODUCAO" />
                 <ScalarProperty Name="IND_SINC_MAX_ROTEIRIZADOR" ColumnName="IND_SINC_MAX_ROTEIRIZADOR" />
                 <ScalarProperty Name="IND_NIR_SYNC_SITE" ColumnName="IND_NIR_SYNC_SITE" />

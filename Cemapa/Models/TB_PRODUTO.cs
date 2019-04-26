@@ -125,6 +125,7 @@ namespace Cemapa.Models
         public string IND_NIR_SYNC_SITE { get; set; }
         public string IND_SINC_MAX_ROTEIRIZADOR { get; set; }
         public Nullable<decimal> PERC_COMISSAO_PRODUCAO { get; set; }
+        public string IND_SYNC_SKYHUB { get; set; }
     
         public virtual TB_CLASSE TB_CLASSE { get; set; }
     }

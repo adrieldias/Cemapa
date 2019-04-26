@@ -40,7 +40,7 @@
         <AssociationConnector Association="Model.FK_PROPRIEDADEXCIDADE" />
         <AssociationConnector Association="Model.PROPEXTIPOPROP" />
         <AssociationConnector Association="Model.FK_PROPRIEDADEXCADASTRO" />
-        <EntityTypeShape EntityType="Model.TB_PRODUTO" Width="1.5" PointX="3.375" PointY="6.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.TB_PRODUTO" Width="1.5" PointX="3.375" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Model.TB_CLASSE" Width="1.5" PointX="1.125" PointY="10" />
         <AssociationConnector Association="Model.FK_PRODUTOXCLASSE" />
       </Diagram>

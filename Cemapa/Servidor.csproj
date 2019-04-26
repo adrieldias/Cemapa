@@ -140,12 +140,14 @@
     <Compile Include="Controllers\ProdutoController.cs" />
     <Compile Include="Controllers\PropriedadeController.cs" />
     <Compile Include="Controllers\QualificacaoSocioController.cs" />
+    <Compile Include="Controllers\SincronizarSkyhubController.cs" />
     <Compile Include="Controllers\TipoCadastroController.cs" />
     <Compile Include="Controllers\TipoPropriedadeController.cs" />
     <Compile Include="Controllers\VendedorController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CategoriaProdutoSkyhub.cs" />
     <Compile Include="Models\Dados.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -161,6 +163,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Dados.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\EspecificacoesProdutoSkyhub.cs" />
+    <Compile Include="Models\ProdutoSkyhub.cs" />
+    <Compile Include="Models\RetornoJson.cs" />
     <Compile Include="Models\TB_CADASTRO.cs">
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
