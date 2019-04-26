@@ -9,9 +9,41 @@ using System.Threading.Tasks;
 
 namespace Cliente.POCO
 {
-    public class TB_PROPRIEDADE : Cemapa.Models.TB_PROPRIEDADE, IEditableObject 
+    
+    public class TB_PROPRIEDADE : Cemapa.Models.TB_PROPRIEDADE, IEditableObject, INotifyPropertyChanged/*, IDataErrorInfo*/
     {
+        public string Teste { get; set; }
+
         Hashtable props = null;
+
+        //public string Error { get => "Erro"; }
+
+        //public string this[string columnName]
+        //{
+        //    get
+        //    {
+        //        string result = string.Empty;
+        //        if (columnName == "NUM_AREA")
+        //        {
+        //            if (string.IsNullOrWhiteSpace(NUM_AREA.ToString()))
+        //                result = "BLANK";
+        //        }
+        //        return result;
+        //    }
+        //    set { OnPropertyChanged("NUM_AREA"); }
+        //}      
+
+
+        public void OnPropertyChanged(string name)
+        {
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (handler != null)
+            {
+                handler(this, new PropertyChangedEventArgs(name));
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public void BeginEdit()
         {
@@ -66,5 +98,5 @@ namespace Cliente.POCO
             //delete current values
             props = null;
         }
-    }
+    }   
 }

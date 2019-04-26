@@ -42,6 +42,7 @@
             this.tbsCri = new Componentes.TextBoxSimples();
             this.cbsTipoPropriedade = new Componentes.ComboBoxSimples();
             this.cbsPropriedadePropria = new Componentes.ComboBoxSimples();
+            this.textBoxSimples1 = new Componentes.TextBoxSimples();
             this.pCabecalho.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -105,6 +106,7 @@
             this.tableLayoutPanel3.Controls.Add(this.tbsCri, 3, 3);
             this.tableLayoutPanel3.Controls.Add(this.cbsTipoPropriedade, 6, 3);
             this.tableLayoutPanel3.Controls.Add(this.cbsPropriedadePropria, 0, 4);
+            this.tableLayoutPanel3.Controls.Add(this.textBoxSimples1, 2, 4);
             this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 6;
@@ -130,7 +132,6 @@
             this.tbsNomePropriedade.PasswordChar = '\0';
             this.tbsNomePropriedade.Size = new System.Drawing.Size(424, 44);
             this.tbsNomePropriedade.TabIndex = 0;
-            this.tbsNomePropriedade.Value = "";
             // 
             // tbsEnderecoPropriedade
             // 
@@ -145,7 +146,6 @@
             this.tbsEnderecoPropriedade.PasswordChar = '\0';
             this.tbsEnderecoPropriedade.Size = new System.Drawing.Size(432, 44);
             this.tbsEnderecoPropriedade.TabIndex = 1;
-            this.tbsEnderecoPropriedade.Value = "";
             // 
             // cbsEstado
             // 
@@ -194,7 +194,6 @@
             this.tbsBairroPropriedade.PasswordChar = '\0';
             this.tbsBairroPropriedade.Size = new System.Drawing.Size(260, 44);
             this.tbsBairroPropriedade.TabIndex = 4;
-            this.tbsBairroPropriedade.Value = "";
             // 
             // tbsCepPropriedade
             // 
@@ -209,7 +208,6 @@
             this.tbsCepPropriedade.PasswordChar = '\0';
             this.tbsCepPropriedade.Size = new System.Drawing.Size(252, 44);
             this.tbsCepPropriedade.TabIndex = 5;
-            this.tbsCepPropriedade.Value = "";
             // 
             // tbsArea
             // 
@@ -224,7 +222,6 @@
             this.tbsArea.PasswordChar = '\0';
             this.tbsArea.Size = new System.Drawing.Size(252, 44);
             this.tbsArea.TabIndex = 7;
-            this.tbsArea.Value = "";
             // 
             // tbsMatriculaPropriedade
             // 
@@ -239,7 +236,6 @@
             this.tbsMatriculaPropriedade.PasswordChar = '\0';
             this.tbsMatriculaPropriedade.Size = new System.Drawing.Size(252, 44);
             this.tbsMatriculaPropriedade.TabIndex = 6;
-            this.tbsMatriculaPropriedade.Value = "";
             // 
             // tbsValorPropriedade
             // 
@@ -254,7 +250,6 @@
             this.tbsValorPropriedade.PasswordChar = '\0';
             this.tbsValorPropriedade.Size = new System.Drawing.Size(346, 44);
             this.tbsValorPropriedade.TabIndex = 8;
-            this.tbsValorPropriedade.Value = "";
             // 
             // tbsCri
             // 
@@ -269,7 +264,6 @@
             this.tbsCri.PasswordChar = '\0';
             this.tbsCri.Size = new System.Drawing.Size(252, 44);
             this.tbsCri.TabIndex = 9;
-            this.tbsCri.Value = "";
             // 
             // cbsTipoPropriedade
             // 
@@ -304,6 +298,20 @@
             this.cbsPropriedadePropria.Size = new System.Drawing.Size(166, 44);
             this.cbsPropriedadePropria.TabIndex = 11;
             this.cbsPropriedadePropria.ValueMember = "";
+            // 
+            // textBoxSimples1
+            // 
+            this.textBoxSimples1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxSimples1.AutoSize = true;
+            this.tableLayoutPanel3.SetColumnSpan(this.textBoxSimples1, 2);
+            this.textBoxSimples1.Font = new System.Drawing.Font("Calibri Light", 12F);
+            this.textBoxSimples1.Label = "NOME DO CAMPO";
+            this.textBoxSimples1.Location = new System.Drawing.Point(175, 203);
+            this.textBoxSimples1.Name = "textBoxSimples1";
+            this.textBoxSimples1.PasswordChar = '\0';
+            this.textBoxSimples1.Size = new System.Drawing.Size(166, 44);
+            this.textBoxSimples1.TabIndex = 12;
             // 
             // FPropriedadeCad
             // 
@@ -345,5 +353,6 @@
         private Componentes.TextBoxSimples tbsCri;
         private Componentes.ComboBoxSimples cbsTipoPropriedade;
         private Componentes.ComboBoxSimples cbsPropriedadePropria;
+        private Componentes.TextBoxSimples textBoxSimples1;
     }
 }

@@ -206,7 +206,7 @@
             this.txbsNome.PasswordChar = '\0';
             this.txbsNome.Size = new System.Drawing.Size(367, 42);
             this.txbsNome.TabIndex = 26;
-            this.txbsNome.Value = "";
+            this.txbsNome.Text = "";
             // 
             // txbsNomeFantasia
             // 
@@ -221,7 +221,7 @@
             this.txbsNomeFantasia.PasswordChar = '\0';
             this.txbsNomeFantasia.Size = new System.Drawing.Size(373, 42);
             this.txbsNomeFantasia.TabIndex = 27;
-            this.txbsNomeFantasia.Value = "";
+            this.txbsNomeFantasia.Text = "";
             // 
             // txbsTelefone
             // 
@@ -236,7 +236,7 @@
             this.txbsTelefone.PasswordChar = '\0';
             this.txbsTelefone.Size = new System.Drawing.Size(142, 42);
             this.txbsTelefone.TabIndex = 29;
-            this.txbsTelefone.Value = "";
+            this.txbsTelefone.Text = "";
             // 
             // txbsCelular
             // 
@@ -251,7 +251,7 @@
             this.txbsCelular.PasswordChar = '\0';
             this.txbsCelular.Size = new System.Drawing.Size(142, 42);
             this.txbsCelular.TabIndex = 30;
-            this.txbsCelular.Value = "";
+            this.txbsCelular.Text = "";
             // 
             // txbsEmailXML
             // 
@@ -266,7 +266,7 @@
             this.txbsEmailXML.PasswordChar = '\0';
             this.txbsEmailXML.Size = new System.Drawing.Size(217, 42);
             this.txbsEmailXML.TabIndex = 31;
-            this.txbsEmailXML.Value = "";
+            this.txbsEmailXML.Text = "";
             // 
             // txbsEmailContato
             // 
@@ -281,7 +281,7 @@
             this.txbsEmailContato.PasswordChar = '\0';
             this.txbsEmailContato.Size = new System.Drawing.Size(223, 42);
             this.txbsEmailContato.TabIndex = 32;
-            this.txbsEmailContato.Value = "";
+            this.txbsEmailContato.Text = "";
             // 
             // txbsCodigo
             // 
@@ -296,7 +296,7 @@
             this.txbsCodigo.PasswordChar = '\0';
             this.txbsCodigo.Size = new System.Drawing.Size(142, 42);
             this.txbsCodigo.TabIndex = 35;
-            this.txbsCodigo.Value = "";
+            this.txbsCodigo.Text = "";
             // 
             // cbsTipoCadastro
             // 
@@ -425,7 +425,7 @@
             this.tbsCep.PasswordChar = '\0';
             this.tbsCep.Size = new System.Drawing.Size(219, 44);
             this.tbsCep.TabIndex = 9;
-            this.tbsCep.Value = "";
+            this.tbsCep.Text = "";
             // 
             // cbsPais
             // 
@@ -457,7 +457,7 @@
             this.tbsEndereco.PasswordChar = '\0';
             this.tbsEndereco.Size = new System.Drawing.Size(369, 44);
             this.tbsEndereco.TabIndex = 7;
-            this.tbsEndereco.Value = "";
+            this.tbsEndereco.Text = "";
             // 
             // tbsComplemento
             // 
@@ -472,7 +472,7 @@
             this.tbsComplemento.PasswordChar = '\0';
             this.tbsComplemento.Size = new System.Drawing.Size(375, 44);
             this.tbsComplemento.TabIndex = 8;
-            this.tbsComplemento.Value = "";
+            this.tbsComplemento.Text = "";
             // 
             // cbsEstado
             // 
@@ -521,7 +521,7 @@
             this.tbsBairro.PasswordChar = '\0';
             this.tbsBairro.Size = new System.Drawing.Size(225, 44);
             this.tbsBairro.TabIndex = 6;
-            this.tbsBairro.Value = "";
+            this.tbsBairro.Text = "";
             // 
             // tabPage1
             // 
@@ -640,7 +640,7 @@
             this.tbsEmpresa.PasswordChar = '\0';
             this.tbsEmpresa.Size = new System.Drawing.Size(294, 44);
             this.tbsEmpresa.TabIndex = 0;
-            this.tbsEmpresa.Value = "";
+            this.tbsEmpresa.Text = "";
             // 
             // tbsFuncao
             // 
@@ -655,7 +655,7 @@
             this.tbsFuncao.PasswordChar = '\0';
             this.tbsFuncao.Size = new System.Drawing.Size(219, 44);
             this.tbsFuncao.TabIndex = 1;
-            this.tbsFuncao.Value = "";
+            this.tbsFuncao.Text = "";
             // 
             // tbsTrabalhoTelefone
             // 
@@ -670,7 +670,7 @@
             this.tbsTrabalhoTelefone.PasswordChar = '\0';
             this.tbsTrabalhoTelefone.Size = new System.Drawing.Size(225, 44);
             this.tbsTrabalhoTelefone.TabIndex = 2;
-            this.tbsTrabalhoTelefone.Value = "";
+            this.tbsTrabalhoTelefone.Text = "";
             // 
             // tbsCrc
             // 
@@ -685,7 +685,7 @@
             this.tbsCrc.PasswordChar = '\0';
             this.tbsCrc.Size = new System.Drawing.Size(219, 44);
             this.tbsCrc.TabIndex = 3;
-            this.tbsCrc.Value = "";
+            this.tbsCrc.Text = "";
             // 
             // tbsSequencial
             // 
@@ -700,7 +700,7 @@
             this.tbsSequencial.PasswordChar = '\0';
             this.tbsSequencial.Size = new System.Drawing.Size(294, 44);
             this.tbsSequencial.TabIndex = 4;
-            this.tbsSequencial.Value = "";
+            this.tbsSequencial.Text = "";
             // 
             // tbsValidadeCrc
             // 
@@ -715,7 +715,7 @@
             this.tbsValidadeCrc.PasswordChar = '\0';
             this.tbsValidadeCrc.Size = new System.Drawing.Size(225, 44);
             this.tbsValidadeCrc.TabIndex = 5;
-            this.tbsValidadeCrc.Value = "";
+            this.tbsValidadeCrc.Text = "";
             // 
             // label1
             // 
@@ -742,7 +742,7 @@
             this.tbsDtFimSociedade.PasswordChar = '\0';
             this.tbsDtFimSociedade.Size = new System.Drawing.Size(219, 44);
             this.tbsDtFimSociedade.TabIndex = 7;
-            this.tbsDtFimSociedade.Value = "";
+            this.tbsDtFimSociedade.Text = "";
             // 
             // cbsQualificacaoSocio
             // 
@@ -774,7 +774,7 @@
             this.tbsPercParticCapitalTotal.PasswordChar = '\0';
             this.tbsPercParticCapitalTotal.Size = new System.Drawing.Size(219, 44);
             this.tbsPercParticCapitalTotal.TabIndex = 9;
-            this.tbsPercParticCapitalTotal.Value = "";
+            this.tbsPercParticCapitalTotal.Text = "";
             // 
             // tbsPercParticCapitalVolante
             // 
@@ -789,7 +789,7 @@
             this.tbsPercParticCapitalVolante.PasswordChar = '\0';
             this.tbsPercParticCapitalVolante.Size = new System.Drawing.Size(219, 44);
             this.tbsPercParticCapitalVolante.TabIndex = 10;
-            this.tbsPercParticCapitalVolante.Value = "";
+            this.tbsPercParticCapitalVolante.Text = "";
             // 
             // FCadastroCad
             // 

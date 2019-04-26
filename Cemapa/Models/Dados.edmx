@@ -1604,7 +1604,7 @@
           <Property Name="DESC_PROPRIEDADE" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
           <Property Name="NUM_ANO" Type="Int16" />
           <Property Name="VAL_PROPRIEDADE" Type="Decimal" Precision="11" Scale="2" />
-          <Property Name="NUM_AREA" Type="Decimal" Precision="11" Scale="3" />
+          <Property Name="NUM_AREA" Type="Decimal" />
           <Property Name="DESC_LOCALIDADE" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="DESC_OBSERVACAO" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
           <Property Name="IND_HIPOTECA" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
@@ -2499,6 +2499,8 @@
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="SynchronizePropertyFacets" Value="False" />
+        <DesignerProperty Name="ProcessDependentTemplatesOnSave" Value="True" />
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->

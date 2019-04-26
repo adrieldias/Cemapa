@@ -9,7 +9,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Configuration;
-
 using Newtonsoft.Json;
 using Cliente.POCO;
 using System.Reflection;
@@ -45,9 +44,7 @@ namespace Cliente.Forms
         /// Busca os dados complementares no servidor
         /// </summary>
         private async void BuscaDadosPropriedade()
-        {   
-            
-
+        { 
             var definition = new
             {
                 Data = new[] {
@@ -163,11 +160,11 @@ namespace Cliente.Forms
             pos = 0;
 
             //cbsFisicaJuridica
-            List<FisicaJuridica> ListaFisicaJuridica = new List<FisicaJuridica>();
-            var f = new FisicaJuridica();
+            List<POCO.FisicaJuridica> ListaFisicaJuridica = new List<POCO.FisicaJuridica>();
+            var f = new POCO.FisicaJuridica();
             f.IND_FISICA_JURIDICA = "F";
             f.DESC_FISICA_JURIDICA = "FISICA";
-            var j = new FisicaJuridica();
+            var j = new POCO.FisicaJuridica();
             j.IND_FISICA_JURIDICA = "J";
             j.DESC_FISICA_JURIDICA = "JURIDICA";
             ListaFisicaJuridica.Add(f);
@@ -176,7 +173,7 @@ namespace Cliente.Forms
             fisicaJuridicaBindingSource.DataSource = ListaFisicaJuridica;
             cbsFisicaJuridica.BindingSource = fisicaJuridicaBindingSource;
             cbsFisicaJuridica.DisplayMember = "DESC_FISICA_JURIDICA";
-            var objFJ = fisicaJuridicaBindingSource.List.OfType<FisicaJuridica>().First(p => p.IND_FISICA_JURIDICA == ((TB_CADASTRO)CadastroBindingSource.Current).IND_FISICA_JURIDICA);
+            var objFJ = fisicaJuridicaBindingSource.List.OfType<POCO.FisicaJuridica>().First(p => p.IND_FISICA_JURIDICA == ((TB_CADASTRO)CadastroBindingSource.Current).IND_FISICA_JURIDICA);
             pos = fisicaJuridicaBindingSource.IndexOf(objFJ);
             fisicaJuridicaBindingSource.Position = pos;
             objFJ = null;
@@ -251,17 +248,46 @@ namespace Cliente.Forms
             PropriedadeBindingSource.DataSource = JsonConvert.DeserializeAnonymousType((await RunAsyncGet(
                 ConfigurationManager.AppSettings["UriPropriedade"], string.Format("{0}/{1}", "Get", ((TB_CADASTRO)CadastroBindingSource.Current).COD_CADASTRO)
                 )), new List<TB_PROPRIEDADE>());
+            DataGridViewTextBoxColumn dgvcCidade = new DataGridViewTextBoxColumn();
+            dgvcCidade.DataPropertyName = "CIDADE";
+            dgvcCidade.HeaderText = "CIDADE";            
+            dgvPropriedades.Columns.Add(dgvcCidade);
+            dgvPropriedades.Columns["TB_CIDADE"].Visible = false;
 
-            //foreach (var col in dgvPropriedades.Columns)
-            //{
-            //    var colunas = "DESC_PROPRIEDADE DESC_LOCALIDADE NUM_AREA";
-            //    if (colunas.Contains(((DataGridViewColumn)col).Name))
-            //    {
-            //        ((DataGridViewColumn)col).Visible = true;
-            //    }
-            //    else
-            //        ((DataGridViewColumn)col).Visible = false;
-            //}
+            foreach (var col in dgvPropriedades.Columns)
+            {
+                var colunas = "DESC_PROPRIEDADE DESC_LOCALIDADE NUM_AREA CIDADE DESC_CRI VAL_PROPRIEDADE NUM_MATRICULA";
+                if (colunas.Contains(((DataGridViewColumn)col).Name))
+                {
+                    ((DataGridViewColumn)col).Visible = true;
+                    if ((col as DataGridViewColumn).Name.Equals("DESC_PROPRIEDADE"))
+                    {
+                        (col as DataGridViewColumn).HeaderText = "PROPRIEDADE";
+                        (col as DataGridViewColumn).DisplayIndex = 0;
+                        (col as DataGridViewColumn).AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                    }
+                    if ((col as DataGridViewColumn).Name.Equals("DESC_LOCALIDADE"))
+                    {
+                        (col as DataGridViewColumn).HeaderText = "ENDEREÇO";
+                        (col as DataGridViewColumn).DisplayIndex = 1;
+                    }
+                    if ((col as DataGridViewColumn).Name.Equals("VAL_PROPRIEDADE"))
+                    {
+                        (col as DataGridViewColumn).HeaderText = "VALOR";
+                        (col as DataGridViewColumn).DisplayIndex = 2;
+                    }
+                    if ((col as DataGridViewColumn).Name.Equals("NUM_AREA"))                    
+                        (col as DataGridViewColumn).HeaderText = "AREA";
+                    if ((col as DataGridViewColumn).Name.Equals("DESC_CRI"))
+                        (col as DataGridViewColumn).HeaderText = "CRI";
+                    if ((col as DataGridViewColumn).Name.Equals("NUM_MATRICULA"))
+                        (col as DataGridViewColumn).HeaderText = "MATRICULA";
+
+
+                }
+                else
+                    ((DataGridViewColumn)col).Visible = false;
+            }
 
 
         }
@@ -359,8 +385,9 @@ namespace Cliente.Forms
         {
             if (PropriedadeBindingSource.Current == null)
                 return;
+
             FPropriedadeCad f = new FPropriedadeCad("ALTERAR");                       
-            f.PropriedadeBindingSource = PropriedadeBindingSource;
+            f.PropriedadeBindingSource = PropriedadeBindingSource;            
             f.Show();            
         }
 
@@ -371,53 +398,12 @@ namespace Cliente.Forms
 
         private void dgvPropriedades_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-            if((dgvPropriedades.Rows[e.RowIndex].DataBoundItem != null)
-                && (dgvPropriedades.Columns[e.ColumnIndex].DataPropertyName.Contains("TB_")))
+            if (dgvPropriedades.Rows[e.RowIndex].DataBoundItem != null)
             {
-                e.Value = BindProperty(
-                    dgvPropriedades.Rows[e.RowIndex].DataBoundItem,
-                    dgvPropriedades.Columns[e.ColumnIndex].DataPropertyName);
-
+                if (dgvPropriedades.Columns[e.ColumnIndex].DataPropertyName.Equals("CIDADE"))
+                    e.Value = (((dgvPropriedades.Rows[e.RowIndex].DataBoundItem as TB_PROPRIEDADE).TB_CIDADE).DESC_CIDADE);
             }
         }
-
-        private string BindProperty(object property, string propertyName)
-        {
-            string retValue = "";
-
-            if (propertyName.Contains("TB_"))
-            {
-                PropertyInfo[] arrayProperties;
-                string leftPropertyName;
-
-                //leftPropertyName = propertyName.Substring(0, propertyName.IndexOf("."));
-                leftPropertyName = propertyName;
-                arrayProperties = property.GetType().GetProperties();
-
-                foreach (PropertyInfo propertyInfo in arrayProperties)
-                {
-                    //if (propertyInfo.Name == leftPropertyName)
-                    //{
-                        retValue = BindProperty(
-                          propertyInfo.GetValue(property, null),
-                          propertyName.Substring(propertyName.IndexOf(".") + 1));
-                        break;
-                    //}
-                }
-            }
-            else
-            {
-                Type propertyType;
-                PropertyInfo propertyInfo;
-
-                propertyType = property.GetType();
-                propertyInfo = propertyType.GetProperty(propertyName);
-                retValue = propertyInfo.GetValue(property, null).ToString();
-            }
-
-            return retValue;
-        }
-
     }
 
 }
