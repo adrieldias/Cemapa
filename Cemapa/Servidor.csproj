@@ -181,6 +181,9 @@
     <Compile Include="Models\TB_CLASS_CADASTRO.cs">
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TB_CONFIGURACAO_SKYHUB.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TB_ESTADO.cs">
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
@@ -196,6 +199,18 @@
     <Compile Include="Models\TB_PRODUTO.cs">
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TB_PRODUTO_CATEGORIA_SKYHUB.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_PRODUTO_ESP_SKYHUB.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_PRODUTO_IMAGEM_SKYHUB.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_PRODUTO_SKYHUB.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TB_PROPRIEDADE.cs">
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
@@ -205,6 +220,9 @@
     <Compile Include="Models\TB_REGIAO.cs">
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TB_SINCRONIZACAO_SKYHUB.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TB_TABELA_PRECO_CAB.cs">
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
@@ -212,6 +230,9 @@
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TB_TIPO_PROPRIEDADE.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_TRIBUTACAO.cs">
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TB_USUARIO.cs">

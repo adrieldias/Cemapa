@@ -243,6 +243,18 @@
           <Property Name="IND_AREA" Type="char" MaxLength="3" />
           <Property Name="IND_SITUACAO" Type="varchar2" MaxLength="7" />
         </EntityType>
+        <EntityType Name="TB_CONFIGURACAO_SKYHUB">
+          <Key>
+            <PropertyRef Name="COD_CONFIGURACAO_SKYHUB" />
+          </Key>
+          <Property Name="COD_CONFIGURACAO_SKYHUB" Type="number" Precision="14" Scale="0" Nullable="false" />
+          <Property Name="COD_FILIAL" Type="number" Precision="14" Scale="0" Nullable="false" />
+          <Property Name="IND_ATIVO" Type="char" MaxLength="1" />
+          <Property Name="DESC_USUARIO_EMAIL" Type="varchar2" MaxLength="40" />
+          <Property Name="DESC_TOKEN_INTEGRACAO" Type="varchar2" MaxLength="30" />
+          <Property Name="DESC_TOKEN_ACCOUNT" Type="varchar2" MaxLength="30" />
+          <Property Name="IND_SINCRONIZA_PRODUTOS" Type="char" MaxLength="1" />
+        </EntityType>
         <EntityType Name="TB_ESTADO">
           <Key>
             <PropertyRef Name="COD_ESTADO" />
@@ -405,6 +417,53 @@
           <Property Name="PERC_COMISSAO_PRODUCAO" Type="number" Precision="5" Scale="2" />
           <Property Name="IND_SYNC_SKYHUB" Type="char" MaxLength="1" />
         </EntityType>
+        <EntityType Name="TB_PRODUTO_CATEGORIA_SKYHUB">
+          <Key>
+            <PropertyRef Name="COD_PRODUTO_CATEGORIA_SKYHUB" />
+          </Key>
+          <Property Name="COD_PRODUTO_CATEGORIA_SKYHUB" Type="number" Precision="14" Scale="0" Nullable="false" />
+          <Property Name="COD_PRODUTO_SKYHUB" Type="number" Precision="14" Scale="0" Nullable="false" />
+          <Property Name="DESC_CATEGORIA" Type="varchar2" MaxLength="150" />
+        </EntityType>
+        <EntityType Name="TB_PRODUTO_ESP_SKYHUB">
+          <Key>
+            <PropertyRef Name="COD_PRODUTO_ESP_SKYHUB" />
+          </Key>
+          <Property Name="COD_PRODUTO_ESP_SKYHUB" Type="number" Precision="14" Scale="0" Nullable="false" />
+          <Property Name="COD_PRODUTO_SKYHUB" Type="number" Precision="14" Scale="0" Nullable="false" />
+          <Property Name="DESC_ESPECIFICACAO" Type="varchar2" MaxLength="100" />
+          <Property Name="VAL_ESPECIFICACAO" Type="varchar2" MaxLength="100" />
+          <Property Name="IND_ATIVO" Type="char" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="TB_PRODUTO_IMAGEM_SKYHUB">
+          <Key>
+            <PropertyRef Name="COD_PRODUTO_IMAGEM_SKYHUB" />
+          </Key>
+          <Property Name="COD_PRODUTO_IMAGEM_SKYHUB" Type="number" Precision="14" Scale="0" Nullable="false" />
+          <Property Name="COD_PRODUTO_SKYHUB" Type="number" Precision="14" Scale="0" Nullable="false" />
+          <Property Name="DESC_IMAGEM" Type="varchar2" MaxLength="100" />
+          <Property Name="IND_ATIVO" Type="char" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="TB_PRODUTO_SKYHUB">
+          <Key>
+            <PropertyRef Name="COD_PRODUTO_SKYHUB" />
+          </Key>
+          <Property Name="COD_PRODUTO_SKYHUB" Type="number" Precision="14" Scale="0" Nullable="false" />
+          <Property Name="COD_PRODUTO" Type="number" Precision="14" Scale="0" Nullable="false" />
+          <Property Name="IND_SINCRONIZA" Type="char" MaxLength="1" />
+          <Property Name="DESC_PRODUTO" Type="varchar2" MaxLength="50" />
+          <Property Name="DESC_DESCRICAO" Type="varchar2" MaxLength="200" />
+          <Property Name="DESC_STATUS" Type="varchar2" MaxLength="10" />
+          <Property Name="VAL_PRECO" Type="number" Precision="10" Scale="4" />
+          <Property Name="VAL_PRECO_PROMOCIONAL" Type="number" Precision="10" Scale="4" />
+          <Property Name="VAL_PESO" Type="number" Precision="6" Scale="2" />
+          <Property Name="VAL_ALTURA" Type="number" Precision="6" Scale="2" />
+          <Property Name="VAL_LARGURA" Type="number" Precision="6" Scale="2" />
+          <Property Name="VAL_COMPRIMENTO" Type="number" Precision="6" Scale="2" />
+          <Property Name="DESC_MARCA" Type="varchar2" MaxLength="30" />
+          <Property Name="DESC_EAN" Type="varchar2" MaxLength="30" />
+          <Property Name="DESC_NCM" Type="varchar2" MaxLength="15" />
+        </EntityType>
         <EntityType Name="TB_PROPRIEDADE">
           <Key>
             <PropertyRef Name="COD_PROPRIEDADE" />
@@ -467,6 +526,17 @@
           <Property Name="QT_POPULACAO" Type="number" Precision="10" Scale="0" />
           <Property Name="IND_SINC_MAX_ROTEIRIZADOR" Type="char" MaxLength="1" />
         </EntityType>
+        <EntityType Name="TB_SINCRONIZACAO_SKYHUB">
+          <Key>
+            <PropertyRef Name="COD_SINCRONIZACAO_SKYHUB" />
+          </Key>
+          <Property Name="COD_SINCRONIZACAO_SKYHUB" Type="number" Precision="14" Scale="0" Nullable="false" />
+          <Property Name="TIPO_ACAO" Type="varchar2" MaxLength="6" Nullable="false" />
+          <Property Name="IND_SINCRONIZADO" Type="char" MaxLength="1" />
+          <Property Name="COD_PRODUTO" Type="number" Precision="14" Scale="0" Nullable="false" />
+          <Property Name="DT_REGISTRO" Type="date" />
+          <Property Name="DT_SINCRONIZACAO" Type="date" />
+        </EntityType>
         <EntityType Name="TB_TABELA_PRECO_CAB">
           <Key>
             <PropertyRef Name="COD_TABELA_PRECO_CAB" />
@@ -489,6 +559,28 @@
           </Key>
           <Property Name="COD_TIPO_PROPRIEDADE" Type="number" Precision="6" Scale="0" Nullable="false" />
           <Property Name="DESC_TIPO_PROPRIEDADE" Type="varchar2" MaxLength="40" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TB_TRIBUTACAO">
+          <Key>
+            <PropertyRef Name="COD_TRIBUTACAO" />
+          </Key>
+          <Property Name="COD_TRIBUTACAO" Type="number" Precision="6" Scale="0" Nullable="false" />
+          <Property Name="DESC_TRIBUTACAO" Type="varchar2" MaxLength="30" />
+          <Property Name="PERC_TRIBUTADO" Type="number" Precision="6" Scale="3" Nullable="false" />
+          <Property Name="PERC_ALIQUOTA" Type="number" Precision="5" Scale="2" Nullable="false" />
+          <Property Name="NUM_CLASSIFICACAO" Type="varchar2" MaxLength="2" />
+          <Property Name="COD_TRIB_IMP_FISCAL" Type="char" MaxLength="30" />
+          <Property Name="DESC_SITUACAO_TRIB" Type="varchar2" MaxLength="3" />
+          <Property Name="DESC_OBSERVACAO" Type="varchar2" MaxLength="80" />
+          <Property Name="IND_BASE_REDUZIDA" Type="varchar2" MaxLength="10" />
+          <Property Name="PERC_TRIBUTADO_NOTA" Type="number" Precision="5" Scale="2" />
+          <Property Name="DESC_CSOSN" Type="varchar2" MaxLength="3" />
+          <Property Name="NUM_INDICE_TRIB_ECF" Type="char" MaxLength="2" />
+          <Property Name="DESC_HASH_MD5" Type="varchar2" MaxLength="32" />
+          <Property Name="PERC_DIFERIMENTO" Type="number" Precision="5" Scale="2" />
+          <Property Name="DESC_SITUACAO_TRIB_NC" Type="varchar2" MaxLength="3" />
+          <Property Name="DESC_CSOSN_NC" Type="varchar2" MaxLength="3" />
+          <Property Name="DESC_OBSERVACAO_NC" Type="varchar2" MaxLength="80" />
         </EntityType>
         <EntityType Name="TB_USUARIO">
           <Key>
@@ -738,6 +830,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_CAT_SKYXPROD_SKY">
+          <End Role="TB_PRODUTO_SKYHUB" Type="Self.TB_PRODUTO_SKYHUB" Multiplicity="1" />
+          <End Role="TB_PRODUTO_CATEGORIA_SKYHUB" Type="Self.TB_PRODUTO_CATEGORIA_SKYHUB" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_PRODUTO_SKYHUB">
+              <PropertyRef Name="COD_PRODUTO_SKYHUB" />
+            </Principal>
+            <Dependent Role="TB_PRODUTO_CATEGORIA_SKYHUB">
+              <PropertyRef Name="COD_PRODUTO_SKYHUB" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ESP_SKYXPROD_SKY">
+          <End Role="TB_PRODUTO_SKYHUB" Type="Self.TB_PRODUTO_SKYHUB" Multiplicity="1" />
+          <End Role="TB_PRODUTO_ESP_SKYHUB" Type="Self.TB_PRODUTO_ESP_SKYHUB" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_PRODUTO_SKYHUB">
+              <PropertyRef Name="COD_PRODUTO_SKYHUB" />
+            </Principal>
+            <Dependent Role="TB_PRODUTO_ESP_SKYHUB">
+              <PropertyRef Name="COD_PRODUTO_SKYHUB" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IMG_SKYXPROD_SKY">
+          <End Role="TB_PRODUTO_SKYHUB" Type="Self.TB_PRODUTO_SKYHUB" Multiplicity="1" />
+          <End Role="TB_PRODUTO_IMAGEM_SKYHUB" Type="Self.TB_PRODUTO_IMAGEM_SKYHUB" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_PRODUTO_SKYHUB">
+              <PropertyRef Name="COD_PRODUTO_SKYHUB" />
+            </Principal>
+            <Dependent Role="TB_PRODUTO_IMAGEM_SKYHUB">
+              <PropertyRef Name="COD_PRODUTO_SKYHUB" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_MUNICIPIOXESTADO">
           <End Role="TB_ESTADO" Type="Self.TB_ESTADO" Multiplicity="1" />
           <End Role="TB_CIDADE" Type="Self.TB_CIDADE" Multiplicity="*" />
@@ -750,6 +878,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_PROD_SKYXPRODUTO">
+          <End Role="TB_PRODUTO" Type="Self.TB_PRODUTO" Multiplicity="1" />
+          <End Role="TB_PRODUTO_SKYHUB" Type="Self.TB_PRODUTO_SKYHUB" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_PRODUTO">
+              <PropertyRef Name="COD_PRODUTO" />
+            </Principal>
+            <Dependent Role="TB_PRODUTO_SKYHUB">
+              <PropertyRef Name="COD_PRODUTO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_PRODUTOXCLASSE">
           <End Role="TB_CLASSE" Type="Self.TB_CLASSE" Multiplicity="1" />
           <End Role="TB_PRODUTO" Type="Self.TB_PRODUTO" Multiplicity="*" />
@@ -759,6 +899,18 @@
             </Principal>
             <Dependent Role="TB_PRODUTO">
               <PropertyRef Name="COD_CLASSE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUTOXTRIBUTACAO">
+          <End Role="TB_TRIBUTACAO" Type="Self.TB_TRIBUTACAO" Multiplicity="1" />
+          <End Role="TB_PRODUTO" Type="Self.TB_PRODUTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_TRIBUTACAO">
+              <PropertyRef Name="COD_TRIBUTACAO" />
+            </Principal>
+            <Dependent Role="TB_PRODUTO">
+              <PropertyRef Name="COD_TRIBUTACAO" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -798,6 +950,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_SINC_SKYXPRODUTO">
+          <End Role="TB_PRODUTO" Type="Self.TB_PRODUTO" Multiplicity="1" />
+          <End Role="TB_SINCRONIZACAO_SKYHUB" Type="Self.TB_SINCRONIZACAO_SKYHUB" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_PRODUTO">
+              <PropertyRef Name="COD_PRODUTO" />
+            </Principal>
+            <Dependent Role="TB_SINCRONIZACAO_SKYHUB">
+              <PropertyRef Name="COD_PRODUTO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_TABELA_PRECO_CABXCADASTRO">
           <End Role="TB_TABELA_PRECO_CAB" Type="Self.TB_TABELA_PRECO_CAB" Multiplicity="0..1" />
           <End Role="TB_CADASTRO" Type="Self.TB_CADASTRO" Multiplicity="*" />
@@ -828,17 +992,24 @@
           <EntitySet Name="TB_CIDADE" EntityType="Self.TB_CIDADE" Schema="SISTEMA" store:Type="Tables" />
           <EntitySet Name="TB_CLASS_CADASTRO" EntityType="Self.TB_CLASS_CADASTRO" Schema="SISTEMA" store:Type="Tables" />
           <EntitySet Name="TB_CLASSE" EntityType="Self.TB_CLASSE" Schema="SISTEMA" store:Type="Tables" />
+          <EntitySet Name="TB_CONFIGURACAO_SKYHUB" EntityType="Self.TB_CONFIGURACAO_SKYHUB" Schema="SISTEMA" store:Type="Tables" />
           <EntitySet Name="TB_ESTADO" EntityType="Self.TB_ESTADO" Schema="SISTEMA" store:Type="Tables" />
           <EntitySet Name="TB_ESTADO_CIVIL" EntityType="Self.TB_ESTADO_CIVIL" Schema="SISTEMA" store:Type="Tables" />
           <EntitySet Name="TB_MOTIVO" EntityType="Self.TB_MOTIVO" Schema="SISTEMA" store:Type="Tables" />
           <EntitySet Name="TB_PAIS" EntityType="Self.TB_PAIS" Schema="SISTEMA" store:Type="Tables" />
           <EntitySet Name="TB_PRODUTO" EntityType="Self.TB_PRODUTO" Schema="SISTEMA" store:Type="Tables" />
+          <EntitySet Name="TB_PRODUTO_CATEGORIA_SKYHUB" EntityType="Self.TB_PRODUTO_CATEGORIA_SKYHUB" Schema="SISTEMA" store:Type="Tables" />
+          <EntitySet Name="TB_PRODUTO_ESP_SKYHUB" EntityType="Self.TB_PRODUTO_ESP_SKYHUB" Schema="SISTEMA" store:Type="Tables" />
+          <EntitySet Name="TB_PRODUTO_IMAGEM_SKYHUB" EntityType="Self.TB_PRODUTO_IMAGEM_SKYHUB" Schema="SISTEMA" store:Type="Tables" />
+          <EntitySet Name="TB_PRODUTO_SKYHUB" EntityType="Self.TB_PRODUTO_SKYHUB" Schema="SISTEMA" store:Type="Tables" />
           <EntitySet Name="TB_PROPRIEDADE" EntityType="Self.TB_PROPRIEDADE" Schema="SISTEMA" store:Type="Tables" />
           <EntitySet Name="TB_QUALIFICACAO_SOCIO" EntityType="Self.TB_QUALIFICACAO_SOCIO" Schema="SISTEMA" store:Type="Tables" />
           <EntitySet Name="TB_REGIAO" EntityType="Self.TB_REGIAO" Schema="SISTEMA" store:Type="Tables" />
+          <EntitySet Name="TB_SINCRONIZACAO_SKYHUB" EntityType="Self.TB_SINCRONIZACAO_SKYHUB" Schema="SISTEMA" store:Type="Tables" />
           <EntitySet Name="TB_TABELA_PRECO_CAB" EntityType="Self.TB_TABELA_PRECO_CAB" Schema="SISTEMA" store:Type="Tables" />
           <EntitySet Name="TB_TIPO_CADASTRO" EntityType="Self.TB_TIPO_CADASTRO" Schema="SISTEMA" store:Type="Tables" />
           <EntitySet Name="TB_TIPO_PROPRIEDADE" EntityType="Self.TB_TIPO_PROPRIEDADE" Schema="SISTEMA" store:Type="Tables" />
+          <EntitySet Name="TB_TRIBUTACAO" EntityType="Self.TB_TRIBUTACAO" Schema="SISTEMA" store:Type="Tables" />
           <EntitySet Name="TB_USUARIO" EntityType="Self.TB_USUARIO" Schema="SISTEMA" store:Type="Tables" />
           <EntitySet Name="TB_VENDEDOR" EntityType="Self.TB_VENDEDOR" Schema="SISTEMA" store:Type="Tables" />
           <AssociationSet Name="FK_CADASTRO_ENDERECOSXCADASTRO" Association="Self.FK_CADASTRO_ENDERECOSXCADASTRO">
@@ -893,12 +1064,32 @@
             <End Role="TB_VENDEDOR" EntitySet="TB_VENDEDOR" />
             <End Role="TB_CADASTRO" EntitySet="TB_CADASTRO" />
           </AssociationSet>
+          <AssociationSet Name="FK_CAT_SKYXPROD_SKY" Association="Self.FK_CAT_SKYXPROD_SKY">
+            <End Role="TB_PRODUTO_SKYHUB" EntitySet="TB_PRODUTO_SKYHUB" />
+            <End Role="TB_PRODUTO_CATEGORIA_SKYHUB" EntitySet="TB_PRODUTO_CATEGORIA_SKYHUB" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ESP_SKYXPROD_SKY" Association="Self.FK_ESP_SKYXPROD_SKY">
+            <End Role="TB_PRODUTO_SKYHUB" EntitySet="TB_PRODUTO_SKYHUB" />
+            <End Role="TB_PRODUTO_ESP_SKYHUB" EntitySet="TB_PRODUTO_ESP_SKYHUB" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IMG_SKYXPROD_SKY" Association="Self.FK_IMG_SKYXPROD_SKY">
+            <End Role="TB_PRODUTO_SKYHUB" EntitySet="TB_PRODUTO_SKYHUB" />
+            <End Role="TB_PRODUTO_IMAGEM_SKYHUB" EntitySet="TB_PRODUTO_IMAGEM_SKYHUB" />
+          </AssociationSet>
           <AssociationSet Name="FK_MUNICIPIOXESTADO" Association="Self.FK_MUNICIPIOXESTADO">
             <End Role="TB_ESTADO" EntitySet="TB_ESTADO" />
             <End Role="TB_CIDADE" EntitySet="TB_CIDADE" />
           </AssociationSet>
+          <AssociationSet Name="FK_PROD_SKYXPRODUTO" Association="Self.FK_PROD_SKYXPRODUTO">
+            <End Role="TB_PRODUTO" EntitySet="TB_PRODUTO" />
+            <End Role="TB_PRODUTO_SKYHUB" EntitySet="TB_PRODUTO_SKYHUB" />
+          </AssociationSet>
           <AssociationSet Name="FK_PRODUTOXCLASSE" Association="Self.FK_PRODUTOXCLASSE">
             <End Role="TB_CLASSE" EntitySet="TB_CLASSE" />
+            <End Role="TB_PRODUTO" EntitySet="TB_PRODUTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUTOXTRIBUTACAO" Association="Self.FK_PRODUTOXTRIBUTACAO">
+            <End Role="TB_TRIBUTACAO" EntitySet="TB_TRIBUTACAO" />
             <End Role="TB_PRODUTO" EntitySet="TB_PRODUTO" />
           </AssociationSet>
           <AssociationSet Name="FK_PROPRIEDADEXCADASTRO" Association="Self.FK_PROPRIEDADEXCADASTRO">
@@ -912,6 +1103,10 @@
           <AssociationSet Name="FK_PROPRIEDADEXTIPO_PROP" Association="Self.FK_PROPRIEDADEXTIPO_PROP">
             <End Role="TB_TIPO_PROPRIEDADE" EntitySet="TB_TIPO_PROPRIEDADE" />
             <End Role="TB_PROPRIEDADE" EntitySet="TB_PROPRIEDADE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SINC_SKYXPRODUTO" Association="Self.FK_SINC_SKYXPRODUTO">
+            <End Role="TB_PRODUTO" EntitySet="TB_PRODUTO" />
+            <End Role="TB_SINCRONIZACAO_SKYHUB" EntitySet="TB_SINCRONIZACAO_SKYHUB" />
           </AssociationSet>
           <AssociationSet Name="FK_TABELA_PRECO_CABXCADASTRO" Association="Self.FK_TABELA_PRECO_CABXCADASTRO">
             <End Role="TB_TABELA_PRECO_CAB" EntitySet="TB_TABELA_PRECO_CAB" />
@@ -1209,11 +1404,42 @@
             <End Role="TB_CADASTRO" EntitySet="TB_CADASTRO" />
             <End Role="TB_PROPRIEDADE" EntitySet="TB_PROPRIEDADE" />
           </AssociationSet>
-          <EntitySet Name="TB_PRODUTO" EntityType="Model.TB_PRODUTO" />
           <EntitySet Name="TB_CLASSE" EntityType="Model.TB_CLASSE" />
+          <EntitySet Name="TB_PRODUTO" EntityType="Model.TB_PRODUTO" />
           <AssociationSet Name="FK_PRODUTOXCLASSE" Association="Model.FK_PRODUTOXCLASSE">
             <End Role="TB_CLASSE" EntitySet="TB_CLASSE" />
             <End Role="TB_PRODUTO" EntitySet="TB_PRODUTO" />
+          </AssociationSet>
+          <EntitySet Name="TB_TRIBUTACAO" EntityType="Model.TB_TRIBUTACAO" />
+          <AssociationSet Name="FK_PRODUTOXTRIBUTACAO" Association="Model.FK_PRODUTOXTRIBUTACAO">
+            <End Role="TB_TRIBUTACAO" EntitySet="TB_TRIBUTACAO" />
+            <End Role="TB_PRODUTO" EntitySet="TB_PRODUTO" />
+          </AssociationSet>
+          <EntitySet Name="TB_CONFIGURACAO_SKYHUB" EntityType="Model.TB_CONFIGURACAO_SKYHUB" />
+          <EntitySet Name="TB_SINCRONIZACAO_SKYHUB" EntityType="Model.TB_SINCRONIZACAO_SKYHUB" />
+          <AssociationSet Name="FK_SINC_SKYXPRODUTO" Association="Model.FK_SINC_SKYXPRODUTO">
+            <End Role="TB_PRODUTO" EntitySet="TB_PRODUTO" />
+            <End Role="TB_SINCRONIZACAO_SKYHUB" EntitySet="TB_SINCRONIZACAO_SKYHUB" />
+          </AssociationSet>
+          <EntitySet Name="TB_PRODUTO_SKYHUB" EntityType="Model.TB_PRODUTO_SKYHUB" />
+          <AssociationSet Name="FK_PROD_SKYXPRODUTO" Association="Model.FK_PROD_SKYXPRODUTO">
+            <End Role="TB_PRODUTO" EntitySet="TB_PRODUTO" />
+            <End Role="TB_PRODUTO_SKYHUB" EntitySet="TB_PRODUTO_SKYHUB" />
+          </AssociationSet>
+          <EntitySet Name="TB_PRODUTO_CATEGORIA_SKYHUB" EntityType="Model.TB_PRODUTO_CATEGORIA_SKYHUB" />
+          <EntitySet Name="TB_PRODUTO_ESP_SKYHUB" EntityType="Model.TB_PRODUTO_ESP_SKYHUB" />
+          <EntitySet Name="TB_PRODUTO_IMAGEM_SKYHUB" EntityType="Model.TB_PRODUTO_IMAGEM_SKYHUB" />
+          <AssociationSet Name="FK_CAT_SKYXPROD_SKY" Association="Model.FK_CAT_SKYXPROD_SKY">
+            <End Role="TB_PRODUTO_SKYHUB" EntitySet="TB_PRODUTO_SKYHUB" />
+            <End Role="TB_PRODUTO_CATEGORIA_SKYHUB" EntitySet="TB_PRODUTO_CATEGORIA_SKYHUB" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ESP_SKYXPROD_SKY" Association="Model.FK_ESP_SKYXPROD_SKY">
+            <End Role="TB_PRODUTO_SKYHUB" EntitySet="TB_PRODUTO_SKYHUB" />
+            <End Role="TB_PRODUTO_ESP_SKYHUB" EntitySet="TB_PRODUTO_ESP_SKYHUB" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IMG_SKYXPROD_SKY" Association="Model.FK_IMG_SKYXPROD_SKY">
+            <End Role="TB_PRODUTO_SKYHUB" EntitySet="TB_PRODUTO_SKYHUB" />
+            <End Role="TB_PRODUTO_IMAGEM_SKYHUB" EntitySet="TB_PRODUTO_IMAGEM_SKYHUB" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="TB_CIDADE">
@@ -1733,6 +1959,26 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="TB_CLASSE">
+          <Key>
+            <PropertyRef Name="COD_CLASSE" />
+          </Key>
+          <Property Name="COD_CLASSE" Type="Int32" Nullable="false" />
+          <Property Name="DESC_CLASSE" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PERC_COMISSAO1" Type="Decimal" Precision="5" Scale="2" />
+          <Property Name="PERC_COMISSAO2" Type="Decimal" Precision="5" Scale="2" />
+          <Property Name="NUM_CLASSE" Type="Byte" Nullable="false" />
+          <Property Name="NUM_SUBCLASSE" Type="Byte" Nullable="false" />
+          <Property Name="PERC_CUSTO" Type="Decimal" Precision="5" Scale="2" />
+          <Property Name="VAL_CUSTO" Type="Decimal" Precision="9" Scale="3" />
+          <Property Name="COD_RAMO" Type="Int32" />
+          <Property Name="IND_TIPO" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="COD_LOTE_TIPO" Type="Int32" />
+          <Property Name="COD_MENSAGEM" Type="Int32" />
+          <Property Name="IND_AREA" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Name="IND_SITUACAO" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TB_PRODUTO" Relationship="Model.FK_PRODUTOXCLASSE" FromRole="TB_CLASSE" ToRole="TB_PRODUTO" />
+        </EntityType>
         <EntityType Name="TB_PRODUTO">
           <Key>
             <PropertyRef Name="COD_PRODUTO" />
@@ -1848,28 +2094,11 @@
           <Property Name="IND_NIR_SYNC_SITE" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="IND_SINC_MAX_ROTEIRIZADOR" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="PERC_COMISSAO_PRODUCAO" Type="Decimal" Precision="5" Scale="2" />
-          <NavigationProperty Name="TB_CLASSE" Relationship="Model.FK_PRODUTOXCLASSE" FromRole="TB_PRODUTO" ToRole="TB_CLASSE" />
           <Property Name="IND_SYNC_SKYHUB" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-        </EntityType>
-        <EntityType Name="TB_CLASSE">
-          <Key>
-            <PropertyRef Name="COD_CLASSE" />
-          </Key>
-          <Property Name="COD_CLASSE" Type="Int32" Nullable="false" />
-          <Property Name="DESC_CLASSE" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="PERC_COMISSAO1" Type="Decimal" Precision="5" Scale="2" />
-          <Property Name="PERC_COMISSAO2" Type="Decimal" Precision="5" Scale="2" />
-          <Property Name="NUM_CLASSE" Type="Byte" Nullable="false" />
-          <Property Name="NUM_SUBCLASSE" Type="Byte" Nullable="false" />
-          <Property Name="PERC_CUSTO" Type="Decimal" Precision="5" Scale="2" />
-          <Property Name="VAL_CUSTO" Type="Decimal" Precision="9" Scale="3" />
-          <Property Name="COD_RAMO" Type="Int32" />
-          <Property Name="IND_TIPO" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="COD_LOTE_TIPO" Type="Int32" />
-          <Property Name="COD_MENSAGEM" Type="Int32" />
-          <Property Name="IND_AREA" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
-          <Property Name="IND_SITUACAO" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="TB_PRODUTO" Relationship="Model.FK_PRODUTOXCLASSE" FromRole="TB_CLASSE" ToRole="TB_PRODUTO" />
+          <NavigationProperty Name="TB_CLASSE" Relationship="Model.FK_PRODUTOXCLASSE" FromRole="TB_PRODUTO" ToRole="TB_CLASSE" />
+          <NavigationProperty Name="TB_TRIBUTACAO" Relationship="Model.FK_PRODUTOXTRIBUTACAO" FromRole="TB_PRODUTO" ToRole="TB_TRIBUTACAO" />
+          <NavigationProperty Name="TB_SINCRONIZACAO_SKYHUB" Relationship="Model.FK_SINC_SKYXPRODUTO" FromRole="TB_PRODUTO" ToRole="TB_SINCRONIZACAO_SKYHUB" />
+          <NavigationProperty Name="TB_PRODUTO_SKYHUB" Relationship="Model.FK_PROD_SKYXPRODUTO" FromRole="TB_PRODUTO" ToRole="TB_PRODUTO_SKYHUB" />
         </EntityType>
         <Association Name="FK_PRODUTOXCLASSE">
           <End Type="Model.TB_CLASSE" Role="TB_CLASSE" Multiplicity="1" />
@@ -1880,6 +2109,179 @@
             </Principal>
             <Dependent Role="TB_PRODUTO">
               <PropertyRef Name="COD_CLASSE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="TB_TRIBUTACAO">
+          <Key>
+            <PropertyRef Name="COD_TRIBUTACAO" />
+          </Key>
+          <Property Name="COD_TRIBUTACAO" Type="Int32" Nullable="false" />
+          <Property Name="DESC_TRIBUTACAO" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="PERC_TRIBUTADO" Type="Decimal" Nullable="false" Precision="6" Scale="3" />
+          <Property Name="PERC_ALIQUOTA" Type="Decimal" Nullable="false" Precision="5" Scale="2" />
+          <Property Name="NUM_CLASSIFICACAO" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="COD_TRIB_IMP_FISCAL" Type="String" MaxLength="30" FixedLength="true" Unicode="false" />
+          <Property Name="DESC_SITUACAO_TRIB" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_OBSERVACAO" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="IND_BASE_REDUZIDA" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="PERC_TRIBUTADO_NOTA" Type="Decimal" Precision="5" Scale="2" />
+          <Property Name="DESC_CSOSN" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="NUM_INDICE_TRIB_ECF" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="DESC_HASH_MD5" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="PERC_DIFERIMENTO" Type="Decimal" Precision="5" Scale="2" />
+          <Property Name="DESC_SITUACAO_TRIB_NC" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_CSOSN_NC" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_OBSERVACAO_NC" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TB_PRODUTO" Relationship="Model.FK_PRODUTOXTRIBUTACAO" FromRole="TB_TRIBUTACAO" ToRole="TB_PRODUTO" />
+        </EntityType>
+        <Association Name="FK_PRODUTOXTRIBUTACAO">
+          <End Type="Model.TB_TRIBUTACAO" Role="TB_TRIBUTACAO" Multiplicity="1" />
+          <End Type="Model.TB_PRODUTO" Role="TB_PRODUTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_TRIBUTACAO">
+              <PropertyRef Name="COD_TRIBUTACAO" />
+            </Principal>
+            <Dependent Role="TB_PRODUTO">
+              <PropertyRef Name="COD_TRIBUTACAO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="TB_CONFIGURACAO_SKYHUB">
+          <Key>
+            <PropertyRef Name="COD_CONFIGURACAO_SKYHUB" />
+          </Key>
+          <Property Name="COD_CONFIGURACAO_SKYHUB" Type="Int64" Nullable="false" />
+          <Property Name="COD_FILIAL" Type="Int64" Nullable="false" />
+          <Property Name="IND_ATIVO" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="DESC_USUARIO_EMAIL" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_TOKEN_INTEGRACAO" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_TOKEN_ACCOUNT" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="IND_SINCRONIZA_PRODUTOS" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <EntityType Name="TB_SINCRONIZACAO_SKYHUB">
+          <Key>
+            <PropertyRef Name="COD_SINCRONIZACAO_SKYHUB" />
+          </Key>
+          <Property Name="COD_SINCRONIZACAO_SKYHUB" Type="Int64" Nullable="false" />
+          <Property Name="TIPO_ACAO" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="IND_SINCRONIZADO" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="COD_PRODUTO" Type="Int64" Nullable="false" />
+          <Property Name="DT_REGISTRO" Type="DateTime" />
+          <Property Name="DT_SINCRONIZACAO" Type="DateTime" />
+          <NavigationProperty Name="TB_PRODUTO" Relationship="Model.FK_SINC_SKYXPRODUTO" FromRole="TB_SINCRONIZACAO_SKYHUB" ToRole="TB_PRODUTO" />
+        </EntityType>
+        <Association Name="FK_SINC_SKYXPRODUTO">
+          <End Type="Model.TB_PRODUTO" Role="TB_PRODUTO" Multiplicity="1" />
+          <End Type="Model.TB_SINCRONIZACAO_SKYHUB" Role="TB_SINCRONIZACAO_SKYHUB" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_PRODUTO">
+              <PropertyRef Name="COD_PRODUTO" />
+            </Principal>
+            <Dependent Role="TB_SINCRONIZACAO_SKYHUB">
+              <PropertyRef Name="COD_PRODUTO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="TB_PRODUTO_SKYHUB">
+          <Key>
+            <PropertyRef Name="COD_PRODUTO_SKYHUB" />
+          </Key>
+          <Property Name="COD_PRODUTO_SKYHUB" Type="Int64" Nullable="false" />
+          <Property Name="COD_PRODUTO" Type="Int64" Nullable="false" />
+          <Property Name="IND_SINCRONIZA" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="DESC_PRODUTO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_DESCRICAO" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_STATUS" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="VAL_PRECO" Type="Decimal" Precision="10" Scale="4" />
+          <Property Name="VAL_PRECO_PROMOCIONAL" Type="Decimal" Precision="10" Scale="4" />
+          <Property Name="VAL_PESO" Type="Decimal" Precision="6" Scale="2" />
+          <Property Name="VAL_ALTURA" Type="Decimal" Precision="6" Scale="2" />
+          <Property Name="VAL_LARGURA" Type="Decimal" Precision="6" Scale="2" />
+          <Property Name="VAL_COMPRIMENTO" Type="Decimal" Precision="6" Scale="2" />
+          <Property Name="DESC_MARCA" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_EAN" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_NCM" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TB_PRODUTO" Relationship="Model.FK_PROD_SKYXPRODUTO" FromRole="TB_PRODUTO_SKYHUB" ToRole="TB_PRODUTO" />
+          <NavigationProperty Name="TB_PRODUTO_CATEGORIA_SKYHUB" Relationship="Model.FK_CAT_SKYXPROD_SKY" FromRole="TB_PRODUTO_SKYHUB" ToRole="TB_PRODUTO_CATEGORIA_SKYHUB" />
+          <NavigationProperty Name="TB_PRODUTO_ESP_SKYHUB" Relationship="Model.FK_ESP_SKYXPROD_SKY" FromRole="TB_PRODUTO_SKYHUB" ToRole="TB_PRODUTO_ESP_SKYHUB" />
+          <NavigationProperty Name="TB_PRODUTO_IMAGEM_SKYHUB" Relationship="Model.FK_IMG_SKYXPROD_SKY" FromRole="TB_PRODUTO_SKYHUB" ToRole="TB_PRODUTO_IMAGEM_SKYHUB" />
+        </EntityType>
+        <Association Name="FK_PROD_SKYXPRODUTO">
+          <End Type="Model.TB_PRODUTO" Role="TB_PRODUTO" Multiplicity="1" />
+          <End Type="Model.TB_PRODUTO_SKYHUB" Role="TB_PRODUTO_SKYHUB" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_PRODUTO">
+              <PropertyRef Name="COD_PRODUTO" />
+            </Principal>
+            <Dependent Role="TB_PRODUTO_SKYHUB">
+              <PropertyRef Name="COD_PRODUTO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="TB_PRODUTO_CATEGORIA_SKYHUB">
+          <Key>
+            <PropertyRef Name="COD_PRODUTO_CATEGORIA_SKYHUB" />
+          </Key>
+          <Property Name="COD_PRODUTO_CATEGORIA_SKYHUB" Type="Int64" Nullable="false" />
+          <Property Name="COD_PRODUTO_SKYHUB" Type="Int64" Nullable="false" />
+          <Property Name="DESC_CATEGORIA" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TB_PRODUTO_SKYHUB" Relationship="Model.FK_CAT_SKYXPROD_SKY" FromRole="TB_PRODUTO_CATEGORIA_SKYHUB" ToRole="TB_PRODUTO_SKYHUB" />
+        </EntityType>
+        <EntityType Name="TB_PRODUTO_ESP_SKYHUB">
+          <Key>
+            <PropertyRef Name="COD_PRODUTO_ESP_SKYHUB" />
+          </Key>
+          <Property Name="COD_PRODUTO_ESP_SKYHUB" Type="Int64" Nullable="false" />
+          <Property Name="COD_PRODUTO_SKYHUB" Type="Int64" Nullable="false" />
+          <Property Name="DESC_ESPECIFICACAO" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="VAL_ESPECIFICACAO" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="IND_ATIVO" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="TB_PRODUTO_SKYHUB" Relationship="Model.FK_ESP_SKYXPROD_SKY" FromRole="TB_PRODUTO_ESP_SKYHUB" ToRole="TB_PRODUTO_SKYHUB" />
+        </EntityType>
+        <EntityType Name="TB_PRODUTO_IMAGEM_SKYHUB">
+          <Key>
+            <PropertyRef Name="COD_PRODUTO_IMAGEM_SKYHUB" />
+          </Key>
+          <Property Name="COD_PRODUTO_IMAGEM_SKYHUB" Type="Int64" Nullable="false" />
+          <Property Name="COD_PRODUTO_SKYHUB" Type="Int64" Nullable="false" />
+          <Property Name="DESC_IMAGEM" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="IND_ATIVO" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="TB_PRODUTO_SKYHUB" Relationship="Model.FK_IMG_SKYXPROD_SKY" FromRole="TB_PRODUTO_IMAGEM_SKYHUB" ToRole="TB_PRODUTO_SKYHUB" />
+        </EntityType>
+        <Association Name="FK_CAT_SKYXPROD_SKY">
+          <End Type="Model.TB_PRODUTO_SKYHUB" Role="TB_PRODUTO_SKYHUB" Multiplicity="1" />
+          <End Type="Model.TB_PRODUTO_CATEGORIA_SKYHUB" Role="TB_PRODUTO_CATEGORIA_SKYHUB" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_PRODUTO_SKYHUB">
+              <PropertyRef Name="COD_PRODUTO_SKYHUB" />
+            </Principal>
+            <Dependent Role="TB_PRODUTO_CATEGORIA_SKYHUB">
+              <PropertyRef Name="COD_PRODUTO_SKYHUB" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ESP_SKYXPROD_SKY">
+          <End Type="Model.TB_PRODUTO_SKYHUB" Role="TB_PRODUTO_SKYHUB" Multiplicity="1" />
+          <End Type="Model.TB_PRODUTO_ESP_SKYHUB" Role="TB_PRODUTO_ESP_SKYHUB" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_PRODUTO_SKYHUB">
+              <PropertyRef Name="COD_PRODUTO_SKYHUB" />
+            </Principal>
+            <Dependent Role="TB_PRODUTO_ESP_SKYHUB">
+              <PropertyRef Name="COD_PRODUTO_SKYHUB" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IMG_SKYXPROD_SKY">
+          <End Type="Model.TB_PRODUTO_SKYHUB" Role="TB_PRODUTO_SKYHUB" Multiplicity="1" />
+          <End Type="Model.TB_PRODUTO_IMAGEM_SKYHUB" Role="TB_PRODUTO_IMAGEM_SKYHUB" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_PRODUTO_SKYHUB">
+              <PropertyRef Name="COD_PRODUTO_SKYHUB" />
+            </Principal>
+            <Dependent Role="TB_PRODUTO_IMAGEM_SKYHUB">
+              <PropertyRef Name="COD_PRODUTO_SKYHUB" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2343,6 +2745,26 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="TB_CLASSE">
+            <EntityTypeMapping TypeName="Model.TB_CLASSE">
+              <MappingFragment StoreEntitySet="TB_CLASSE">
+                <ScalarProperty Name="IND_SITUACAO" ColumnName="IND_SITUACAO" />
+                <ScalarProperty Name="IND_AREA" ColumnName="IND_AREA" />
+                <ScalarProperty Name="COD_MENSAGEM" ColumnName="COD_MENSAGEM" />
+                <ScalarProperty Name="COD_LOTE_TIPO" ColumnName="COD_LOTE_TIPO" />
+                <ScalarProperty Name="IND_TIPO" ColumnName="IND_TIPO" />
+                <ScalarProperty Name="COD_RAMO" ColumnName="COD_RAMO" />
+                <ScalarProperty Name="VAL_CUSTO" ColumnName="VAL_CUSTO" />
+                <ScalarProperty Name="PERC_CUSTO" ColumnName="PERC_CUSTO" />
+                <ScalarProperty Name="NUM_SUBCLASSE" ColumnName="NUM_SUBCLASSE" />
+                <ScalarProperty Name="NUM_CLASSE" ColumnName="NUM_CLASSE" />
+                <ScalarProperty Name="PERC_COMISSAO2" ColumnName="PERC_COMISSAO2" />
+                <ScalarProperty Name="PERC_COMISSAO1" ColumnName="PERC_COMISSAO1" />
+                <ScalarProperty Name="DESC_CLASSE" ColumnName="DESC_CLASSE" />
+                <ScalarProperty Name="COD_CLASSE" ColumnName="COD_CLASSE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="TB_PRODUTO">
             <EntityTypeMapping TypeName="Model.TB_PRODUTO">
               <MappingFragment StoreEntitySet="TB_PRODUTO">
@@ -2461,27 +2883,106 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="TB_CLASSE">
-            <EntityTypeMapping TypeName="Model.TB_CLASSE">
-              <MappingFragment StoreEntitySet="TB_CLASSE">
-                <ScalarProperty Name="IND_SITUACAO" ColumnName="IND_SITUACAO" />
-                <ScalarProperty Name="IND_AREA" ColumnName="IND_AREA" />
-                <ScalarProperty Name="COD_MENSAGEM" ColumnName="COD_MENSAGEM" />
-                <ScalarProperty Name="COD_LOTE_TIPO" ColumnName="COD_LOTE_TIPO" />
-                <ScalarProperty Name="IND_TIPO" ColumnName="IND_TIPO" />
-                <ScalarProperty Name="COD_RAMO" ColumnName="COD_RAMO" />
-                <ScalarProperty Name="VAL_CUSTO" ColumnName="VAL_CUSTO" />
-                <ScalarProperty Name="PERC_CUSTO" ColumnName="PERC_CUSTO" />
-                <ScalarProperty Name="NUM_SUBCLASSE" ColumnName="NUM_SUBCLASSE" />
-                <ScalarProperty Name="NUM_CLASSE" ColumnName="NUM_CLASSE" />
-                <ScalarProperty Name="PERC_COMISSAO2" ColumnName="PERC_COMISSAO2" />
-                <ScalarProperty Name="PERC_COMISSAO1" ColumnName="PERC_COMISSAO1" />
-                <ScalarProperty Name="DESC_CLASSE" ColumnName="DESC_CLASSE" />
-                <ScalarProperty Name="COD_CLASSE" ColumnName="COD_CLASSE" />
+          <EntitySetMapping Name="TB_TRIBUTACAO">
+            <EntityTypeMapping TypeName="Model.TB_TRIBUTACAO">
+              <MappingFragment StoreEntitySet="TB_TRIBUTACAO">
+                <ScalarProperty Name="DESC_OBSERVACAO_NC" ColumnName="DESC_OBSERVACAO_NC" />
+                <ScalarProperty Name="DESC_CSOSN_NC" ColumnName="DESC_CSOSN_NC" />
+                <ScalarProperty Name="DESC_SITUACAO_TRIB_NC" ColumnName="DESC_SITUACAO_TRIB_NC" />
+                <ScalarProperty Name="PERC_DIFERIMENTO" ColumnName="PERC_DIFERIMENTO" />
+                <ScalarProperty Name="DESC_HASH_MD5" ColumnName="DESC_HASH_MD5" />
+                <ScalarProperty Name="NUM_INDICE_TRIB_ECF" ColumnName="NUM_INDICE_TRIB_ECF" />
+                <ScalarProperty Name="DESC_CSOSN" ColumnName="DESC_CSOSN" />
+                <ScalarProperty Name="PERC_TRIBUTADO_NOTA" ColumnName="PERC_TRIBUTADO_NOTA" />
+                <ScalarProperty Name="IND_BASE_REDUZIDA" ColumnName="IND_BASE_REDUZIDA" />
+                <ScalarProperty Name="DESC_OBSERVACAO" ColumnName="DESC_OBSERVACAO" />
+                <ScalarProperty Name="DESC_SITUACAO_TRIB" ColumnName="DESC_SITUACAO_TRIB" />
+                <ScalarProperty Name="COD_TRIB_IMP_FISCAL" ColumnName="COD_TRIB_IMP_FISCAL" />
+                <ScalarProperty Name="NUM_CLASSIFICACAO" ColumnName="NUM_CLASSIFICACAO" />
+                <ScalarProperty Name="PERC_ALIQUOTA" ColumnName="PERC_ALIQUOTA" />
+                <ScalarProperty Name="PERC_TRIBUTADO" ColumnName="PERC_TRIBUTADO" />
+                <ScalarProperty Name="DESC_TRIBUTACAO" ColumnName="DESC_TRIBUTACAO" />
+                <ScalarProperty Name="COD_TRIBUTACAO" ColumnName="COD_TRIBUTACAO" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-        </EntityContainerMapping>
+          <EntitySetMapping Name="TB_CONFIGURACAO_SKYHUB">
+            <EntityTypeMapping TypeName="Model.TB_CONFIGURACAO_SKYHUB">
+              <MappingFragment StoreEntitySet="TB_CONFIGURACAO_SKYHUB">
+                <ScalarProperty Name="IND_SINCRONIZA_PRODUTOS" ColumnName="IND_SINCRONIZA_PRODUTOS" />
+                <ScalarProperty Name="DESC_TOKEN_ACCOUNT" ColumnName="DESC_TOKEN_ACCOUNT" />
+                <ScalarProperty Name="DESC_TOKEN_INTEGRACAO" ColumnName="DESC_TOKEN_INTEGRACAO" />
+                <ScalarProperty Name="DESC_USUARIO_EMAIL" ColumnName="DESC_USUARIO_EMAIL" />
+                <ScalarProperty Name="IND_ATIVO" ColumnName="IND_ATIVO" />
+                <ScalarProperty Name="COD_FILIAL" ColumnName="COD_FILIAL" />
+                <ScalarProperty Name="COD_CONFIGURACAO_SKYHUB" ColumnName="COD_CONFIGURACAO_SKYHUB" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TB_SINCRONIZACAO_SKYHUB">
+            <EntityTypeMapping TypeName="Model.TB_SINCRONIZACAO_SKYHUB">
+              <MappingFragment StoreEntitySet="TB_SINCRONIZACAO_SKYHUB">
+                <ScalarProperty Name="DT_SINCRONIZACAO" ColumnName="DT_SINCRONIZACAO" />
+                <ScalarProperty Name="DT_REGISTRO" ColumnName="DT_REGISTRO" />
+                <ScalarProperty Name="COD_PRODUTO" ColumnName="COD_PRODUTO" />
+                <ScalarProperty Name="IND_SINCRONIZADO" ColumnName="IND_SINCRONIZADO" />
+                <ScalarProperty Name="TIPO_ACAO" ColumnName="TIPO_ACAO" />
+                <ScalarProperty Name="COD_SINCRONIZACAO_SKYHUB" ColumnName="COD_SINCRONIZACAO_SKYHUB" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TB_PRODUTO_SKYHUB">
+            <EntityTypeMapping TypeName="Model.TB_PRODUTO_SKYHUB">
+              <MappingFragment StoreEntitySet="TB_PRODUTO_SKYHUB">
+                <ScalarProperty Name="DESC_NCM" ColumnName="DESC_NCM" />
+                <ScalarProperty Name="DESC_EAN" ColumnName="DESC_EAN" />
+                <ScalarProperty Name="DESC_MARCA" ColumnName="DESC_MARCA" />
+                <ScalarProperty Name="VAL_COMPRIMENTO" ColumnName="VAL_COMPRIMENTO" />
+                <ScalarProperty Name="VAL_LARGURA" ColumnName="VAL_LARGURA" />
+                <ScalarProperty Name="VAL_ALTURA" ColumnName="VAL_ALTURA" />
+                <ScalarProperty Name="VAL_PESO" ColumnName="VAL_PESO" />
+                <ScalarProperty Name="VAL_PRECO_PROMOCIONAL" ColumnName="VAL_PRECO_PROMOCIONAL" />
+                <ScalarProperty Name="VAL_PRECO" ColumnName="VAL_PRECO" />
+                <ScalarProperty Name="DESC_STATUS" ColumnName="DESC_STATUS" />
+                <ScalarProperty Name="DESC_DESCRICAO" ColumnName="DESC_DESCRICAO" />
+                <ScalarProperty Name="DESC_PRODUTO" ColumnName="DESC_PRODUTO" />
+                <ScalarProperty Name="IND_SINCRONIZA" ColumnName="IND_SINCRONIZA" />
+                <ScalarProperty Name="COD_PRODUTO" ColumnName="COD_PRODUTO" />
+                <ScalarProperty Name="COD_PRODUTO_SKYHUB" ColumnName="COD_PRODUTO_SKYHUB" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TB_PRODUTO_CATEGORIA_SKYHUB">
+            <EntityTypeMapping TypeName="Model.TB_PRODUTO_CATEGORIA_SKYHUB">
+              <MappingFragment StoreEntitySet="TB_PRODUTO_CATEGORIA_SKYHUB">
+                <ScalarProperty Name="DESC_CATEGORIA" ColumnName="DESC_CATEGORIA" />
+                <ScalarProperty Name="COD_PRODUTO_SKYHUB" ColumnName="COD_PRODUTO_SKYHUB" />
+                <ScalarProperty Name="COD_PRODUTO_CATEGORIA_SKYHUB" ColumnName="COD_PRODUTO_CATEGORIA_SKYHUB" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TB_PRODUTO_ESP_SKYHUB">
+            <EntityTypeMapping TypeName="Model.TB_PRODUTO_ESP_SKYHUB">
+              <MappingFragment StoreEntitySet="TB_PRODUTO_ESP_SKYHUB">
+                <ScalarProperty Name="IND_ATIVO" ColumnName="IND_ATIVO" />
+                <ScalarProperty Name="VAL_ESPECIFICACAO" ColumnName="VAL_ESPECIFICACAO" />
+                <ScalarProperty Name="DESC_ESPECIFICACAO" ColumnName="DESC_ESPECIFICACAO" />
+                <ScalarProperty Name="COD_PRODUTO_SKYHUB" ColumnName="COD_PRODUTO_SKYHUB" />
+                <ScalarProperty Name="COD_PRODUTO_ESP_SKYHUB" ColumnName="COD_PRODUTO_ESP_SKYHUB" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TB_PRODUTO_IMAGEM_SKYHUB">
+            <EntityTypeMapping TypeName="Model.TB_PRODUTO_IMAGEM_SKYHUB">
+              <MappingFragment StoreEntitySet="TB_PRODUTO_IMAGEM_SKYHUB">
+                <ScalarProperty Name="IND_ATIVO" ColumnName="IND_ATIVO" />
+                <ScalarProperty Name="DESC_IMAGEM" ColumnName="DESC_IMAGEM" />
+                <ScalarProperty Name="COD_PRODUTO_SKYHUB" ColumnName="COD_PRODUTO_SKYHUB" />
+                <ScalarProperty Name="COD_PRODUTO_IMAGEM_SKYHUB" ColumnName="COD_PRODUTO_IMAGEM_SKYHUB" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>
@@ -2496,7 +2997,7 @@
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="false" />
-        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
         <DesignerProperty Name="SynchronizePropertyFacets" Value="False" />

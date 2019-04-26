@@ -14,6 +14,13 @@ namespace Cemapa.Models
     
     public partial class TB_PRODUTO
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public TB_PRODUTO()
+        {
+            this.TB_SINCRONIZACAO_SKYHUB = new HashSet<TB_SINCRONIZACAO_SKYHUB>();
+            this.TB_PRODUTO_SKYHUB = new HashSet<TB_PRODUTO_SKYHUB>();
+        }
+    
         public long COD_PRODUTO { get; set; }
         public int COD_CLASSE { get; set; }
         public int COD_TRIBUTACAO { get; set; }
@@ -128,5 +135,10 @@ namespace Cemapa.Models
         public string IND_SYNC_SKYHUB { get; set; }
     
         public virtual TB_CLASSE TB_CLASSE { get; set; }
+        public virtual TB_TRIBUTACAO TB_TRIBUTACAO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TB_SINCRONIZACAO_SKYHUB> TB_SINCRONIZACAO_SKYHUB { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TB_PRODUTO_SKYHUB> TB_PRODUTO_SKYHUB { get; set; }
     }
 }

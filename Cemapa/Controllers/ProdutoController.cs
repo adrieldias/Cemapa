@@ -10,7 +10,7 @@ namespace Cemapa.Controllers
     public class ProdutoController : ApiController
     {
         private Entities db = new Entities();
-
+        
         [HttpGet]
         public List<TB_PRODUTO> Get(int? id)
         {            
@@ -23,7 +23,5 @@ namespace Cemapa.Controllers
                          select c;
             return query.ToList();
         }
-
-
     }
 }
