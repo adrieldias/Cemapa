@@ -37,6 +37,9 @@ namespace Cemapa.Models
         public string DESC_MARCA { get; set; }
         public string DESC_EAN { get; set; }
         public string DESC_NCM { get; set; }
+        public Nullable<decimal> VAL_CUSTO_MEDIO { get; set; }
+        public string IND_ATUALIZA_VALORES { get; set; }
+        public Nullable<decimal> QT_QUANTIDADE { get; set; }
     
         public virtual TB_PRODUTO TB_PRODUTO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

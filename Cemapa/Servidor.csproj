@@ -190,6 +190,9 @@
     <Compile Include="Models\TB_ESTADO_CIVIL.cs">
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TB_ESTOQUE.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TB_MOTIVO.cs">
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>

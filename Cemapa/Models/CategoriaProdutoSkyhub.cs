@@ -7,7 +7,7 @@ namespace Cemapa.Models
 {
     public class CategoriaProdutoSkyhub
     {
-        public int code { get; set; }
-        public int name { get; set; }
+        public long code { get; set; }
+        public string name { get; set; }
     }
 }

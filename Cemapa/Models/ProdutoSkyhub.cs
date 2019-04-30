@@ -7,25 +7,25 @@ namespace Cemapa.Models
 {
     public class ProdutoSkyhub
     {
-        public string sku { get; set; }
+        public long sku { get; set; }
         public string name { get; set; }
         public string description { get; set; }
         public string status { get; set; }
         public int qty { get; set; }
-        public int price { get; set; }
-        public int promotional_price { get; set; }
-        public int cost { get; set; }
-        public int weight { get; set; }
-        public int height { get; set; }
-        public int width { get; set; }
-        public int length { get; set; }
+        public double price { get; set; }
+        public double promotional_price { get; set; }
+        public double cost { get; set; }
+        public double weight { get; set; }
+        public double height { get; set; }
+        public double width { get; set; }
+        public double length { get; set; }
         public string brand { get; set; }
         public string ean { get; set; }
-        public string nbn { get; set; }
+        public string nbm { get; set; }
 
-        public List<CategoriaProdutoSkyhub> categories;
-        public List<string> images;
-        public List<EspecificacoesProdutoSkyhub> specifications;
+        public List<CategoriaProdutoSkyhub> categories = new List<CategoriaProdutoSkyhub>();
+        public List<string> images = new List<string>();
+        public List<EspecificacoesProdutoSkyhub> specifications = new List<EspecificacoesProdutoSkyhub>();
         public List<ProdutoSkyhub> variations;
     }
 }

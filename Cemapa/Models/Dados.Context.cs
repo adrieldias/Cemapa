@@ -50,5 +50,6 @@ namespace Cemapa.Models
         public virtual DbSet<TB_PRODUTO_CATEGORIA_SKYHUB> TB_PRODUTO_CATEGORIA_SKYHUB { get; set; }
         public virtual DbSet<TB_PRODUTO_ESP_SKYHUB> TB_PRODUTO_ESP_SKYHUB { get; set; }
         public virtual DbSet<TB_PRODUTO_IMAGEM_SKYHUB> TB_PRODUTO_IMAGEM_SKYHUB { get; set; }
+        public virtual DbSet<TB_ESTOQUE> TB_ESTOQUE { get; set; }
     }
 }

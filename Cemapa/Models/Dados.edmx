@@ -283,6 +283,34 @@
           <Property Name="COD_ESTADO_CIVIL" Type="number" Precision="6" Scale="0" Nullable="false" />
           <Property Name="DESC_ESTADO_CIVIL" Type="varchar2" MaxLength="30" Nullable="false" />
         </EntityType>
+        <EntityType Name="TB_ESTOQUE">
+          <Key>
+            <PropertyRef Name="COD_LOTE_TIPO" />
+            <PropertyRef Name="COD_FILIAL" />
+            <PropertyRef Name="COD_PRODUTO" />
+          </Key>
+          <Property Name="COD_LOTE_TIPO" Type="number" Precision="6" Scale="0" Nullable="false" />
+          <Property Name="COD_FILIAL" Type="number" Precision="6" Scale="0" Nullable="false" />
+          <Property Name="COD_PRODUTO" Type="number" Precision="13" Scale="0" Nullable="false" />
+          <Property Name="VL_CUSTO_MEDIO" Type="number" Precision="11" Scale="4" />
+          <Property Name="VL_ULTIMO_CUSTO" Type="number" Precision="11" Scale="4" />
+          <Property Name="VL_CUSTO_DOLAR" Type="number" Precision="11" Scale="4" />
+          <Property Name="QT_QUANTIDADE" Type="number" Precision="11" Scale="3" Nullable="false" />
+          <Property Name="DT_COMPRA" Type="date" />
+          <Property Name="DT_VENDA" Type="date" />
+          <Property Name="QT_COMPRA" Type="number" Precision="11" Scale="3" />
+          <Property Name="QT_MINIMO" Type="number" Precision="11" Scale="3" />
+          <Property Name="QT_MAXIMO" Type="number" Precision="11" Scale="3" />
+          <Property Name="QT_INVENTARIO" Type="number" Precision="11" Scale="3" />
+          <Property Name="DT_INVENTARIO" Type="date" />
+          <Property Name="VL_CUSTO_INVENTARIO" Type="number" Precision="11" Scale="4" />
+          <Property Name="QT_COMPROMETIDO" Type="number" Precision="6" Scale="0" />
+          <Property Name="VL_ULTIMA_VENDA" Type="number" Precision="11" Scale="4" />
+          <Property Name="COD_ULTIMO_FORNECEDOR" Type="number" Precision="6" Scale="0" />
+          <Property Name="DESC_LOCALIZACAO" Type="varchar2" MaxLength="10" />
+          <Property Name="DESC_HASH_MD5" Type="varchar2" MaxLength="32" />
+          <Property Name="VL_CUSTO_COMISSAO" Type="number" Precision="11" Scale="4" />
+        </EntityType>
         <EntityType Name="TB_MOTIVO">
           <Key>
             <PropertyRef Name="COD_MOTIVO" />
@@ -415,7 +443,6 @@
           <Property Name="IND_NIR_SYNC_SITE" Type="char" MaxLength="1" />
           <Property Name="IND_SINC_MAX_ROTEIRIZADOR" Type="char" MaxLength="1" />
           <Property Name="PERC_COMISSAO_PRODUCAO" Type="number" Precision="5" Scale="2" />
-          <Property Name="IND_SYNC_SKYHUB" Type="char" MaxLength="1" />
         </EntityType>
         <EntityType Name="TB_PRODUTO_CATEGORIA_SKYHUB">
           <Key>
@@ -463,6 +490,9 @@
           <Property Name="DESC_MARCA" Type="varchar2" MaxLength="30" />
           <Property Name="DESC_EAN" Type="varchar2" MaxLength="30" />
           <Property Name="DESC_NCM" Type="varchar2" MaxLength="15" />
+          <Property Name="VAL_CUSTO_MEDIO" Type="number" Precision="10" Scale="4" />
+          <Property Name="IND_ATUALIZA_VALORES" Type="char" MaxLength="1" />
+          <Property Name="QT_QUANTIDADE" Type="number" Precision="11" Scale="3" />
         </EntityType>
         <EntityType Name="TB_PROPRIEDADE">
           <Key>
@@ -854,6 +884,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ESTOQUEXPRODUTO">
+          <End Role="TB_PRODUTO" Type="Self.TB_PRODUTO" Multiplicity="1" />
+          <End Role="TB_ESTOQUE" Type="Self.TB_ESTOQUE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_PRODUTO">
+              <PropertyRef Name="COD_PRODUTO" />
+            </Principal>
+            <Dependent Role="TB_ESTOQUE">
+              <PropertyRef Name="COD_PRODUTO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_IMG_SKYXPROD_SKY">
           <End Role="TB_PRODUTO_SKYHUB" Type="Self.TB_PRODUTO_SKYHUB" Multiplicity="1" />
           <End Role="TB_PRODUTO_IMAGEM_SKYHUB" Type="Self.TB_PRODUTO_IMAGEM_SKYHUB" Multiplicity="*" />
@@ -995,6 +1037,7 @@
           <EntitySet Name="TB_CONFIGURACAO_SKYHUB" EntityType="Self.TB_CONFIGURACAO_SKYHUB" Schema="SISTEMA" store:Type="Tables" />
           <EntitySet Name="TB_ESTADO" EntityType="Self.TB_ESTADO" Schema="SISTEMA" store:Type="Tables" />
           <EntitySet Name="TB_ESTADO_CIVIL" EntityType="Self.TB_ESTADO_CIVIL" Schema="SISTEMA" store:Type="Tables" />
+          <EntitySet Name="TB_ESTOQUE" EntityType="Self.TB_ESTOQUE" Schema="SISTEMA" store:Type="Tables" />
           <EntitySet Name="TB_MOTIVO" EntityType="Self.TB_MOTIVO" Schema="SISTEMA" store:Type="Tables" />
           <EntitySet Name="TB_PAIS" EntityType="Self.TB_PAIS" Schema="SISTEMA" store:Type="Tables" />
           <EntitySet Name="TB_PRODUTO" EntityType="Self.TB_PRODUTO" Schema="SISTEMA" store:Type="Tables" />
@@ -1071,6 +1114,10 @@
           <AssociationSet Name="FK_ESP_SKYXPROD_SKY" Association="Self.FK_ESP_SKYXPROD_SKY">
             <End Role="TB_PRODUTO_SKYHUB" EntitySet="TB_PRODUTO_SKYHUB" />
             <End Role="TB_PRODUTO_ESP_SKYHUB" EntitySet="TB_PRODUTO_ESP_SKYHUB" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ESTOQUEXPRODUTO" Association="Self.FK_ESTOQUEXPRODUTO">
+            <End Role="TB_PRODUTO" EntitySet="TB_PRODUTO" />
+            <End Role="TB_ESTOQUE" EntitySet="TB_ESTOQUE" />
           </AssociationSet>
           <AssociationSet Name="FK_IMG_SKYXPROD_SKY" Association="Self.FK_IMG_SKYXPROD_SKY">
             <End Role="TB_PRODUTO_SKYHUB" EntitySet="TB_PRODUTO_SKYHUB" />
@@ -1440,6 +1487,11 @@
           <AssociationSet Name="FK_IMG_SKYXPROD_SKY" Association="Model.FK_IMG_SKYXPROD_SKY">
             <End Role="TB_PRODUTO_SKYHUB" EntitySet="TB_PRODUTO_SKYHUB" />
             <End Role="TB_PRODUTO_IMAGEM_SKYHUB" EntitySet="TB_PRODUTO_IMAGEM_SKYHUB" />
+          </AssociationSet>
+          <EntitySet Name="TB_ESTOQUE" EntityType="Model.TB_ESTOQUE" />
+          <AssociationSet Name="FK_ESTOQUEXPRODUTO" Association="Model.FK_ESTOQUEXPRODUTO">
+            <End Role="TB_PRODUTO" EntitySet="TB_PRODUTO" />
+            <End Role="TB_ESTOQUE" EntitySet="TB_ESTOQUE" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="TB_CIDADE">
@@ -2094,11 +2146,11 @@
           <Property Name="IND_NIR_SYNC_SITE" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="IND_SINC_MAX_ROTEIRIZADOR" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="PERC_COMISSAO_PRODUCAO" Type="Decimal" Precision="5" Scale="2" />
-          <Property Name="IND_SYNC_SKYHUB" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <NavigationProperty Name="TB_CLASSE" Relationship="Model.FK_PRODUTOXCLASSE" FromRole="TB_PRODUTO" ToRole="TB_CLASSE" />
           <NavigationProperty Name="TB_TRIBUTACAO" Relationship="Model.FK_PRODUTOXTRIBUTACAO" FromRole="TB_PRODUTO" ToRole="TB_TRIBUTACAO" />
           <NavigationProperty Name="TB_SINCRONIZACAO_SKYHUB" Relationship="Model.FK_SINC_SKYXPRODUTO" FromRole="TB_PRODUTO" ToRole="TB_SINCRONIZACAO_SKYHUB" />
           <NavigationProperty Name="TB_PRODUTO_SKYHUB" Relationship="Model.FK_PROD_SKYXPRODUTO" FromRole="TB_PRODUTO" ToRole="TB_PRODUTO_SKYHUB" />
+          <NavigationProperty Name="TB_ESTOQUE" Relationship="Model.FK_ESTOQUEXPRODUTO" FromRole="TB_PRODUTO" ToRole="TB_ESTOQUE" />
         </EntityType>
         <Association Name="FK_PRODUTOXCLASSE">
           <End Type="Model.TB_CLASSE" Role="TB_CLASSE" Multiplicity="1" />
@@ -2206,6 +2258,9 @@
           <NavigationProperty Name="TB_PRODUTO_CATEGORIA_SKYHUB" Relationship="Model.FK_CAT_SKYXPROD_SKY" FromRole="TB_PRODUTO_SKYHUB" ToRole="TB_PRODUTO_CATEGORIA_SKYHUB" />
           <NavigationProperty Name="TB_PRODUTO_ESP_SKYHUB" Relationship="Model.FK_ESP_SKYXPROD_SKY" FromRole="TB_PRODUTO_SKYHUB" ToRole="TB_PRODUTO_ESP_SKYHUB" />
           <NavigationProperty Name="TB_PRODUTO_IMAGEM_SKYHUB" Relationship="Model.FK_IMG_SKYXPROD_SKY" FromRole="TB_PRODUTO_SKYHUB" ToRole="TB_PRODUTO_IMAGEM_SKYHUB" />
+          <Property Name="VAL_CUSTO_MEDIO" Type="Decimal" Precision="10" Scale="4" />
+          <Property Name="IND_ATUALIZA_VALORES" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="QT_QUANTIDADE" Type="Decimal" Precision="11" Scale="3" />
         </EntityType>
         <Association Name="FK_PROD_SKYXPRODUTO">
           <End Type="Model.TB_PRODUTO" Role="TB_PRODUTO" Multiplicity="1" />
@@ -2282,6 +2337,47 @@
             </Principal>
             <Dependent Role="TB_PRODUTO_IMAGEM_SKYHUB">
               <PropertyRef Name="COD_PRODUTO_SKYHUB" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="TB_ESTOQUE">
+          <Key>
+            <PropertyRef Name="COD_LOTE_TIPO" />
+            <PropertyRef Name="COD_FILIAL" />
+            <PropertyRef Name="COD_PRODUTO" />
+          </Key>
+          <Property Name="COD_LOTE_TIPO" Type="Int32" Nullable="false" />
+          <Property Name="COD_FILIAL" Type="Int32" Nullable="false" />
+          <Property Name="COD_PRODUTO" Type="Int64" Nullable="false" />
+          <Property Name="VL_CUSTO_MEDIO" Type="Decimal" Precision="11" Scale="4" />
+          <Property Name="VL_ULTIMO_CUSTO" Type="Decimal" Precision="11" Scale="4" />
+          <Property Name="VL_CUSTO_DOLAR" Type="Decimal" Precision="11" Scale="4" />
+          <Property Name="QT_QUANTIDADE" Type="Decimal" Nullable="false" Precision="11" Scale="3" />
+          <Property Name="DT_COMPRA" Type="DateTime" />
+          <Property Name="DT_VENDA" Type="DateTime" />
+          <Property Name="QT_COMPRA" Type="Decimal" Precision="11" Scale="3" />
+          <Property Name="QT_MINIMO" Type="Decimal" Precision="11" Scale="3" />
+          <Property Name="QT_MAXIMO" Type="Decimal" Precision="11" Scale="3" />
+          <Property Name="QT_INVENTARIO" Type="Decimal" Precision="11" Scale="3" />
+          <Property Name="DT_INVENTARIO" Type="DateTime" />
+          <Property Name="VL_CUSTO_INVENTARIO" Type="Decimal" Precision="11" Scale="4" />
+          <Property Name="QT_COMPROMETIDO" Type="Int32" />
+          <Property Name="VL_ULTIMA_VENDA" Type="Decimal" Precision="11" Scale="4" />
+          <Property Name="COD_ULTIMO_FORNECEDOR" Type="Int32" />
+          <Property Name="DESC_LOCALIZACAO" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_HASH_MD5" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="VL_CUSTO_COMISSAO" Type="Decimal" Precision="11" Scale="4" />
+          <NavigationProperty Name="TB_PRODUTO" Relationship="Model.FK_ESTOQUEXPRODUTO" FromRole="TB_ESTOQUE" ToRole="TB_PRODUTO" />
+        </EntityType>
+        <Association Name="FK_ESTOQUEXPRODUTO">
+          <End Type="Model.TB_PRODUTO" Role="TB_PRODUTO" Multiplicity="1" />
+          <End Type="Model.TB_ESTOQUE" Role="TB_ESTOQUE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_PRODUTO">
+              <PropertyRef Name="COD_PRODUTO" />
+            </Principal>
+            <Dependent Role="TB_ESTOQUE">
+              <PropertyRef Name="COD_PRODUTO" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2768,7 +2864,6 @@
           <EntitySetMapping Name="TB_PRODUTO">
             <EntityTypeMapping TypeName="Model.TB_PRODUTO">
               <MappingFragment StoreEntitySet="TB_PRODUTO">
-                <ScalarProperty Name="IND_SYNC_SKYHUB" ColumnName="IND_SYNC_SKYHUB" />
                 <ScalarProperty Name="PERC_COMISSAO_PRODUCAO" ColumnName="PERC_COMISSAO_PRODUCAO" />
                 <ScalarProperty Name="IND_SINC_MAX_ROTEIRIZADOR" ColumnName="IND_SINC_MAX_ROTEIRIZADOR" />
                 <ScalarProperty Name="IND_NIR_SYNC_SITE" ColumnName="IND_NIR_SYNC_SITE" />
@@ -2934,6 +3029,9 @@
           <EntitySetMapping Name="TB_PRODUTO_SKYHUB">
             <EntityTypeMapping TypeName="Model.TB_PRODUTO_SKYHUB">
               <MappingFragment StoreEntitySet="TB_PRODUTO_SKYHUB">
+                <ScalarProperty Name="QT_QUANTIDADE" ColumnName="QT_QUANTIDADE" />
+                <ScalarProperty Name="IND_ATUALIZA_VALORES" ColumnName="IND_ATUALIZA_VALORES" />
+                <ScalarProperty Name="VAL_CUSTO_MEDIO" ColumnName="VAL_CUSTO_MEDIO" />
                 <ScalarProperty Name="DESC_NCM" ColumnName="DESC_NCM" />
                 <ScalarProperty Name="DESC_EAN" ColumnName="DESC_EAN" />
                 <ScalarProperty Name="DESC_MARCA" ColumnName="DESC_MARCA" />
@@ -2979,6 +3077,33 @@
                 <ScalarProperty Name="DESC_IMAGEM" ColumnName="DESC_IMAGEM" />
                 <ScalarProperty Name="COD_PRODUTO_SKYHUB" ColumnName="COD_PRODUTO_SKYHUB" />
                 <ScalarProperty Name="COD_PRODUTO_IMAGEM_SKYHUB" ColumnName="COD_PRODUTO_IMAGEM_SKYHUB" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TB_ESTOQUE">
+            <EntityTypeMapping TypeName="Model.TB_ESTOQUE">
+              <MappingFragment StoreEntitySet="TB_ESTOQUE">
+                <ScalarProperty Name="VL_CUSTO_COMISSAO" ColumnName="VL_CUSTO_COMISSAO" />
+                <ScalarProperty Name="DESC_HASH_MD5" ColumnName="DESC_HASH_MD5" />
+                <ScalarProperty Name="DESC_LOCALIZACAO" ColumnName="DESC_LOCALIZACAO" />
+                <ScalarProperty Name="COD_ULTIMO_FORNECEDOR" ColumnName="COD_ULTIMO_FORNECEDOR" />
+                <ScalarProperty Name="VL_ULTIMA_VENDA" ColumnName="VL_ULTIMA_VENDA" />
+                <ScalarProperty Name="QT_COMPROMETIDO" ColumnName="QT_COMPROMETIDO" />
+                <ScalarProperty Name="VL_CUSTO_INVENTARIO" ColumnName="VL_CUSTO_INVENTARIO" />
+                <ScalarProperty Name="DT_INVENTARIO" ColumnName="DT_INVENTARIO" />
+                <ScalarProperty Name="QT_INVENTARIO" ColumnName="QT_INVENTARIO" />
+                <ScalarProperty Name="QT_MAXIMO" ColumnName="QT_MAXIMO" />
+                <ScalarProperty Name="QT_MINIMO" ColumnName="QT_MINIMO" />
+                <ScalarProperty Name="QT_COMPRA" ColumnName="QT_COMPRA" />
+                <ScalarProperty Name="DT_VENDA" ColumnName="DT_VENDA" />
+                <ScalarProperty Name="DT_COMPRA" ColumnName="DT_COMPRA" />
+                <ScalarProperty Name="QT_QUANTIDADE" ColumnName="QT_QUANTIDADE" />
+                <ScalarProperty Name="VL_CUSTO_DOLAR" ColumnName="VL_CUSTO_DOLAR" />
+                <ScalarProperty Name="VL_ULTIMO_CUSTO" ColumnName="VL_ULTIMO_CUSTO" />
+                <ScalarProperty Name="VL_CUSTO_MEDIO" ColumnName="VL_CUSTO_MEDIO" />
+                <ScalarProperty Name="COD_PRODUTO" ColumnName="COD_PRODUTO" />
+                <ScalarProperty Name="COD_FILIAL" ColumnName="COD_FILIAL" />
+                <ScalarProperty Name="COD_LOTE_TIPO" ColumnName="COD_LOTE_TIPO" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
