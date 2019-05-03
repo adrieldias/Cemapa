@@ -13,14 +13,5 @@ namespace Cemapa.Models
         public string Mensagem { get; set; }
         public DateTime Data { get; set; }
         public string Complemento { get; set; }
-
-        public RetornoJson(string status, string mensagem, string complemento = "", int id = 0)
-        {
-            Id = id;
-            Status = status;
-            Mensagem = mensagem;
-            Data = DateTime.Now;
-            Complemento = complemento;
-        }
     }
 }

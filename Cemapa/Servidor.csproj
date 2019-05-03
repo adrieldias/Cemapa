@@ -164,6 +164,8 @@
       <DependentUpon>Dados.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\EspecificacoesProdutoSkyhub.cs" />
+    <Compile Include="Models\ExcecoesHttp.cs" />
+    <Compile Include="Models\GravaLog.cs" />
     <Compile Include="Models\ProdutoSkyhub.cs" />
     <Compile Include="Models\RetornoJson.cs" />
     <Compile Include="Models\TB_CADASTRO.cs">
