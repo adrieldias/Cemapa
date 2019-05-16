@@ -28,4 +28,16 @@ namespace Cemapa.Models
         public List<EspecificacoesProdutoSkyhub> specifications = new List<EspecificacoesProdutoSkyhub>();
         public List<ProdutoSkyhub> variations;
     }
+
+    public class EspecificacoesProdutoSkyhub
+    {
+        public string key { get; set; }
+        public string value { get; set; }
+    }
+
+    public class CategoriaProdutoSkyhub
+    {
+        public long code { get; set; }
+        public string name { get; set; }
+    }
 }

@@ -12,14 +12,10 @@ namespace Cemapa.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class TB_CONFIGURACAO_SKYHUB
+    public partial class TB_SEQUENCIA
     {
-        public long COD_CONFIGURACAO_SKYHUB { get; set; }
-        public long COD_FILIAL { get; set; }
-        public string IND_ATIVO { get; set; }
-        public string DESC_USUARIO_EMAIL { get; set; }
-        public string DESC_TOKEN_INTEGRACAO { get; set; }
-        public string DESC_TOKEN_ACCOUNT { get; set; }
-        public long COD_OPERACAO { get; set; }
+        public string NOME_SEQUENCIA { get; set; }
+        public int COD_FILIAL { get; set; }
+        public int VAL_SEQUENCIA { get; set; }
     }
 }

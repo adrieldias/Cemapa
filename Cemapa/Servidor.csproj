@@ -147,7 +147,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\CategoriaProdutoSkyhub.cs" />
+    <Compile Include="Models\ControlaExcecoes.cs" />
     <Compile Include="Models\Dados.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -163,9 +163,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Dados.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\EspecificacoesProdutoSkyhub.cs" />
-    <Compile Include="Models\ExcecoesHttp.cs" />
-    <Compile Include="Models\GravaLog.cs" />
+    <Compile Include="Models\OrdensSkyhub.cs" />
     <Compile Include="Models\ProdutoSkyhub.cs" />
     <Compile Include="Models\RetornoJson.cs" />
     <Compile Include="Models\TB_CADASTRO.cs">
@@ -201,6 +199,12 @@
     <Compile Include="Models\TB_PAIS.cs">
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TB_PEDIDO_CAB.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_PEDIDO_ITEM.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TB_PRODUTO.cs">
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
@@ -225,10 +229,10 @@
     <Compile Include="Models\TB_REGIAO.cs">
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\TB_SINCRONIZACAO_SKYHUB.cs">
+    <Compile Include="Models\TB_SEQUENCIA.cs">
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\TB_TABELA_PRECO_CAB.cs">
+    <Compile Include="Models\TB_SINCRONIZACAO_SKYHUB.cs">
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TB_TIPO_CADASTRO.cs">

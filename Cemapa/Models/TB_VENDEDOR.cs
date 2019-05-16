@@ -18,6 +18,7 @@ namespace Cemapa.Models
         public TB_VENDEDOR()
         {
             this.TB_CADASTRO = new HashSet<TB_CADASTRO>();
+            this.TB_PEDIDO_CAB = new HashSet<TB_PEDIDO_CAB>();
         }
     
         public int COD_VENDEDOR { get; set; }
@@ -69,5 +70,7 @@ namespace Cemapa.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TB_CADASTRO> TB_CADASTRO { get; set; }
         public virtual TB_ESTADO TB_ESTADO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TB_PEDIDO_CAB> TB_PEDIDO_CAB { get; set; }
     }
 }

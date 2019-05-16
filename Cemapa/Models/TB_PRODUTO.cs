@@ -17,9 +17,11 @@ namespace Cemapa.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public TB_PRODUTO()
         {
-            this.TB_SINCRONIZACAO_SKYHUB = new HashSet<TB_SINCRONIZACAO_SKYHUB>();
-            this.TB_PRODUTO_SKYHUB = new HashSet<TB_PRODUTO_SKYHUB>();
             this.TB_ESTOQUE = new HashSet<TB_ESTOQUE>();
+            this.TB_PEDIDO_CAB = new HashSet<TB_PEDIDO_CAB>();
+            this.TB_PRODUTO_SKYHUB = new HashSet<TB_PRODUTO_SKYHUB>();
+            this.TB_SINCRONIZACAO_SKYHUB = new HashSet<TB_SINCRONIZACAO_SKYHUB>();
+            this.TB_PEDIDO_ITEM = new HashSet<TB_PEDIDO_ITEM>();
         }
     
         public long COD_PRODUTO { get; set; }
@@ -77,13 +79,13 @@ namespace Cemapa.Models
         public Nullable<decimal> NUM_CONVERTE_FARDO { get; set; }
         public string COD_EX_TIPI { get; set; }
         public string NUM_GENERO_NCM { get; set; }
-        public Nullable<short> COD_LISTA_SERVICO { get; set; }
         public Nullable<int> COD_GENERO_PRODUTO { get; set; }
+        public Nullable<short> COD_LISTA_SERVICO { get; set; }
         public Nullable<decimal> QT_PESO_CAIXA_MIN { get; set; }
         public Nullable<decimal> QT_PESO_CAIXA_MAX { get; set; }
         public Nullable<byte> NUM_DIAS_VALIDADE { get; set; }
-        public Nullable<int> COD_CULTURA { get; set; }
         public string IND_PESO_PADRAO { get; set; }
+        public Nullable<int> COD_CULTURA { get; set; }
         public string DESC_SECAO { get; set; }
         public string DESC_BOQUETA { get; set; }
         public string DESC_OBSERVACAO { get; set; }
@@ -106,11 +108,10 @@ namespace Cemapa.Models
         public string COD_CST_COFINS_SAIDA { get; set; }
         public Nullable<int> COD_ATIVIDADE_CONTRIB { get; set; }
         public string IND_SUBST_TRIB { get; set; }
-        public string IND_ARREDONDAMENTO_TRUNCAMENTO { get; set; }
         public string IND_PROD_PROPRIA_TERCEIRO { get; set; }
-        public string IND_MARCENARIA { get; set; }
         public Nullable<bool> IND_QTD_ETIQUETAS { get; set; }
         public string DESC_HASH_MD5 { get; set; }
+        public string IND_ARREDONDAMENTO_TRUNCAMENTO { get; set; }
         public Nullable<decimal> PERC_MARGEM_MINIMA { get; set; }
         public string IND_PRECO_VENDA_ETIQUETA { get; set; }
         public Nullable<decimal> PERC_MIXGN { get; set; }
@@ -135,12 +136,16 @@ namespace Cemapa.Models
         public Nullable<decimal> PERC_COMISSAO_PRODUCAO { get; set; }
     
         public virtual TB_CLASSE TB_CLASSE { get; set; }
-        public virtual TB_TRIBUTACAO TB_TRIBUTACAO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TB_SINCRONIZACAO_SKYHUB> TB_SINCRONIZACAO_SKYHUB { get; set; }
+        public virtual ICollection<TB_ESTOQUE> TB_ESTOQUE { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TB_PEDIDO_CAB> TB_PEDIDO_CAB { get; set; }
+        public virtual TB_TRIBUTACAO TB_TRIBUTACAO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TB_PRODUTO_SKYHUB> TB_PRODUTO_SKYHUB { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TB_ESTOQUE> TB_ESTOQUE { get; set; }
+        public virtual ICollection<TB_SINCRONIZACAO_SKYHUB> TB_SINCRONIZACAO_SKYHUB { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TB_PEDIDO_ITEM> TB_PEDIDO_ITEM { get; set; }
     }
 }
