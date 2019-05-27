@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Cemapa.Models
 {
-    public class ProdutoSkyhub
+    public class ProdutosSkyhub
     {
         public long sku { get; set; }
         public string name { get; set; }
@@ -26,7 +26,7 @@ namespace Cemapa.Models
         public List<CategoriaProdutoSkyhub> categories = new List<CategoriaProdutoSkyhub>();
         public List<string> images = new List<string>();
         public List<EspecificacoesProdutoSkyhub> specifications = new List<EspecificacoesProdutoSkyhub>();
-        public List<ProdutoSkyhub> variations;
+        public List<ProdutosSkyhub> variations;
     }
 
     public class EspecificacoesProdutoSkyhub

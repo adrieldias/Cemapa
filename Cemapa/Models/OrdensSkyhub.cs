@@ -23,9 +23,9 @@ namespace Cemapa.Models
         public string shipping_carrier { get; set; }
         public ShippingAddress shipping_address { get; set; }
         public string shipped_date { get; set; }
-        public List<object> shipments { get; set; }
+        public List<Shipment> shipments { get; set; }
         public DateTime placed_at { get; set; }
-        public List<object> payments { get; set; }
+        public List<Payment> payments { get; set; }
         public List<Item> items { get; set; }
         public List<object> invoices { get; set; }
         public double interest { get; set; }
@@ -43,6 +43,43 @@ namespace Cemapa.Models
         public object approved_date { get; set; }
     }
 
+    public class Track
+    {
+        public string code { get; set; }
+        public string carrier { get; set; }
+        public string method { get; set; }
+        public string url { get; set; }
+    }
+
+    public class Shipment
+    {
+        public string code { get; set; }
+        public Track track { get; set; }
+    }
+
+    public class Sefaz
+    {
+        public string type_integration { get; set; }
+        public string payment_indicator { get; set; }
+        public string name_payment { get; set; }
+        public string name_card_issuer { get; set; }
+        public string id_payment { get; set; }
+        public string id_card_issuer { get; set; }
+    }
+
+    public class Payment
+    {
+        public double value { get; set; }
+        public object transaction_date { get; set; }
+        public object status { get; set; }
+        public Sefaz sefaz { get; set; }
+        public int parcels { get; set; }
+        public string method { get; set; }
+        public string description { get; set; }
+        public string card_issuer { get; set; }
+        public string autorization_id { get; set; }
+    }
+
     public class Status
     {
         public string type { get; set; }
@@ -53,9 +90,9 @@ namespace Cemapa.Models
     public class ShippingAddress
     {
         public string street { get; set; }
-        public object secondary_phone { get; set; }
+        public string secondary_phone { get; set; }
         public string region { get; set; }
-        public object reference { get; set; }
+        public string reference { get; set; }
         public string postcode { get; set; }
         public string phone { get; set; }
         public string number { get; set; }
@@ -63,7 +100,7 @@ namespace Cemapa.Models
         public string full_name { get; set; }
         public string detail { get; set; }
         public string country { get; set; }
-        public object complement { get; set; }
+        public string complement { get; set; }
         public string city { get; set; }
     }
 
@@ -111,5 +148,10 @@ namespace Cemapa.Models
         public string country { get; set; }
         public string complement { get; set; }
         public string city { get; set; }
+    }
+
+    public class Invoice
+    {
+        public string key { get; set; }
     }
 }
