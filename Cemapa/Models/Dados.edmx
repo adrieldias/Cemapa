@@ -400,6 +400,7 @@
           <Property Name="COD_PEDIDO_MARKETPLACE" Type="varchar2" MaxLength="60" />
           <Property Name="VAL_DESPESAS" Type="number" Precision="11" Scale="2" />
           <Property Name="IND_SINC_MAX_ROTEIRIZADOR" Type="char" MaxLength="1" />
+          <Property Name="DESC_SITUACAO_SKYHUB" Type="varchar2" MaxLength="30" />
         </EntityType>
         <EntityType Name="TB_PEDIDO_ITEM">
           <Key>
@@ -2198,6 +2199,7 @@
           <Property Name="VAL_DESPESAS" Type="Decimal" Precision="11" Scale="2" />
           <Property Name="IND_SINC_MAX_ROTEIRIZADOR" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <NavigationProperty Name="TB_PEDIDO_ITEM" Relationship="Model.FK_PEDIDO_ITEMXPEDIDO_CAB" FromRole="TB_PEDIDO_CAB" ToRole="TB_PEDIDO_ITEM" />
+          <Property Name="DESC_SITUACAO_SKYHUB" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_PEDIDO_CABXCADASTRO">
           <End Type="Model.TB_CADASTRO" Role="TB_CADASTRO" Multiplicity="0..1" />
@@ -3212,6 +3214,7 @@
           <EntitySetMapping Name="TB_PEDIDO_CAB">
             <EntityTypeMapping TypeName="Model.TB_PEDIDO_CAB">
               <MappingFragment StoreEntitySet="TB_PEDIDO_CAB">
+                <ScalarProperty Name="DESC_SITUACAO_SKYHUB" ColumnName="DESC_SITUACAO_SKYHUB" />
                 <ScalarProperty Name="IND_SINC_MAX_ROTEIRIZADOR" ColumnName="IND_SINC_MAX_ROTEIRIZADOR" />
                 <ScalarProperty Name="VAL_DESPESAS" ColumnName="VAL_DESPESAS" />
                 <ScalarProperty Name="COD_PEDIDO_MARKETPLACE" ColumnName="COD_PEDIDO_MARKETPLACE" />
