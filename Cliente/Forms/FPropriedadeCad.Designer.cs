@@ -50,12 +50,7 @@
             // 
             // pCabecalho
             // 
-            this.pCabecalho.Size = new System.Drawing.Size(868, 52);
-            // 
-            // btFechar
-            // 
-            this.btFechar.FlatAppearance.BorderColor = System.Drawing.Color.Gainsboro;
-            this.btFechar.FlatAppearance.BorderSize = 0;
+            this.pCabecalho.Size = new System.Drawing.Size(868, 52);            
             // 
             // btCancelar
             // 
@@ -67,6 +62,7 @@
             // 
             this.btSalvar.FlatAppearance.BorderColor = System.Drawing.Color.Gainsboro;
             this.btSalvar.FlatAppearance.BorderSize = 0;
+            this.btSalvar.Text = "CONFIRMAR";
             this.btSalvar.Click += new System.EventHandler(this.btSalvar_Click);
             // 
             // panel1
@@ -324,8 +320,7 @@
             this.Load += new System.EventHandler(this.FPropriedadeCad_Load);
             this.Controls.SetChildIndex(this.pCabecalho, 0);
             this.Controls.SetChildIndex(this.btSalvar, 0);
-            this.Controls.SetChildIndex(this.btCancelar, 0);
-            this.Controls.SetChildIndex(this.btFechar, 0);
+            this.Controls.SetChildIndex(this.btCancelar, 0);            
             this.Controls.SetChildIndex(this.panel1, 0);
             this.pCabecalho.ResumeLayout(false);
             this.pCabecalho.PerformLayout();

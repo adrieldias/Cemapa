@@ -103,66 +103,62 @@
             // btNovo
             // 
             this.btNovo.AutoSize = true;
-            this.btNovo.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.btNovo.BackColor = System.Drawing.Color.LightGray;
             this.btNovo.FlatAppearance.BorderColor = System.Drawing.Color.Gainsboro;
             this.btNovo.FlatAppearance.BorderSize = 0;
-            this.btNovo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btNovo.ForeColor = System.Drawing.Color.Gray;
-            this.btNovo.Location = new System.Drawing.Point(1, 53);
+            this.btNovo.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.btNovo.Location = new System.Drawing.Point(0, 58);
             this.btNovo.Name = "btNovo";
             this.btNovo.Padding = new System.Windows.Forms.Padding(0, 5, 0, 5);
-            this.btNovo.Size = new System.Drawing.Size(80, 39);
+            this.btNovo.Size = new System.Drawing.Size(86, 42);
             this.btNovo.TabIndex = 3;
             this.btNovo.Text = "NOVO";
-            this.btNovo.UseVisualStyleBackColor = false;
+            this.btNovo.UseVisualStyleBackColor = true;
             // 
             // btAlterar
             // 
             this.btAlterar.AutoSize = true;
-            this.btAlterar.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.btAlterar.BackColor = System.Drawing.Color.LightGray;
             this.btAlterar.FlatAppearance.BorderColor = System.Drawing.Color.Gainsboro;
             this.btAlterar.FlatAppearance.BorderSize = 0;
-            this.btAlterar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btAlterar.ForeColor = System.Drawing.Color.Gray;
-            this.btAlterar.Location = new System.Drawing.Point(82, 53);
+            this.btAlterar.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.btAlterar.Location = new System.Drawing.Point(92, 58);
             this.btAlterar.Name = "btAlterar";
             this.btAlterar.Padding = new System.Windows.Forms.Padding(0, 5, 0, 5);
-            this.btAlterar.Size = new System.Drawing.Size(80, 39);
+            this.btAlterar.Size = new System.Drawing.Size(86, 42);
             this.btAlterar.TabIndex = 4;
             this.btAlterar.Text = "ALTERAR";
-            this.btAlterar.UseVisualStyleBackColor = false;
+            this.btAlterar.UseVisualStyleBackColor = true;
             // 
             // btExcluir
             // 
             this.btExcluir.AutoSize = true;
-            this.btExcluir.BackColor = System.Drawing.Color.Tomato;
+            this.btExcluir.BackColor = System.Drawing.Color.LightGray;
             this.btExcluir.FlatAppearance.BorderColor = System.Drawing.Color.Gainsboro;
             this.btExcluir.FlatAppearance.BorderSize = 0;
-            this.btExcluir.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btExcluir.ForeColor = System.Drawing.Color.White;
-            this.btExcluir.Location = new System.Drawing.Point(246, 53);
+            this.btExcluir.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.btExcluir.Location = new System.Drawing.Point(276, 58);
             this.btExcluir.Name = "btExcluir";
             this.btExcluir.Padding = new System.Windows.Forms.Padding(0, 5, 0, 5);
-            this.btExcluir.Size = new System.Drawing.Size(80, 39);
+            this.btExcluir.Size = new System.Drawing.Size(86, 42);
             this.btExcluir.TabIndex = 5;
             this.btExcluir.Text = "EXCLUIR";
-            this.btExcluir.UseVisualStyleBackColor = false;
+            this.btExcluir.UseVisualStyleBackColor = true;
             // 
             // btVisualizar
             // 
             this.btVisualizar.AutoSize = true;
-            this.btVisualizar.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.btVisualizar.BackColor = System.Drawing.Color.LightGray;
             this.btVisualizar.FlatAppearance.BorderColor = System.Drawing.Color.Gainsboro;
             this.btVisualizar.FlatAppearance.BorderSize = 0;
-            this.btVisualizar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btVisualizar.ForeColor = System.Drawing.Color.Gray;
-            this.btVisualizar.Location = new System.Drawing.Point(163, 53);
+            this.btVisualizar.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.btVisualizar.Location = new System.Drawing.Point(184, 58);
             this.btVisualizar.Name = "btVisualizar";
             this.btVisualizar.Padding = new System.Windows.Forms.Padding(0, 5, 0, 5);
-            this.btVisualizar.Size = new System.Drawing.Size(82, 39);
+            this.btVisualizar.Size = new System.Drawing.Size(86, 42);
             this.btVisualizar.TabIndex = 6;
             this.btVisualizar.Text = "VISUALIZAR";
-            this.btVisualizar.UseVisualStyleBackColor = false;
+            this.btVisualizar.UseVisualStyleBackColor = true;
             // 
             // FModeloHome
             // 

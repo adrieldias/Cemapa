@@ -17,6 +17,7 @@ namespace Cemapa.Controllers
         {
             db.Configuration.LazyLoadingEnabled = false;
             var query = from c in db.TB_QUALIFICACAO_SOCIO
+                        orderby c.COD_QUALIFICACAO_SOCIO
                         select c;
             return query.ToList();
         }

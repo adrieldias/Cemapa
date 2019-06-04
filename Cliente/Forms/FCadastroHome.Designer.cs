@@ -67,9 +67,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(1, 98);
+            this.dataGridView1.Location = new System.Drawing.Point(1, 106);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(829, 316);
+            this.dataGridView1.Size = new System.Drawing.Size(829, 308);
             this.dataGridView1.TabIndex = 7;
             // 
             // FCadastroHome

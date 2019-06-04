@@ -73,7 +73,9 @@ namespace Cliente.Forms
 
         private void btAlterar_Click(object sender, EventArgs e)
         {
-
+            FCadastroCad f = new FCadastroCad("ALTERAR");
+            f.ChaveConsulta.Add("Codigo", dataGridView1.CurrentRow.Cells["CODIGO"].Value.ToString());
+            f.Show();
         }
 
         private void btVisualizar_Click(object sender, EventArgs e)

@@ -28,6 +28,8 @@ namespace Cliente
 {
     public sealed class PersonalizaForm
     {
+        public string LayoutTela { get; set; }
+
         static PersonalizaForm _instancia;
 
         private const string FONTE = "Calibri Light";
@@ -82,27 +84,15 @@ namespace Cliente
             }
         }
 
-        public void Personaliza(Form formulario)
+        public void Personaliza(Form formulario, string layoutTela)
         {
             formulario.FormBorderStyle = FormBorderStyle.None;
-
-            // Personaliza em até três níveis (controle dentro de controle dentro de controle)
-            foreach(Control c in formulario.Controls)
-            {
-                //foreach(Control ci in c.Controls)
-                //{
-                //    foreach (Control cii in ci.Controls)
-                //    {
-                //        foreach (Control ciii in cii.Controls)
-                //        {
-                //            PersonalizaControles(ciii);
-                //        }
-                //        PersonalizaControles(cii);
-                //    }
-                //    PersonalizaControles(ci);
-                //}
+            this.LayoutTela = layoutTela;
+            foreach (Control c in formulario.Controls)
+            {                
                 PersonalizaControles(c);
-            }       
+            }
+            this.LayoutTela = string.Empty;
         }
 
         #region TextBox
@@ -187,16 +177,6 @@ namespace Cliente
                 //e.CellStyle.ForeColor = Color.Tomato;
                 ((DataGridView)sender).Rows[e.RowIndex].DefaultCellStyle.ForeColor = Color.Tomato;                
             }
-
-            //if (((DataGridView)sender).Columns[e.ColumnIndex].Name.Equals("Classificacao"))
-            //{  
-            //if (((DataGridView)sender).Columns[e.ColumnIndex].Name != null)
-            //    if (e.Value.ToString().Equals("SEPROCADO"))
-            //    {
-            //        e.CellStyle.BackColor = Color.Red;
-            //        e.CellStyle.SelectionBackColor = Color.DarkRed;
-            //    }
-            //}
         }
 
         private void PersonalizaForm_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
@@ -246,23 +226,60 @@ namespace Cliente
                 || button.Text.ToUpper().Contains("CANCEL")
                 || button.Text.ToUpper().Contains("DELET")
                 || button.Text.ToUpper().Contains("ABORT"))
-            {
-                button.BackColor = Color.Tomato;
-                button.ForeColor = Color.WhiteSmoke;
+            {                
+                button.BackColor = Color.LightGray;
+                button.ForeColor = Color.Tomato;                
             }
             else
             {                
-                button.BackColor = Color.WhiteSmoke;
-                //button.ForeColor = Color.Gray;
-                button.ForeColor = Color.DarkSlateGray;
+                button.BackColor = Color.LightGray;
+                button.ForeColor = Color.SteelBlue;                
             }
             
             button.FlatStyle = FlatStyle.Flat;            
-            button.FlatAppearance.BorderSize = 0;
-            //button.ForeColor = Color.White;
+            button.FlatAppearance.BorderSize = 0;            
             
             button.Font = new Font(FONTE, 10);
             button.Text = button.Text.ToUpper();
+
+            // Modifica o comportamento dos botões conforme o layout de tela
+            if((LayoutTela != null) && LayoutTela.Equals("VISUALIZAR"))
+            {
+                if (button.Text.ToUpper().Contains("EXCLUI")
+                || button.Text.ToUpper().Contains("CANCEL")
+                || button.Text.ToUpper().Contains("DELET")
+                || button.Text.ToUpper().Contains("ABORT")
+                || button.Text.ToUpper().Contains("INCLU")
+                || button.Text.ToUpper().Contains("INSER")
+                || button.Text.ToUpper().Contains("NOVO")
+                || button.Text.ToUpper().Contains("ALTERA")
+                || button.Text.ToUpper().Contains("SALVA")
+                || button.Text.ToUpper().Contains("CONFIRM"))
+                {   
+                    button.Paint += Button_Paint;                    
+                    button.Enabled = false;                    
+                }   
+            }
+
+            if ((LayoutTela != null) && 
+                (LayoutTela.Equals("ALTERAR")
+                || LayoutTela.Equals("INSERIR")))
+            {
+                if (button.Text.ToUpper().Contains("FECHA"))                
+                {
+                    button.Paint += Button_Paint;
+                    button.Enabled = false;
+                }
+            }
+        }
+
+        private void Button_Paint(object sender, PaintEventArgs e)
+        {                        
+            e.Graphics.FillRectangle(new SolidBrush(Color.LightGray), 0, 0, (sender as Button).Width, (sender as Button).Height);
+            //e.Graphics.DrawRectangle(new Pen(Color.Blue, 2), 0, 0, (sender as Button).Width, (sender as Button).Height);
+            var w = (sender as Button).Width / 2;
+            var tamanho = ((sender as Button).Text.Length / 2) * 8;            
+            e.Graphics.DrawString((sender as Button).Text, (sender as Button).Font, Brushes.Gray, w - tamanho, 11);            
         }
         #endregion
 
