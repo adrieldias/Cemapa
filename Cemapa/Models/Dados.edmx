@@ -141,8 +141,6 @@
           <Property Name="DESC_QUALIFICACAO" Type="varchar2" MaxLength="100" />
           <Property Name="PERC_ESPECIAL_PECA" Type="number" Precision="5" Scale="2" />
           <Property Name="PERC_ESPECIAL_SERVICO" Type="number" Precision="5" Scale="2" />
-          <Property Name="DESC_E_MAIL_CONJUGE" Type="varchar2" MaxLength="40" />
-          <Property Name="DESC_TELEFONE_CONJUGE" Type="varchar2" MaxLength="12" />
           <Property Name="DT_ALTERACAO" Type="date" />
           <Property Name="IND_ATACADO_VAREJO" Type="char" MaxLength="1" />
           <Property Name="DT_ULT_ALTERACAO" Type="date" />
@@ -254,8 +252,7 @@
           <Property Name="DESC_USUARIO_EMAIL" Type="varchar2" MaxLength="40" />
           <Property Name="DESC_TOKEN_INTEGRACAO" Type="varchar2" MaxLength="30" />
           <Property Name="DESC_TOKEN_ACCOUNT" Type="varchar2" MaxLength="30" />
-          <Property Name="IND_SINCRONIZA_PRODUTOS" Type="char" MaxLength="1" />
-          <Property Name="COD_OPERACAO" Type="number" Precision="14" Scale="0" />
+          <Property Name="COD_OPERACAO" Type="number" Precision="14" Scale="0" Nullable="false" />
         </EntityType>
         <EntityType Name="TB_ESTADO">
           <Key>
@@ -336,11 +333,11 @@
           </Key>
           <Property Name="COD_PEDIDO_CAB" Type="number" Precision="6" Scale="0" Nullable="false" />
           <Property Name="COD_FILIAL" Type="number" Precision="6" Scale="0" />
-          <Property Name="COD_OPERACAO" Type="number" Precision="6" Scale="0" Nullable="false" />
+          <Property Name="COD_OPERACAO" Type="number" Precision="6" Scale="0" />
           <Property Name="COD_VENDEDOR" Type="number" Precision="6" Scale="0" />
           <Property Name="COD_CADASTRO" Type="number" Precision="6" Scale="0" />
           <Property Name="NUM_PEDIDO" Type="number" Precision="6" Scale="0" />
-          <Property Name="DT_EMISSAO" Type="date" Nullable="false" />
+          <Property Name="DT_EMISSAO" Type="date" />
           <Property Name="VAL_DESCONTO" Type="number" Precision="11" Scale="2" />
           <Property Name="DT_ENTREGA" Type="date" />
           <Property Name="DT_FATURAMENTO" Type="date" />
@@ -350,7 +347,7 @@
           <Property Name="PERC_COMISSAO" Type="number" Precision="6" Scale="2" />
           <Property Name="DESC_COMPLEMENTO_OBS2" Type="varchar2" MaxLength="100" />
           <Property Name="DT_VENCIMENTO" Type="date" />
-          <Property Name="IND_TIPO_PAGAMENTO" Type="varchar2" MaxLength="12" />
+          <Property Name="IND_TIPO_PAGAMENTO" Type="varchar2" MaxLength="10" />
           <Property Name="COD_PRODUTO" Type="number" Precision="13" Scale="0" />
           <Property Name="QT_QUANTIDADE" Type="number" Precision="9" Scale="2" />
           <Property Name="COD_USUARIO" Type="number" Precision="6" Scale="0" />
@@ -382,7 +379,6 @@
           <Property Name="PERC_ISSQN" Type="number" Precision="5" Scale="2" />
           <Property Name="VAL_TOTAL" Type="number" Precision="11" Scale="2" />
           <Property Name="VAL_ADIANTAMENTO" Type="number" Precision="11" Scale="2" />
-          <Property Name="COD_SERIE" Type="varchar2" MaxLength="3" />
           <Property Name="DESC_VEICULO" Type="varchar2" MaxLength="100" />
           <Property Name="DESC_TECIDO" Type="varchar2" MaxLength="100" />
           <Property Name="DESC_FORMA_PAGAMENTO" Type="varchar2" MaxLength="100" />
@@ -400,10 +396,11 @@
           <Property Name="IND_CONSUMIDOR_FINAL" Type="char" MaxLength="1" />
           <Property Name="COD_VEICULO" Type="number" Precision="6" Scale="0" />
           <Property Name="STEP_SINCRONIZACAO" Type="varchar2" MaxLength="15" />
+          <Property Name="COD_SERIE" Type="varchar2" MaxLength="3" />
+          <Property Name="COD_PEDIDO_MARKETPLACE" Type="varchar2" MaxLength="60" />
           <Property Name="VAL_DESPESAS" Type="number" Precision="11" Scale="2" />
           <Property Name="IND_SINC_MAX_ROTEIRIZADOR" Type="char" MaxLength="1" />
           <Property Name="DESC_SITUACAO_SKYHUB" Type="varchar2" MaxLength="30" />
-          <Property Name="COD_PEDIDO_MARKETPLACE" Type="varchar2" MaxLength="60" />
         </EntityType>
         <EntityType Name="TB_PEDIDO_ITEM">
           <Key>
@@ -457,8 +454,8 @@
           <Property Name="NUM_EMBALAGEM" Type="number" Precision="9" Scale="5" />
           <Property Name="DESC_UNIDADE" Type="varchar2" MaxLength="3" />
           <Property Name="NUM_TRIB_TRANSFERENCIA" Type="number" Precision="3" Scale="0" />
-          <Property Name="VAL_VAREJO" Type="number" Precision="17" Scale="8" />
-          <Property Name="VAL_ATACADO" Type="number" Precision="17" Scale="8" />
+          <Property Name="VAL_VAREJO" Type="number" Precision="11" Scale="2" />
+          <Property Name="VAL_ATACADO" Type="number" Precision="11" Scale="2" />
           <Property Name="PERC_DESCONTO_MAXIMO" Type="number" Precision="5" Scale="2" />
           <Property Name="PERC_IPI" Type="number" Precision="5" Scale="2" />
           <Property Name="DESC_CLASS_FISCAL" Type="varchar2" MaxLength="3" />
@@ -505,13 +502,13 @@
           <Property Name="NUM_CONVERTE_FARDO" Type="number" Precision="7" Scale="4" />
           <Property Name="COD_EX_TIPI" Type="varchar2" MaxLength="3" />
           <Property Name="NUM_GENERO_NCM" Type="varchar2" MaxLength="8" />
-          <Property Name="COD_LISTA_SERVICO" Type="number" Precision="4" Scale="0" />
           <Property Name="COD_GENERO_PRODUTO" Type="number" Precision="6" Scale="0" />
+          <Property Name="COD_LISTA_SERVICO" Type="number" Precision="4" Scale="0" />
           <Property Name="QT_PESO_CAIXA_MIN" Type="number" Precision="5" Scale="2" />
           <Property Name="QT_PESO_CAIXA_MAX" Type="number" Precision="5" Scale="2" />
           <Property Name="NUM_DIAS_VALIDADE" Type="number" Precision="3" Scale="0" />
-          <Property Name="COD_CULTURA" Type="number" Precision="6" Scale="0" />
           <Property Name="IND_PESO_PADRAO" Type="varchar2" MaxLength="1" />
+          <Property Name="COD_CULTURA" Type="number" Precision="6" Scale="0" />
           <Property Name="DESC_SECAO" Type="varchar2" MaxLength="50" />
           <Property Name="DESC_BOQUETA" Type="varchar2" MaxLength="50" />
           <Property Name="DESC_OBSERVACAO" Type="varchar2" MaxLength="500" />
@@ -534,11 +531,10 @@
           <Property Name="COD_CST_COFINS_SAIDA" Type="varchar2" MaxLength="2" />
           <Property Name="COD_ATIVIDADE_CONTRIB" Type="number" Precision="8" Scale="0" />
           <Property Name="IND_SUBST_TRIB" Type="char" MaxLength="3" />
-          <Property Name="IND_ARREDONDAMENTO_TRUNCAMENTO" Type="char" MaxLength="1" />
           <Property Name="IND_PROD_PROPRIA_TERCEIRO" Type="char" MaxLength="1" />
-          <Property Name="IND_MARCENARIA" Type="varchar2" MaxLength="3" />
           <Property Name="IND_QTD_ETIQUETAS" Type="number" Precision="1" Scale="0" />
           <Property Name="DESC_HASH_MD5" Type="varchar2" MaxLength="32" />
+          <Property Name="IND_ARREDONDAMENTO_TRUNCAMENTO" Type="char" MaxLength="1" />
           <Property Name="PERC_MARGEM_MINIMA" Type="number" Precision="5" Scale="2" />
           <Property Name="IND_PRECO_VENDA_ETIQUETA" Type="char" MaxLength="1" />
           <Property Name="PERC_MIXGN" Type="number" Precision="6" Scale="4" />
@@ -647,8 +643,6 @@
           <Property Name="DESC_CRI" Type="varchar2" MaxLength="20" />
           <Property Name="DT_VENC_CONTRATO" Type="date" />
           <Property Name="COD_CADASTRO_PROPRIETARIO" Type="number" Precision="6" Scale="0" />
-          <Property Name="DESC_LATITUDE" Type="varchar2" MaxLength="12" />
-          <Property Name="DESC_LONGITUDE" Type="varchar2" MaxLength="12" />
         </EntityType>
         <EntityType Name="TB_QUALIFICACAO_SOCIO">
           <Key>
@@ -809,9 +803,9 @@
           <Property Name="IND_AMOSTRA" Type="char" MaxLength="1" />
           <Property Name="IND_SEM_NOTA" Type="char" MaxLength="1" />
           <Property Name="DESC_BAIRRO" Type="varchar2" MaxLength="20" />
-          <Property Name="DESC_E_MAIL1" Type="varchar2" MaxLength="70" />
           <Property Name="PERC_COMISSAO3" Type="number" Precision="5" Scale="2" />
           <Property Name="PERC_COMISSAO4" Type="number" Precision="5" Scale="2" />
+          <Property Name="DESC_E_MAIL1" Type="varchar2" MaxLength="70" />
           <Property Name="IND_SINC_MAX_ROTEIRIZADOR" Type="char" MaxLength="1" />
         </EntityType>
         <Association Name="FK_CADASTRO_ENDERECOSXCADASTRO">
@@ -1056,6 +1050,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_PEDIDO_ITEMXPEDIDO_CAB">
+          <End Role="TB_PEDIDO_CAB" Type="Self.TB_PEDIDO_CAB" Multiplicity="0..1" />
+          <End Role="TB_PEDIDO_ITEM" Type="Self.TB_PEDIDO_ITEM" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_PEDIDO_CAB">
+              <PropertyRef Name="COD_PEDIDO_CAB" />
+            </Principal>
+            <Dependent Role="TB_PEDIDO_ITEM">
+              <PropertyRef Name="COD_PEDIDO_CAB" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_PEDIDO_ITEMXPRODUTO">
           <End Role="TB_PRODUTO" Type="Self.TB_PRODUTO" Multiplicity="0..1" />
           <End Role="TB_PEDIDO_ITEM" Type="Self.TB_PEDIDO_ITEM" Multiplicity="*" />
@@ -1065,18 +1071,6 @@
             </Principal>
             <Dependent Role="TB_PEDIDO_ITEM">
               <PropertyRef Name="COD_PRODUTO" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PEDIDO_ITEMXPRODUTO1">
-          <End Role="TB_PRODUTO" Type="Self.TB_PRODUTO" Multiplicity="0..1" />
-          <End Role="TB_PEDIDO_ITEM" Type="Self.TB_PEDIDO_ITEM" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TB_PRODUTO">
-              <PropertyRef Name="COD_PRODUTO" />
-            </Principal>
-            <Dependent Role="TB_PEDIDO_ITEM">
-              <PropertyRef Name="COD_PRODUTO_AUX" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1309,11 +1303,11 @@
             <End Role="TB_VENDEDOR" EntitySet="TB_VENDEDOR" />
             <End Role="TB_PEDIDO_CAB" EntitySet="TB_PEDIDO_CAB" />
           </AssociationSet>
-          <AssociationSet Name="FK_PEDIDO_ITEMXPRODUTO" Association="Self.FK_PEDIDO_ITEMXPRODUTO">
-            <End Role="TB_PRODUTO" EntitySet="TB_PRODUTO" />
+          <AssociationSet Name="FK_PEDIDO_ITEMXPEDIDO_CAB" Association="Self.FK_PEDIDO_ITEMXPEDIDO_CAB">
+            <End Role="TB_PEDIDO_CAB" EntitySet="TB_PEDIDO_CAB" />
             <End Role="TB_PEDIDO_ITEM" EntitySet="TB_PEDIDO_ITEM" />
           </AssociationSet>
-          <AssociationSet Name="FK_PEDIDO_ITEMXPRODUTO1" Association="Self.FK_PEDIDO_ITEMXPRODUTO1">
+          <AssociationSet Name="FK_PEDIDO_ITEMXPRODUTO" Association="Self.FK_PEDIDO_ITEMXPRODUTO">
             <End Role="TB_PRODUTO" EntitySet="TB_PRODUTO" />
             <End Role="TB_PEDIDO_ITEM" EntitySet="TB_PEDIDO_ITEM" />
           </AssociationSet>
@@ -2205,6 +2199,7 @@
           <Property Name="VAL_DESPESAS" Type="Decimal" Precision="11" Scale="2" />
           <Property Name="IND_SINC_MAX_ROTEIRIZADOR" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <NavigationProperty Name="TB_PEDIDO_ITEM" Relationship="Model.FK_PEDIDO_ITEMXPEDIDO_CAB" FromRole="TB_PEDIDO_CAB" ToRole="TB_PEDIDO_ITEM" />
+          <Property Name="DESC_SITUACAO_SKYHUB" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_PEDIDO_CABXCADASTRO">
           <End Type="Model.TB_CADASTRO" Role="TB_CADASTRO" Multiplicity="0..1" />
@@ -3219,6 +3214,7 @@
           <EntitySetMapping Name="TB_PEDIDO_CAB">
             <EntityTypeMapping TypeName="Model.TB_PEDIDO_CAB">
               <MappingFragment StoreEntitySet="TB_PEDIDO_CAB">
+                <ScalarProperty Name="DESC_SITUACAO_SKYHUB" ColumnName="DESC_SITUACAO_SKYHUB" />
                 <ScalarProperty Name="IND_SINC_MAX_ROTEIRIZADOR" ColumnName="IND_SINC_MAX_ROTEIRIZADOR" />
                 <ScalarProperty Name="VAL_DESPESAS" ColumnName="VAL_DESPESAS" />
                 <ScalarProperty Name="COD_PEDIDO_MARKETPLACE" ColumnName="COD_PEDIDO_MARKETPLACE" />

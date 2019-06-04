@@ -147,7 +147,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\ControlaExcecoes.cs" />
+    <Compile Include="Controllers\Excecao\ControlaExcecoes.cs" />
     <Compile Include="Models\Dados.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -164,8 +164,7 @@
       <DependentUpon>Dados.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\OrdensSkyhub.cs" />
-    <Compile Include="Models\ProdutoSkyhub.cs" />
-    <Compile Include="Models\RetornoJson.cs" />
+    <Compile Include="Models\ProdutosSkyhub.cs" />
     <Compile Include="Models\TB_CADASTRO.cs">
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>

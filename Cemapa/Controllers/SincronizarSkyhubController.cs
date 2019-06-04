@@ -8,7 +8,6 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Web.Http;
 using Cemapa.Models;
-using Newtonsoft.Json;
 
 namespace Cemapa.Controllers
 {
@@ -16,14 +15,425 @@ namespace Cemapa.Controllers
     {
         private Entities db = new Entities();
 
-
         [HttpGet]
-        public async Task<RetornoJson> SincronizaPedidos()
+        public async Task<HttpResponseMessage> FinalizaPedido(int codFilial, string codMarketplace)
         {
             try
             {
-                int wTotalAtualizados = 0;
+                if (codFilial == 0)
+                {
+                    throw new Exception("Informe a filial");
+                }
+
+                if (codMarketplace == "")
+                {
+                    throw new Exception("Código do pedido do marketplace inválido");
+                }
+
+                //Encontra a filial para buscar informações de acesso.
+                //Também garante que um pedido não irá se misturar com o pedido de outra filial
+                //Podendo confundir as contas às quais os pedidos são sincronizados
+
+                TB_CONFIGURACAO_SKYHUB configuracaoSkyhub = GetConfiguracao(codFilial);
+
+                if (configuracaoSkyhub != null)
+                {
+                    HttpClient Http = new HttpClient
+                    {
+                        BaseAddress = new Uri("https://api.skyhub.com.br")
+                    };
+
+                    Http.DefaultRequestHeaders.Accept.Clear();
+                    Http.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                    Http.DefaultRequestHeaders.Add("X-User-Email", configuracaoSkyhub.DESC_USUARIO_EMAIL);
+                    Http.DefaultRequestHeaders.Add("X-Api-Key", configuracaoSkyhub.DESC_TOKEN_INTEGRACAO);
+                    Http.DefaultRequestHeaders.Add("X-Accountmanager-Key", configuracaoSkyhub.DESC_TOKEN_ACCOUNT);
+                    Http.DefaultRequestHeaders.Add("Accept", "application/json;charset=UTF-8");
+
+                    object data = null;
+
+                    HttpResponseMessage response = await Http.PostAsJsonAsync($"/orders/{codMarketplace}/delivery", data);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        TB_PEDIDO_CAB wPedido = (from p in db.TB_PEDIDO_CAB
+                                                 where (p.COD_PEDIDO_MARKETPLACE == codMarketplace)
+                                                 select p).FirstOrDefault();
+                        if (wPedido != null)
+                        {
+                            wPedido.DESC_SITUACAO_SKYHUB = "DELIVERED";
+                            db.Entry(wPedido).State = EntityState.Modified;
+                            db.SaveChanges();
+                        }
+                        else
+                        {
+                            throw new Exception($"Erro ao atualizar pedido no sistema. Não encontrado: {codMarketplace}");
+                        }
+                    }
+                    else
+                    {
+                        throw new Exception($"Erro no retorno da Skyhub. {codMarketplace}: {response.ReasonPhrase}");
+                    }
+                }
+                else
+                {
+                    throw new Exception($"Filial não encontrada: {codFilial}");
+                }
+
+                return Request.CreateResponse(
+                    HttpStatusCode.OK,
+                    "Pedido cancelado"
+                );
+            }
+            catch (Exception except)
+            {
+                return Request.CreateResponse(
+                    HttpStatusCode.InternalServerError,
+                    $"Não foi possível enviar: {except.Message}"
+                );
+            }
+        }
+
+
+        [HttpGet]
+        public async Task<HttpResponseMessage> CancelaPedido(int codFilial, string codMarketplace)
+        {
+            try
+            {
+                if (codFilial == 0)
+                {
+                    throw new Exception("Informe a filial");
+                }
+
+                if (codMarketplace == "")
+                {
+                    throw new Exception("Código do pedido do marketplace inválido");
+                }
+
+                //Encontra a filial para buscar informações de acesso.
+                //Também garante que um pedido não irá se misturar com o pedido de outra filial
+                //Podendo confundir as contas às quais os pedidos são sincronizados
+
+                TB_CONFIGURACAO_SKYHUB configuracaoSkyhub = GetConfiguracao(codFilial);
+
+                if (configuracaoSkyhub != null)
+                {
+                    HttpClient Http = new HttpClient
+                    {
+                        BaseAddress = new Uri("https://api.skyhub.com.br")
+                    };
+
+                    Http.DefaultRequestHeaders.Accept.Clear();
+                    Http.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                    Http.DefaultRequestHeaders.Add("X-User-Email", configuracaoSkyhub.DESC_USUARIO_EMAIL);
+                    Http.DefaultRequestHeaders.Add("X-Api-Key", configuracaoSkyhub.DESC_TOKEN_INTEGRACAO);
+                    Http.DefaultRequestHeaders.Add("X-Accountmanager-Key", configuracaoSkyhub.DESC_TOKEN_ACCOUNT);
+                    Http.DefaultRequestHeaders.Add("Accept", "application/json;charset=UTF-8");
+                    
+                    object data = null;
+
+                    HttpResponseMessage response = await Http.PostAsJsonAsync($"/orders/{codMarketplace}/cancel", data);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        TB_PEDIDO_CAB wPedido = (from p in db.TB_PEDIDO_CAB
+                                                 where (p.COD_PEDIDO_MARKETPLACE == codMarketplace)
+                                                 select p).FirstOrDefault();
+                        if (wPedido != null)
+                        {
+                            wPedido.DESC_SITUACAO_SKYHUB = "CANCELED";
+                            wPedido.DESC_COMPLEMENTO_OBS2 = "Cancelado pelo vendedor";
+                            db.Entry(wPedido).State = EntityState.Modified;
+                            db.SaveChanges();
+                        }
+                        else
+                        {
+                            throw new Exception($"Erro ao atualizar pedido no sistema. Não encontrado: {codMarketplace}");
+                        }
+                    }
+                    else
+                    {
+                        throw new Exception($"Erro no retorno da Skyhub. {codMarketplace}: {response.ReasonPhrase}");
+                    }
+                }
+                else
+                {
+                    throw new Exception($"Filial não encontrada: {codFilial}");
+                }
+
+                return Request.CreateResponse(
+                    HttpStatusCode.OK,
+                    "Pedido cancelado"
+                );
+            }
+            catch (Exception except)
+            {
+                return Request.CreateResponse(
+                    HttpStatusCode.InternalServerError,
+                    $"Não foi possível enviar: {except.Message}"
+                );
+            }
+        }
+
+        [HttpGet]
+        public async Task<HttpResponseMessage> EnviaPedido(int codFilial, string codMarketplace, string codRastreamento)
+        {
+            try
+            {
+                if (codFilial == 0)
+                {
+                    throw new Exception("Informe a filial");
+                }
+
+                if (codMarketplace == "")
+                {
+                    throw new Exception("Código do pedido do marketplace inválido");
+                }
+
+                if (codRastreamento == "")
+                {
+                    throw new Exception("Código de rastreamento inválido");
+                }
+
+                //Encontra a filial para buscar informações de acesso.
+                //Também garante que um pedido não irá se misturar com o pedido de outra filial
+                //Podendo confundir as contas às quais os pedidos são sincronizados
+
+                TB_CONFIGURACAO_SKYHUB configuracaoSkyhub = GetConfiguracao(codFilial);
+
+                if (configuracaoSkyhub != null)
+                {
+                    HttpClient Http = new HttpClient
+                    {
+                        BaseAddress = new Uri("https://api.skyhub.com.br")
+                    };
+
+                    Http.DefaultRequestHeaders.Accept.Clear();
+                    Http.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                    Http.DefaultRequestHeaders.Add("X-User-Email", configuracaoSkyhub.DESC_USUARIO_EMAIL);
+                    Http.DefaultRequestHeaders.Add("X-Api-Key", configuracaoSkyhub.DESC_TOKEN_INTEGRACAO);
+                    Http.DefaultRequestHeaders.Add("X-Accountmanager-Key", configuracaoSkyhub.DESC_TOKEN_ACCOUNT);
+                    Http.DefaultRequestHeaders.Add("Accept", "application/json;charset=UTF-8");
+
+
+                    Shipment envio = new Shipment()
+                    {
+                        code = codMarketplace,
+                        track = new Track() { code = codRastreamento }
+                    };
+
+                    Dictionary<string, Shipment> data = new Dictionary<string, Shipment> { { "shipment", envio } };
+
+                    HttpResponseMessage response = await Http.PostAsJsonAsync($"/orders/{codMarketplace}/shipments", data);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        TB_PEDIDO_CAB wPedido = (from p in db.TB_PEDIDO_CAB
+                                                 where (p.COD_PEDIDO_MARKETPLACE == codMarketplace)
+                                                 select p).FirstOrDefault();
+                        if (wPedido != null)
+                        {
+                            wPedido.DESC_SITUACAO_SKYHUB = "SHIPPED";
+                            db.Entry(wPedido).State = EntityState.Modified;
+                            db.SaveChanges();
+                        }
+                        else
+                        {
+                            throw new Exception($"Erro ao atualizar pedido no sistema. Não encontrado: {codMarketplace}");
+                        }
+                    }
+                    else
+                    {
+                        throw new Exception($"Erro no retorno da Skyhub. {codMarketplace}: {response.ReasonPhrase}");
+                    }
+                }
+                else
+                {
+                    throw new Exception($"Filial não encontrada: {codFilial}");
+                }
+
+                return Request.CreateResponse(
+                    HttpStatusCode.OK,
+                    "Pedido enviado"
+                );
+            }
+            catch (Exception except)
+            {
+                return Request.CreateResponse(
+                    HttpStatusCode.InternalServerError,
+                    $"Não foi possível enviar: {except.Message}"
+                );
+            }
+        }
+
+        [HttpGet]
+        public async Task<HttpResponseMessage> DetalhesPedido(int codFilial, string codMarketplace)
+        {
+            Order ordem;
+
+            try
+            {
+                if (codFilial == 0)
+                {
+                    throw new Exception("Informe a filial");
+                }
+
+                if (codMarketplace == null)
+                {
+                    throw new Exception("Código do pedido do marketplace inválido");
+                }
+
+                TB_CONFIGURACAO_SKYHUB configuracaoSkyhub = GetConfiguracao(codFilial);
+
+                if (configuracaoSkyhub != null)
+                {
+                    HttpClient Http = new HttpClient
+                    {
+                        BaseAddress = new Uri("https://api.skyhub.com.br")
+                    };
+
+                    Http.DefaultRequestHeaders.Accept.Clear();
+                    Http.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                    Http.DefaultRequestHeaders.Add("X-User-Email", configuracaoSkyhub.DESC_USUARIO_EMAIL);
+                    Http.DefaultRequestHeaders.Add("X-Api-Key", configuracaoSkyhub.DESC_TOKEN_INTEGRACAO);
+                    Http.DefaultRequestHeaders.Add("X-Accountmanager-Key", configuracaoSkyhub.DESC_TOKEN_ACCOUNT);
+                    Http.DefaultRequestHeaders.Add("Accept", "application/json;charset=UTF-8");
+
+                    HttpResponseMessage response = await Http.GetAsync($"/orders/{codMarketplace}");
+
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        throw new Exception($"Erro no retorno da Skyhub. {codMarketplace}: {response.ReasonPhrase}");
+                    }
+                    else
+                    {
+                        ordem = new Order();
+                        ordem = await response.Content.ReadAsAsync<Order>();
+                    }
+                }
+                else
+                {
+                    throw new Exception($"Filial não encontrada: {codFilial}");
+                }
+
+                return Request.CreateResponse(
+                    HttpStatusCode.OK,
+                    ordem
+                );
+            }
+            catch (Exception except)
+            {
+                return Request.CreateResponse(
+                    HttpStatusCode.InternalServerError,
+                    $"Não foi possível consultar: {except.Message}"
+                );
+            }
+        }
+
+        [HttpGet]
+        public async Task<HttpResponseMessage> FaturaPedido(int codFilial, string chaveNFE, string codMarketplace)
+        {
+            try
+            {
+                if (chaveNFE.Length != 44)
+                {
+                    throw new Exception("Chave da NFE inválida");
+                }
+
+                if (codFilial == 0)
+                {
+                    throw new Exception("Informe a filial");
+                }
+
+                if (codMarketplace == "")
+                {
+                    throw new Exception("Código do pedido do marketplace inválido");
+                }
+                
+                //Encontra a filial para buscar informações de acesso.
+                //Também garante que um pedido não irá se misturar com o pedido de outra filial
+                //Podendo confundir as contas às quais os pedidos são sincronizados
+
+                TB_CONFIGURACAO_SKYHUB configuracaoSkyhub = GetConfiguracao(codFilial);
+                    
+                if (configuracaoSkyhub != null)
+                {
+                    HttpClient Http = new HttpClient
+                    {
+                        BaseAddress = new Uri("https://api.skyhub.com.br")
+                    };
+
+                    Http.DefaultRequestHeaders.Accept.Clear();
+                    Http.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                    Http.DefaultRequestHeaders.Add("X-User-Email", configuracaoSkyhub.DESC_USUARIO_EMAIL);
+                    Http.DefaultRequestHeaders.Add("X-Api-Key", configuracaoSkyhub.DESC_TOKEN_INTEGRACAO);
+                    Http.DefaultRequestHeaders.Add("X-Accountmanager-Key", configuracaoSkyhub.DESC_TOKEN_ACCOUNT);
+                    Http.DefaultRequestHeaders.Add("Accept", "application/json;charset=UTF-8");
+
+                    //Atribui a chave de acesso da nota fiscal à chamada
+
+                    Invoice fatura = new Invoice()
+                    {
+                        key = chaveNFE
+                    };
+
+                    Dictionary<string, Invoice> data = new Dictionary<string, Invoice> { { "invoice", fatura } };
+
+                    HttpResponseMessage response = await Http.PostAsJsonAsync($"/orders/{codMarketplace}/invoice", data);
+                        
+                    if (response.IsSuccessStatusCode)
+                    {
+                        TB_PEDIDO_CAB wPedido = (from p in db.TB_PEDIDO_CAB
+                                                 where (p.COD_PEDIDO_MARKETPLACE == codMarketplace)
+                                                 select p).FirstOrDefault();
+                        if (wPedido != null)
+                        {
+                            wPedido.DESC_SITUACAO_SKYHUB = "INVOICE";
+                            db.Entry(wPedido).State = EntityState.Modified;
+                            db.SaveChanges();
+                        }
+                        else
+                        {
+                            throw new Exception($"Erro ao atualizar pedido no sistema. Não encontrado: {codMarketplace}");
+                        }
+                    }
+                    else
+                    {
+                        throw new Exception($"Erro no retorno da Skyhub. {codMarketplace}: {response.ReasonPhrase}");
+                    }
+                }
+                else
+                {
+                    throw new Exception($"Filial não encontrada: {codFilial}");
+                }
+                
+                return Request.CreateResponse(
+                    HttpStatusCode.OK,
+                    "Pedido faturado"
+                );
+            }
+            catch (Exception except)
+            {
+                return Request.CreateResponse(
+                    HttpStatusCode.InternalServerError,
+                    $"Não foi possível faturar: {except.Message}"
+                );
+            }
+        }
+
+        [HttpGet]
+        public async Task<HttpResponseMessage> SincronizaPedidos()
+        {
+            try
+            {
+                int wTotalCancelados = 0;
                 int wTotalCriados = 0;
+                int wTotalAlterados = 0;
 
                 ControlaExcecoes.Limpa();
 
@@ -60,13 +470,13 @@ namespace Cemapa.Controllers
 
                             HttpResponseMessage response = await Http.GetAsync("/queues/orders");
 
+                            Order ordem = new Order();
+                            ordem = await response.Content.ReadAsAsync<Order>();
+
                             if (response.IsSuccessStatusCode)
                             {
                                 try
                                 {
-                                    Order ordem = new Order();
-                                    ordem = await response.Content.ReadAsAsync<Order>();
-
                                     //Verifica se ainda existem pedidos na fila, caso retorne nulo, então todos os pedidos já estão sincronizados
 
                                     if (ordem != null)
@@ -74,102 +484,185 @@ namespace Cemapa.Controllers
                                         //Verifica se já existe esse pedido no sistema pelo campo COD_PEDIDO_MARKETPLACE
                                         //caso não exista insere um pedido novo, caso exista não faz nada.
 
-                                        if (ordem.status.type == "APPROVED")
+                                        switch (ordem.status.type)
                                         {
-                                            if (!db.TB_PEDIDO_CAB.Any(p => p.COD_PEDIDO_MARKETPLACE == ordem.code))
-                                            {
-                                                //Gera os códigos necessários para gerar um pedido no sistema
+                                            case "APPROVED":
+                                                //Pedidos com status APPROVED já obtiveram o pagamento devido então precisa sincronizar
 
-                                                int wCadastro = GetCodCadastro(ordem);
-                                                int wSequencia = GetSequencia(ordem);
-                                                int wCodigoPedido = db.Database.SqlQuery<int>("SELECT SQPEDIDO.NEXTVAL FROM DUAL").First();
-
-                                                if (wCadastro == -1)
+                                                if (!db.TB_PEDIDO_CAB.Any(p => p.COD_PEDIDO_MARKETPLACE == ordem.code))
                                                 {
-                                                    throw new Exception($"Cliente não encontrado e não foi possível cadastrar: {ordem.customer.name}");
-                                                }
+                                                    //Gera os códigos necessários para gerar um pedido no sistema
 
-                                                if (wSequencia == -1)
-                                                {
-                                                    throw new Exception("Não existe uma sequência para pedidos, corrija antes de sincronizar");
-                                                }
+                                                    int wCadastro = GetCodCadastro(ordem);
+                                                    int wSequencia = GetSequencia(ordem);
 
-                                                //Cria o novo pedido trazendo dados da API e algumas informações padrões no sistema
+                                                    int wCodigoPedido = db.Database.SqlQuery<int>("SELECT SQPEDIDO.NEXTVAL FROM DUAL").First();
 
-                                                TB_PEDIDO_CAB wPedidoCab = new TB_PEDIDO_CAB()
-                                                {
-                                                    COD_PEDIDO_CAB = wCodigoPedido,
-                                                    COD_FILIAL = Convert.ToInt32(configuracaoSkyhub.COD_FILIAL),
-                                                    COD_OPERACAO = Convert.ToInt32(configuracaoSkyhub.COD_OPERACAO),
-                                                    COD_CADASTRO = wCadastro,
-                                                    NUM_PEDIDO = wSequencia,
-                                                    DT_EMISSAO = DateTime.Now,
-                                                    IND_SITUACAO = "1",
-                                                    IND_TIPO_PAGAMENTO = "A VISTA",
-                                                    IND_TIPO_FRETE = "CIF",
-                                                    COD_PEDIDO_MARKETPLACE = ordem.code,
-                                                    DESC_COMPLEMENTO_OBS = "Pedido do marketplace: " + ordem.code
-                                                };
-
-                                                foreach (Item item in ordem.items)
-                                                {
-                                                    int wCodItem = db.Database.SqlQuery<int>("SELECT SQPEDIDO_ITEM.NEXTVAL FROM DUAL").First();
-                                                    int wCodLoteTipo = GetLoteTipo(item);
-                                                    int wCodTributacao = GetTributacao(item);
-                                                    long wCodProduto = GetProdutosSkyhub(item);
-
-                                                    if (wCodLoteTipo == -1)
+                                                    if (wCadastro == -1)
                                                     {
-                                                        throw new Exception("Produto não possui nenhum lote configurado. Produto: " + item.id);
+                                                        throw new Exception($"Cliente não encontrado e não foi possível cadastrar: {ordem.customer.name}");
                                                     }
 
-                                                    if (wCodTributacao == -1)
+                                                    if (wSequencia == -1)
                                                     {
-                                                        throw new Exception("Produto não possui nenhuma tributação configurada. Produto: " + item.id);
+                                                        throw new Exception("Não existe uma sequência para pedidos, corrija antes de sincronizar");
                                                     }
 
-                                                    if (wCodProduto == -1)
-                                                    {
-                                                        throw new Exception("Produto não encontrado: " + wCodProduto);
-                                                    }
+                                                    //Cria o novo pedido trazendo dados da API e algumas informações padrões no sistema
 
-                                                    wPedidoCab.TB_PEDIDO_ITEM.Add(
-                                                        new TB_PEDIDO_ITEM()
+                                                    TB_PEDIDO_CAB wPedidoCab = new TB_PEDIDO_CAB()
+                                                    {
+                                                        COD_PEDIDO_CAB = wCodigoPedido,
+                                                        COD_FILIAL = Convert.ToInt32(configuracaoSkyhub.COD_FILIAL),
+                                                        COD_OPERACAO = Convert.ToInt32(configuracaoSkyhub.COD_OPERACAO),
+                                                        COD_CADASTRO = wCadastro,
+                                                        NUM_PEDIDO = wSequencia,
+                                                        DT_EMISSAO = ordem.updated_at,
+                                                        IND_SITUACAO = "1",
+                                                        IND_TIPO_PAGAMENTO = "A VISTA",
+                                                        IND_TIPO_FRETE = "CIF",
+                                                        COD_PEDIDO_MARKETPLACE = ordem.code,
+                                                        DESC_COMPLEMENTO_OBS = "Pedido do marketplace: " + ordem.code,
+                                                        DESC_SITUACAO_SKYHUB = "APPROVED",
+                                                        PERC_COMISSAO = 0,
+                                                        COD_DEPARTAMENTO = 1
+                                                    };
+
+                                                    foreach (Item item in ordem.items)
+                                                    {
+                                                        int wCodItem = db.Database.SqlQuery<int>("SELECT SQPEDIDO_ITEM.NEXTVAL FROM DUAL").First();
+                                                        int wCodLoteTipo = GetLoteTipo(item);
+                                                        int wCodTributacao = GetTributacao(item);
+                                                        long wCodProduto = GetProdutosSkyhub(item);
+
+                                                        if (wCodLoteTipo == -1)
                                                         {
-                                                            COD_PEDIDO_ITEM = wCodItem,
-                                                            COD_PEDIDO_CAB = wCodigoPedido,
-                                                            COD_PRODUTO = wCodProduto,
-                                                            VAL_UNITARIO = Convert.ToDecimal(item.original_price),
-                                                            QT_PEDIDO = item.qty,
-                                                            COD_LOTE_TIPO = wCodLoteTipo,
-                                                            COD_TRIBUTACAO = wCodTributacao
-                                                        });
+                                                            throw new Exception("Produto não possui nenhum lote configurado. Produto: " + item.id);
+                                                        }
+
+                                                        if (wCodTributacao == -1)
+                                                        {
+                                                            throw new Exception("Produto não possui nenhuma tributação configurada. Produto: " + item.id);
+                                                        }
+
+                                                        if (wCodProduto == -1)
+                                                        {
+                                                            throw new Exception("Produto não encontrado: " + wCodProduto);
+                                                        }
+
+                                                        wPedidoCab.TB_PEDIDO_ITEM.Add(
+                                                            new TB_PEDIDO_ITEM()
+                                                            {
+                                                                COD_PEDIDO_ITEM = wCodItem,
+                                                                COD_PEDIDO_CAB = wCodigoPedido,
+                                                                COD_PRODUTO = wCodProduto,
+                                                                VAL_UNITARIO = Convert.ToDecimal(item.original_price),
+                                                                QT_PEDIDO = item.qty,
+                                                                COD_LOTE_TIPO = wCodLoteTipo,
+                                                                COD_TRIBUTACAO = wCodTributacao
+                                                            });
+                                                    }
+
+                                                    db.Entry(wPedidoCab).State = EntityState.Added;
+                                                    db.SaveChanges();
+
+                                                    wTotalCriados++;
                                                 }
+                                            break;
 
-                                                db.Entry(wPedidoCab).State = EntityState.Added;
-                                                db.SaveChanges();
+                                            case "CANCELED":
+                                                //Pedidos com status CANCELED são necessários para saber quando um cliente cancelou sua compra
 
-                                                wTotalCriados++;
-                                            }
-                                            else
-                                            {
-                                                wTotalAtualizados++;
-                                            }
-                                        }
-                                        //Pedidos com status CANCELED são necessários para saber quando um cliente cancelou sua compra
-                                        else if (ordem.status.type == "CANCELED")
-                                        {
-                                            if (!db.TB_PEDIDO_CAB.Any(p => p.COD_PEDIDO_MARKETPLACE == ordem.code))
-                                            {
-                                                TB_PEDIDO_CAB wPedidoCab = GetPedidoPorMarketplace(ordem);
-                                                wPedidoCab.IND_SITUACAO = "2";
-                                                wPedidoCab.DESC_COMPLEMENTO_OBS = "Cancelado pelo cliente";
+                                                if (!db.TB_PEDIDO_CAB.Any(p => p.COD_PEDIDO_MARKETPLACE == ordem.code))
+                                                {
+                                                    TB_PEDIDO_CAB wPedidoCab = GetPedidoPorMarketplace(ordem);
+                                                    wPedidoCab.IND_SITUACAO = "2";
+                                                    wPedidoCab.DESC_COMPLEMENTO_OBS2 = "Cancelado pelo cliente";
+                                                    wPedidoCab.DESC_SITUACAO_SKYHUB = "CANCELED";
 
-                                                db.Entry(wPedidoCab).State = EntityState.Modified;
-                                                db.SaveChanges();
+                                                    db.Entry(wPedidoCab).State = EntityState.Modified;
+                                                    db.SaveChanges();
 
-                                                wTotalAtualizados++;
-                                            }
+                                                    wTotalCancelados++;
+                                                }
+                                            break;
+
+                                            case "INVOICE":
+                                                //Pedidos com status INVOICE provavelmente não ocorrerão, pois esse status é acionado pelo vendedor
+
+                                                if (!db.TB_PEDIDO_CAB.Any(p => p.COD_PEDIDO_MARKETPLACE == ordem.code))
+                                                {
+                                                    TB_PEDIDO_CAB wPedidoCab = GetPedidoPorMarketplace(ordem);
+                                                    wPedidoCab.DESC_SITUACAO_SKYHUB = "INVOICE";
+
+                                                    db.Entry(wPedidoCab).State = EntityState.Modified;
+                                                    db.SaveChanges();
+
+                                                    wTotalAlterados++;
+                                                }
+                                            break;
+
+                                            case "SHIPPED":
+                                                //Pedidos com status SHIPPED podem ocorrer se a empresa a qual entrega notificar.
+                                                //Mas normalmente esse status é alterado pelo vendedor
+
+                                                if (!db.TB_PEDIDO_CAB.Any(p => p.COD_PEDIDO_MARKETPLACE == ordem.code))
+                                                {
+                                                    TB_PEDIDO_CAB wPedidoCab = GetPedidoPorMarketplace(ordem);
+                                                    wPedidoCab.DESC_SITUACAO_SKYHUB = "SHIPPED";
+
+                                                    db.Entry(wPedidoCab).State = EntityState.Modified;
+                                                    db.SaveChanges();
+
+                                                    wTotalAlterados++;
+                                                }
+                                            break;
+
+                                            case "DELIVERED":
+                                                //Pedidos com status SHIPPED podem ocorrer se a empresa a qual entrega notificar.
+                                                //Mas normalmente esse status é alterado pelo vendedor
+
+                                                if (!db.TB_PEDIDO_CAB.Any(p => p.COD_PEDIDO_MARKETPLACE == ordem.code))
+                                                {
+                                                    TB_PEDIDO_CAB wPedidoCab = GetPedidoPorMarketplace(ordem);
+                                                    wPedidoCab.DESC_SITUACAO_SKYHUB = "DELIVERED";
+
+                                                    db.Entry(wPedidoCab).State = EntityState.Modified;
+                                                    db.SaveChanges();
+
+                                                    wTotalAlterados++;
+                                                }
+                                            break;
+
+                                            case "SHIPMENT_EXCEPTION":
+                                                //Pedidos com status SHIPMENT_EXCEPTION pode ocorrer quando houver algum problema com a entrega.
+
+                                                if (!db.TB_PEDIDO_CAB.Any(p => p.COD_PEDIDO_MARKETPLACE == ordem.code))
+                                                {
+                                                    TB_PEDIDO_CAB wPedidoCab = GetPedidoPorMarketplace(ordem);
+                                                    wPedidoCab.DESC_SITUACAO_SKYHUB = "SHIPMENT_EXCEPTION";
+
+                                                    db.Entry(wPedidoCab).State = EntityState.Modified;
+                                                    db.SaveChanges();
+
+                                                    wTotalAlterados++;
+                                                }
+                                            break;
+
+                                            case "PAYMENT_OVERDUE":
+                                                //Pedidos com status PAYMENT_OVERDUE ocorre quando o boleto estiver com a data de pagamento vencido.
+
+                                                if (!db.TB_PEDIDO_CAB.Any(p => p.COD_PEDIDO_MARKETPLACE == ordem.code))
+                                                {
+                                                    TB_PEDIDO_CAB wPedidoCab = GetPedidoPorMarketplace(ordem);
+                                                    wPedidoCab.DESC_SITUACAO_SKYHUB = "PAYMENT_OVERDUE";
+
+                                                    db.Entry(wPedidoCab).State = EntityState.Modified;
+                                                    db.SaveChanges();
+
+                                                    wTotalAlterados++;
+                                                }
+                                            break;
                                         }
 
                                         //Após consumir um pedido, é necessário confirmar com a API que ele foi consumido com sucesso.
@@ -194,7 +687,7 @@ namespace Cemapa.Controllers
                                 }
                                 catch (Exception except)
                                 {
-                                    ControlaExcecoes.Add($"Erro ao sincronizar. Filial: {configuracaoSkyhub.COD_FILIAL}", response.ReasonPhrase, except.Message);
+                                    ControlaExcecoes.Add($"Erro ao sincronizar. Filial: {configuracaoSkyhub.COD_FILIAL}", except.Message);
                                     continue;
                                 }
                             }
@@ -214,40 +707,32 @@ namespace Cemapa.Controllers
 
                 if (ControlaExcecoes.SemExcecoes())
                 {
-                    return new RetornoJson()
-                    {
-                        Id = 0,
-                        Status = "success",
-                        Mensagem = "Os pedidos agora estão sincronizados.",
-                        Complemento = $"Criados: {wTotalCriados}, Atualizados: {wTotalAtualizados}"
-                    };
+                    return Request.CreateResponse(
+                        HttpStatusCode.OK,
+                        $"Os pedidos agora estão sincronizados. Criados: {wTotalCriados}, Cancelados: {wTotalCancelados}, Alterados: {wTotalAlterados}."
+                    );
                 }
                 else
                 {
-                    return new RetornoJson()
-                    {
-                        Id = 0,
-                        Status = "erro",
-                        Mensagem = "Nem todos os pedidos foram sincronizados.",
-                        Complemento = $"Criados: {wTotalCriados}, Atualizados: {wTotalAtualizados}",
-                        Corpo = ControlaExcecoes.Excecoes
-                    };
+                    return Request.CreateResponse(
+                        HttpStatusCode.InternalServerError,
+                        $"Nem todos os pedidos foram sincronizados. Criados: {wTotalCriados}, Cancelados: {wTotalCancelados}, Alterados: {wTotalAlterados}. " +
+                        $"{ControlaExcecoes.Excecoes}"
+                    );
                 }
             }
             catch (Exception except)
             {
-                return new RetornoJson()
-                {
-                    Id = 0,
-                    Status = "erro",
-                    Mensagem = "Não foi possível começar a sincronização.",
-                    Complemento = except.Message
-                };
+                return Request.CreateResponse(
+                    HttpStatusCode.InternalServerError,
+                    $"Não foi possível começar a sincronização. {except.Message}"
+                );
+                
             }
         }
 
         [HttpGet]
-        public async Task<RetornoJson> SincronizaProdutos()
+        public async Task<HttpResponseMessage> SincronizaProdutos()
         {
             try
             {
@@ -320,7 +805,7 @@ namespace Cemapa.Controllers
                                                 //Por enquanto, o campo custo será sempre zero, solicitado por Marcos, até descobrirmos o real
                                                 //propósito de existir tal campo em uma loja online.
 
-                                                ProdutoSkyhub ProdutoSku = new ProdutoSkyhub
+                                                ProdutosSkyhub ProdutoSku = new ProdutosSkyhub
                                                 {
                                                     sku = produtoSkyhub.COD_PRODUTO,
                                                     name = produtoSkyhub.DESC_PRODUTO,
@@ -366,7 +851,7 @@ namespace Cemapa.Controllers
 
                                                 //Adiciona o produto skyhub na chave "products", padrão da API.
 
-                                                Dictionary<string, ProdutoSkyhub> products = new Dictionary<string, ProdutoSkyhub>{{ "product", ProdutoSku }};
+                                                Dictionary<string, ProdutosSkyhub> products = new Dictionary<string, ProdutosSkyhub>{{ "product", ProdutoSku }};
 
                                                 //Por fim, executa a chamada Http conforme a requisição registrada na tabela TB_SINCRONIZACAO_SKYHUB
                                                 //e caso ocorra algum erro, grava um log com informações.
@@ -513,37 +998,26 @@ namespace Cemapa.Controllers
 
                 if (ControlaExcecoes.SemExcecoes())
                 {
-                    return new RetornoJson()
-                    {
-                        Id = 0,
-                        Status = "success",
-                        Mensagem = "Os produtos agora estão sincronizados em todas as filiais.",
-                        Complemento = $"Criados: {totalCriados}, Atualizados: {totalAtualizados}, Removidos: {totalDeletados}"
-
-                    };
+                    return Request.CreateResponse(
+                        HttpStatusCode.OK,
+                        $"Os produtos estão sincronizados. Criados: {totalCriados}, Atualizados: {totalAtualizados}, Removidos: {totalDeletados}"
+                    );
                 }
                 else
                 {
-                    return new RetornoJson()
-                    {
-                        Id = 0,
-                        Status = "erro",
-                        Mensagem = "Nem todos os produtos foram sincronizados.",
-                        Complemento = $"Criados: {totalCriados}, Atualizados: {totalAtualizados}, Removidos: {totalDeletados}",
-                        Corpo = ControlaExcecoes.Excecoes
-
-                    };
+                    return Request.CreateResponse(
+                        HttpStatusCode.InternalServerError,
+                        $"Nem todos os produtos foram sincronizados. Criados: {totalCriados}, Atualizados: {totalAtualizados}, Removidos: {totalDeletados}" +
+                        $"{ControlaExcecoes.Excecoes}"
+                    );
                 }
             }
             catch (Exception except)
             {
-                return new RetornoJson()
-                {
-                    Id = 0,
-                    Status = "erro",
-                    Mensagem = "Não foi possível começar a sincronização.",
-                    Complemento = except.Message
-                };
+                return Request.CreateResponse(
+                    HttpStatusCode.InternalServerError,
+                    $"Não foi possível começar a sincronização. {except.Message}"
+                );
             }
         }
 
@@ -552,6 +1026,13 @@ namespace Cemapa.Controllers
             return (from configuracaoSkyhub in db.TB_CONFIGURACAO_SKYHUB
                     where configuracaoSkyhub.IND_ATIVO == "S"
                     select configuracaoSkyhub).ToList();
+        }
+
+        private TB_CONFIGURACAO_SKYHUB GetConfiguracao(int codFilial)
+        {
+            return (from configuracaoSkyhub in db.TB_CONFIGURACAO_SKYHUB
+                    where configuracaoSkyhub.IND_ATIVO == "S" && configuracaoSkyhub.COD_FILIAL == codFilial
+                    select configuracaoSkyhub).FirstOrDefault();
         }
 
         private List<TB_SINCRONIZACAO_SKYHUB> GetSincronizacoes()
@@ -628,37 +1109,78 @@ namespace Cemapa.Controllers
                                      select c).FirstOrDefault();
             if (wCadastro == null)
             {
-                int wCodigoCadastro = db.Database.SqlQuery<int>("SELECT SQCADASTRO.NEXTVAL FROM DUAL").First();
-                string wSexo;
+                string wEstado = ordem.shipping_address.region.ToUpper();
+                string wCpf_cnpj = ordem.customer.vat_number;
+                string wNome = ordem.customer.name.ToUpper();
+                string wSexo = ordem.customer.gender == "male" ? "M" : "F";
+                string wBairro = ordem.shipping_address.neighborhood;
+                string wEmail = ordem.customer.email;
+                DateTime wNascimento = Convert.ToDateTime(ordem.customer.date_of_birth);
+                string wCelular = ordem.shipping_address.phone;
+                string wTelefone = ordem.shipping_address.secondary_phone;
+                string wEndereco = ordem.shipping_address.street + ", " + ordem.shipping_address.number;
+                string wComplemento = ordem.shipping_address.complement;
+                int wTipoCadastro;
 
-                if (ordem.customer.gender == "male")
+                TB_TIPO_CADASTRO wTipoCad = (from tc in db.TB_TIPO_CADASTRO
+                                             where (tc.DESC_TIPO_CADASTRO == "CLIENTE WEB")
+                                             select tc).FirstOrDefault();
+                if (wTipoCad == null)
                 {
-                    wSexo = "M";
+                    int wCodigoTipoCad = db.Database.SqlQuery<int>("SELECT SQTIPO_CADASTRO.NEXTVAL FROM DUAL").First();
+
+                    TB_TIPO_CADASTRO wNovoTipoCadastro = new TB_TIPO_CADASTRO()
+                    {
+                        COD_TIPO_CADASTRO = wCodigoTipoCad,
+                        DESC_TIPO_CADASTRO = "CLIENTE WEB"
+                    };
+
+                    db.Entry(wNovoTipoCadastro).State = EntityState.Added;
+                    wTipoCadastro = wCodigoTipoCad;
                 }
                 else
                 {
-                    wSexo = "F";
+                    wTipoCadastro = wTipoCad.COD_TIPO_CADASTRO;
                 }
 
-                TB_CADASTRO wNovo = new TB_CADASTRO()
+
+                if (ordem.billing_address.number == "")
+                {
+                    wEndereco = ordem.billing_address.street;
+                }
+
+                if (!db.TB_ESTADO.Any(e => e.COD_ESTADO == wEstado))
+                {
+                    throw new Exception("Estado não encontrado: " + wEstado);
+                }
+
+                if (wCpf_cnpj.Length < 10)
+                {
+                    throw new Exception("CPF ou CNPJ inválido. " + wCpf_cnpj);
+                }
+
+                int wCodigoCadastro = db.Database.SqlQuery<int>("SELECT SQCADASTRO.NEXTVAL FROM DUAL").First();
+
+                TB_CADASTRO wNovoCadastro = new TB_CADASTRO()
                 {
                     COD_CADASTRO = wCodigoCadastro,
-                    NOME = ordem.customer.name,
-                    NUM_CGC_CPF = ordem.customer.vat_number,
-                    DESC_E_MAIL = ordem.customer.email,
-                    DT_NASCIMENTO = Convert.ToDateTime(ordem.customer.date_of_birth),
-                    DESC_CELULAR = ordem.billing_address.phone,
-                    DESC_TELEFONE = ordem.billing_address.secondary_phone,
-                    DESC_ENDERECO = ordem.billing_address.street + ", " + ordem.billing_address.number,
-                    DESC_COMPLEMENTO = ordem.billing_address.complement,
-                    DESC_BAIRRO = ordem.billing_address.neighborhood,
-                    COD_ESTADO = ordem.billing_address.region.ToUpper(),
+                    NOME = wNome,
+                    COD_TIPO_CADASTRO = wTipoCadastro,
+                    NUM_CGC_CPF = wCpf_cnpj,
+                    DESC_E_MAIL = wEmail,
+                    DT_NASCIMENTO = wNascimento,
+                    DT_CADASTRO = DateTime.Now,
+                    DESC_CELULAR = wCelular,
+                    DESC_TELEFONE = wTelefone,
+                    DESC_ENDERECO = wEndereco,
+                    DESC_COMPLEMENTO = wComplemento,
+                    DESC_BAIRRO = wBairro,
+                    COD_ESTADO = wEstado,
                     IND_SEXO_CATEGORIA = wSexo,
-                    COD_TIPO_CADASTRO = 1
+                    IND_FISICA_JURIDICA = "F"
                 };
 
-                db.Entry(wNovo).State = EntityState.Added;
-                db.SaveChanges();
+                db.Entry(wNovoCadastro).State = EntityState.Added;
 
                 return wCodigoCadastro;
             }
