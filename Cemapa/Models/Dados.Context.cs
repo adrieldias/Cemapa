@@ -40,7 +40,6 @@ namespace Cemapa.Models
         public virtual DbSet<TB_TRIBUTACAO> TB_TRIBUTACAO { get; set; }
         public virtual DbSet<TB_ESTOQUE> TB_ESTOQUE { get; set; }
         public virtual DbSet<TB_CADASTRO> TB_CADASTRO { get; set; }
-        public virtual DbSet<TB_PEDIDO_CAB> TB_PEDIDO_CAB { get; set; }
         public virtual DbSet<TB_PRODUTO> TB_PRODUTO { get; set; }
         public virtual DbSet<TB_CIDADE> TB_CIDADE { get; set; }
         public virtual DbSet<TB_REGIAO> TB_REGIAO { get; set; }
@@ -52,6 +51,7 @@ namespace Cemapa.Models
         public virtual DbSet<TB_PRODUTO_SKYHUB> TB_PRODUTO_SKYHUB { get; set; }
         public virtual DbSet<TB_SINCRONIZACAO_SKYHUB> TB_SINCRONIZACAO_SKYHUB { get; set; }
         public virtual DbSet<TB_SEQUENCIA> TB_SEQUENCIA { get; set; }
+        public virtual DbSet<TB_PEDIDO_CAB> TB_PEDIDO_CAB { get; set; }
         public virtual DbSet<TB_PEDIDO_ITEM> TB_PEDIDO_ITEM { get; set; }
     }
 }

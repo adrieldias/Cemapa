@@ -22,11 +22,11 @@ namespace Cemapa.Models
     
         public int COD_PEDIDO_CAB { get; set; }
         public Nullable<int> COD_FILIAL { get; set; }
-        public Nullable<int> COD_OPERACAO { get; set; }
+        public int COD_OPERACAO { get; set; }
         public Nullable<int> COD_VENDEDOR { get; set; }
         public Nullable<int> COD_CADASTRO { get; set; }
         public Nullable<int> NUM_PEDIDO { get; set; }
-        public Nullable<System.DateTime> DT_EMISSAO { get; set; }
+        public System.DateTime DT_EMISSAO { get; set; }
         public Nullable<decimal> VAL_DESCONTO { get; set; }
         public Nullable<System.DateTime> DT_ENTREGA { get; set; }
         public Nullable<System.DateTime> DT_FATURAMENTO { get; set; }
@@ -68,6 +68,7 @@ namespace Cemapa.Models
         public Nullable<decimal> PERC_ISSQN { get; set; }
         public Nullable<decimal> VAL_TOTAL { get; set; }
         public Nullable<decimal> VAL_ADIANTAMENTO { get; set; }
+        public string COD_SERIE { get; set; }
         public string DESC_VEICULO { get; set; }
         public string DESC_TECIDO { get; set; }
         public string DESC_FORMA_PAGAMENTO { get; set; }
@@ -85,17 +86,16 @@ namespace Cemapa.Models
         public string IND_CONSUMIDOR_FINAL { get; set; }
         public Nullable<int> COD_VEICULO { get; set; }
         public string STEP_SINCRONIZACAO { get; set; }
-        public string COD_SERIE { get; set; }
-        public string COD_PEDIDO_MARKETPLACE { get; set; }
         public Nullable<decimal> VAL_DESPESAS { get; set; }
         public string IND_SINC_MAX_ROTEIRIZADOR { get; set; }
         public string DESC_SITUACAO_SKYHUB { get; set; }
+        public string COD_PEDIDO_MARKETPLACE { get; set; }
     
         public virtual TB_CADASTRO TB_CADASTRO { get; set; }
         public virtual TB_CADASTRO TB_CADASTRO1 { get; set; }
-        public virtual TB_PRODUTO TB_PRODUTO { get; set; }
         public virtual TB_VENDEDOR TB_VENDEDOR { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TB_PEDIDO_ITEM> TB_PEDIDO_ITEM { get; set; }
+        public virtual TB_PRODUTO TB_PRODUTO { get; set; }
     }
 }
