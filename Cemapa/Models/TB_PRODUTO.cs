@@ -22,6 +22,7 @@ namespace Cemapa.Models
             this.TB_SINCRONIZACAO_SKYHUB = new HashSet<TB_SINCRONIZACAO_SKYHUB>();
             this.TB_PEDIDO_CAB = new HashSet<TB_PEDIDO_CAB>();
             this.TB_PEDIDO_ITEM = new HashSet<TB_PEDIDO_ITEM>();
+            this.TB_TABELA_PRECO_ITEM = new HashSet<TB_TABELA_PRECO_ITEM>();
         }
     
         public long COD_PRODUTO { get; set; }
@@ -147,5 +148,7 @@ namespace Cemapa.Models
         public virtual ICollection<TB_PEDIDO_CAB> TB_PEDIDO_CAB { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TB_PEDIDO_ITEM> TB_PEDIDO_ITEM { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TB_TABELA_PRECO_ITEM> TB_TABELA_PRECO_ITEM { get; set; }
     }
 }

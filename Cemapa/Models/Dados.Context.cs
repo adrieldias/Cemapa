@@ -53,5 +53,7 @@ namespace Cemapa.Models
         public virtual DbSet<TB_SEQUENCIA> TB_SEQUENCIA { get; set; }
         public virtual DbSet<TB_PEDIDO_CAB> TB_PEDIDO_CAB { get; set; }
         public virtual DbSet<TB_PEDIDO_ITEM> TB_PEDIDO_ITEM { get; set; }
+        public virtual DbSet<TB_TABELA_PRECO_CAB> TB_TABELA_PRECO_CAB { get; set; }
+        public virtual DbSet<TB_TABELA_PRECO_ITEM> TB_TABELA_PRECO_ITEM { get; set; }
     }
 }
