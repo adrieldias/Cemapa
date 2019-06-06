@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -14,6 +15,57 @@ namespace Cemapa.Controllers
     public class SincronizarSkyhubController : ApiController
     {
         private Entities db = new Entities();
+
+        private HttpResponseMessage DownloadFile(string downloadFilePath, string fileName)
+        {
+            try
+            {
+                //Check if the file exists. If the file doesn't exist, throw a file not found exception
+                if (!File.Exists(downloadFilePath))
+                {
+                    throw new HttpResponseException(HttpStatusCode.NotFound);
+                }
+
+                //Copy the source file stream to MemoryStream and close the file stream
+                MemoryStream responseStream = new MemoryStream();
+                Stream fileStream = File.Open(downloadFilePath, FileMode.Open);
+
+                fileStream.CopyTo(responseStream);
+                fileStream.Close();
+                responseStream.Position = 0;
+
+                HttpResponseMessage response = new HttpResponseMessage();
+                response.StatusCode = HttpStatusCode.OK;
+
+                //Write the memory stream to HttpResponseMessage content
+                response.Content = new StreamContent(responseStream);
+                string contentDisposition = string.Concat("attachment; filename=", fileName);
+                response.Content.Headers.ContentDisposition =
+                              ContentDispositionHeaderValue.Parse(contentDisposition);
+                return response;
+            }
+            catch
+            {
+                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+            }
+        }
+
+        [HttpGet]
+        public HttpResponseMessage DownloadEtiqueta()
+        {
+            try
+            {
+                return DownloadFile("C:/Users/Gian/Desktop/ag1268.pdf", "ag1268.pdf");
+
+            }
+            catch (Exception except)
+            {
+                return Request.CreateResponse(
+                    HttpStatusCode.InternalServerError,
+                    $"Não foi possível enviar: {except.Message}"
+                );
+            }
+        }
 
         [HttpGet]
         public async Task<HttpResponseMessage> FinalizaPedido(int codFilial, string codMarketplace)
@@ -73,7 +125,10 @@ namespace Cemapa.Controllers
                     }
                     else
                     {
-                        throw new Exception($"Erro no retorno da Skyhub. {codMarketplace}: {response.ReasonPhrase}");
+                        Error body = new Error();
+                        body = await response.Content.ReadAsAsync<Error>();
+
+                        throw new Exception($"Erro no retorno da Skyhub. {codMarketplace}: {response.ReasonPhrase}. Conteúdo: {body.error}");
                     }
                 }
                 else
@@ -155,7 +210,10 @@ namespace Cemapa.Controllers
                     }
                     else
                     {
-                        throw new Exception($"Erro no retorno da Skyhub. {codMarketplace}: {response.ReasonPhrase}");
+                        Error body = new Error();
+                        body = await response.Content.ReadAsAsync<Error>();
+
+                        throw new Exception($"Erro no retorno da Skyhub. {codMarketplace}: {response.ReasonPhrase}. Conteúdo: {body.error}");
                     }
                 }
                 else
@@ -178,7 +236,7 @@ namespace Cemapa.Controllers
         }
 
         [HttpGet]
-        public async Task<HttpResponseMessage> EnviaPedido(int codFilial, string codMarketplace, string codRastreamento)
+        public async Task<HttpResponseMessage> EnviaPedido(int codFilial, string codMarketplace)
         {
             try
             {
@@ -190,11 +248,6 @@ namespace Cemapa.Controllers
                 if (codMarketplace == "")
                 {
                     throw new Exception("Código do pedido do marketplace inválido");
-                }
-
-                if (codRastreamento == "")
-                {
-                    throw new Exception("Código de rastreamento inválido");
                 }
 
                 //Encontra a filial para buscar informações de acesso.
@@ -217,16 +270,13 @@ namespace Cemapa.Controllers
                     Http.DefaultRequestHeaders.Add("X-Api-Key", configuracaoSkyhub.DESC_TOKEN_INTEGRACAO);
                     Http.DefaultRequestHeaders.Add("X-Accountmanager-Key", configuracaoSkyhub.DESC_TOKEN_ACCOUNT);
                     Http.DefaultRequestHeaders.Add("Accept", "application/json;charset=UTF-8");
-
-
+                    
                     Shipment envio = new Shipment()
                     {
-                        code = codMarketplace,
-                        track = new Track() { code = codRastreamento }
+                        code = codMarketplace
                     };
-
                     Dictionary<string, Shipment> data = new Dictionary<string, Shipment> { { "shipment", envio } };
-
+                    
                     HttpResponseMessage response = await Http.PostAsJsonAsync($"/orders/{codMarketplace}/shipments", data);
 
                     if (response.IsSuccessStatusCode)
@@ -247,7 +297,10 @@ namespace Cemapa.Controllers
                     }
                     else
                     {
-                        throw new Exception($"Erro no retorno da Skyhub. {codMarketplace}: {response.ReasonPhrase}");
+                        Error body = new Error();
+                        body = await response.Content.ReadAsAsync<Error>();
+
+                        throw new Exception($"Erro no retorno da Skyhub. {codMarketplace}: {response.ReasonPhrase}. Conteúdo: {body.error}");
                     }
                 }
                 else
@@ -307,7 +360,10 @@ namespace Cemapa.Controllers
 
                     if (!response.IsSuccessStatusCode)
                     {
-                        throw new Exception($"Erro no retorno da Skyhub. {codMarketplace}: {response.ReasonPhrase}");
+                        Error body = new Error();
+                        body = await response.Content.ReadAsAsync<Error>();
+
+                        throw new Exception($"Erro no retorno da Skyhub. {codMarketplace}: {response.ReasonPhrase}. Conteúdo: {body.error}");
                     }
                     else
                     {
@@ -404,7 +460,10 @@ namespace Cemapa.Controllers
                     }
                     else
                     {
-                        throw new Exception($"Erro no retorno da Skyhub. {codMarketplace}: {response.ReasonPhrase}");
+                        Error body = new Error();
+                        body = await response.Content.ReadAsAsync<Error>();
+
+                        throw new Exception($"Erro no retorno da Skyhub. {codMarketplace}: {response.ReasonPhrase}. Conteúdo: {body.error}");
                     }
                 }
                 else

@@ -11,6 +11,11 @@ namespace Cemapa.Models
         public List<Order> orders { get; set; }
     }
 
+    public class Error
+    {
+        public string error { get; set; }
+    }
+
     public class Order
     {
         public DateTime updated_at { get; set; }
