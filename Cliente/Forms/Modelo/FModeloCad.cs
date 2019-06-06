@@ -48,8 +48,7 @@ namespace Cliente.Forms.Modelo
             this.FormBorderStyle = FormBorderStyle.None;
             this.DoubleBuffered = true;
             this.SetStyle(ControlStyles.ResizeRedraw, true);
-            this.LayoutTela = layout;
-            arrumaLayout();
+            this.LayoutTela = layout;            
         }
 
         #region Acesso assíncrono ao servidor
@@ -145,19 +144,6 @@ namespace Cliente.Forms.Modelo
 
         #endregion
 
-        private void arrumaLayout()
-        {
-            if (LayoutTela.Equals("VISUALIZAR"))
-            {
-                btFechar.Left = btSalvar.Left;                
-                btSalvar.Visible = false;
-                btCancelar.Visible = false;
-            }
-            else
-            if(LayoutTela.Equals("ALTERAR"))            
-                btFechar.Visible = false;
-        }
-
         private void btMinimize_Click(object sender, EventArgs e)
         {            
             this.WindowState = FormWindowState.Minimized;            
@@ -240,14 +226,9 @@ namespace Cliente.Forms.Modelo
             Application.DoEvents();
         }
 
-        private void btFechar_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
         public void Personaliza()
-        {
-            PersonalizaForm.Instancia.Personaliza(this);            
+        {   
+            PersonalizaForm.Instancia.Personaliza(this, LayoutTela);            
         }
 
         private void FModeloCad_Activated(object sender, EventArgs e)
@@ -307,6 +288,11 @@ namespace Cliente.Forms.Modelo
                 }
             }
             return retorno;
-        }
+        }        
+
+        private void btFechar_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }        
     }
 }

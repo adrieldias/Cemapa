@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="912c242cfcbe4301bb4c503ca9fbf7eb" Name="Diagram1" ZoomLevel="65">
+      <Diagram DiagramId="912c242cfcbe4301bb4c503ca9fbf7eb" Name="Diagram1" ZoomLevel="73">
         <EntityTypeShape EntityType="Model.TB_TIPO_CADASTRO" Width="1.5" PointX="0.5" PointY="5.5" IsExpanded="false" />
         <EntityTypeShape EntityType="Model.TB_CLASS_CADASTRO" Width="1.5" PointX="0.875" PointY="0.5" IsExpanded="false" />
         <EntityTypeShape EntityType="Model.TB_ESTADO" Width="1.5" PointX="8.75" PointY="2.25" IsExpanded="false" />
@@ -32,13 +32,9 @@
         <AssociationConnector Association="Model.FK_CADASTROXTIPO_CADASTRO" />
         <AssociationConnector Association="Model.FK_CADASTROXUSUARIO" />
         <AssociationConnector Association="Model.FK_PROPRIEDADEXCADASTRO" />
-        <EntityTypeShape EntityType="Model.TB_PEDIDO_CAB" Width="1.5" PointX="17.75" PointY="2.625" IsExpanded="false" />
-        <AssociationConnector Association="Model.FK_PEDIDO_CABXCADASTRO" />
-        <AssociationConnector Association="Model.FK_PEDIDOXCADASTROTRANSP" />
         <EntityTypeShape EntityType="Model.TB_PRODUTO" Width="1.5" PointX="11.875" PointY="4.5" IsExpanded="false" />
         <AssociationConnector Association="Model.FK_PRODUTOXCLASSE" />
         <AssociationConnector Association="Model.FK_ESTOQUEXPRODUTO" />
-        <AssociationConnector Association="Model.FK_PEDIDOXPRODUTO" />
         <AssociationConnector Association="Model.FK_PRODUTOXTRIBUTACAO" />
         <EntityTypeShape EntityType="Model.TB_CIDADE" Width="1.5" PointX="5.75" PointY="2" IsExpanded="false" />
         <AssociationConnector Association="Model.FK_CADASTROXCIDADE" />
@@ -48,13 +44,12 @@
         <EntityTypeShape EntityType="Model.TB_VENDEDOR" Width="1.5" PointX="11" PointY="8.625" IsExpanded="false" />
         <AssociationConnector Association="Model.FK_CADASTROXVENDEDOR" />
         <AssociationConnector Association="Model.FK_VENDEDORXESTADO" />
-        <AssociationConnector Association="Model.FK_PEDIDO_CABXVENDEDOR" />
         <EntityTypeShape EntityType="Model.TB_CONFIGURACAO_SKYHUB" Width="1.5" PointX="3.375" PointY="6.75" IsExpanded="false" />
-        <EntityTypeShape EntityType="Model.TB_PRODUTO_CATEGORIA_SKYHUB" Width="1.5" PointX="16.375" PointY="11.625" IsExpanded="false" />
-        <EntityTypeShape EntityType="Model.TB_PRODUTO_ESP_SKYHUB" Width="1.5" PointX="16.375" PointY="14.125" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.TB_PRODUTO_CATEGORIA_SKYHUB" Width="1.5" PointX="16.375" PointY="11.625" />
+        <EntityTypeShape EntityType="Model.TB_PRODUTO_ESP_SKYHUB" Width="1.5" PointX="16.375" PointY="14.125" />
         <EntityTypeShape EntityType="Model.TB_PRODUTO_IMAGEM_SKYHUB" Width="1.5" PointX="16.375" PointY="8.875" IsExpanded="false" />
-        <EntityTypeShape EntityType="Model.TB_PRODUTO_SKYHUB" Width="1.5" PointX="14.125" PointY="10.75" IsExpanded="false" />
-        <EntityTypeShape EntityType="Model.TB_SINCRONIZACAO_SKYHUB" Width="1.5" PointX="12" PointY="12" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.TB_PRODUTO_SKYHUB" Width="1.5" PointX="14.125" PointY="10.75" />
+        <EntityTypeShape EntityType="Model.TB_SINCRONIZACAO_SKYHUB" Width="1.5" PointX="14.125" PointY="16" />
         <AssociationConnector Association="Model.FK_PROD_SKYXPRODUTO" />
         <AssociationConnector Association="Model.FK_SINC_SKYXPRODUTO" />
         <AssociationConnector Association="Model.FK_CAT_SKYXPROD_SKY" />
@@ -62,12 +57,21 @@
         <AssociationConnector Association="Model.FK_IMG_SKYXPROD_SKY" />
         <AssociationConnector Association="Model.FK_PROPRIEDADEXCIDADE" />
         <EntityTypeShape EntityType="Model.TB_SEQUENCIA" Width="1.5" PointX="5.375" PointY="6.75" IsExpanded="false" />
-        <EntityTypeShape EntityType="Model.TB_PEDIDO_ITEM" Width="1.5" PointX="19" PointY="4" IsExpanded="false" />
-        <AssociationConnector Association="Model.FK_PEDIDO_ITEMXPEDIDO_CAB" />
+        <EntityTypeShape EntityType="Model.TB_PEDIDO_CAB" Width="1.5" PointX="19.25" PointY="0.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.TB_PEDIDO_ITEM" Width="1.5" PointX="20.75" PointY="3.375" IsExpanded="false" />
+        <AssociationConnector Association="Model.FK_PEDIDO_CABXCADASTRO" />
+        <AssociationConnector Association="Model.FK_PEDIDOXCADASTROTRANSP" />
+        <AssociationConnector Association="Model.FK_PEDIDO_CABXVENDEDOR" />
+        <AssociationConnector Association="Model.FK_PEDIDOITEMXPEDIDO" />
+        <AssociationConnector Association="Model.FK_PEDIDOXPRODUTO" />
         <AssociationConnector Association="Model.FK_PEDIDO_ITEMXPRODUTO" />
-        <EntityTypeShape EntityType="Model.TB_PRODUTO_VARIACAO_SKYHUB" Width="1.5" PointX="16.875" PointY="6.625" IsExpanded="false" />
-        <AssociationConnector Association="Model.FK_PROD_SKYXPROD_SKY" />
-      </Diagram>
+        <EntityTypeShape EntityType="Model.TB_TABELA_PRECO_CAB" Width="1.5" PointX="23.625" PointY="0.875" IsExpanded="true" />
+        <AssociationConnector Association="Model.FK_TABELA_PRECO_CABXCADASTRO" />
+        <AssociationConnector Association="Model.FK_TABELA_PRECO_CABXPEDIDO_IT" />
+        <EntityTypeShape EntityType="Model.TB_TABELA_PRECO_ITEM" Width="1.5" PointX="23.625" PointY="3.625" />
+        <AssociationConnector Association="Model.FK_PRECOITEMXPRODUTO" />
+        <AssociationConnector Association="Model.FK_PRECOITEMXPRECOCAB" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

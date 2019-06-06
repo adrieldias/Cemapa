@@ -111,6 +111,13 @@ namespace Componentes
             set => this.comboBox1.ValueMember = value;
         }
 
+        [Description("SelectedIndex"), Category("Cemapa")]
+        public int SelectedIndex
+        {
+            get => this.comboBox1.SelectedIndex;
+            set => this.comboBox1.SelectedIndex = value;
+        }
+
         #endregion
 
         public ComboBoxSimples()

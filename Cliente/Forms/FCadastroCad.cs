@@ -18,110 +18,20 @@ namespace Cliente.Forms
     public partial class FCadastroCad : FModeloCad
     {
         #region Properties
-
         
         public List<TB_ESTADO> EstadoPropriedade { get; set; }
         public List<TB_CIDADE> CidadePropriedade { get; set; }
         public object Propriedade { get; set; }
-
         public BindingSource TipoCadastroBindingSource { get; set; }
         public BindingSource ClassCadastroBindingSource { get; set; }
         public BindingSource VendedorBindingSource { get; set; }
-        public BindingSource EstadoBindingSource { get; set; }
-        public BindingSource CidadeBindingSource { get; set; }
+        public BindingSource EstadoBindingSource { get; set; }        
         public BindingSource PaisBindingSource { get; set; }
-        public BindingSource EstadoPropriedadeBindingSource { get; set; }
         public BindingSource CidadePropriedadeBindingSource { get; set; }
         public BindingSource PropriedadeBindingSource { get; set; }
         public BindingSource CadastroBindingSource { get; set; }
-
-        #endregion
-
-        #region Dados Propriedade
-        
-
-        /// <summary>
-        /// Busca os dados complementares no servidor
-        /// </summary>
-        private async void BuscaDadosPropriedade()
-        { 
-            var definition = new
-            {
-                Data = new[] {
-                    new {
-                        CODIGO = 0,
-                        NOME = string.Empty,
-                        ENDERECO = string.Empty,
-                        CIDADE = string.Empty,
-                        BAIRRO = string.Empty,
-                        CEP = string.Empty,
-                        AREA = 0.0,
-                        VALOR = 0.0,
-                        MATRICULA = 0,
-                        CRI = string.Empty,
-                        TIPO = DBNull.Value,
-                        PROPRIO = string.Empty                        
-                    }
-                }
-            };
-
-            // Busca os dados no servidor
-            var anonymousType = JsonConvert.DeserializeAnonymousType(
-                (await RunAsyncGet(
-                ConfigurationManager.AppSettings["UriPropriedade"], "GetPersonalizado/?COD_CADASTRO=600"
-                ))
-                , definition);
-            this.Propriedade = anonymousType.Data;
-
-
-
-            
-            //BuscaCidadesPropriedade(Cadastro.COD_ESTADO);
-
-            
-        }
-
-        private void AtualizaCbsCidadePropriedade()
-        {
-            //if (CidadePropriedade != null)
-            //{
-            //    if (CidadePropriedadeBindingSource == null)
-            //        CidadePropriedadeBindingSource = new BindingSource();
-            //    CidadeBindingSource.DataSource = CidadePropriedade;
-            //    try
-            //    {
-            //        var objCid = CidadePropriedadeBindingSource.List.OfType<TB_CIDADE>().First(c => c.COD_CIDADE == 1);
-            //        var pos = CidadePropriedadeBindingSource.IndexOf(objCid);
-            //        CidadePropriedadeBindingSource.Position = pos;
-            //        objCid = null;
-            //        pos = 0;
-            //    }
-            //    catch (Exception e)
-            //    {
-            //        CidadePropriedadeBindingSource.Position = 0;
-            //    }
-            //    cbsCidadePropriedade.BindingSource = CidadePropriedadeBindingSource;
-            //    cbsCidadePropriedade.DisplayMember = "DESC_CIDADE";
-            //}
-        }
-
-
-        //private async void BuscaCidadesPropriedade(string estado)
-        //{
-        //    //Carrega apenas cidades do estado da propriedade
-        //    if (EstadoPropriedadeBindingSource == null)
-        //        EstadoPropriedadeBindingSource = new BindingSource();
-        //    EstadoPropriedadeBindingSource.DataSource = Estado;
-        //    var objEst = EstadoPropriedadeBindingSource.List.OfType<TB_ESTADO>().First(c => c.COD_ESTADO == estado);
-        //    var pos = EstadoPropriedadeBindingSource.IndexOf(objEst);
-        //    EstadoPropriedadeBindingSource.Position = pos;
-        //    objEst = null;
-        //    pos = 0;
-        //    this.CidadePropriedade = JsonConvert.DeserializeAnonymousType((await RunAsyncGet(
-        //        string.Format("{0}{1}", ConfigurationManager.AppSettings["UriCidade"], "GetCidadesPorEstado")
-        //        , ((TB_ESTADO)EstadoPropriedadeBindingSource.Current).COD_ESTADO)), new List<TB_CIDADE>());
-        //    AtualizaCbsCidadePropriedade();
-        //}
+        public BindingSource EnderecoBindingSource { get; set; }
+        public BindingSource QualificacaoSocioBindingSource { get; set; }
 
         #endregion
 
@@ -132,21 +42,31 @@ namespace Cliente.Forms
             // Busca o cadastro no servidor
             if (CadastroBindingSource == null)
                 CadastroBindingSource = new BindingSource();
-            var teste = JsonConvert.DeserializeAnonymousType((await RunAsyncGet(
+            var cadastro = JsonConvert.DeserializeAnonymousType((await RunAsyncGet(
                 ConfigurationManager.AppSettings["UriCadastro"], string.Format("{0}/{1}", "Get", this.ChaveConsulta["Codigo"])
-                )), new TB_CADASTRO());
-            CadastroBindingSource.DataSource = teste;
+                )), new TB_CADASTRO());            
+            CadastroBindingSource.DataSource = cadastro;
 
-            txbsCodigo.DataBindings.Add("Text", CadastroBindingSource.Current, "COD_CADASTRO");            
+            // DataBindings
+            txbsCodigo.DataBindings.Add("Text", CadastroBindingSource.Current, "COD_CADASTRO");
             txbsNome.DataBindings.Add("Text", CadastroBindingSource.Current, "NOME");
             txbsNomeFantasia.DataBindings.Add("Text", CadastroBindingSource.Current, "DESC_FANTASIA");
             txbsTelefone.DataBindings.Add("Text", CadastroBindingSource.Current, "DESC_TELEFONE");
             txbsCelular.DataBindings.Add("Text", CadastroBindingSource.Current, "DESC_CELULAR");
             txbsEmailXML.DataBindings.Add("Text", CadastroBindingSource.Current, "DESC_E_MAIL");
             txbsEmailContato.DataBindings.Add("Text", CadastroBindingSource.Current, "DESC_E_MAIL1");
-            
+            tbsEmpresa.DataBindings.Add("Text", CadastroBindingSource.Current, "DESC_EMPRESA");
+            tbsFuncao.DataBindings.Add("Text", CadastroBindingSource.Current, "DESC_FUNCAO");
+            tbsTrabalhoTelefone.DataBindings.Add("Text", CadastroBindingSource.Current, "DESC_FONE_EMPRESA");
+            tbsCrc.DataBindings.Add("Text", CadastroBindingSource.Current, "DESC_CRC");
+            tbsSequencial.DataBindings.Add("Text", CadastroBindingSource.Current, "NUM_SEQ_CRC");
+            tbsValidadeCrc.DataBindings.Add("Text", CadastroBindingSource.Current, "DT_CRC");
+            tbsDtFimSociedade.DataBindings.Add("Text", CadastroBindingSource.Current, "DT_CANCELAMENTO");
+            tbsPercParticCapitalTotal.DataBindings.Add("Text", CadastroBindingSource.Current, "PERC_CAP_TOT");
+            tbsPercParticCapitalVolante.DataBindings.Add("Text", CadastroBindingSource.Current, "PERC_CAP_VOT");
+
             //cbsTipoCadastro
-            if(TipoCadastroBindingSource == null)
+            if (TipoCadastroBindingSource == null)
                 TipoCadastroBindingSource = new BindingSource();
             TipoCadastroBindingSource.DataSource = JsonConvert.DeserializeAnonymousType((await RunAsyncGet(
                 ConfigurationManager.AppSettings["UriTipoCadastro"]
@@ -185,61 +105,58 @@ namespace Cliente.Forms
             ClassCadastroBindingSource.DataSource = JsonConvert.DeserializeAnonymousType((await RunAsyncGet(
                 ConfigurationManager.AppSettings["UriClassCadastro"]
                 )), new List<TB_CLASS_CADASTRO>());
-            var objCC = ClassCadastroBindingSource.List.OfType<TB_CLASS_CADASTRO>().First(c => c.COD_CLASS_CADASTRO == ((TB_CADASTRO)CadastroBindingSource.Current).COD_CLASS_CADASTRO);
-            pos = ClassCadastroBindingSource.IndexOf(objCC);
-            ClassCadastroBindingSource.Position = pos;
             cbsClassificacao.BindingSource = ClassCadastroBindingSource;
-            cbsClassificacao.DisplayMember = "DESC_CLASSIFICACAO";
-            objCC = null;
-            pos = 0;
+            cbsClassificacao.DisplayMember = "DESC_CLASSIFICACAO";            
+            if ((CadastroBindingSource.Current as TB_CADASTRO).COD_CLASS_CADASTRO != null)
+            {
+                var objCC = ClassCadastroBindingSource.List.OfType<TB_CLASS_CADASTRO>().First(c => c.COD_CLASS_CADASTRO == ((TB_CADASTRO)CadastroBindingSource.Current).COD_CLASS_CADASTRO);
+                pos = ClassCadastroBindingSource.IndexOf(objCC);
+                ClassCadastroBindingSource.Position = pos;
+                objCC = null;
+                pos = 0;
+            }
+            else
+                cbsClassificacao.SelectedIndex = -1;
 
             //cbsVendedor  
-            if (!((TB_CADASTRO)CadastroBindingSource.Current).COD_VENDEDOR.Equals(null))
+
+            if (VendedorBindingSource == null)
+                VendedorBindingSource = new BindingSource();
+            VendedorBindingSource.DataSource = JsonConvert.DeserializeAnonymousType((await RunAsyncGet(
+            ConfigurationManager.AppSettings["UriVendedor"]
+            )), new List<TB_VENDEDOR>());
+            cbsVendedor.BindingSource = VendedorBindingSource;
+            cbsVendedor.DisplayMember = "NOME";            
+            if ((CadastroBindingSource.Current as TB_CADASTRO).COD_VENDEDOR != null)
             {
-                if(VendedorBindingSource == null)
-                    VendedorBindingSource = new BindingSource();
-                VendedorBindingSource.DataSource = JsonConvert.DeserializeAnonymousType((await RunAsyncGet(
-                ConfigurationManager.AppSettings["UriVendedor"]
-                )), new List<TB_VENDEDOR>());
                 var objV = VendedorBindingSource.List.OfType<TB_VENDEDOR>().First(c => c.COD_VENDEDOR == ((TB_CADASTRO)CadastroBindingSource.Current).COD_VENDEDOR);
                 pos = VendedorBindingSource.IndexOf(objV);
                 VendedorBindingSource.Position = pos;
-                cbsVendedor.BindingSource = VendedorBindingSource;
-                cbsVendedor.DisplayMember = "NOME";
                 objV = null;
                 pos = 0;
             }
+            else
+                cbsVendedor.SelectedIndex = -1;
 
-            //cbsEstado
-            if (EstadoBindingSource == null)
-                EstadoBindingSource = new BindingSource();
-            EstadoBindingSource.CurrentItemChanged += new EventHandler(EstadoBindingSource_CurrentChanged);
-            EstadoBindingSource.DataSource = JsonConvert.DeserializeAnonymousType((await RunAsyncGet(
-                ConfigurationManager.AppSettings["UriEstado"]
-                )), new List<TB_ESTADO>());
-            var objEst = EstadoBindingSource.List.OfType<TB_ESTADO>().First(c => c.COD_ESTADO == ((TB_CADASTRO)CadastroBindingSource.Current).COD_ESTADO);
-            pos = EstadoBindingSource.IndexOf(objEst);
-            EstadoBindingSource.Position = pos;
-            cbsEstado.BindingSource = EstadoBindingSource;
-            cbsEstado.DisplayMember = "DESC_ESTADO";
-            cbsEstado.ValueMember = "COD_ESTADO";
-            objEst = null;
-            pos = 0;
-
-            //cbsPais
-            if (PaisBindingSource == null)
-                PaisBindingSource = new BindingSource();
-            PaisBindingSource.DataSource = JsonConvert.DeserializeAnonymousType((await RunAsyncGet(
-                ConfigurationManager.AppSettings["UriPais"]
-                )), new List<TB_PAIS>());
-            var objPais = PaisBindingSource.List.OfType<TB_PAIS>().First(p => p.COD_PAIS == ((TB_CADASTRO)CadastroBindingSource.Current).COD_PAIS);
-            pos = PaisBindingSource.IndexOf(objPais);
-            PaisBindingSource.Position = pos;
-            cbsPais.BindingSource = PaisBindingSource;
-            cbsPais.DisplayMember = "DESC_PAIS";
-            cbsPais.ValueMember = "COD_PAIS";
-            objPais = null;
-            pos = 0;
+            //cbsQualificacaoSocio
+            if (QualificacaoSocioBindingSource == null)
+                QualificacaoSocioBindingSource = new BindingSource();
+            QualificacaoSocioBindingSource.DataSource
+                = JsonConvert.DeserializeAnonymousType((await RunAsyncGet(
+                ConfigurationManager.AppSettings["UriQualificacaoSocio"]
+                )), new List<TB_QUALIFICACAO_SOCIO>());
+            cbsQualificacaoSocio.BindingSource = QualificacaoSocioBindingSource;
+            cbsQualificacaoSocio.DisplayMember = "DESC_QUALIFICACAO_SOCIO";
+            cbsQualificacaoSocio.SelectedIndex = -1;
+            if ((CadastroBindingSource.Current as TB_CADASTRO).COD_QUALIFICACAO_SOCIO != null)
+            {
+                var objQualif
+                    = QualificacaoSocioBindingSource.List.OfType<TB_QUALIFICACAO_SOCIO>().First(q => q.COD_QUALIFICACAO_SOCIO == (QualificacaoSocioBindingSource.Current as TB_QUALIFICACAO_SOCIO).COD_QUALIFICACAO_SOCIO);
+                pos = QualificacaoSocioBindingSource.IndexOf(objQualif);
+                QualificacaoSocioBindingSource.Position = pos;
+                objQualif = null;
+                pos = 0;
+            }
 
             //dgvPropriedades
             if (PropriedadeBindingSource == null)
@@ -289,37 +206,49 @@ namespace Cliente.Forms
                     ((DataGridViewColumn)col).Visible = false;
             }
 
-
-        }
-
-        private async void BuscaCidades(string estado)
-        {
-            //Carrega apenas cidades do estado do cadastro             
-            var objEst = EstadoBindingSource.List.OfType<TB_ESTADO>().First(c => c.COD_ESTADO == estado);
-            var pos = EstadoBindingSource.IndexOf(objEst);
-            EstadoBindingSource.Position = pos;
-            objEst = null;
-            pos = 0;
-            if (CidadeBindingSource == null)
-                CidadeBindingSource = new BindingSource();            
-            CidadeBindingSource.DataSource = JsonConvert.DeserializeAnonymousType((await RunAsyncGet(
-                string.Format("{0}{1}", ConfigurationManager.AppSettings["UriCidade"], "GetCidadesPorEstado")
-                , ((TB_ESTADO)EstadoBindingSource.Current).COD_ESTADO)), new List<TB_CIDADE>());
-
-            try
+            //dgvEndereco
+            if (EnderecoBindingSource == null)
+                EnderecoBindingSource = new BindingSource();
+            dgvEndereco.DataSource = EnderecoBindingSource;
+            var endereco = JsonConvert.DeserializeAnonymousType((await RunAsyncGet(
+                ConfigurationManager.AppSettings["UriEndereco"], string.Format("{0}/{1}", "Get", ((TB_CADASTRO)CadastroBindingSource.Current).COD_CADASTRO)
+                )), new List<TB_CADASTRO_ENDERECOS>());
+            EnderecoBindingSource.DataSource = endereco;
+            var colEndereco = new string[] { "DESC_ENDERECO", "DESC_CIDADE", "COD_ESTADO", "DESC_CEP" };
+            foreach (var col in dgvEndereco.Columns)
             {
-                var objCid = CidadeBindingSource.List.OfType<TB_CIDADE>().First(c => c.COD_CIDADE == ((TB_CADASTRO)CadastroBindingSource.Current).COD_CIDADE);
-                pos = CidadeBindingSource.IndexOf(objCid);
-                CidadeBindingSource.Position = pos;
-                objCid = null;
-                pos = 0;
+                if (colEndereco.Contains(((DataGridViewColumn)col).Name))
+                {
+                    ((DataGridViewColumn)col).Visible = true;
+                    if (((DataGridViewColumn)col).Name.Equals("DESC_ENDERECO"))
+                    {
+                        (col as DataGridViewColumn).HeaderText = "ENDEREÇO";
+                        (col as DataGridViewColumn).DisplayIndex = 1;
+                        (col as DataGridViewColumn).AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                    }
+                    if ((col as DataGridViewColumn).Name.Equals("DESC_CIDADE"))
+                    {
+                        (col as DataGridViewColumn).HeaderText = "CIDADE";
+                        (col as DataGridViewColumn).DisplayIndex = 2;
+                    }
+                    if ((col as DataGridViewColumn).Name.Equals("COD_ESTADO"))
+                    {
+                        (col as DataGridViewColumn).HeaderText = "ESTADO";
+                        (col as DataGridViewColumn).DisplayIndex = 3;
+                    }
+                    if ((col as DataGridViewColumn).Name.Equals("DESC_CEP"))
+                    {
+                        (col as DataGridViewColumn).HeaderText = "CEP";
+                        (col as DataGridViewColumn).DisplayIndex = 4;
+                    }
+                }
+                else
+                {
+                    (col as DataGridViewColumn).Visible = false;
+                }
+
             }
-            catch (Exception e)
-            {
-                CidadeBindingSource.Position = 0;
-            }
-            cbsCidade.BindingSource = CidadeBindingSource;
-            cbsCidade.DisplayMember = "DESC_CIDADE";
+
         }
 
         #endregion
@@ -331,27 +260,18 @@ namespace Cliente.Forms
             this.lbNome.Text = "FORMULÁRIO DE CADASTRO";
         }
 
-        private void EstadoBindingSource_CurrentChanged(object sender, EventArgs e)
-        {
-            BuscaCidades(((TB_ESTADO)EstadoBindingSource.Current).COD_ESTADO);
-        }
-
-        public void Inicializa()
-        {
-            if (this.LayoutTela.Equals("VISUALIZAR"))
-            {
-                BuscaDados();
-            }
-        }
-
         private void btSalvar_Click(object sender, EventArgs e)
         {
-
+            (CadastroBindingSource.Current as TB_CADASTRO).TB_CADASTRO_ENDERECOS
+                .Add(EnderecoBindingSource.Current as TB_CADASTRO_ENDERECOS);
+            (CadastroBindingSource.Current as TB_CADASTRO).TB_PROPRIEDADE
+                .Add(PropriedadeBindingSource.Current as TB_PROPRIEDADE);
+            CadastroBindingSource.EndEdit();
         }
 
         private void btCancelar_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show(((TB_TIPO_CADASTRO)cbsTipoCadastro.Current).DESC_TIPO_CADASTRO);
+        {   
+            CadastroBindingSource.CancelEdit();
         }       
 
         private void cbsFisicaJuridica_SelectedValueChanged(object sender, EventArgs e)
@@ -377,8 +297,11 @@ namespace Cliente.Forms
         }
 
         private void FCadastroCad_Load(object sender, EventArgs e)
-        {
-            Inicializa();
+        {   
+            if ("VISUALIZAR ALTERAR".Contains(this.LayoutTela))
+            {
+                BuscaDados();
+            }
         }
 
         private void btAlterarProriedade_Click(object sender, EventArgs e)
@@ -401,9 +324,20 @@ namespace Cliente.Forms
             if (dgvPropriedades.Rows[e.RowIndex].DataBoundItem != null)
             {
                 if (dgvPropriedades.Columns[e.ColumnIndex].DataPropertyName.Equals("CIDADE"))
-                    e.Value = (((dgvPropriedades.Rows[e.RowIndex].DataBoundItem as TB_PROPRIEDADE).TB_CIDADE).DESC_CIDADE);
+                    if ((dgvPropriedades.Rows[e.RowIndex].DataBoundItem as TB_PROPRIEDADE).TB_CIDADE != null)
+                        e.Value = (((dgvPropriedades.Rows[e.RowIndex].DataBoundItem as TB_PROPRIEDADE).TB_CIDADE).DESC_CIDADE);
             }
         }
+
+        private void btAlterarEndereco_Click(object sender, EventArgs e)
+        {
+            if (EnderecoBindingSource.Current == null)
+                return;
+
+            FEnderecoCad f = new FEnderecoCad("ALTERAR");
+            f.EnderecoBindingSource = EnderecoBindingSource;
+            f.Show();
+        }        
     }
 
 }

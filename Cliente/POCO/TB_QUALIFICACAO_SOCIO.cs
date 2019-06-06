@@ -7,9 +7,10 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace Cliente.POCO
 {
-    public class TB_CADASTRO_ENDERECOS : Cemapa.Models.TB_CADASTRO_ENDERECOS, IEditableObject
+    public class TB_QUALIFICACAO_SOCIO : Cemapa.Models.TB_QUALIFICACAO_SOCIO, IEditableObject, INotifyPropertyChanged
     {
         Hashtable props = null;
 

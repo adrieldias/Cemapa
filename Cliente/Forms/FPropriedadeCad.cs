@@ -65,22 +65,34 @@ namespace Cliente.Forms
         #region Acesso assíncrono ao servidor
         private async void BuscaDados()
         {
-            var cidade =
-            JsonConvert.DeserializeAnonymousType((await RunAsyncGet(
-                string.Format("{0}{1}/{2}", ConfigurationManager.AppSettings["UriCidade"], "Get", ((TB_PROPRIEDADE)PropriedadeBindingSource.Current).COD_CIDADE)
-                )), new TB_CIDADE());
+            TB_CIDADE cidade = null;
+            if (((TB_PROPRIEDADE)PropriedadeBindingSource.Current).COD_CIDADE != null)
+            {
+                cidade =
+                JsonConvert.DeserializeAnonymousType((await RunAsyncGet(
+                    string.Format("{0}{1}/{2}", ConfigurationManager.AppSettings["UriCidade"], "Get", ((TB_PROPRIEDADE)PropriedadeBindingSource.Current).COD_CIDADE)
+                    )), new TB_CIDADE());
+            }
+
             EstadoBindingSource.DataSource = JsonConvert.DeserializeAnonymousType((await RunAsyncGet(
                 ConfigurationManager.AppSettings["UriEstado"]
                 )), new List<TB_ESTADO>());
-            var objEst = EstadoBindingSource.List.OfType<TB_ESTADO>().First(c => c.COD_ESTADO == cidade.COD_ESTADO);
-            var pos = EstadoBindingSource.IndexOf(objEst);
-            EstadoBindingSource.Position = pos;
-            objEst = null;
-            pos = 0;
             cbsEstado.DisplayMember = "DESC_ESTADO";
             cbsEstado.ValueMember = "COD_ESTADO";
+            if (cidade != null)
+            {
+                var objEst = EstadoBindingSource.List.OfType<TB_ESTADO>().First(c => c.COD_ESTADO == cidade.COD_ESTADO);
+                var pos = EstadoBindingSource.IndexOf(objEst);
+                EstadoBindingSource.Position = pos;
+                objEst = null;
+                pos = 0;
+            }
+            else
+                cbsEstado.SelectedIndex = -1;
             EstadoBindingSource.CurrentItemChanged += new EventHandler(EstadoBindingSource_CurrentChanged);
-            BuscaCidades(cidade.COD_ESTADO);
+
+            if (cidade != null)
+                BuscaCidades(cidade.COD_ESTADO);            
 
             TipoPropriedadeBindingSource.DataSource =
                 JsonConvert.DeserializeAnonymousType((
@@ -89,7 +101,7 @@ namespace Cliente.Forms
             {
                 var objTP = TipoPropriedadeBindingSource.List.OfType<TB_TIPO_PROPRIEDADE>()
                     .First(c => c.COD_TIPO_PROPRIEDADE == ((TB_PROPRIEDADE)PropriedadeBindingSource.Current).COD_TIPO_PROPRIEDADE);
-                pos = TipoPropriedadeBindingSource.IndexOf(objTP);
+                var pos = TipoPropriedadeBindingSource.IndexOf(objTP);
                 TipoPropriedadeBindingSource.Position = pos;
                 objTP = null;
                 pos = 0;
@@ -164,6 +176,7 @@ namespace Cliente.Forms
             if(((TB_PROPRIEDADE)PropriedadeBindingSource.Current).IND_TIPO_IMOVEL != null)
                 ((TB_PROPRIEDADE)PropriedadeBindingSource.Current).IND_TIPO_IMOVEL =
                     TipoImovelBindingSource.Current.ToString();
+            PropriedadeBindingSource.EndEdit();
         }
 
         private void btCancelar_Click(object sender, EventArgs e)

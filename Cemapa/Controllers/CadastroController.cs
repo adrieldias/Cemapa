@@ -96,6 +96,39 @@ namespace Cemapa.Controllers
             
             
         }       
+
+        [HttpPost]
+        public System.Web.Mvc.JsonResult Delete(int id)
+        {
+            db.Configuration.LazyLoadingEnabled = false;
+
+            try
+            {
+                TB_CADASTRO query = (from c in db.TB_CADASTRO
+                            //.Include("TB_CADASTRO_ENDERECOS")
+                            //.Include("TB_PROPRIEDADE")                            
+                            where c.COD_CADASTRO == id
+                            select c).FirstOrDefault();
+                db.Entry(query).State = EntityState.Deleted;
+                db.SaveChanges();
+
+                var res = "Deletado";
+                return new System.Web.Mvc.JsonResult()
+                {
+                    Data = res,
+                    JsonRequestBehavior = System.Web.Mvc.JsonRequestBehavior.AllowGet
+                };
+            }
+            catch(Exception ex)
+            {
+                var err = string.Format("{0} - {1}", ex.Message, ex.InnerException);
+                return new System.Web.Mvc.JsonResult()
+                {
+                    Data = err,
+                    JsonRequestBehavior = System.Web.Mvc.JsonRequestBehavior.AllowGet
+                };
+            }
+        }
     }
 
    

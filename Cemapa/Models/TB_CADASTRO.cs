@@ -206,12 +206,13 @@ namespace Cemapa.Models
         public virtual TB_USUARIO TB_USUARIO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TB_PROPRIEDADE> TB_PROPRIEDADE { get; set; }
+        public virtual TB_CIDADE TB_CIDADE { get; set; }
+        public virtual TB_REGIAO TB_REGIAO { get; set; }
+        public virtual TB_VENDEDOR TB_VENDEDOR { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TB_PEDIDO_CAB> TB_PEDIDO_CAB { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TB_PEDIDO_CAB> TB_PEDIDO_CAB1 { get; set; }
-        public virtual TB_CIDADE TB_CIDADE { get; set; }
-        public virtual TB_REGIAO TB_REGIAO { get; set; }
-        public virtual TB_VENDEDOR TB_VENDEDOR { get; set; }
+        public virtual TB_TABELA_PRECO_CAB TB_TABELA_PRECO_CAB { get; set; }
     }
 }

@@ -67,6 +67,12 @@
     <Compile Include="Forms\FCadastroCad.Designer.cs">
       <DependentUpon>FCadastroCad.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\FEnderecoCad.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FEnderecoCad.Designer.cs">
+      <DependentUpon>FEnderecoCad.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\FPropriedadeCad.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -101,6 +107,7 @@
     <Compile Include="POCO\TB_PAIS.cs" />
     <Compile Include="POCO\TB_PRODUTO.cs" />
     <Compile Include="POCO\TB_PROPRIEDADE.cs" />
+    <Compile Include="POCO\TB_QUALIFICACAO_SOCIO.cs" />
     <Compile Include="POCO\TB_TIPO_CADASTRO.cs" />
     <Compile Include="POCO\TB_TIPO_PROPRIEDADE.cs" />
     <Compile Include="POCO\TB_VENDEDOR.cs" />
@@ -111,6 +118,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FCadastroHome.resx">
       <DependentUpon>FCadastroHome.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FEnderecoCad.resx">
+      <DependentUpon>FEnderecoCad.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FPropriedadeCad.resx">
       <DependentUpon>FPropriedadeCad.cs</DependentUpon>
@@ -156,6 +166,7 @@
       <Name>Componentes</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Fody.4.2.1\build\Fody.targets" Condition="Exists('..\packages\Fody.4.2.1\build\Fody.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

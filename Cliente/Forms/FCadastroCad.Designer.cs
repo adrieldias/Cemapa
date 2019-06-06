@@ -45,14 +45,10 @@
             this.cbsClassificacao = new Componentes.ComboBoxSimples();
             this.cbsVendedor = new Componentes.ComboBoxSimples();
             this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.tbsCep = new Componentes.TextBoxSimples();
-            this.cbsPais = new Componentes.ComboBoxSimples();
-            this.tbsEndereco = new Componentes.TextBoxSimples();
-            this.tbsComplemento = new Componentes.TextBoxSimples();
-            this.cbsEstado = new Componentes.ComboBoxSimples();
-            this.cbsCidade = new Componentes.ComboBoxSimples();
-            this.tbsBairro = new Componentes.TextBoxSimples();
+            this.btExcluirEndereco = new System.Windows.Forms.Button();
+            this.btAlterarEndereco = new System.Windows.Forms.Button();
+            this.btNovoEndereco = new System.Windows.Forms.Button();
+            this.dgvEndereco = new System.Windows.Forms.DataGridView();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.btExcluirPropriedade = new System.Windows.Forms.Button();
             this.btAlterarProriedade = new System.Windows.Forms.Button();
@@ -77,7 +73,7 @@
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tabPage4.SuspendLayout();
-            this.tableLayoutPanel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvEndereco)).BeginInit();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPropriedades)).BeginInit();
             this.tabPage3.SuspendLayout();
@@ -88,21 +84,18 @@
             // 
             this.pCabecalho.Size = new System.Drawing.Size(900, 52);
             // 
-            // btFechar
-            // 
-            this.btFechar.FlatAppearance.BorderColor = System.Drawing.Color.Gainsboro;
-            this.btFechar.FlatAppearance.BorderSize = 0;
-            // 
             // btCancelar
             // 
             this.btCancelar.FlatAppearance.BorderColor = System.Drawing.Color.Gainsboro;
             this.btCancelar.FlatAppearance.BorderSize = 0;
+            this.btCancelar.Location = new System.Drawing.Point(89, 56);
             this.btCancelar.Click += new System.EventHandler(this.btCancelar_Click);
             // 
             // btSalvar
             // 
             this.btSalvar.FlatAppearance.BorderColor = System.Drawing.Color.Gainsboro;
             this.btSalvar.FlatAppearance.BorderSize = 0;
+            this.btSalvar.Location = new System.Drawing.Point(1, 56);
             this.btSalvar.Click += new System.EventHandler(this.btSalvar_Click);
             // 
             // slickBlueTabControl1
@@ -117,11 +110,11 @@
             this.slickBlueTabControl1.Controls.Add(this.tabPage3);
             this.slickBlueTabControl1.Font = new System.Drawing.Font("Calibri Light", 10F);
             this.slickBlueTabControl1.ItemSize = new System.Drawing.Size(40, 130);
-            this.slickBlueTabControl1.Location = new System.Drawing.Point(0, 99);
+            this.slickBlueTabControl1.Location = new System.Drawing.Point(0, 102);
             this.slickBlueTabControl1.Multiline = true;
             this.slickBlueTabControl1.Name = "slickBlueTabControl1";
             this.slickBlueTabControl1.SelectedIndex = 0;
-            this.slickBlueTabControl1.Size = new System.Drawing.Size(900, 476);
+            this.slickBlueTabControl1.Size = new System.Drawing.Size(900, 473);
             this.slickBlueTabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.slickBlueTabControl1.TabIndex = 13;
             // 
@@ -131,7 +124,7 @@
             this.tabPage2.Location = new System.Drawing.Point(134, 4);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(762, 468);
+            this.tabPage2.Size = new System.Drawing.Size(762, 465);
             this.tabPage2.TabIndex = 0;
             this.tabPage2.Text = "Dados Principais";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -161,7 +154,7 @@
             this.tableLayoutPanel1.Controls.Add(this.cbsTipoCadastro, 0, 3);
             this.tableLayoutPanel1.Controls.Add(this.cbsFisicaJuridica, 5, 3);
             this.tableLayoutPanel1.Controls.Add(this.cbsClassificacao, 0, 6);
-            this.tableLayoutPanel1.Controls.Add(this.cbsVendedor, 3, 6);
+            this.tableLayoutPanel1.Controls.Add(this.cbsVendedor, 2, 6);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -174,7 +167,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(756, 462);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(756, 459);
             this.tableLayoutPanel1.TabIndex = 2;
             // 
             // pictureBox1
@@ -206,7 +199,6 @@
             this.txbsNome.PasswordChar = '\0';
             this.txbsNome.Size = new System.Drawing.Size(367, 42);
             this.txbsNome.TabIndex = 26;
-            this.txbsNome.Text = "";
             // 
             // txbsNomeFantasia
             // 
@@ -221,7 +213,6 @@
             this.txbsNomeFantasia.PasswordChar = '\0';
             this.txbsNomeFantasia.Size = new System.Drawing.Size(373, 42);
             this.txbsNomeFantasia.TabIndex = 27;
-            this.txbsNomeFantasia.Text = "";
             // 
             // txbsTelefone
             // 
@@ -236,7 +227,6 @@
             this.txbsTelefone.PasswordChar = '\0';
             this.txbsTelefone.Size = new System.Drawing.Size(142, 42);
             this.txbsTelefone.TabIndex = 29;
-            this.txbsTelefone.Text = "";
             // 
             // txbsCelular
             // 
@@ -251,7 +241,6 @@
             this.txbsCelular.PasswordChar = '\0';
             this.txbsCelular.Size = new System.Drawing.Size(142, 42);
             this.txbsCelular.TabIndex = 30;
-            this.txbsCelular.Text = "";
             // 
             // txbsEmailXML
             // 
@@ -266,7 +255,6 @@
             this.txbsEmailXML.PasswordChar = '\0';
             this.txbsEmailXML.Size = new System.Drawing.Size(217, 42);
             this.txbsEmailXML.TabIndex = 31;
-            this.txbsEmailXML.Text = "";
             // 
             // txbsEmailContato
             // 
@@ -281,7 +269,6 @@
             this.txbsEmailContato.PasswordChar = '\0';
             this.txbsEmailContato.Size = new System.Drawing.Size(223, 42);
             this.txbsEmailContato.TabIndex = 32;
-            this.txbsEmailContato.Text = "";
             // 
             // txbsCodigo
             // 
@@ -296,7 +283,6 @@
             this.txbsCodigo.PasswordChar = '\0';
             this.txbsCodigo.Size = new System.Drawing.Size(142, 42);
             this.txbsCodigo.TabIndex = 35;
-            this.txbsCodigo.Text = "";
             // 
             // cbsTipoCadastro
             // 
@@ -338,14 +324,14 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.cbsClassificacao.AutoSize = true;
             this.cbsClassificacao.BindingSource = null;
-            this.tableLayoutPanel1.SetColumnSpan(this.cbsClassificacao, 3);
+            this.tableLayoutPanel1.SetColumnSpan(this.cbsClassificacao, 2);
             this.cbsClassificacao.DisplayMember = "";
             this.cbsClassificacao.Label = "CLASSIFICAÇÃO";
             this.cbsClassificacao.Location = new System.Drawing.Point(3, 363);
             this.cbsClassificacao.Name = "cbsClassificacao";
             this.cbsClassificacao.SelectedText = null;
             this.cbsClassificacao.SelectedValue = null;
-            this.cbsClassificacao.Size = new System.Drawing.Size(219, 44);
+            this.cbsClassificacao.Size = new System.Drawing.Size(144, 44);
             this.cbsClassificacao.TabIndex = 40;
             this.cbsClassificacao.ValueMember = "";
             // 
@@ -355,173 +341,71 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.cbsVendedor.AutoSize = true;
             this.cbsVendedor.BindingSource = null;
-            this.tableLayoutPanel1.SetColumnSpan(this.cbsVendedor, 3);
+            this.tableLayoutPanel1.SetColumnSpan(this.cbsVendedor, 5);
             this.cbsVendedor.DisplayMember = "";
             this.cbsVendedor.Label = "VENDEDOR";
-            this.cbsVendedor.Location = new System.Drawing.Point(228, 363);
+            this.cbsVendedor.Location = new System.Drawing.Point(153, 363);
             this.cbsVendedor.Name = "cbsVendedor";
             this.cbsVendedor.SelectedText = null;
             this.cbsVendedor.SelectedValue = null;
-            this.cbsVendedor.Size = new System.Drawing.Size(219, 44);
+            this.cbsVendedor.Size = new System.Drawing.Size(369, 44);
             this.cbsVendedor.TabIndex = 41;
             this.cbsVendedor.ValueMember = "";
             // 
             // tabPage4
             // 
-            this.tabPage4.Controls.Add(this.tableLayoutPanel2);
+            this.tabPage4.Controls.Add(this.btExcluirEndereco);
+            this.tabPage4.Controls.Add(this.btAlterarEndereco);
+            this.tabPage4.Controls.Add(this.btNovoEndereco);
+            this.tabPage4.Controls.Add(this.dgvEndereco);
             this.tabPage4.Location = new System.Drawing.Point(134, 4);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(762, 468);
+            this.tabPage4.Size = new System.Drawing.Size(762, 465);
             this.tabPage4.TabIndex = 1;
             this.tabPage4.Text = "Endereço";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
-            // tableLayoutPanel2
+            // btExcluirEndereco
             // 
-            this.tableLayoutPanel2.ColumnCount = 10;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.tableLayoutPanel2.Controls.Add(this.tbsCep, 0, 2);
-            this.tableLayoutPanel2.Controls.Add(this.cbsPais, 3, 2);
-            this.tableLayoutPanel2.Controls.Add(this.tbsEndereco, 0, 0);
-            this.tableLayoutPanel2.Controls.Add(this.tbsComplemento, 5, 0);
-            this.tableLayoutPanel2.Controls.Add(this.cbsEstado, 0, 1);
-            this.tableLayoutPanel2.Controls.Add(this.cbsCidade, 3, 1);
-            this.tableLayoutPanel2.Controls.Add(this.tbsBairro, 7, 1);
-            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 3);
-            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 8;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(756, 462);
-            this.tableLayoutPanel2.TabIndex = 0;
+            this.btExcluirEndereco.Location = new System.Drawing.Point(190, 6);
+            this.btExcluirEndereco.Name = "btExcluirEndereco";
+            this.btExcluirEndereco.Size = new System.Drawing.Size(86, 42);
+            this.btExcluirEndereco.TabIndex = 19;
+            this.btExcluirEndereco.Text = "Excluir";
+            this.btExcluirEndereco.UseVisualStyleBackColor = true;
             // 
-            // tbsCep
+            // btAlterarEndereco
             // 
-            this.tbsCep.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.btAlterarEndereco.Location = new System.Drawing.Point(98, 6);
+            this.btAlterarEndereco.Name = "btAlterarEndereco";
+            this.btAlterarEndereco.Size = new System.Drawing.Size(86, 42);
+            this.btAlterarEndereco.TabIndex = 18;
+            this.btAlterarEndereco.Text = "Alterar";
+            this.btAlterarEndereco.UseVisualStyleBackColor = true;
+            this.btAlterarEndereco.Click += new System.EventHandler(this.btAlterarEndereco_Click);
+            // 
+            // btNovoEndereco
+            // 
+            this.btNovoEndereco.Location = new System.Drawing.Point(6, 6);
+            this.btNovoEndereco.Name = "btNovoEndereco";
+            this.btNovoEndereco.Size = new System.Drawing.Size(86, 42);
+            this.btNovoEndereco.TabIndex = 17;
+            this.btNovoEndereco.Text = "Novo";
+            this.btNovoEndereco.UseVisualStyleBackColor = true;
+            // 
+            // dgvEndereco
+            // 
+            this.dgvEndereco.AllowUserToAddRows = false;
+            this.dgvEndereco.AllowUserToDeleteRows = false;
+            this.dgvEndereco.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbsCep.AutoSize = true;
-            this.tableLayoutPanel2.SetColumnSpan(this.tbsCep, 3);
-            this.tbsCep.Font = new System.Drawing.Font("Calibri Light", 12F);
-            this.tbsCep.Label = "CEP";
-            this.tbsCep.Location = new System.Drawing.Point(3, 103);
-            this.tbsCep.Name = "tbsCep";
-            this.tbsCep.PasswordChar = '\0';
-            this.tbsCep.Size = new System.Drawing.Size(219, 44);
-            this.tbsCep.TabIndex = 9;
-            this.tbsCep.Text = "";
-            // 
-            // cbsPais
-            // 
-            this.cbsPais.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.cbsPais.AutoSize = true;
-            this.cbsPais.BindingSource = null;
-            this.tableLayoutPanel2.SetColumnSpan(this.cbsPais, 3);
-            this.cbsPais.DisplayMember = "";
-            this.cbsPais.Label = "PAÍS";
-            this.cbsPais.Location = new System.Drawing.Point(228, 103);
-            this.cbsPais.Name = "cbsPais";
-            this.cbsPais.SelectedText = null;
-            this.cbsPais.SelectedValue = null;
-            this.cbsPais.Size = new System.Drawing.Size(219, 44);
-            this.cbsPais.TabIndex = 10;
-            this.cbsPais.ValueMember = "";
-            // 
-            // tbsEndereco
-            // 
-            this.tbsEndereco.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbsEndereco.AutoSize = true;
-            this.tableLayoutPanel2.SetColumnSpan(this.tbsEndereco, 5);
-            this.tbsEndereco.Font = new System.Drawing.Font("Calibri Light", 12F);
-            this.tbsEndereco.Label = "ENDEREÇO (INFORMAR NÚMERO APÓS VÍRGULA)";
-            this.tbsEndereco.Location = new System.Drawing.Point(3, 3);
-            this.tbsEndereco.Name = "tbsEndereco";
-            this.tbsEndereco.PasswordChar = '\0';
-            this.tbsEndereco.Size = new System.Drawing.Size(369, 44);
-            this.tbsEndereco.TabIndex = 7;
-            this.tbsEndereco.Text = "";
-            // 
-            // tbsComplemento
-            // 
-            this.tbsComplemento.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbsComplemento.AutoSize = true;
-            this.tableLayoutPanel2.SetColumnSpan(this.tbsComplemento, 5);
-            this.tbsComplemento.Font = new System.Drawing.Font("Calibri Light", 12F);
-            this.tbsComplemento.Label = "COMPLEMENTO";
-            this.tbsComplemento.Location = new System.Drawing.Point(378, 3);
-            this.tbsComplemento.Name = "tbsComplemento";
-            this.tbsComplemento.PasswordChar = '\0';
-            this.tbsComplemento.Size = new System.Drawing.Size(375, 44);
-            this.tbsComplemento.TabIndex = 8;
-            this.tbsComplemento.Text = "";
-            // 
-            // cbsEstado
-            // 
-            this.cbsEstado.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.cbsEstado.AutoSize = true;
-            this.cbsEstado.BindingSource = null;
-            this.tableLayoutPanel2.SetColumnSpan(this.cbsEstado, 3);
-            this.cbsEstado.DisplayMember = "";
-            this.cbsEstado.Label = "ESTADO";
-            this.cbsEstado.Location = new System.Drawing.Point(3, 53);
-            this.cbsEstado.Name = "cbsEstado";
-            this.cbsEstado.SelectedText = "DESC_ESTADO";
-            this.cbsEstado.SelectedValue = "COD_ESTADO";
-            this.cbsEstado.Size = new System.Drawing.Size(219, 44);
-            this.cbsEstado.TabIndex = 4;
-            this.cbsEstado.ValueMember = "";
-            // 
-            // cbsCidade
-            // 
-            this.cbsCidade.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.cbsCidade.AutoSize = true;
-            this.cbsCidade.BindingSource = null;
-            this.tableLayoutPanel2.SetColumnSpan(this.cbsCidade, 4);
-            this.cbsCidade.DisplayMember = "";
-            this.cbsCidade.Label = "CIDADE";
-            this.cbsCidade.Location = new System.Drawing.Point(228, 53);
-            this.cbsCidade.Name = "cbsCidade";
-            this.cbsCidade.SelectedText = null;
-            this.cbsCidade.SelectedValue = null;
-            this.cbsCidade.Size = new System.Drawing.Size(294, 44);
-            this.cbsCidade.TabIndex = 11;
-            this.cbsCidade.ValueMember = "";
-            // 
-            // tbsBairro
-            // 
-            this.tbsBairro.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbsBairro.AutoSize = true;
-            this.tableLayoutPanel2.SetColumnSpan(this.tbsBairro, 3);
-            this.tbsBairro.Font = new System.Drawing.Font("Calibri Light", 12F);
-            this.tbsBairro.Label = "BAIRRO";
-            this.tbsBairro.Location = new System.Drawing.Point(528, 53);
-            this.tbsBairro.Name = "tbsBairro";
-            this.tbsBairro.PasswordChar = '\0';
-            this.tbsBairro.Size = new System.Drawing.Size(225, 44);
-            this.tbsBairro.TabIndex = 6;
-            this.tbsBairro.Text = "";
+            this.dgvEndereco.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvEndereco.Location = new System.Drawing.Point(6, 54);
+            this.dgvEndereco.Name = "dgvEndereco";
+            this.dgvEndereco.Size = new System.Drawing.Size(748, 408);
+            this.dgvEndereco.TabIndex = 0;
             // 
             // tabPage1
             // 
@@ -532,14 +416,14 @@
             this.tabPage1.Location = new System.Drawing.Point(134, 4);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(762, 468);
+            this.tabPage1.Size = new System.Drawing.Size(762, 465);
             this.tabPage1.TabIndex = 2;
             this.tabPage1.Text = "Propriedade";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // btExcluirPropriedade
             // 
-            this.btExcluirPropriedade.Location = new System.Drawing.Point(192, 6);
+            this.btExcluirPropriedade.Location = new System.Drawing.Point(190, 6);
             this.btExcluirPropriedade.Name = "btExcluirPropriedade";
             this.btExcluirPropriedade.Size = new System.Drawing.Size(86, 42);
             this.btExcluirPropriedade.TabIndex = 16;
@@ -548,7 +432,7 @@
             // 
             // btAlterarProriedade
             // 
-            this.btAlterarProriedade.Location = new System.Drawing.Point(100, 6);
+            this.btAlterarProriedade.Location = new System.Drawing.Point(98, 6);
             this.btAlterarProriedade.Name = "btAlterarProriedade";
             this.btAlterarProriedade.Size = new System.Drawing.Size(86, 42);
             this.btAlterarProriedade.TabIndex = 15;
@@ -558,7 +442,7 @@
             // 
             // btNovaPropriedade
             // 
-            this.btNovaPropriedade.Location = new System.Drawing.Point(8, 6);
+            this.btNovaPropriedade.Location = new System.Drawing.Point(6, 6);
             this.btNovaPropriedade.Name = "btNovaPropriedade";
             this.btNovaPropriedade.Size = new System.Drawing.Size(86, 42);
             this.btNovaPropriedade.TabIndex = 14;
@@ -572,7 +456,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvPropriedades.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvPropriedades.Location = new System.Drawing.Point(8, 54);
+            this.dgvPropriedades.Location = new System.Drawing.Point(6, 54);
             this.dgvPropriedades.Name = "dgvPropriedades";
             this.dgvPropriedades.Size = new System.Drawing.Size(748, 408);
             this.dgvPropriedades.TabIndex = 13;
@@ -584,7 +468,7 @@
             this.tabPage3.Location = new System.Drawing.Point(134, 4);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(762, 468);
+            this.tabPage3.Size = new System.Drawing.Size(762, 465);
             this.tabPage3.TabIndex = 3;
             this.tabPage3.Text = "Trabalho/Aut";
             this.tabPage3.ToolTipText = "Trabalho/Autorização";
@@ -624,7 +508,7 @@
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(756, 462);
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(756, 459);
             this.tableLayoutPanel4.TabIndex = 0;
             // 
             // tbsEmpresa
@@ -640,7 +524,6 @@
             this.tbsEmpresa.PasswordChar = '\0';
             this.tbsEmpresa.Size = new System.Drawing.Size(294, 44);
             this.tbsEmpresa.TabIndex = 0;
-            this.tbsEmpresa.Text = "";
             // 
             // tbsFuncao
             // 
@@ -655,7 +538,6 @@
             this.tbsFuncao.PasswordChar = '\0';
             this.tbsFuncao.Size = new System.Drawing.Size(219, 44);
             this.tbsFuncao.TabIndex = 1;
-            this.tbsFuncao.Text = "";
             // 
             // tbsTrabalhoTelefone
             // 
@@ -670,7 +552,6 @@
             this.tbsTrabalhoTelefone.PasswordChar = '\0';
             this.tbsTrabalhoTelefone.Size = new System.Drawing.Size(225, 44);
             this.tbsTrabalhoTelefone.TabIndex = 2;
-            this.tbsTrabalhoTelefone.Text = "";
             // 
             // tbsCrc
             // 
@@ -685,7 +566,6 @@
             this.tbsCrc.PasswordChar = '\0';
             this.tbsCrc.Size = new System.Drawing.Size(219, 44);
             this.tbsCrc.TabIndex = 3;
-            this.tbsCrc.Text = "";
             // 
             // tbsSequencial
             // 
@@ -700,7 +580,6 @@
             this.tbsSequencial.PasswordChar = '\0';
             this.tbsSequencial.Size = new System.Drawing.Size(294, 44);
             this.tbsSequencial.TabIndex = 4;
-            this.tbsSequencial.Text = "";
             // 
             // tbsValidadeCrc
             // 
@@ -715,7 +594,6 @@
             this.tbsValidadeCrc.PasswordChar = '\0';
             this.tbsValidadeCrc.Size = new System.Drawing.Size(225, 44);
             this.tbsValidadeCrc.TabIndex = 5;
-            this.tbsValidadeCrc.Text = "";
             // 
             // label1
             // 
@@ -742,7 +620,6 @@
             this.tbsDtFimSociedade.PasswordChar = '\0';
             this.tbsDtFimSociedade.Size = new System.Drawing.Size(219, 44);
             this.tbsDtFimSociedade.TabIndex = 7;
-            this.tbsDtFimSociedade.Text = "";
             // 
             // cbsQualificacaoSocio
             // 
@@ -774,7 +651,6 @@
             this.tbsPercParticCapitalTotal.PasswordChar = '\0';
             this.tbsPercParticCapitalTotal.Size = new System.Drawing.Size(219, 44);
             this.tbsPercParticCapitalTotal.TabIndex = 9;
-            this.tbsPercParticCapitalTotal.Text = "";
             // 
             // tbsPercParticCapitalVolante
             // 
@@ -789,7 +665,6 @@
             this.tbsPercParticCapitalVolante.PasswordChar = '\0';
             this.tbsPercParticCapitalVolante.Size = new System.Drawing.Size(219, 44);
             this.tbsPercParticCapitalVolante.TabIndex = 10;
-            this.tbsPercParticCapitalVolante.Text = "";
             // 
             // FCadastroCad
             // 
@@ -802,7 +677,6 @@
             this.Load += new System.EventHandler(this.FCadastroCad_Load);
             this.Controls.SetChildIndex(this.btSalvar, 0);
             this.Controls.SetChildIndex(this.btCancelar, 0);
-            this.Controls.SetChildIndex(this.btFechar, 0);
             this.Controls.SetChildIndex(this.pCabecalho, 0);
             this.Controls.SetChildIndex(this.slickBlueTabControl1, 0);
             this.pCabecalho.ResumeLayout(false);
@@ -814,8 +688,7 @@
             this.tableLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.tabPage4.ResumeLayout(false);
-            this.tableLayoutPanel2.ResumeLayout(false);
-            this.tableLayoutPanel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvEndereco)).EndInit();
             this.tabPage1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvPropriedades)).EndInit();
             this.tabPage3.ResumeLayout(false);
@@ -840,18 +713,10 @@
         private Componentes.TextBoxSimples txbsEmailXML;
         private Componentes.TextBoxSimples txbsEmailContato;
         private Componentes.TextBoxSimples txbsCodigo;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
-        private Componentes.ComboBoxSimples cbsEstado;
         private Componentes.ComboBoxSimples cbsTipoCadastro;
         private Componentes.ComboBoxSimples cbsFisicaJuridica;
         private Componentes.ComboBoxSimples cbsClassificacao;
         private Componentes.ComboBoxSimples cbsVendedor;
-        private Componentes.TextBoxSimples tbsBairro;
-        private Componentes.TextBoxSimples tbsEndereco;
-        private Componentes.TextBoxSimples tbsComplemento;
-        private Componentes.TextBoxSimples tbsCep;
-        private Componentes.ComboBoxSimples cbsPais;
-        private Componentes.ComboBoxSimples cbsCidade;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
@@ -870,5 +735,9 @@
         private System.Windows.Forms.Button btNovaPropriedade;
         private System.Windows.Forms.Button btExcluirPropriedade;
         private System.Windows.Forms.Button btAlterarProriedade;
+        private System.Windows.Forms.DataGridView dgvEndereco;
+        private System.Windows.Forms.Button btExcluirEndereco;
+        private System.Windows.Forms.Button btAlterarEndereco;
+        private System.Windows.Forms.Button btNovoEndereco;
     }
 }

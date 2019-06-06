@@ -240,7 +240,7 @@ namespace Cliente.Forms.Modelo
 
         public void Inicializa()
         {
-            PersonalizaForm.Instancia.Personaliza(this);
+            PersonalizaForm.Instancia.Personaliza(this, "UNICO");
             AddEventGridView();
         }
 

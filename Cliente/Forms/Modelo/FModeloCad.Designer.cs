@@ -32,9 +32,9 @@
             this.btMinimize = new System.Windows.Forms.Button();
             this.btCloseForm = new System.Windows.Forms.Button();
             this.lbNome = new System.Windows.Forms.Label();
-            this.btFechar = new System.Windows.Forms.Button();
             this.btCancelar = new System.Windows.Forms.Button();
             this.btSalvar = new System.Windows.Forms.Button();
+            this.btFechar = new System.Windows.Forms.Button();
             this.pCabecalho.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -98,68 +98,57 @@
             this.lbNome.TabIndex = 0;
             this.lbNome.Text = "NOME DO FORMULÁRIO";
             // 
-            // btFechar
-            // 
-            this.btFechar.AutoSize = true;
-            this.btFechar.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.btFechar.DialogResult = System.Windows.Forms.DialogResult.Abort;
-            this.btFechar.FlatAppearance.BorderColor = System.Drawing.Color.Gainsboro;
-            this.btFechar.FlatAppearance.BorderSize = 0;
-            this.btFechar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btFechar.ForeColor = System.Drawing.Color.Gray;
-            this.btFechar.Location = new System.Drawing.Point(173, 53);
-            this.btFechar.Margin = new System.Windows.Forms.Padding(1);
-            this.btFechar.Name = "btFechar";
-            this.btFechar.Padding = new System.Windows.Forms.Padding(0, 5, 0, 5);
-            this.btFechar.Size = new System.Drawing.Size(86, 42);
-            this.btFechar.TabIndex = 10;
-            this.btFechar.Text = "FECHAR";
-            this.btFechar.UseVisualStyleBackColor = false;
-            this.btFechar.Click += new System.EventHandler(this.btFechar_Click);
-            // 
             // btCancelar
             // 
             this.btCancelar.AutoSize = true;
-            this.btCancelar.BackColor = System.Drawing.Color.Tomato;
+            this.btCancelar.BackColor = System.Drawing.Color.LightGray;
             this.btCancelar.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btCancelar.FlatAppearance.BorderColor = System.Drawing.Color.Gainsboro;
             this.btCancelar.FlatAppearance.BorderSize = 0;
-            this.btCancelar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btCancelar.ForeColor = System.Drawing.Color.White;
-            this.btCancelar.Location = new System.Drawing.Point(87, 53);
+            this.btCancelar.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.btCancelar.Location = new System.Drawing.Point(88, 56);
             this.btCancelar.Margin = new System.Windows.Forms.Padding(1);
             this.btCancelar.Name = "btCancelar";
             this.btCancelar.Padding = new System.Windows.Forms.Padding(0, 5, 0, 5);
             this.btCancelar.Size = new System.Drawing.Size(86, 42);
             this.btCancelar.TabIndex = 9;
             this.btCancelar.Text = "CANCELAR";
-            this.btCancelar.UseVisualStyleBackColor = false;
+            this.btCancelar.UseVisualStyleBackColor = true;
             this.btCancelar.Click += new System.EventHandler(this.btCancelar_Click);
             // 
             // btSalvar
             // 
             this.btSalvar.AutoSize = true;
-            this.btSalvar.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.btSalvar.BackColor = System.Drawing.Color.LightGray;
             this.btSalvar.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btSalvar.FlatAppearance.BorderColor = System.Drawing.Color.Gainsboro;
             this.btSalvar.FlatAppearance.BorderSize = 0;
-            this.btSalvar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btSalvar.ForeColor = System.Drawing.Color.Gray;
-            this.btSalvar.Location = new System.Drawing.Point(1, 53);
+            this.btSalvar.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.btSalvar.Location = new System.Drawing.Point(0, 56);
             this.btSalvar.Margin = new System.Windows.Forms.Padding(1);
             this.btSalvar.Name = "btSalvar";
             this.btSalvar.Padding = new System.Windows.Forms.Padding(0, 5, 0, 5);
             this.btSalvar.Size = new System.Drawing.Size(86, 42);
             this.btSalvar.TabIndex = 8;
             this.btSalvar.Text = "SALVAR";
-            this.btSalvar.UseVisualStyleBackColor = false;
+            this.btSalvar.UseVisualStyleBackColor = true;
             this.btSalvar.Click += new System.EventHandler(this.btSalvar_Click);
+            // 
+            // btFechar
+            // 
+            this.btFechar.Location = new System.Drawing.Point(178, 56);
+            this.btFechar.Name = "btFechar";
+            this.btFechar.Size = new System.Drawing.Size(86, 42);
+            this.btFechar.TabIndex = 10;
+            this.btFechar.Text = "FECHAR";
+            this.btFechar.UseVisualStyleBackColor = true;
+            this.btFechar.Click += new System.EventHandler(this.btFechar_Click);
             // 
             // FModeloCad
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.Silver;
+            this.BackColor = System.Drawing.Color.LightGray;
             this.ClientSize = new System.Drawing.Size(830, 376);
             this.Controls.Add(this.btFechar);
             this.Controls.Add(this.btCancelar);
@@ -184,8 +173,8 @@
         public System.Windows.Forms.Label lbNome;
         private System.Windows.Forms.Button btCloseForm;
         private System.Windows.Forms.Button btMinimize;
-        protected System.Windows.Forms.Button btFechar;
         protected System.Windows.Forms.Button btCancelar;
         protected System.Windows.Forms.Button btSalvar;
+        private System.Windows.Forms.Button btFechar;
     }
 }
