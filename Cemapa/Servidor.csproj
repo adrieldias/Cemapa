@@ -235,12 +235,6 @@
     <Compile Include="Models\TB_SINCRONIZACAO_SKYHUB.cs">
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\TB_TABELA_PRECO_CAB.cs">
-      <DependentUpon>Dados.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TB_TABELA_PRECO_ITEM.cs">
-      <DependentUpon>Dados.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\TB_TIPO_CADASTRO.cs">
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>

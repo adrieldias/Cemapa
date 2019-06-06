@@ -688,24 +688,6 @@
           <Property Name="DT_REGISTRO" Type="date" />
           <Property Name="DT_SINCRONIZACAO" Type="date" />
         </EntityType>
-        <EntityType Name="TB_TABELA_PRECO_CAB">
-          <Key>
-            <PropertyRef Name="COD_TABELA_PRECO_CAB" />
-          </Key>
-          <Property Name="COD_TABELA_PRECO_CAB" Type="number" Precision="6" Scale="0" Nullable="false" />
-          <Property Name="DESC_TABELA_PRECO" Type="varchar2" MaxLength="30" Nullable="false" />
-          <Property Name="IND_SITUACAO" Type="varchar2" MaxLength="20" Nullable="false" />
-          <Property Name="IND_BLOQUEIA_DESCONTO" Type="char" MaxLength="3" />
-        </EntityType>
-        <EntityType Name="TB_TABELA_PRECO_ITEM">
-          <Key>
-            <PropertyRef Name="COD_TABELA_PRECO_ITEM" />
-          </Key>
-          <Property Name="COD_TABELA_PRECO_ITEM" Type="number" Precision="6" Scale="0" Nullable="false" />
-          <Property Name="COD_TABELA_PRECO_CAB" Type="number" Precision="6" Scale="0" Nullable="false" />
-          <Property Name="COD_PRODUTO" Type="number" Precision="14" Scale="0" Nullable="false" />
-          <Property Name="VAL_PRECO" Type="number" Precision="13" Scale="2" Nullable="false" />
-        </EntityType>
         <EntityType Name="TB_TIPO_CADASTRO">
           <Key>
             <PropertyRef Name="COD_TIPO_CADASTRO" />
@@ -1122,32 +1104,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_PRECOITEMXPRECOCAB">
-          <End Role="TB_TABELA_PRECO_CAB" Type="Self.TB_TABELA_PRECO_CAB" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="TB_TABELA_PRECO_ITEM" Type="Self.TB_TABELA_PRECO_ITEM" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TB_TABELA_PRECO_CAB">
-              <PropertyRef Name="COD_TABELA_PRECO_CAB" />
-            </Principal>
-            <Dependent Role="TB_TABELA_PRECO_ITEM">
-              <PropertyRef Name="COD_TABELA_PRECO_CAB" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PRECOITEMXPRODUTO">
-          <End Role="TB_PRODUTO" Type="Self.TB_PRODUTO" Multiplicity="1" />
-          <End Role="TB_TABELA_PRECO_ITEM" Type="Self.TB_TABELA_PRECO_ITEM" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TB_PRODUTO">
-              <PropertyRef Name="COD_PRODUTO" />
-            </Principal>
-            <Dependent Role="TB_TABELA_PRECO_ITEM">
-              <PropertyRef Name="COD_PRODUTO" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_PROD_SKYXPRODUTO">
           <End Role="TB_PRODUTO" Type="Self.TB_PRODUTO" Multiplicity="1" />
           <End Role="TB_PRODUTO_SKYHUB" Type="Self.TB_PRODUTO_SKYHUB" Multiplicity="*" />
@@ -1232,32 +1188,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_TABELA_PRECO_CABXCADASTRO">
-          <End Role="TB_TABELA_PRECO_CAB" Type="Self.TB_TABELA_PRECO_CAB" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="TB_CADASTRO" Type="Self.TB_CADASTRO" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TB_TABELA_PRECO_CAB">
-              <PropertyRef Name="COD_TABELA_PRECO_CAB" />
-            </Principal>
-            <Dependent Role="TB_CADASTRO">
-              <PropertyRef Name="COD_TABELA_PRECO_CAB" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TABELA_PRECO_CABXPEDIDO_IT">
-          <End Role="TB_TABELA_PRECO_CAB" Type="Self.TB_TABELA_PRECO_CAB" Multiplicity="0..1" />
-          <End Role="TB_PEDIDO_ITEM" Type="Self.TB_PEDIDO_ITEM" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TB_TABELA_PRECO_CAB">
-              <PropertyRef Name="COD_TABELA_PRECO_CAB" />
-            </Principal>
-            <Dependent Role="TB_PEDIDO_ITEM">
-              <PropertyRef Name="COD_TABELA_PRECO_CAB" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_VENDEDORXESTADO">
           <End Role="TB_ESTADO" Type="Self.TB_ESTADO" Multiplicity="0..1" />
           <End Role="TB_VENDEDOR" Type="Self.TB_VENDEDOR" Multiplicity="*" />
@@ -1294,8 +1224,6 @@
           <EntitySet Name="TB_REGIAO" EntityType="Self.TB_REGIAO" Schema="SISTEMA" store:Type="Tables" />
           <EntitySet Name="TB_SEQUENCIA" EntityType="Self.TB_SEQUENCIA" Schema="SISTEMA" store:Type="Tables" />
           <EntitySet Name="TB_SINCRONIZACAO_SKYHUB" EntityType="Self.TB_SINCRONIZACAO_SKYHUB" Schema="SISTEMA" store:Type="Tables" />
-          <EntitySet Name="TB_TABELA_PRECO_CAB" EntityType="Self.TB_TABELA_PRECO_CAB" Schema="SISTEMA" store:Type="Tables" />
-          <EntitySet Name="TB_TABELA_PRECO_ITEM" EntityType="Self.TB_TABELA_PRECO_ITEM" Schema="SISTEMA" store:Type="Tables" />
           <EntitySet Name="TB_TIPO_CADASTRO" EntityType="Self.TB_TIPO_CADASTRO" Schema="SISTEMA" store:Type="Tables" />
           <EntitySet Name="TB_TIPO_PROPRIEDADE" EntityType="Self.TB_TIPO_PROPRIEDADE" Schema="SISTEMA" store:Type="Tables" />
           <EntitySet Name="TB_TRIBUTACAO" EntityType="Self.TB_TRIBUTACAO" Schema="SISTEMA" store:Type="Tables" />
@@ -1397,14 +1325,6 @@
             <End Role="TB_PRODUTO" EntitySet="TB_PRODUTO" />
             <End Role="TB_PEDIDO_CAB" EntitySet="TB_PEDIDO_CAB" />
           </AssociationSet>
-          <AssociationSet Name="FK_PRECOITEMXPRECOCAB" Association="Self.FK_PRECOITEMXPRECOCAB">
-            <End Role="TB_TABELA_PRECO_CAB" EntitySet="TB_TABELA_PRECO_CAB" />
-            <End Role="TB_TABELA_PRECO_ITEM" EntitySet="TB_TABELA_PRECO_ITEM" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PRECOITEMXPRODUTO" Association="Self.FK_PRECOITEMXPRODUTO">
-            <End Role="TB_PRODUTO" EntitySet="TB_PRODUTO" />
-            <End Role="TB_TABELA_PRECO_ITEM" EntitySet="TB_TABELA_PRECO_ITEM" />
-          </AssociationSet>
           <AssociationSet Name="FK_PROD_SKYXPRODUTO" Association="Self.FK_PROD_SKYXPRODUTO">
             <End Role="TB_PRODUTO" EntitySet="TB_PRODUTO" />
             <End Role="TB_PRODUTO_SKYHUB" EntitySet="TB_PRODUTO_SKYHUB" />
@@ -1432,14 +1352,6 @@
           <AssociationSet Name="FK_SINC_SKYXPRODUTO" Association="Self.FK_SINC_SKYXPRODUTO">
             <End Role="TB_PRODUTO" EntitySet="TB_PRODUTO" />
             <End Role="TB_SINCRONIZACAO_SKYHUB" EntitySet="TB_SINCRONIZACAO_SKYHUB" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TABELA_PRECO_CABXCADASTRO" Association="Self.FK_TABELA_PRECO_CABXCADASTRO">
-            <End Role="TB_TABELA_PRECO_CAB" EntitySet="TB_TABELA_PRECO_CAB" />
-            <End Role="TB_CADASTRO" EntitySet="TB_CADASTRO" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TABELA_PRECO_CABXPEDIDO_IT" Association="Self.FK_TABELA_PRECO_CABXPEDIDO_IT">
-            <End Role="TB_TABELA_PRECO_CAB" EntitySet="TB_TABELA_PRECO_CAB" />
-            <End Role="TB_PEDIDO_ITEM" EntitySet="TB_PEDIDO_ITEM" />
           </AssociationSet>
           <AssociationSet Name="FK_VENDEDORXESTADO" Association="Self.FK_VENDEDORXESTADO">
             <End Role="TB_ESTADO" EntitySet="TB_ESTADO" />
@@ -1606,24 +1518,6 @@
           <AssociationSet Name="FK_PEDIDO_ITEMXPRODUTO" Association="Model.FK_PEDIDO_ITEMXPRODUTO">
             <End Role="TB_PRODUTO" EntitySet="TB_PRODUTO" />
             <End Role="TB_PEDIDO_ITEM" EntitySet="TB_PEDIDO_ITEM" />
-          </AssociationSet>
-          <EntitySet Name="TB_TABELA_PRECO_CAB" EntityType="Model.TB_TABELA_PRECO_CAB" />
-          <AssociationSet Name="FK_TABELA_PRECO_CABXCADASTRO" Association="Model.FK_TABELA_PRECO_CABXCADASTRO">
-            <End Role="TB_TABELA_PRECO_CAB" EntitySet="TB_TABELA_PRECO_CAB" />
-            <End Role="TB_CADASTRO" EntitySet="TB_CADASTRO" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TABELA_PRECO_CABXPEDIDO_IT" Association="Model.FK_TABELA_PRECO_CABXPEDIDO_IT">
-            <End Role="TB_TABELA_PRECO_CAB" EntitySet="TB_TABELA_PRECO_CAB" />
-            <End Role="TB_PEDIDO_ITEM" EntitySet="TB_PEDIDO_ITEM" />
-          </AssociationSet>
-          <EntitySet Name="TB_TABELA_PRECO_ITEM" EntityType="Model.TB_TABELA_PRECO_ITEM" />
-          <AssociationSet Name="FK_PRECOITEMXPRODUTO" Association="Model.FK_PRECOITEMXPRODUTO">
-            <End Role="TB_PRODUTO" EntitySet="TB_PRODUTO" />
-            <End Role="TB_TABELA_PRECO_ITEM" EntitySet="TB_TABELA_PRECO_ITEM" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PRECOITEMXPRECOCAB" Association="Model.FK_PRECOITEMXPRECOCAB">
-            <End Role="TB_TABELA_PRECO_CAB" EntitySet="TB_TABELA_PRECO_CAB" />
-            <End Role="TB_TABELA_PRECO_ITEM" EntitySet="TB_TABELA_PRECO_ITEM" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="TB_TIPO_CADASTRO">
@@ -2098,7 +1992,6 @@
           <Property Name="COD_FILIAL" Type="Int32" />
           <NavigationProperty Name="TB_PEDIDO_CAB" Relationship="Model.FK_PEDIDO_CABXCADASTRO" FromRole="TB_CADASTRO" ToRole="TB_PEDIDO_CAB" />
           <NavigationProperty Name="TB_PEDIDO_CAB1" Relationship="Model.FK_PEDIDOXCADASTROTRANSP" FromRole="TB_CADASTRO" ToRole="TB_PEDIDO_CAB" />
-          <NavigationProperty Name="TB_TABELA_PRECO_CAB" Relationship="Model.FK_TABELA_PRECO_CABXCADASTRO" FromRole="TB_CADASTRO" ToRole="TB_TABELA_PRECO_CAB" />
           </EntityType>
         <Association Name="FK_CADASTRO_ENDERECOSXCADASTRO">
           <End Type="Model.TB_CADASTRO" Role="TB_CADASTRO" Multiplicity="1">
@@ -2355,7 +2248,6 @@
           <Property Name="PERC_COMISSAO_PRODUCAO" Type="Decimal" Precision="5" Scale="2" />
           <NavigationProperty Name="TB_PEDIDO_CAB" Relationship="Model.FK_PEDIDOXPRODUTO" FromRole="TB_PRODUTO" ToRole="TB_PEDIDO_CAB" />
           <NavigationProperty Name="TB_PEDIDO_ITEM" Relationship="Model.FK_PEDIDO_ITEMXPRODUTO" FromRole="TB_PRODUTO" ToRole="TB_PEDIDO_ITEM" />
-          <NavigationProperty Name="TB_TABELA_PRECO_ITEM" Relationship="Model.FK_PRECOITEMXPRODUTO" FromRole="TB_PRODUTO" ToRole="TB_TABELA_PRECO_ITEM" />
         </EntityType>
         <Association Name="FK_PRODUTOXCLASSE">
           <End Type="Model.TB_CLASSE" Role="TB_CLASSE" Multiplicity="1" />
@@ -2808,7 +2700,6 @@
           <Property Name="IND_SINC_MAX_ROTEIRIZADOR" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <NavigationProperty Name="TB_PEDIDO_CAB" Relationship="Model.FK_PEDIDOITEMXPEDIDO" FromRole="TB_PEDIDO_ITEM" ToRole="TB_PEDIDO_CAB" />
           <NavigationProperty Name="TB_PRODUTO" Relationship="Model.FK_PEDIDO_ITEMXPRODUTO" FromRole="TB_PEDIDO_ITEM" ToRole="TB_PRODUTO" />
-          <NavigationProperty Name="TB_TABELA_PRECO_CAB" Relationship="Model.FK_TABELA_PRECO_CABXPEDIDO_IT" FromRole="TB_PEDIDO_ITEM" ToRole="TB_TABELA_PRECO_CAB" />
         </EntityType>
         <Association Name="FK_PEDIDO_CABXCADASTRO">
           <End Type="Model.TB_CADASTRO" Role="TB_CADASTRO" Multiplicity="0..1" />
@@ -2879,81 +2770,6 @@
             </Principal>
             <Dependent Role="TB_PEDIDO_ITEM">
               <PropertyRef Name="COD_PRODUTO" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="TB_TABELA_PRECO_CAB">
-          <Key>
-            <PropertyRef Name="COD_TABELA_PRECO_CAB" />
-          </Key>
-          <Property Name="COD_TABELA_PRECO_CAB" Type="Int32" Nullable="false" />
-          <Property Name="DESC_TABELA_PRECO" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="IND_SITUACAO" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="IND_BLOQUEIA_DESCONTO" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
-          <NavigationProperty Name="TB_CADASTRO" Relationship="Model.FK_TABELA_PRECO_CABXCADASTRO" FromRole="TB_TABELA_PRECO_CAB" ToRole="TB_CADASTRO" />
-          <NavigationProperty Name="TB_PEDIDO_ITEM" Relationship="Model.FK_TABELA_PRECO_CABXPEDIDO_IT" FromRole="TB_TABELA_PRECO_CAB" ToRole="TB_PEDIDO_ITEM" />
-          <NavigationProperty Name="TB_TABELA_PRECO_ITEM" Relationship="Model.FK_PRECOITEMXPRECOCAB" FromRole="TB_TABELA_PRECO_CAB" ToRole="TB_TABELA_PRECO_ITEM" />
-        </EntityType>
-        <Association Name="FK_TABELA_PRECO_CABXCADASTRO">
-          <End Type="Model.TB_TABELA_PRECO_CAB" Role="TB_TABELA_PRECO_CAB" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="Model.TB_CADASTRO" Role="TB_CADASTRO" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TB_TABELA_PRECO_CAB">
-              <PropertyRef Name="COD_TABELA_PRECO_CAB" />
-            </Principal>
-            <Dependent Role="TB_CADASTRO">
-              <PropertyRef Name="COD_TABELA_PRECO_CAB" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TABELA_PRECO_CABXPEDIDO_IT">
-          <End Type="Model.TB_TABELA_PRECO_CAB" Role="TB_TABELA_PRECO_CAB" Multiplicity="0..1" />
-          <End Type="Model.TB_PEDIDO_ITEM" Role="TB_PEDIDO_ITEM" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TB_TABELA_PRECO_CAB">
-              <PropertyRef Name="COD_TABELA_PRECO_CAB" />
-            </Principal>
-            <Dependent Role="TB_PEDIDO_ITEM">
-              <PropertyRef Name="COD_TABELA_PRECO_CAB" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="TB_TABELA_PRECO_ITEM">
-          <Key>
-            <PropertyRef Name="COD_TABELA_PRECO_ITEM" />
-          </Key>
-          <Property Name="COD_TABELA_PRECO_ITEM" Type="Int32" Nullable="false" />
-          <Property Name="COD_TABELA_PRECO_CAB" Type="Int32" Nullable="false" />
-          <Property Name="COD_PRODUTO" Type="Int64" Nullable="false" />
-          <Property Name="VAL_PRECO" Type="Decimal" Nullable="false" Precision="13" Scale="2" />
-          <NavigationProperty Name="TB_PRODUTO" Relationship="Model.FK_PRECOITEMXPRODUTO" FromRole="TB_TABELA_PRECO_ITEM" ToRole="TB_PRODUTO" />
-          <NavigationProperty Name="TB_TABELA_PRECO_CAB" Relationship="Model.FK_PRECOITEMXPRECOCAB" FromRole="TB_TABELA_PRECO_ITEM" ToRole="TB_TABELA_PRECO_CAB" />
-        </EntityType>
-        <Association Name="FK_PRECOITEMXPRODUTO">
-          <End Type="Model.TB_PRODUTO" Role="TB_PRODUTO" Multiplicity="1" />
-          <End Type="Model.TB_TABELA_PRECO_ITEM" Role="TB_TABELA_PRECO_ITEM" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TB_PRODUTO">
-              <PropertyRef Name="COD_PRODUTO" />
-            </Principal>
-            <Dependent Role="TB_TABELA_PRECO_ITEM">
-              <PropertyRef Name="COD_PRODUTO" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PRECOITEMXPRECOCAB">
-          <End Type="Model.TB_TABELA_PRECO_CAB" Role="TB_TABELA_PRECO_CAB" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="Model.TB_TABELA_PRECO_ITEM" Role="TB_TABELA_PRECO_ITEM" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TB_TABELA_PRECO_CAB">
-              <PropertyRef Name="COD_TABELA_PRECO_CAB" />
-            </Principal>
-            <Dependent Role="TB_TABELA_PRECO_ITEM">
-              <PropertyRef Name="COD_TABELA_PRECO_CAB" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3787,26 +3603,6 @@
                 <ScalarProperty Name="COD_PRODUTO" ColumnName="COD_PRODUTO" />
                 <ScalarProperty Name="COD_PEDIDO_CAB" ColumnName="COD_PEDIDO_CAB" />
                 <ScalarProperty Name="COD_PEDIDO_ITEM" ColumnName="COD_PEDIDO_ITEM" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TB_TABELA_PRECO_CAB">
-            <EntityTypeMapping TypeName="Model.TB_TABELA_PRECO_CAB">
-              <MappingFragment StoreEntitySet="TB_TABELA_PRECO_CAB">
-                <ScalarProperty Name="IND_BLOQUEIA_DESCONTO" ColumnName="IND_BLOQUEIA_DESCONTO" />
-                <ScalarProperty Name="IND_SITUACAO" ColumnName="IND_SITUACAO" />
-                <ScalarProperty Name="DESC_TABELA_PRECO" ColumnName="DESC_TABELA_PRECO" />
-                <ScalarProperty Name="COD_TABELA_PRECO_CAB" ColumnName="COD_TABELA_PRECO_CAB" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TB_TABELA_PRECO_ITEM">
-            <EntityTypeMapping TypeName="Model.TB_TABELA_PRECO_ITEM">
-              <MappingFragment StoreEntitySet="TB_TABELA_PRECO_ITEM">
-                <ScalarProperty Name="VAL_PRECO" ColumnName="VAL_PRECO" />
-                <ScalarProperty Name="COD_PRODUTO" ColumnName="COD_PRODUTO" />
-                <ScalarProperty Name="COD_TABELA_PRECO_CAB" ColumnName="COD_TABELA_PRECO_CAB" />
-                <ScalarProperty Name="COD_TABELA_PRECO_ITEM" ColumnName="COD_TABELA_PRECO_ITEM" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
