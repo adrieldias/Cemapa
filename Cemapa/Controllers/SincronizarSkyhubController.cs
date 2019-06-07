@@ -16,47 +16,58 @@ namespace Cemapa.Controllers
     {
         private Entities db = new Entities();
 
-        private HttpResponseMessage DownloadFile(string downloadFilePath, string fileName)
+        [HttpGet]
+        public async Task<HttpResponseMessage> DownloadEtiqueta(int codFilial, string codMarketplace)
         {
             try
             {
-                //Check if the file exists. If the file doesn't exist, throw a file not found exception
-                if (!File.Exists(downloadFilePath))
+                if (codFilial == 0)
                 {
-                    throw new HttpResponseException(HttpStatusCode.NotFound);
+                    throw new Exception("Informe a filial");
                 }
 
-                //Copy the source file stream to MemoryStream and close the file stream
-                MemoryStream responseStream = new MemoryStream();
-                Stream fileStream = File.Open(downloadFilePath, FileMode.Open);
+                if (codMarketplace == "")
+                {
+                    throw new Exception("Código do pedido do marketplace inválido");
+                }
+                
+                TB_CONFIGURACAO_SKYHUB configuracaoSkyhub = GetConfiguracao(codFilial);
 
-                fileStream.CopyTo(responseStream);
-                fileStream.Close();
-                responseStream.Position = 0;
+                if (configuracaoSkyhub != null)
+                {
+                    HttpClient Http = new HttpClient
+                    {
+                        BaseAddress = new Uri("https://api.skyhub.com.br")
+                    };
 
-                HttpResponseMessage response = new HttpResponseMessage();
-                response.StatusCode = HttpStatusCode.OK;
+                    Http.DefaultRequestHeaders.Accept.Clear();
+                    Http.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/pdf"));
 
-                //Write the memory stream to HttpResponseMessage content
-                response.Content = new StreamContent(responseStream);
-                string contentDisposition = string.Concat("attachment; filename=", fileName);
-                response.Content.Headers.ContentDisposition =
-                              ContentDispositionHeaderValue.Parse(contentDisposition);
-                return response;
-            }
-            catch
-            {
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
-            }
-        }
+                    Http.DefaultRequestHeaders.Add("X-User-Email", configuracaoSkyhub.DESC_USUARIO_EMAIL);
+                    Http.DefaultRequestHeaders.Add("X-Api-Key", configuracaoSkyhub.DESC_TOKEN_INTEGRACAO);
+                    Http.DefaultRequestHeaders.Add("X-Accountmanager-Key", configuracaoSkyhub.DESC_TOKEN_ACCOUNT);
+                    Http.DefaultRequestHeaders.Add("Accept", "application/pdf;charset=UTF-8");
+                    
+                    HttpResponseMessage response = await Http.GetAsync($"shipments/b2w/view?plp_id=60159");
 
-        [HttpGet]
-        public HttpResponseMessage DownloadEtiqueta()
-        {
-            try
-            {
-                return DownloadFile("C:/Users/Gian/Desktop/ag1268.pdf", "ag1268.pdf");
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        Error body = new Error();
+                        body = await response.Content.ReadAsAsync<Error>();
 
+                        throw new Exception($"Erro no retorno da Skyhub. {codMarketplace}: {response.ReasonPhrase}. Conteúdo: {body.error}");
+                    }
+
+                    return new HttpResponseMessage()
+                    {
+                        StatusCode = HttpStatusCode.OK,
+                        Content = response.Content
+                    };
+                }
+                else
+                {
+                    throw new Exception($"Filial não encontrada: {codFilial}");
+                }
             }
             catch (Exception except)
             {
@@ -70,6 +81,11 @@ namespace Cemapa.Controllers
         [HttpGet]
         public async Task<HttpResponseMessage> FinalizaPedido(int codFilial, string codMarketplace)
         {
+            //Método não utilizado por hora.
+            //Este método atualiza um pedido na B2W para o status DELIVERED, indicando que o comprador
+            //recebeu o pedido. Mas esse status é atualizado pela própria B2W
+            //assim que o comprador atualiza no site deles, ou o correio notifica.
+
             try
             {
                 if (codFilial == 0)
@@ -188,16 +204,18 @@ namespace Cemapa.Controllers
                     Http.DefaultRequestHeaders.Add("Accept", "application/json;charset=UTF-8");
                     
                     object data = null;
-
                     HttpResponseMessage response = await Http.PostAsJsonAsync($"/orders/{codMarketplace}/cancel", data);
 
                     if (response.IsSuccessStatusCode)
                     {
+                        //Atualiza os campos do pedido necessários para cancelado
+
                         TB_PEDIDO_CAB wPedido = (from p in db.TB_PEDIDO_CAB
                                                  where (p.COD_PEDIDO_MARKETPLACE == codMarketplace)
                                                  select p).FirstOrDefault();
                         if (wPedido != null)
                         {
+                            wPedido.IND_SITUACAO = "2";
                             wPedido.DESC_SITUACAO_SKYHUB = "CANCELED";
                             wPedido.DESC_COMPLEMENTO_OBS2 = "Cancelado pelo vendedor";
                             db.Entry(wPedido).State = EntityState.Modified;
@@ -238,6 +256,16 @@ namespace Cemapa.Controllers
         [HttpGet]
         public async Task<HttpResponseMessage> EnviaPedido(int codFilial, string codMarketplace)
         {
+            //Método não utilizado por hora.
+            //Este método atualiza um pedido na B2W para o status SHIPPED, indicando que o vendedor
+            //entregou o pedido para o comprador. Mas esse status é atualizado pela própria B2W
+            //assim que ele recebe as informações pelos correios.
+
+            //Importante resaltar que pedidos que não utilizam os serviços de entrega da B2W
+            //que no caso é feita pelos correios, o próprio vendedor deve informar a API sobre dados
+            //da entrega, tais como código de rastreio, descrição da transportadora, etc...
+            //O Sistema por enquanto esta implementado apenas para utilizar a B2W entregas.
+
             try
             {
                 if (codFilial == 0)
@@ -271,10 +299,22 @@ namespace Cemapa.Controllers
                     Http.DefaultRequestHeaders.Add("X-Accountmanager-Key", configuracaoSkyhub.DESC_TOKEN_ACCOUNT);
                     Http.DefaultRequestHeaders.Add("Accept", "application/json;charset=UTF-8");
                     
+                    //Informações da transportadora optado pelo vendedor.
+
                     Shipment envio = new Shipment()
                     {
-                        code = codMarketplace
+                        code = codMarketplace,
+                        track = new Track()
+                        {
+                            code = "",
+                            carrier = "",
+                            method = "",
+                            url = ""
+                        }
                     };
+
+                    //Adiciona a key shipment à requisição, padrão da API
+
                     Dictionary<string, Shipment> data = new Dictionary<string, Shipment> { { "shipment", envio } };
                     
                     HttpResponseMessage response = await Http.PostAsJsonAsync($"/orders/{codMarketplace}/shipments", data);
@@ -325,6 +365,8 @@ namespace Cemapa.Controllers
         [HttpGet]
         public async Task<HttpResponseMessage> DetalhesPedido(int codFilial, string codMarketplace)
         {
+            //Este método retorna o JSON completo do pedido como ele está na B2W
+
             Order ordem;
 
             try
@@ -338,6 +380,8 @@ namespace Cemapa.Controllers
                 {
                     throw new Exception("Código do pedido do marketplace inválido");
                 }
+
+                //Encontra a filial para buscar informações de acesso.
 
                 TB_CONFIGURACAO_SKYHUB configuracaoSkyhub = GetConfiguracao(codFilial);
 
@@ -438,12 +482,16 @@ namespace Cemapa.Controllers
                         key = chaveNFE
                     };
 
+                    //Adiciona a key invoice à chamada, padrão da API
+
                     Dictionary<string, Invoice> data = new Dictionary<string, Invoice> { { "invoice", fatura } };
 
                     HttpResponseMessage response = await Http.PostAsJsonAsync($"/orders/{codMarketplace}/invoice", data);
                         
                     if (response.IsSuccessStatusCode)
                     {
+                        //Se houve uma resposta de sucesso, atualiza o campo DESC_SITUACAO_SKYHUB na tabela TB_PEDIDO_CAB
+
                         TB_PEDIDO_CAB wPedido = (from p in db.TB_PEDIDO_CAB
                                                  where (p.COD_PEDIDO_MARKETPLACE == codMarketplace)
                                                  select p).FirstOrDefault();
@@ -554,7 +602,6 @@ namespace Cemapa.Controllers
 
                                                     int wCadastro = GetCodCadastro(ordem);
                                                     int wSequencia = GetSequencia(ordem);
-
                                                     int wCodigoPedido = db.Database.SqlQuery<int>("SELECT SQPEDIDO.NEXTVAL FROM DUAL").First();
 
                                                     if (wCadastro == -1)
@@ -619,7 +666,8 @@ namespace Cemapa.Controllers
                                                                 QT_PEDIDO = item.qty,
                                                                 COD_LOTE_TIPO = wCodLoteTipo,
                                                                 COD_TRIBUTACAO = wCodTributacao
-                                                            });
+                                                            }
+                                                        );
                                                     }
 
                                                     db.Entry(wPedidoCab).State = EntityState.Added;
@@ -662,8 +710,14 @@ namespace Cemapa.Controllers
                                             break;
 
                                             case "SHIPPED":
-                                                //Pedidos com status SHIPPED podem ocorrer se a empresa a qual entrega notificar.
-                                                //Mas normalmente esse status é alterado pelo vendedor
+                                                //Pedido com status SHIPPED, indica que o pedido foi entrega a transportadora.
+                                                //Provavelmente não ocorrerão, quem notifica este pedido é a própria B2W quando
+                                                //recebe tais informações dos correios
+
+                                                //Importante resaltar que pedidos que não utilizam os serviços de entrega da B2W
+                                                //que no caso é feita pelos correios, o próprio vendedor deve informar a API sobre dados
+                                                //da entrega, tais como código de rastreio, descrição da transportadora, etc...
+                                                //O Sistema por enquanto esta implementado apenas para utilizar a B2W entregas.
 
                                                 if (!db.TB_PEDIDO_CAB.Any(p => p.COD_PEDIDO_MARKETPLACE == ordem.code))
                                                 {
@@ -678,8 +732,8 @@ namespace Cemapa.Controllers
                                             break;
 
                                             case "DELIVERED":
-                                                //Pedidos com status SHIPPED podem ocorrer se a empresa a qual entrega notificar.
-                                                //Mas normalmente esse status é alterado pelo vendedor
+                                                //Pedidos com status DELIVERED indicam que o comprador recebeu o produto.
+                                                //Esse status é atualizado pelo comprador.
 
                                                 if (!db.TB_PEDIDO_CAB.Any(p => p.COD_PEDIDO_MARKETPLACE == ordem.code))
                                                 {
@@ -764,6 +818,9 @@ namespace Cemapa.Controllers
                     }
                 }
 
+                //Biblioteca ControlaExcecoes armazenou todos os erros ocorridos, caso não ocorra nenhum erro,
+                //então o método SemExcecoes retornará verdadeiro.
+
                 if (ControlaExcecoes.SemExcecoes())
                 {
                     return Request.CreateResponse(
@@ -803,7 +860,7 @@ namespace Cemapa.Controllers
 
                 ControlaExcecoes.Limpa();
 
-                //Busca sincronizações de produtos pendentes (campo IND_SINCRONIZADO esteja igual a "N").
+                //Busca sincronizações de produtos pendentes (campo IND_SINCRONIZADO esteja igual a "N") na tabela TB_SINCRONIZACAO_SKYHUB.
 
                 List<TB_SINCRONIZACAO_SKYHUB> sincronizacoesSkyhub = GetSincronizacoes();
 
@@ -827,7 +884,6 @@ namespace Cemapa.Controllers
 
                                 if (produtosSkyhub.Count > 0)
                                 {
-                                    
                                     foreach (TB_PRODUTO_SKYHUB produtoSkyhub in produtosSkyhub)
                                     {
                                         try
@@ -861,8 +917,6 @@ namespace Cemapa.Controllers
                                                 Http.DefaultRequestHeaders.Add("Accept", "application/json;charset=UTF-8");
 
                                                 //Instancia o produto da Classe ProdutoSkyhub, criada conforme a estrutura especificada no manual da API.
-                                                //Por enquanto, o campo custo será sempre zero, solicitado por Marcos, até descobrirmos o real
-                                                //propósito de existir tal campo em uma loja online.
 
                                                 ProdutosSkyhub ProdutoSku = new ProdutosSkyhub
                                                 {
@@ -880,7 +934,7 @@ namespace Cemapa.Controllers
                                                     ean = wInfosProduto.DESC_COD_BARRA,
                                                     nbm = wInfosProduto.NUM_GENERO_NCM
                                                 };
-
+                                                
                                                 foreach (var categoria in produtoSkyhub.TB_PRODUTO_CATEGORIA_SKYHUB)
                                                 {
                                                     ProdutoSku.categories.Add(
@@ -907,6 +961,10 @@ namespace Cemapa.Controllers
                                                 {
                                                     ProdutoSku.images.Add(imagem.DESC_IMAGEM);
                                                 }
+
+                                                /*
+                                                 *  Implementar a parte de variações assim que corrigir o modelo
+                                                 */
 
                                                 //Adiciona o produto skyhub na chave "products", padrão da API.
 
@@ -1013,7 +1071,8 @@ namespace Cemapa.Controllers
                                         if (response.StatusCode == HttpStatusCode.NotFound)
                                         {
                                             //Diminui para depois aumentar, ou seja, permanecer o valor que esta.
-                                            //Usado para uma tentativa de deletar um produto que já foi apagada não somar.
+                                            //Usado para uma tentativa de deletar um produto que já foi apagada não somar
+                                            //Serve apenas para o relatório da resposta ser preciso
 
                                             totalDeletados--;
                                         }
@@ -1054,6 +1113,9 @@ namespace Cemapa.Controllers
                         continue;
                     }
                 }
+
+                //Biblioteca ControlaExcecoes armazenou todos os erros ocorridos, caso não ocorra nenhum erro,
+                //então o método SemExcecoes retornará verdadeiro.
 
                 if (ControlaExcecoes.SemExcecoes())
                 {
