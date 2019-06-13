@@ -661,7 +661,7 @@ namespace Cemapa.Controllers
                                                             {
                                                                 COD_PEDIDO_ITEM = wCodItem,
                                                                 COD_PEDIDO_CAB = wCodigoPedido,
-                                                                COD_PRODUTO = wCodProduto,
+                                                                COD_PRODUTO = (int)wCodProduto,
                                                                 VAL_UNITARIO = Convert.ToDecimal(item.original_price),
                                                                 QT_PEDIDO = item.qty,
                                                                 COD_LOTE_TIPO = wCodLoteTipo,

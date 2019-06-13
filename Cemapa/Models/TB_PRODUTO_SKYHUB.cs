@@ -22,8 +22,8 @@ namespace Cemapa.Models
             this.TB_PRODUTO_IMAGEM_SKYHUB = new HashSet<TB_PRODUTO_IMAGEM_SKYHUB>();
         }
     
-        public long COD_PRODUTO_SKYHUB { get; set; }
-        public long COD_PRODUTO { get; set; }
+        public int COD_PRODUTO_SKYHUB { get; set; }
+        public int COD_PRODUTO { get; set; }
         public string IND_SINCRONIZA { get; set; }
         public string DESC_PRODUTO { get; set; }
         public string DESC_DESCRICAO { get; set; }
