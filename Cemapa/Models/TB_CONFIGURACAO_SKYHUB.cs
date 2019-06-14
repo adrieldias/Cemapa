@@ -14,12 +14,12 @@ namespace Cemapa.Models
     
     public partial class TB_CONFIGURACAO_SKYHUB
     {
-        public long COD_CONFIGURACAO_SKYHUB { get; set; }
-        public long COD_FILIAL { get; set; }
+        public int COD_CONFIGURACAO_SKYHUB { get; set; }
+        public int COD_FILIAL { get; set; }
         public string IND_ATIVO { get; set; }
         public string DESC_USUARIO_EMAIL { get; set; }
         public string DESC_TOKEN_INTEGRACAO { get; set; }
         public string DESC_TOKEN_ACCOUNT { get; set; }
-        public long COD_OPERACAO { get; set; }
+        public int COD_OPERACAO { get; set; }
     }
 }

@@ -213,6 +213,5 @@ namespace Cemapa.Models
         public virtual ICollection<TB_PEDIDO_CAB> TB_PEDIDO_CAB { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TB_PEDIDO_CAB> TB_PEDIDO_CAB1 { get; set; }
-        public virtual TB_TABELA_PRECO_CAB TB_TABELA_PRECO_CAB { get; set; }
     }
 }

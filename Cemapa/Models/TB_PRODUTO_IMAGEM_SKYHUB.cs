@@ -14,8 +14,8 @@ namespace Cemapa.Models
     
     public partial class TB_PRODUTO_IMAGEM_SKYHUB
     {
-        public long COD_PRODUTO_IMAGEM_SKYHUB { get; set; }
-        public long COD_PRODUTO_SKYHUB { get; set; }
+        public int COD_PRODUTO_IMAGEM_SKYHUB { get; set; }
+        public int COD_PRODUTO_SKYHUB { get; set; }
         public string DESC_IMAGEM { get; set; }
         public string IND_ATIVO { get; set; }
     
