@@ -165,6 +165,7 @@
       <DependentUpon>Dados.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\OrdensSkyhub.cs" />
+    <Compile Include="Models\PLPsSkyhub.cs" />
     <Compile Include="Models\ProdutosSkyhub.cs" />
     <Compile Include="Models\TB_CADASTRO.cs">
       <DependentUpon>Dados.tt</DependentUpon>
