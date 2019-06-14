@@ -24,7 +24,7 @@ namespace Cemapa.Models
             this.TB_PEDIDO_ITEM = new HashSet<TB_PEDIDO_ITEM>();
         }
     
-        public long COD_PRODUTO { get; set; }
+        public int COD_PRODUTO { get; set; }
         public int COD_CLASSE { get; set; }
         public int COD_TRIBUTACAO { get; set; }
         public string DESC_PRODUTO { get; set; }

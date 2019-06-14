@@ -37,7 +37,7 @@ namespace Cemapa.Models
         public string DESC_COMPLEMENTO_OBS2 { get; set; }
         public Nullable<System.DateTime> DT_VENCIMENTO { get; set; }
         public string IND_TIPO_PAGAMENTO { get; set; }
-        public Nullable<long> COD_PRODUTO { get; set; }
+        public Nullable<int> COD_PRODUTO { get; set; }
         public Nullable<decimal> QT_QUANTIDADE { get; set; }
         public Nullable<int> COD_USUARIO { get; set; }
         public Nullable<byte> NR_DIAS_CHEQUE { get; set; }

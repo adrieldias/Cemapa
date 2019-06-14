@@ -16,7 +16,7 @@ namespace Cemapa.Models
     {
         public int COD_LOTE_TIPO { get; set; }
         public int COD_FILIAL { get; set; }
-        public long COD_PRODUTO { get; set; }
+        public int COD_PRODUTO { get; set; }
         public Nullable<decimal> VL_CUSTO_MEDIO { get; set; }
         public Nullable<decimal> VL_ULTIMO_CUSTO { get; set; }
         public Nullable<decimal> VL_CUSTO_DOLAR { get; set; }

@@ -16,7 +16,7 @@ namespace Cemapa.Models
     {
         public int COD_PEDIDO_ITEM { get; set; }
         public Nullable<int> COD_PEDIDO_CAB { get; set; }
-        public Nullable<long> COD_PRODUTO { get; set; }
+        public Nullable<int> COD_PRODUTO { get; set; }
         public Nullable<int> COD_TRIBUTACAO { get; set; }
         public decimal QT_PEDIDO { get; set; }
         public decimal VAL_UNITARIO { get; set; }
