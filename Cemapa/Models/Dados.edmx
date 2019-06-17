@@ -402,7 +402,6 @@
           <Property Name="STEP_SINCRONIZACAO" Type="varchar2" MaxLength="15" />
           <Property Name="VAL_DESPESAS" Type="number" Precision="11" Scale="2" />
           <Property Name="IND_SINC_MAX_ROTEIRIZADOR" Type="char" MaxLength="1" />
-          <Property Name="DESC_SITUACAO_MARKETPLACE" Type="varchar2" MaxLength="30" />
           <Property Name="COD_PEDIDO_MARKETPLACE" Type="varchar2" MaxLength="60" />
           <Property Name="DESC_SITUACAO_SKYHUB" Type="varchar2" MaxLength="30" />
         </EntityType>

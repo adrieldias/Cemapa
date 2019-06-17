@@ -892,7 +892,14 @@ namespace Cemapa.Controllers
                                 }
                                 catch (Exception except)
                                 {
-                                    ControlaExcecoes.Add($"Erro ao sincronizar. Filial: {configuracaoSkyhub.COD_FILIAL}", except.Message);
+                                    if (except.Message == "An error occurred while updating the entries. See the inner exception for details.")
+                                    {
+                                        ControlaExcecoes.Add($"Erro ao sincronizar. Filial: {configuracaoSkyhub.COD_FILIAL}", except.InnerException.Message);
+                                    }
+                                    else
+                                    {
+                                        ControlaExcecoes.Add($"Erro ao sincronizar. Filial: {configuracaoSkyhub.COD_FILIAL}", except.Message);
+                                    }
                                     continue;
                                 }
                             }
@@ -925,7 +932,7 @@ namespace Cemapa.Controllers
                     return Request.CreateResponse(
                         HttpStatusCode.InternalServerError,
                         $"Nem todos os pedidos foram sincronizados. Criados: {wTotalCriados}, Cancelados: {wTotalCancelados}, Alterados: {wTotalAlterados}. " +
-                        $"{ControlaExcecoes.Excecoes}"
+                        $"{string.Join(", ", ControlaExcecoes.Excecoes)}"
                     );
                 }
             }
@@ -1220,8 +1227,8 @@ namespace Cemapa.Controllers
                 {
                     return Request.CreateResponse(
                         HttpStatusCode.InternalServerError,
-                        $"Nem todos os produtos foram sincronizados. Criados: {totalCriados}, Atualizados: {totalAtualizados}, Removidos: {totalDeletados}" +
-                        $"{ControlaExcecoes.Excecoes}"
+                        $"Nem todos os produtos foram sincronizados. Criados: {totalCriados}, Atualizados: {totalAtualizados}, Removidos: {totalDeletados} " +
+                        $"{string.Join(", ", ControlaExcecoes.Excecoes)}"
                     );
                 }
             }
