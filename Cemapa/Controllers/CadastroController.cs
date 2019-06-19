@@ -121,7 +121,7 @@ namespace Cemapa.Controllers
             }
             catch(Exception ex)
             {
-                var err = ex.Message;
+                var err = string.Format("{0} - {1}", ex.Message, ex.InnerException);
                 return new System.Web.Mvc.JsonResult()
                 {
                     Data = err,

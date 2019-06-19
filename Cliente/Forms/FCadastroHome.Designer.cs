@@ -48,6 +48,7 @@
             // 
             this.btExcluir.FlatAppearance.BorderColor = System.Drawing.Color.Gainsboro;
             this.btExcluir.FlatAppearance.BorderSize = 0;
+            this.btExcluir.Click += new System.EventHandler(this.btExcluir_Click);
             // 
             // btVisualizar
             // 

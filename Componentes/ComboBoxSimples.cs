@@ -176,5 +176,11 @@ namespace Componentes
         {
             e.KeyChar = e.KeyChar.ToString().ToUpper()[0];            
         }
+
+        private void ComboBoxSimples_Resize(object sender, EventArgs e)
+        {
+            comboBox1.SelectionLength = 0;
+            Refresh();
+        }
     }
 }

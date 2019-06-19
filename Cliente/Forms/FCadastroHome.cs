@@ -12,7 +12,9 @@ using System.Net.Http;
 using Newtonsoft.Json;
 
 using Cliente.Forms.Modelo;
+using Cliente.Utils;
 using System.Reflection;
+using System.Configuration;
 
 namespace Cliente.Forms
 {
@@ -59,7 +61,10 @@ namespace Cliente.Forms
             
             // Busca os dados no servidor
             var anonymousType = JsonConvert.DeserializeAnonymousType(
-                (await RunAsyncGet("http://localhost:53233/API/Cadastro/GetPersonalizado")), definition);
+                (await RunAsyncGet(
+                    string.Format("{0}{1}", ConfigurationManager.AppSettings["UriCadastro"], "GetPersonalizado")
+                    )), definition);
+
             CadastroBindingSource.DataSource = anonymousType.Data;
             dataGridView1.DataSource = CadastroBindingSource.DataSource;
         }
@@ -83,6 +88,28 @@ namespace Cliente.Forms
             FCadastroCad f = new FCadastroCad("VISUALIZAR");            
             f.ChaveConsulta.Add("Codigo", dataGridView1.CurrentRow.Cells["CODIGO"].Value.ToString());
             f.Show();
+        }
+
+        private async void btExcluir_Click(object sender, EventArgs e)
+        {
+            RetornoJson modelo = new RetornoJson();
+            if (FDialogBox.Message(FDialogBox.Questionamento, "Exclusão", "Deseja realmente excluir este cadastro?") == DialogResult.OK)
+            {
+                var r =
+                    await RunAsyncPost(
+                    string.Format("{0}{1}", ConfigurationManager.AppSettings["UriCadastro"], "Delete"),
+                    ((int)dataGridView1.CurrentRow.Cells["CODIGO"].Value)
+                    );
+                var retorno = JsonConvert.DeserializeAnonymousType(r, modelo);
+                if (retorno.Data == "Deletado")
+                {
+                    FDialogBox.Message(FDialogBox.Informacao, "Mensagem", "Cadastro excluído");
+                    FCadastroHome_Load(sender, e);
+                }
+                else
+                    FDialogBox.Message(FDialogBox.Erro, "Erro", retorno.Data, FDialogBox.TamGrande);
+                
+            }
         }
     }
 }
