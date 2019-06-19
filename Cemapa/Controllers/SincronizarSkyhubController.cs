@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -19,6 +18,13 @@ namespace Cemapa.Controllers
         [HttpGet]
         public async Task<HttpResponseMessage> DownloadEtiqueta(int codFilial, string codMarketplace)
         {
+            //Este método buscar por PLPs, que nada mais são do que agrupamentos de pedidos, para imprimir em etiquetas.
+            //Problema que a forma de acessar e imprimir etiquetas pode precisar de algumas chamadas.
+            
+            bool wAchouPlp = false;
+            string wCodigoPlp = null;
+            int wMaximoIteracoes = 10;
+
             try
             {
                 if (codFilial == 0)
@@ -35,27 +41,112 @@ namespace Cemapa.Controllers
 
                 if (configuracaoSkyhub != null)
                 {
+                    //Primeira requisição, faz uma chamada para verificar se uma PLP ja existe.
+
                     HttpClient Http = new HttpClient
                     {
                         BaseAddress = new Uri("https://api.skyhub.com.br")
                     };
 
                     Http.DefaultRequestHeaders.Accept.Clear();
-                    Http.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/pdf"));
-
+                    
                     Http.DefaultRequestHeaders.Add("X-User-Email", configuracaoSkyhub.DESC_USUARIO_EMAIL);
                     Http.DefaultRequestHeaders.Add("X-Api-Key", configuracaoSkyhub.DESC_TOKEN_INTEGRACAO);
                     Http.DefaultRequestHeaders.Add("X-Accountmanager-Key", configuracaoSkyhub.DESC_TOKEN_ACCOUNT);
-                    Http.DefaultRequestHeaders.Add("Accept", "application/pdf;charset=UTF-8");
+
+                    Http.DefaultRequestHeaders.Add("Accept", "application/json;charset=UTF-8");
+                    Http.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    HttpResponseMessage response;
+
+                    while (!wAchouPlp || wMaximoIteracoes <= 0)
+                    {
+                        response = await Http.GetAsync($"shipments/b2w");
+
+                        if (response.IsSuccessStatusCode)
+                        {
+                            //Caso encontre a PLP correspondente ao código do pedido solicitado,
+                            //então copia o código da PLP para imprimir em seguida.
+
+                            PLPs plps = await response.Content.ReadAsAsync<PLPs>();
+
+                            foreach (Plp plp in plps.plp)
+                            {
+                                foreach (OrderPLP ordem in plp.orders)
+                                {
+                                    if (ordem.code == codMarketplace)
+                                    {
+                                        wAchouPlp = true;
+                                        wCodigoPlp = plp.id;
+                                    }
+                                }
+                            }
+
+                            if (!wAchouPlp)
+                            {
+                                //Caso não encontre a PLP com o código do pedido solicitado, então é necessário
+                                //realizar o agrupamento, para depois novamente busca-la.
+
+                                List<string> codigos = new List<string> { codMarketplace };
+                                Dictionary<string, List<string>> agrupamentos = new Dictionary<string, List<string>> { { "order_remote_codes", codigos } };
+                                
+                                response = await Http.PostAsJsonAsync($"shipments/b2w", agrupamentos);
+
+                                if (!response.IsSuccessStatusCode)
+                                {
+                                    //Caso a skyhub já encontre alguma PLP existente para esse pedido, então ele desagrupa e
+                                    //retorna um erro, porém na próxima chamada existe a certeza de que o pedido será agrupado
+                                    //em uma nova PLP.
+
+                                    response = await Http.PostAsJsonAsync($"shipments/b2w", agrupamentos);
+
+                                    if (!response.IsSuccessStatusCode)
+                                    {
+                                        ErrorPLP body = new ErrorPLP();
+                                        body = await response.Content.ReadAsAsync<ErrorPLP>();
+
+                                        throw new Exception($"Erro ao agrupar pedido em uma PLP. {codMarketplace}: {response.ReasonPhrase}. Conteúdo: {body.message}");
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            Error body = new Error();
+                            body = await response.Content.ReadAsAsync<Error>();
+
+                            throw new Exception($"Erro ao buscar PLPs na skyhub. {codMarketplace}: {response.ReasonPhrase}. Conteúdo: {body.error}");
+                        }
+
+                        //Variavel controla numero máximo de iterações do loop, para não resultar em uma chamada sem fim.
+
+                        wMaximoIteracoes--;
+                    }
+
+                    if (!wAchouPlp && wMaximoIteracoes <= 0)
+                    {
+                        //Caso fez varias buscas e não encontrou nada, encerra e drop o erro.
+                        //Se acontecer esse caso, é provavel que exista uma possibilidade não prevista sobre gerar as etiquetas.
+
+                        throw new Exception($"Erro ao procurar PLP na skyhub. {codMarketplace}: Tentou procurar a PLP por muito tempo, e não encontrou nada");
+                    }
+
+                    //Finalmente recupera a etiqueta, enviando o código da PLP encontrada anteriormente.
+
+                    Http.DefaultRequestHeaders.Clear();
+                    Http.DefaultRequestHeaders.Accept.Clear();
                     
-                    HttpResponseMessage response = await Http.GetAsync($"shipments/b2w/view?plp_id=60159");
+                    Http.DefaultRequestHeaders.Add("X-User-Email", configuracaoSkyhub.DESC_USUARIO_EMAIL);
+                    Http.DefaultRequestHeaders.Add("X-Api-Key", configuracaoSkyhub.DESC_TOKEN_INTEGRACAO);
+                    Http.DefaultRequestHeaders.Add("X-Accountmanager-Key", configuracaoSkyhub.DESC_TOKEN_ACCOUNT);
+                    
+                    Http.DefaultRequestHeaders.Add("Accept", "application/pdf;charset=UTF-8");
+                    Http.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/pdf"));
+
+                    response = await Http.GetAsync($"shipments/b2w/view?plp_id={wCodigoPlp}");
 
                     if (!response.IsSuccessStatusCode)
                     {
-                        Error body = new Error();
-                        body = await response.Content.ReadAsAsync<Error>();
-
-                        throw new Exception($"Erro no retorno da Skyhub. {codMarketplace}: {response.ReasonPhrase}. Conteúdo: {body.error}");
+                        throw new Exception($"Erro ao baixar etiqueta. {codMarketplace}: {response.ReasonPhrase}. Conteúdo: {response.Content.ReadAsStringAsync()}");
                     }
 
                     return new HttpResponseMessage()
@@ -73,7 +164,7 @@ namespace Cemapa.Controllers
             {
                 return Request.CreateResponse(
                     HttpStatusCode.InternalServerError,
-                    $"Não foi possível enviar: {except.Message}"
+                    $"Erro: {except.Message}"
                 );
             }
         }
@@ -131,6 +222,7 @@ namespace Cemapa.Controllers
                         if (wPedido != null)
                         {
                             wPedido.DESC_SITUACAO_SKYHUB = "DELIVERED";
+                            wPedido.DESC_COMPLEMENTO_OBS2 = "Finalizado pelo vendedor";
                             db.Entry(wPedido).State = EntityState.Modified;
                             db.SaveChanges();
                         }
@@ -144,7 +236,7 @@ namespace Cemapa.Controllers
                         Error body = new Error();
                         body = await response.Content.ReadAsAsync<Error>();
 
-                        throw new Exception($"Erro no retorno da Skyhub. {codMarketplace}: {response.ReasonPhrase}. Conteúdo: {body.error}");
+                        throw new Exception($"Erro ao atualizar pedido para DELIVERED. {codMarketplace}: {response.ReasonPhrase}. Conteúdo: {body.error}");
                     }
                 }
                 else
@@ -161,7 +253,7 @@ namespace Cemapa.Controllers
             {
                 return Request.CreateResponse(
                     HttpStatusCode.InternalServerError,
-                    $"Não foi possível enviar: {except.Message}"
+                    $"Erro: {except.Message}"
                 );
             }
         }
@@ -231,7 +323,7 @@ namespace Cemapa.Controllers
                         Error body = new Error();
                         body = await response.Content.ReadAsAsync<Error>();
 
-                        throw new Exception($"Erro no retorno da Skyhub. {codMarketplace}: {response.ReasonPhrase}. Conteúdo: {body.error}");
+                        throw new Exception($"Erro ao atualizar pedido para CANCELED. {codMarketplace}: {response.ReasonPhrase}. Conteúdo: {body.error}");
                     }
                 }
                 else
@@ -248,7 +340,7 @@ namespace Cemapa.Controllers
             {
                 return Request.CreateResponse(
                     HttpStatusCode.InternalServerError,
-                    $"Não foi possível enviar: {except.Message}"
+                    $"Erro: {except.Message}"
                 );
             }
         }
@@ -357,7 +449,7 @@ namespace Cemapa.Controllers
             {
                 return Request.CreateResponse(
                     HttpStatusCode.InternalServerError,
-                    $"Não foi possível enviar: {except.Message}"
+                    $"Erro: {except.Message}"
                 );
             }
         }
@@ -407,7 +499,7 @@ namespace Cemapa.Controllers
                         Error body = new Error();
                         body = await response.Content.ReadAsAsync<Error>();
 
-                        throw new Exception($"Erro no retorno da Skyhub. {codMarketplace}: {response.ReasonPhrase}. Conteúdo: {body.error}");
+                        throw new Exception($"Erro ao buscar pedido na skyhub. {codMarketplace}: {response.ReasonPhrase}. Conteúdo: {body.error}");
                     }
                     else
                     {
@@ -429,7 +521,7 @@ namespace Cemapa.Controllers
             {
                 return Request.CreateResponse(
                     HttpStatusCode.InternalServerError,
-                    $"Não foi possível consultar: {except.Message}"
+                    $"Erro: {except.Message}"
                 );
             }
         }
@@ -528,7 +620,7 @@ namespace Cemapa.Controllers
             {
                 return Request.CreateResponse(
                     HttpStatusCode.InternalServerError,
-                    $"Não foi possível faturar: {except.Message}"
+                    $"Erro: {except.Message}"
                 );
             }
         }
@@ -800,7 +892,14 @@ namespace Cemapa.Controllers
                                 }
                                 catch (Exception except)
                                 {
-                                    ControlaExcecoes.Add($"Erro ao sincronizar. Filial: {configuracaoSkyhub.COD_FILIAL}", except.Message);
+                                    if (except.Message == "An error occurred while updating the entries. See the inner exception for details.")
+                                    {
+                                        ControlaExcecoes.Add($"Erro ao sincronizar. Filial: {configuracaoSkyhub.COD_FILIAL}", except.InnerException.Message);
+                                    }
+                                    else
+                                    {
+                                        ControlaExcecoes.Add($"Erro ao sincronizar. Filial: {configuracaoSkyhub.COD_FILIAL}", except.Message);
+                                    }
                                     continue;
                                 }
                             }
@@ -833,7 +932,7 @@ namespace Cemapa.Controllers
                     return Request.CreateResponse(
                         HttpStatusCode.InternalServerError,
                         $"Nem todos os pedidos foram sincronizados. Criados: {wTotalCriados}, Cancelados: {wTotalCancelados}, Alterados: {wTotalAlterados}. " +
-                        $"{ControlaExcecoes.Excecoes}"
+                        $"{string.Join(", ", ControlaExcecoes.Excecoes)}"
                     );
                 }
             }
@@ -965,7 +1064,7 @@ namespace Cemapa.Controllers
                                                 /*
                                                  *  Implementar a parte de variações assim que corrigir o modelo
                                                  */
-
+                                                
                                                 //Adiciona o produto skyhub na chave "products", padrão da API.
 
                                                 Dictionary<string, ProdutosSkyhub> products = new Dictionary<string, ProdutosSkyhub>{{ "product", ProdutoSku }};
@@ -1128,8 +1227,8 @@ namespace Cemapa.Controllers
                 {
                     return Request.CreateResponse(
                         HttpStatusCode.InternalServerError,
-                        $"Nem todos os produtos foram sincronizados. Criados: {totalCriados}, Atualizados: {totalAtualizados}, Removidos: {totalDeletados}" +
-                        $"{ControlaExcecoes.Excecoes}"
+                        $"Nem todos os produtos foram sincronizados. Criados: {totalCriados}, Atualizados: {totalAtualizados}, Removidos: {totalDeletados} " +
+                        $"{string.Join(", ", ControlaExcecoes.Excecoes)}"
                     );
                 }
             }
