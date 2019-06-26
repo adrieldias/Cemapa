@@ -33,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
@@ -47,6 +50,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Busca.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Busca.Designer.cs">
+      <DependentUpon>Busca.cs</DependentUpon>
+    </Compile>
     <Compile Include="ComboBoxSimples.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -70,6 +79,9 @@
     <Compile Include="TextBoxSimples.Designer.cs">
       <DependentUpon>TextBoxSimples.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Busca.resx">
+      <DependentUpon>Busca.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ComboBoxSimples.resx">
       <DependentUpon>ComboBoxSimples.cs</DependentUpon>
     </EmbeddedResource>
@@ -88,6 +100,7 @@
     <EmbeddedResource Include="TextBoxSimples.resx">
       <DependentUpon>TextBoxSimples.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

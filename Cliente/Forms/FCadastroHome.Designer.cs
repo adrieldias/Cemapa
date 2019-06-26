@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.busca1 = new Componentes.Busca();
             this.pCabecalho.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -67,16 +68,24 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(1, 106);
+            this.dataGridView1.Location = new System.Drawing.Point(1, 151);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(829, 308);
+            this.dataGridView1.Size = new System.Drawing.Size(829, 263);
             this.dataGridView1.TabIndex = 7;
+            // 
+            // busca1
+            // 
+            this.busca1.Location = new System.Drawing.Point(25, 106);
+            this.busca1.Name = "busca1";
+            this.busca1.Size = new System.Drawing.Size(691, 34);
+            this.busca1.TabIndex = 8;
             // 
             // FCadastroHome
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(830, 437);
+            this.Controls.Add(this.busca1);
             this.Controls.Add(this.dataGridView1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable;
             this.Name = "FCadastroHome";
@@ -88,6 +97,7 @@
             this.Controls.SetChildIndex(this.btVisualizar, 0);
             this.Controls.SetChildIndex(this.pCabecalho, 0);
             this.Controls.SetChildIndex(this.dataGridView1, 0);
+            this.Controls.SetChildIndex(this.busca1, 0);
             this.pCabecalho.ResumeLayout(false);
             this.pCabecalho.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
@@ -99,5 +109,6 @@
         #endregion
 
         private System.Windows.Forms.DataGridView dataGridView1;
+        private Componentes.Busca busca1;
     }
 }

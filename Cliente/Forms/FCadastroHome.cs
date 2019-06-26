@@ -13,6 +13,7 @@ using Newtonsoft.Json;
 
 using Cliente.Forms.Modelo;
 using System.Reflection;
+using System.Configuration;
 
 namespace Cliente.Forms
 {
@@ -27,6 +28,7 @@ namespace Cliente.Forms
             if (CadastroBindingSource == null)
                 CadastroBindingSource = new BindingSource();
             CadastroBindingSource.CurrentChanged += new EventHandler(CadastroBindingSource_CurrentChanged);
+            busca1.BindingSource = CadastroBindingSource;
         }
 
         private void CadastroBindingSource_CurrentChanged(object sender, EventArgs e)
@@ -56,15 +58,19 @@ namespace Cliente.Forms
                     }
                 }
             };
-            
-            // Busca os dados no servidor
-            var anonymousType = JsonConvert.DeserializeAnonymousType(
-                (await RunAsyncGet("http://localhost:53233/API/Cadastro/GetPersonalizado")), definition);
-            CadastroBindingSource.DataSource = anonymousType.Data;
-            dataGridView1.DataSource = CadastroBindingSource.DataSource;
+
+            busca1.definition = definition;
+            busca1.URI = ConfigurationManager.AppSettings["UriCadastro"];
+            //Busca os dados no servidor
+            //var anonymousType = JsonConvert.DeserializeAnonymousType(
+            //   (await RunAsyncGet("http://localhost:53233/API/Cadastro/GetPersonalizado")), definition);
+            //BindingSource.DataSource = anonymousType.Data;
+            //dataGridView1.DataSource = BindingSource.DataSource;
+            busca1.ListarTodos();
+            busca1.Focus();
         }
 
-        
+
 
         private void btNovo_Click(object sender, EventArgs e)
         {
