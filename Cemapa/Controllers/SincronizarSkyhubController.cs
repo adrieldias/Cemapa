@@ -221,7 +221,7 @@ namespace Cemapa.Controllers
                                                  select p).FirstOrDefault();
                         if (wPedido != null)
                         {
-                            wPedido.DESC_SITUACAO_SKYHUB = "DELIVERED";
+                            wPedido.DESC_SITUACAO_MARKETPLACE = "DELIVERED";
                             wPedido.DESC_COMPLEMENTO_OBS2 = "Finalizado pelo vendedor";
                             db.Entry(wPedido).State = EntityState.Modified;
                             db.SaveChanges();
@@ -308,7 +308,7 @@ namespace Cemapa.Controllers
                         if (wPedido != null)
                         {
                             wPedido.IND_SITUACAO = "2";
-                            wPedido.DESC_SITUACAO_SKYHUB = "CANCELED";
+                            wPedido.DESC_SITUACAO_MARKETPLACE = "CANCELED";
                             wPedido.DESC_COMPLEMENTO_OBS2 = "Cancelado pelo vendedor";
                             db.Entry(wPedido).State = EntityState.Modified;
                             db.SaveChanges();
@@ -418,7 +418,7 @@ namespace Cemapa.Controllers
                                                  select p).FirstOrDefault();
                         if (wPedido != null)
                         {
-                            wPedido.DESC_SITUACAO_SKYHUB = "SHIPPED";
+                            wPedido.DESC_SITUACAO_MARKETPLACE = "SHIPPED";
                             db.Entry(wPedido).State = EntityState.Modified;
                             db.SaveChanges();
                         }
@@ -589,7 +589,7 @@ namespace Cemapa.Controllers
                                                  select p).FirstOrDefault();
                         if (wPedido != null)
                         {
-                            wPedido.DESC_SITUACAO_SKYHUB = "INVOICE";
+                            wPedido.DESC_SITUACAO_MARKETPLACE = "INVOICE";
                             db.Entry(wPedido).State = EntityState.Modified;
                             db.SaveChanges();
                         }
@@ -721,7 +721,7 @@ namespace Cemapa.Controllers
                                                         IND_TIPO_FRETE = "CIF",
                                                         COD_PEDIDO_MARKETPLACE = ordem.code,
                                                         DESC_COMPLEMENTO_OBS = "Pedido do marketplace: " + ordem.code,
-                                                        DESC_SITUACAO_SKYHUB = "APPROVED",
+                                                        DESC_SITUACAO_MARKETPLACE = "APPROVED",
                                                         PERC_COMISSAO = 0,
                                                         COD_DEPARTAMENTO = 1
                                                     };
@@ -729,15 +729,9 @@ namespace Cemapa.Controllers
                                                     foreach (Item item in ordem.items)
                                                     {
                                                         int wCodItem = db.Database.SqlQuery<int>("SELECT SQPEDIDO_ITEM.NEXTVAL FROM DUAL").First();
-                                                        int wCodLoteTipo = GetLoteTipo(item);
                                                         int wCodTributacao = GetTributacao(item);
                                                         long wCodProduto = GetProdutosSkyhub(item);
-
-                                                        if (wCodLoteTipo == -1)
-                                                        {
-                                                            throw new Exception("Produto não possui nenhum lote configurado. Produto: " + item.id);
-                                                        }
-
+                                                        
                                                         if (wCodTributacao == -1)
                                                         {
                                                             throw new Exception("Produto não possui nenhuma tributação configurada. Produto: " + item.id);
@@ -756,7 +750,7 @@ namespace Cemapa.Controllers
                                                                 COD_PRODUTO = (int)wCodProduto,
                                                                 VAL_UNITARIO = Convert.ToDecimal(item.original_price),
                                                                 QT_PEDIDO = item.qty,
-                                                                COD_LOTE_TIPO = wCodLoteTipo,
+                                                                COD_LOTE_TIPO = 1,
                                                                 COD_TRIBUTACAO = wCodTributacao
                                                             }
                                                         );
@@ -777,7 +771,7 @@ namespace Cemapa.Controllers
                                                     TB_PEDIDO_CAB wPedidoCab = GetPedidoPorMarketplace(ordem);
                                                     wPedidoCab.IND_SITUACAO = "2";
                                                     wPedidoCab.DESC_COMPLEMENTO_OBS2 = "Cancelado pelo cliente";
-                                                    wPedidoCab.DESC_SITUACAO_SKYHUB = "CANCELED";
+                                                    wPedidoCab.DESC_SITUACAO_MARKETPLACE = "CANCELED";
 
                                                     db.Entry(wPedidoCab).State = EntityState.Modified;
                                                     db.SaveChanges();
@@ -792,7 +786,7 @@ namespace Cemapa.Controllers
                                                 if (!db.TB_PEDIDO_CAB.Any(p => p.COD_PEDIDO_MARKETPLACE == ordem.code))
                                                 {
                                                     TB_PEDIDO_CAB wPedidoCab = GetPedidoPorMarketplace(ordem);
-                                                    wPedidoCab.DESC_SITUACAO_SKYHUB = "INVOICE";
+                                                    wPedidoCab.DESC_SITUACAO_MARKETPLACE = "INVOICE";
 
                                                     db.Entry(wPedidoCab).State = EntityState.Modified;
                                                     db.SaveChanges();
@@ -814,7 +808,7 @@ namespace Cemapa.Controllers
                                                 if (!db.TB_PEDIDO_CAB.Any(p => p.COD_PEDIDO_MARKETPLACE == ordem.code))
                                                 {
                                                     TB_PEDIDO_CAB wPedidoCab = GetPedidoPorMarketplace(ordem);
-                                                    wPedidoCab.DESC_SITUACAO_SKYHUB = "SHIPPED";
+                                                    wPedidoCab.DESC_SITUACAO_MARKETPLACE = "SHIPPED";
 
                                                     db.Entry(wPedidoCab).State = EntityState.Modified;
                                                     db.SaveChanges();
@@ -830,7 +824,7 @@ namespace Cemapa.Controllers
                                                 if (!db.TB_PEDIDO_CAB.Any(p => p.COD_PEDIDO_MARKETPLACE == ordem.code))
                                                 {
                                                     TB_PEDIDO_CAB wPedidoCab = GetPedidoPorMarketplace(ordem);
-                                                    wPedidoCab.DESC_SITUACAO_SKYHUB = "DELIVERED";
+                                                    wPedidoCab.DESC_SITUACAO_MARKETPLACE = "DELIVERED";
 
                                                     db.Entry(wPedidoCab).State = EntityState.Modified;
                                                     db.SaveChanges();
@@ -845,7 +839,7 @@ namespace Cemapa.Controllers
                                                 if (!db.TB_PEDIDO_CAB.Any(p => p.COD_PEDIDO_MARKETPLACE == ordem.code))
                                                 {
                                                     TB_PEDIDO_CAB wPedidoCab = GetPedidoPorMarketplace(ordem);
-                                                    wPedidoCab.DESC_SITUACAO_SKYHUB = "SHIPMENT_EXCEPTION";
+                                                    wPedidoCab.DESC_SITUACAO_MARKETPLACE = "SHIPMENT_EXCEPTION";
 
                                                     db.Entry(wPedidoCab).State = EntityState.Modified;
                                                     db.SaveChanges();
@@ -860,7 +854,7 @@ namespace Cemapa.Controllers
                                                 if (!db.TB_PEDIDO_CAB.Any(p => p.COD_PEDIDO_MARKETPLACE == ordem.code))
                                                 {
                                                     TB_PEDIDO_CAB wPedidoCab = GetPedidoPorMarketplace(ordem);
-                                                    wPedidoCab.DESC_SITUACAO_SKYHUB = "PAYMENT_OVERDUE";
+                                                    wPedidoCab.DESC_SITUACAO_MARKETPLACE = "PAYMENT_OVERDUE";
 
                                                     db.Entry(wPedidoCab).State = EntityState.Modified;
                                                     db.SaveChanges();
@@ -892,14 +886,7 @@ namespace Cemapa.Controllers
                                 }
                                 catch (Exception except)
                                 {
-                                    if (except.Message == "An error occurred while updating the entries. See the inner exception for details.")
-                                    {
-                                        ControlaExcecoes.Add($"Erro ao sincronizar. Filial: {configuracaoSkyhub.COD_FILIAL}", except.InnerException.Message);
-                                    }
-                                    else
-                                    {
-                                        ControlaExcecoes.Add($"Erro ao sincronizar. Filial: {configuracaoSkyhub.COD_FILIAL}", except.Message);
-                                    }
+                                    ControlaExcecoes.Add($"Erro ao sincronizar. Filial: {configuracaoSkyhub.COD_FILIAL}", ResolucaoExcecoes.ErroAprofundado(except));
                                     continue;
                                 }
                             }
@@ -912,7 +899,7 @@ namespace Cemapa.Controllers
                     }
                     catch (Exception except)
                     {
-                        ControlaExcecoes.Add($"Erro ao sincronizar. Filial: {configuracaoSkyhub.COD_FILIAL}", except.Message);
+                        ControlaExcecoes.Add($"Erro ao sincronizar. Filial: {configuracaoSkyhub.COD_FILIAL}", ResolucaoExcecoes.ErroAprofundado(except));
                         continue;
                     }
                 }
@@ -940,7 +927,7 @@ namespace Cemapa.Controllers
             {
                 return Request.CreateResponse(
                     HttpStatusCode.InternalServerError,
-                    $"Não foi possível começar a sincronização. {except.Message}"
+                    $"Não foi possível começar a sincronização. {ResolucaoExcecoes.ErroAprofundado(except)}"
                 );
                 
             }
@@ -991,12 +978,7 @@ namespace Cemapa.Controllers
 
                                             TB_PRODUTO wInfosProduto = InfosProduto(configuracaoSkyhub, produtoSkyhub);
                                             decimal wTotalEstoque = TotalEstoque(configuracaoSkyhub, produtoSkyhub);
-
-                                            if (wTotalEstoque < 1)
-                                            {
-                                                throw new Exception("Produto sem estoque");
-                                            }
-
+                                            
                                             //Faz algumas verificações em alguns campos antes de sincronizar.
                                             //Caso não esteja tudo ok, este produto não será sincronizado
 
@@ -1017,7 +999,7 @@ namespace Cemapa.Controllers
 
                                                 //Instancia o produto da Classe ProdutoSkyhub, criada conforme a estrutura especificada no manual da API.
 
-                                                ProdutosSkyhub ProdutoSku = new ProdutosSkyhub
+                                                ProdutoSkyhub ProdutoSku = new ProdutoSkyhub
                                                 {
                                                     sku = produtoSkyhub.COD_PRODUTO,
                                                     name = produtoSkyhub.DESC_PRODUTO,
@@ -1037,7 +1019,7 @@ namespace Cemapa.Controllers
                                                 foreach (var categoria in produtoSkyhub.TB_PRODUTO_CATEGORIA_SKYHUB)
                                                 {
                                                     ProdutoSku.categories.Add(
-                                                        new CategoriaProdutoSkyhub
+                                                        new Category
                                                         {
                                                             code = categoria.COD_PRODUTO_CATEGORIA_SKYHUB,
                                                             name = categoria.DESC_CATEGORIA
@@ -1048,7 +1030,7 @@ namespace Cemapa.Controllers
                                                 foreach (var espec in produtoSkyhub.TB_PRODUTO_ESP_SKYHUB)
                                                 {
                                                     ProdutoSku.specifications.Add(
-                                                        new EspecificacoesProdutoSkyhub
+                                                        new Specification
                                                         {
                                                             key = espec.DESC_ESPECIFICACAO,
                                                             value = espec.VAL_ESPECIFICACAO
@@ -1061,13 +1043,84 @@ namespace Cemapa.Controllers
                                                     ProdutoSku.images.Add(imagem.DESC_IMAGEM);
                                                 }
 
-                                                /*
-                                                 *  Implementar a parte de variações assim que corrigir o modelo
-                                                 */
+                                                List<TB_PRODUTO_SKYHUB> variacoes = GetVariacoes(produtoSkyhub);
+
+                                                foreach (var variacao in variacoes)
+                                                {
+                                                    if (ProdutoEstaOK(variacao))
+                                                    {
+                                                        TB_PRODUTO wInfosVariacao = InfosProduto(configuracaoSkyhub, variacao);
+                                                        decimal wTotalEstoqueVar = TotalEstoque(configuracaoSkyhub, variacao);
+
+                                                        Variation wProdutoVariacao = new Variation
+                                                        {
+                                                            sku = variacao.COD_PRODUTO,
+                                                            price = Convert.ToDouble(wInfosVariacao.VAL_VAREJO),
+                                                            qty = Convert.ToInt32(wTotalEstoqueVar),
+                                                            ean = wInfosVariacao.DESC_COD_BARRA
+                                                        };
+
+                                                        foreach (var espec in variacao.TB_PRODUTO_ESP_SKYHUB)
+                                                        {
+                                                            wProdutoVariacao.specifications.Add(
+                                                                new Specification
+                                                                {
+                                                                    key = espec.DESC_ESPECIFICACAO,
+                                                                    value = espec.VAL_ESPECIFICACAO
+                                                                }
+                                                            );
+                                                        }
+
+                                                        wProdutoVariacao.specifications.Add(
+                                                            new Specification
+                                                            {
+                                                                key = "price",
+                                                                value = Convert.ToString(wInfosVariacao.VAL_VAREJO)
+                                                            }
+                                                        );
+
+                                                        foreach (var imagem in variacao.TB_PRODUTO_IMAGEM_SKYHUB)
+                                                        {
+                                                            wProdutoVariacao.images.Add(imagem.DESC_IMAGEM);
+                                                        }
+
+                                                        ProdutoSku.variations.Add(wProdutoVariacao);
+                                                    }
+                                                    else
+                                                    {
+                                                        throw new Exception("Variação de produto não preenchido corretamente");
+                                                    }
+
+                                                }
+
+                                                //Agora cria a key variation_attributes, que é gerada com base nas especificações
+                                                //do produto pai e de suas variações. Caso exista alguma variação com mesma key mas
+                                                //value diferente, então esse produto tem variações de atributos.
+
+                                                foreach (Specification specification in ProdutoSku.specifications)
+                                                {
+                                                    bool wAchou = false;
+
+                                                    foreach (Variation variation in ProdutoSku.variations)
+                                                    {
+                                                        foreach (Specification variSpecification in variation.specifications)
+                                                        {
+                                                            if ((variSpecification.key == specification.key) && (variSpecification.value != specification.value))
+                                                            {
+                                                                wAchou = true;
+                                                            }
+                                                        }
+                                                    }
+
+                                                    if (wAchou)
+                                                    {
+                                                        ProdutoSku.variation_attributes.Add(specification.key);
+                                                    }
+                                                }
                                                 
                                                 //Adiciona o produto skyhub na chave "products", padrão da API.
 
-                                                Dictionary<string, ProdutosSkyhub> products = new Dictionary<string, ProdutosSkyhub>{{ "product", ProdutoSku }};
+                                                Dictionary<string, ProdutoSkyhub> products = new Dictionary<string, ProdutoSkyhub>{{ "product", ProdutoSku }};
 
                                                 //Por fim, executa a chamada Http conforme a requisição registrada na tabela TB_SINCRONIZACAO_SKYHUB
                                                 //e caso ocorra algum erro, grava um log com informações.
@@ -1133,12 +1186,12 @@ namespace Cemapa.Controllers
                                             }
                                             else
                                             {
-                                                saveRegistro = false;
+                                                throw new Exception("Produto não preenchido corretamente");
                                             }
                                         }
                                         catch (Exception except)
                                         {
-                                            ControlaExcecoes.Add($"Erro ao sincronizar. Filial: {configuracaoSkyhub.COD_FILIAL}", $"produto: {produtoSkyhub.COD_PRODUTO}", except.Message);
+                                            ControlaExcecoes.Add($"Erro ao sincronizar. Filial: {configuracaoSkyhub.COD_FILIAL}", $"produto: {produtoSkyhub.COD_PRODUTO}", ResolucaoExcecoes.ErroAprofundado(except));
                                             saveRegistro = false;
                                             continue;
                                         }
@@ -1186,7 +1239,9 @@ namespace Cemapa.Controllers
                             }
                             catch (Exception except)
                             {
-                                ControlaExcecoes.Add($"Erro ao sincronizar. Filial: {configuracaoSkyhub.COD_FILIAL}", except.Message);
+                                ControlaExcecoes.Add($"Erro ao sincronizar. Filial: {configuracaoSkyhub.COD_FILIAL}, " +
+                                                     $"Sincronização: {sincronizacaoSkyhub.COD_SINCRONIZACAO_SKYHUB}",
+                                                     ResolucaoExcecoes.ErroAprofundado(except));
                                 saveRegistro = false;
                                 continue;
                             }
@@ -1208,7 +1263,7 @@ namespace Cemapa.Controllers
                     }
                     catch (Exception except)
                     {
-                        ControlaExcecoes.Add($"Erro ao sincronizar. Sincronização: {sincronizacaoSkyhub.COD_SINCRONIZACAO_SKYHUB}", except.Message);
+                        ControlaExcecoes.Add($"Erro ao sincronizar. Sincronização: {sincronizacaoSkyhub.COD_SINCRONIZACAO_SKYHUB}", ResolucaoExcecoes.ErroAprofundado(except));
                         continue;
                     }
                 }
@@ -1227,7 +1282,7 @@ namespace Cemapa.Controllers
                 {
                     return Request.CreateResponse(
                         HttpStatusCode.InternalServerError,
-                        $"Nem todos os produtos foram sincronizados. Criados: {totalCriados}, Atualizados: {totalAtualizados}, Removidos: {totalDeletados} " +
+                        $"Nem todos os produtos foram sincronizados. Criados: {totalCriados}, Atualizados: {totalAtualizados}, Removidos: {totalDeletados}. " +
                         $"{string.Join(", ", ControlaExcecoes.Excecoes)}"
                     );
                 }
@@ -1236,9 +1291,16 @@ namespace Cemapa.Controllers
             {
                 return Request.CreateResponse(
                     HttpStatusCode.InternalServerError,
-                    $"Não foi possível começar a sincronização. {except.Message}"
+                    $"Não foi possível começar a sincronização. {ResolucaoExcecoes.ErroAprofundado(except)}"
                 );
             }
+        }
+
+        private List<TB_PRODUTO_SKYHUB> GetVariacoes(TB_PRODUTO_SKYHUB produtoSky)
+        {
+            return (from produtoSkyhub in db.TB_PRODUTO_SKYHUB
+                    where produtoSkyhub.COD_PRODUTO_SKYHUB_PAI == produtoSky.COD_PRODUTO
+                    select produtoSkyhub).ToList();
         }
 
         private List<TB_CONFIGURACAO_SKYHUB> GetConfiguracoes()

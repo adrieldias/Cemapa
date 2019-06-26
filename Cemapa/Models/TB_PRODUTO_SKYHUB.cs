@@ -32,6 +32,7 @@ namespace Cemapa.Models
         public Nullable<decimal> VAL_ALTURA { get; set; }
         public Nullable<decimal> VAL_LARGURA { get; set; }
         public Nullable<decimal> VAL_COMPRIMENTO { get; set; }
+        public Nullable<int> COD_PRODUTO_SKYHUB_PAI { get; set; }
     
         public virtual TB_PRODUTO TB_PRODUTO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

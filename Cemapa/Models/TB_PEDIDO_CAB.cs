@@ -88,7 +88,7 @@ namespace Cemapa.Models
         public string STEP_SINCRONIZACAO { get; set; }
         public Nullable<decimal> VAL_DESPESAS { get; set; }
         public string IND_SINC_MAX_ROTEIRIZADOR { get; set; }
-        public string DESC_SITUACAO_SKYHUB { get; set; }
+        public string DESC_SITUACAO_MARKETPLACE { get; set; }
         public string COD_PEDIDO_MARKETPLACE { get; set; }
     
         public virtual TB_CADASTRO TB_CADASTRO { get; set; }
