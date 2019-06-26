@@ -42,10 +42,21 @@ namespace Cliente.Forms
             // Busca o cadastro no servidor
             if (CadastroBindingSource == null)
                 CadastroBindingSource = new BindingSource();
-            var cadastro = JsonConvert.DeserializeAnonymousType((await RunAsyncGet(
-                ConfigurationManager.AppSettings["UriCadastro"], string.Format("{0}/{1}", "Get", this.ChaveConsulta["Codigo"])
-                )), new TB_CADASTRO());            
-            CadastroBindingSource.DataSource = cadastro;
+
+            if ("VISUALIZAR ALTERAR".Contains(this.LayoutTela))
+            {
+                var cadastro = JsonConvert.DeserializeAnonymousType((await RunAsyncGet(
+                    ConfigurationManager.AppSettings["UriCadastro"], string.Format("{0}/{1}", "Get", this.ChaveConsulta["Codigo"])
+                    )), new TB_CADASTRO());
+                CadastroBindingSource.DataSource = cadastro;
+            }
+            else
+            if ("INSERIR".Contains(this.LayoutTela))
+            {
+                var cadastro = new TB_CADASTRO();
+                CadastroBindingSource.DataSource = cadastro;
+                CadastroBindingSource.AddNew();
+            }   
 
             // DataBindings
             txbsCodigo.DataBindings.Add("Text", CadastroBindingSource.Current, "COD_CADASTRO");
@@ -71,13 +82,17 @@ namespace Cliente.Forms
             TipoCadastroBindingSource.DataSource = JsonConvert.DeserializeAnonymousType((await RunAsyncGet(
                 ConfigurationManager.AppSettings["UriTipoCadastro"]
                 )), new List<TB_TIPO_CADASTRO>());
-            var obj = TipoCadastroBindingSource.List.OfType<TB_TIPO_CADASTRO>().First(c => c.COD_TIPO_CADASTRO == ((TB_CADASTRO)CadastroBindingSource.Current).COD_TIPO_CADASTRO);
-            var pos = TipoCadastroBindingSource.IndexOf(obj);
-            TipoCadastroBindingSource.Position = pos;
+            if ((CadastroBindingSource.Current as TB_CADASTRO).COD_TIPO_CADASTRO > 0)
+            {
+                var obj = TipoCadastroBindingSource.List.OfType<TB_TIPO_CADASTRO>().First(c => c.COD_TIPO_CADASTRO == ((TB_CADASTRO)CadastroBindingSource.Current).COD_TIPO_CADASTRO);
+                var pos = TipoCadastroBindingSource.IndexOf(obj);
+                TipoCadastroBindingSource.Position = pos;
+                obj = null;
+                pos = 0;
+            }
             cbsTipoCadastro.BindingSource = TipoCadastroBindingSource;
             cbsTipoCadastro.DisplayMember = "DESC_TIPO_CADASTRO";
-            obj = null;
-            pos = 0;
+            
 
             //cbsFisicaJuridica
             List<POCO.FisicaJuridica> ListaFisicaJuridica = new List<POCO.FisicaJuridica>();
@@ -93,11 +108,14 @@ namespace Cliente.Forms
             fisicaJuridicaBindingSource.DataSource = ListaFisicaJuridica;
             cbsFisicaJuridica.BindingSource = fisicaJuridicaBindingSource;
             cbsFisicaJuridica.DisplayMember = "DESC_FISICA_JURIDICA";
-            var objFJ = fisicaJuridicaBindingSource.List.OfType<POCO.FisicaJuridica>().First(p => p.IND_FISICA_JURIDICA == ((TB_CADASTRO)CadastroBindingSource.Current).IND_FISICA_JURIDICA);
-            pos = fisicaJuridicaBindingSource.IndexOf(objFJ);
-            fisicaJuridicaBindingSource.Position = pos;
-            objFJ = null;
-            pos = 0;
+            if ((CadastroBindingSource.Current as TB_CADASTRO).IND_FISICA_JURIDICA != null)
+            {
+                var objFJ = fisicaJuridicaBindingSource.List.OfType<POCO.FisicaJuridica>().First(p => p.IND_FISICA_JURIDICA == ((TB_CADASTRO)CadastroBindingSource.Current).IND_FISICA_JURIDICA);
+                var pos = fisicaJuridicaBindingSource.IndexOf(objFJ);
+                fisicaJuridicaBindingSource.Position = pos;
+                objFJ = null;
+                pos = 0;
+            }
 
             //cbsClassCadastro            
             if(ClassCadastroBindingSource == null)
@@ -110,7 +128,7 @@ namespace Cliente.Forms
             if ((CadastroBindingSource.Current as TB_CADASTRO).COD_CLASS_CADASTRO != null)
             {
                 var objCC = ClassCadastroBindingSource.List.OfType<TB_CLASS_CADASTRO>().First(c => c.COD_CLASS_CADASTRO == ((TB_CADASTRO)CadastroBindingSource.Current).COD_CLASS_CADASTRO);
-                pos = ClassCadastroBindingSource.IndexOf(objCC);
+                var pos = ClassCadastroBindingSource.IndexOf(objCC);
                 ClassCadastroBindingSource.Position = pos;
                 objCC = null;
                 pos = 0;
@@ -130,7 +148,7 @@ namespace Cliente.Forms
             if ((CadastroBindingSource.Current as TB_CADASTRO).COD_VENDEDOR != null)
             {
                 var objV = VendedorBindingSource.List.OfType<TB_VENDEDOR>().First(c => c.COD_VENDEDOR == ((TB_CADASTRO)CadastroBindingSource.Current).COD_VENDEDOR);
-                pos = VendedorBindingSource.IndexOf(objV);
+                var pos = VendedorBindingSource.IndexOf(objV);
                 VendedorBindingSource.Position = pos;
                 objV = null;
                 pos = 0;
@@ -152,7 +170,7 @@ namespace Cliente.Forms
             {
                 var objQualif
                     = QualificacaoSocioBindingSource.List.OfType<TB_QUALIFICACAO_SOCIO>().First(q => q.COD_QUALIFICACAO_SOCIO == (QualificacaoSocioBindingSource.Current as TB_QUALIFICACAO_SOCIO).COD_QUALIFICACAO_SOCIO);
-                pos = QualificacaoSocioBindingSource.IndexOf(objQualif);
+                var pos = QualificacaoSocioBindingSource.IndexOf(objQualif);
                 QualificacaoSocioBindingSource.Position = pos;
                 objQualif = null;
                 pos = 0;
@@ -199,8 +217,6 @@ namespace Cliente.Forms
                         (col as DataGridViewColumn).HeaderText = "CRI";
                     if ((col as DataGridViewColumn).Name.Equals("NUM_MATRICULA"))
                         (col as DataGridViewColumn).HeaderText = "MATRICULA";
-
-
                 }
                 else
                     ((DataGridViewColumn)col).Visible = false;
@@ -297,11 +313,8 @@ namespace Cliente.Forms
         }
 
         private void FCadastroCad_Load(object sender, EventArgs e)
-        {   
-            if ("VISUALIZAR ALTERAR".Contains(this.LayoutTela))
-            {
-                BuscaDados();
-            }
+        {  
+            BuscaDados();
         }
 
         private void btAlterarProriedade_Click(object sender, EventArgs e)

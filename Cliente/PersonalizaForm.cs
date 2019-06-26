@@ -128,7 +128,8 @@ namespace Cliente
                         , "ERRO", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-                if (propertyInfo.GetValue(ds, null).ToString() != value)
+                if (propertyInfo.GetValue(ds, null) != null 
+                    && propertyInfo.GetValue(ds, null).ToString() != value)
                 {
                     Type t = Nullable.GetUnderlyingType(propertyInfo.PropertyType) ?? propertyInfo.PropertyType;
                     object safeValue = (value == null) ? null : Convert.ChangeType(value, t);

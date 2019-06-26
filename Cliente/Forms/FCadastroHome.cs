@@ -73,7 +73,8 @@ namespace Cliente.Forms
 
         private void btNovo_Click(object sender, EventArgs e)
         {
-
+            FCadastroCad f = new FCadastroCad("INSERIR");
+            f.Show();
         }
 
         private void btAlterar_Click(object sender, EventArgs e)
