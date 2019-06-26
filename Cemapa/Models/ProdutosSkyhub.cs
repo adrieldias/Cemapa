@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Cemapa.Models
 {
-    public class ProdutosSkyhub
+    public class ProdutoSkyhub
     {
         public long sku { get; set; }
         public string name { get; set; }
@@ -13,8 +13,6 @@ namespace Cemapa.Models
         public string status { get; set; }
         public int qty { get; set; }
         public double price { get; set; }
-        public double promotional_price { get; set; }
-        public double cost { get; set; }
         public double weight { get; set; }
         public double height { get; set; }
         public double width { get; set; }
@@ -23,21 +21,32 @@ namespace Cemapa.Models
         public string ean { get; set; }
         public string nbm { get; set; }
 
-        public List<CategoriaProdutoSkyhub> categories = new List<CategoriaProdutoSkyhub>();
+        public List<Category> categories = new List<Category>();
         public List<string> images = new List<string>();
-        public List<EspecificacoesProdutoSkyhub> specifications = new List<EspecificacoesProdutoSkyhub>();
-        public List<ProdutosSkyhub> variations;
+        public List<string> variation_attributes = new List<string>();
+        public List<Specification> specifications = new List<Specification>();
+        public List<Variation> variations = new List<Variation>();
     }
 
-    public class EspecificacoesProdutoSkyhub
+    public class Specification
     {
         public string key { get; set; }
         public string value { get; set; }
     }
 
-    public class CategoriaProdutoSkyhub
+    public class Category
     {
         public long code { get; set; }
         public string name { get; set; }
+    }
+
+    public class Variation
+    {
+        public string ean { get; set; }
+        public int qty { get; set; }
+        public long sku { get; set; }
+        public double price { get; set; } //Key usada apenas para validações internas
+        public List<string> images = new List<string>();
+        public List<Specification> specifications = new List<Specification>();
     }
 }
