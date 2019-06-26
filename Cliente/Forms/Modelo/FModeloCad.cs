@@ -222,7 +222,7 @@ namespace Cliente.Forms.Modelo
                 16
                 ));
 
-            this.Refresh();
+            //this.Refresh();
             Application.DoEvents();
         }
 

@@ -77,6 +77,7 @@
             this.Name = "TextBoxSimples";
             this.Size = new System.Drawing.Size(401, 49);
             this.Enter += new System.EventHandler(this.TextBoxSimples_Enter);
+            this.Resize += new System.EventHandler(this.TextBoxSimples_Resize);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.ResumeLayout(false);
