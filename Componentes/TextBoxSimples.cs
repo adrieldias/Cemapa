@@ -75,5 +75,10 @@ namespace Componentes
         {
             textBox1.SelectAll();
         }
+
+        private void TextBoxSimples_Resize(object sender, EventArgs e)
+        {
+            Refresh();
+        }
     }
 }

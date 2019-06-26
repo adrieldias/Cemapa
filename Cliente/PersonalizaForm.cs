@@ -128,7 +128,8 @@ namespace Cliente
                         , "ERRO", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-                if (propertyInfo.GetValue(ds, null).ToString() != value)
+                if (propertyInfo.GetValue(ds, null) != null 
+                    && propertyInfo.GetValue(ds, null).ToString() != value)
                 {
                     Type t = Nullable.GetUnderlyingType(propertyInfo.PropertyType) ?? propertyInfo.PropertyType;
                     object safeValue = (value == null) ? null : Convert.ChangeType(value, t);
@@ -202,18 +203,29 @@ namespace Cliente
 
         #region Label
         private void PersonalizaLabel(Label label)
-        {
-            label.Text = label.Text.ToUpper();
+        {  
             if (label.Name.Equals("lbNome"))
             {
 
             }
             else
-            {
-
-                label.Margin = new Padding(0, 0, 3, 0);
-                label.Dock = DockStyle.Bottom;
+            {   
+                if ((label.Parent as Control).GetType().ToString().Equals("TableLayoutPanel"))
+                {
+                    label.Margin = new Padding(0, 0, 3, 0);
+                    label.Dock = DockStyle.Bottom;
+                }
             }
+            
+            if((label.Parent as Control).GetType().ToString() != "Componentes.TextBoxSimples"
+                && (label.Parent as Control).GetType().ToString() != "Componentes.ComboBoxSimples")
+                    label.Font = new Font(FONTE, TAMANHO_FONTE);
+            label.TextChanged += Label_TextChanged;
+        }
+
+        private void Label_TextChanged(object sender, EventArgs e)
+        {
+            (sender as Label).Text = (sender as Label).Text.ToUpper();            
         }
         #endregion
 

@@ -50,6 +50,7 @@
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -66,6 +67,12 @@
     </Compile>
     <Compile Include="Forms\FCadastroCad.Designer.cs">
       <DependentUpon>FCadastroCad.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FDialogBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FDialogBox.Designer.cs">
+      <DependentUpon>FDialogBox.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\FEnderecoCad.cs">
       <SubType>Form</SubType>
@@ -113,11 +120,15 @@
     <Compile Include="POCO\TB_VENDEDOR.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utils\RetornoJson.cs" />
     <EmbeddedResource Include="Forms\FCadastroCad.resx">
       <DependentUpon>FCadastroCad.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FCadastroHome.resx">
       <DependentUpon>FCadastroHome.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FDialogBox.resx">
+      <DependentUpon>FDialogBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FEnderecoCad.resx">
       <DependentUpon>FEnderecoCad.cs</DependentUpon>
@@ -140,7 +151,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

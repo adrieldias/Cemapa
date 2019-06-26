@@ -295,6 +295,7 @@
             this.cbsTipoCadastro.Label = "TIPO";
             this.cbsTipoCadastro.Location = new System.Drawing.Point(3, 213);
             this.cbsTipoCadastro.Name = "cbsTipoCadastro";
+            this.cbsTipoCadastro.SelectedIndex = -1;
             this.cbsTipoCadastro.SelectedText = null;
             this.cbsTipoCadastro.SelectedValue = null;
             this.cbsTipoCadastro.Size = new System.Drawing.Size(369, 44);
@@ -312,6 +313,7 @@
             this.cbsFisicaJuridica.Label = "PESSOA FÍSICA/JURÍDICA";
             this.cbsFisicaJuridica.Location = new System.Drawing.Point(378, 213);
             this.cbsFisicaJuridica.Name = "cbsFisicaJuridica";
+            this.cbsFisicaJuridica.SelectedIndex = -1;
             this.cbsFisicaJuridica.SelectedText = null;
             this.cbsFisicaJuridica.SelectedValue = null;
             this.cbsFisicaJuridica.Size = new System.Drawing.Size(375, 44);
@@ -329,6 +331,7 @@
             this.cbsClassificacao.Label = "CLASSIFICAÇÃO";
             this.cbsClassificacao.Location = new System.Drawing.Point(3, 363);
             this.cbsClassificacao.Name = "cbsClassificacao";
+            this.cbsClassificacao.SelectedIndex = -1;
             this.cbsClassificacao.SelectedText = null;
             this.cbsClassificacao.SelectedValue = null;
             this.cbsClassificacao.Size = new System.Drawing.Size(144, 44);
@@ -346,6 +349,7 @@
             this.cbsVendedor.Label = "VENDEDOR";
             this.cbsVendedor.Location = new System.Drawing.Point(153, 363);
             this.cbsVendedor.Name = "cbsVendedor";
+            this.cbsVendedor.SelectedIndex = -1;
             this.cbsVendedor.SelectedText = null;
             this.cbsVendedor.SelectedValue = null;
             this.cbsVendedor.Size = new System.Drawing.Size(369, 44);
@@ -632,6 +636,7 @@
             this.cbsQualificacaoSocio.Label = "QUALIFICAÇAO DO SÓCIO OU TITULAR";
             this.cbsQualificacaoSocio.Location = new System.Drawing.Point(228, 133);
             this.cbsQualificacaoSocio.Name = "cbsQualificacaoSocio";
+            this.cbsQualificacaoSocio.SelectedIndex = -1;
             this.cbsQualificacaoSocio.SelectedText = null;
             this.cbsQualificacaoSocio.SelectedValue = null;
             this.cbsQualificacaoSocio.Size = new System.Drawing.Size(525, 44);

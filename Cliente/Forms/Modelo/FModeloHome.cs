@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Net.Http;
+using System.Web.Script.Serialization;
 
 namespace Cliente.Forms.Modelo
 {
@@ -115,6 +116,37 @@ namespace Cliente.Forms.Modelo
                     return "ERRO";
                 }
             }
+        }
+
+        public static async Task<string> RunAsyncPost(string uri, int codigo)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(uri);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+
+                var response = await client.PostAsync(uri + "/" + codigo.ToString(),
+                    new StringContent(
+                        new JavaScriptSerializer().Serialize(""), Encoding.UTF8, "application/json"
+                    )
+                    );
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var resposta = response.Content.ReadAsStringAsync();
+                    response.Dispose();
+                    client.Dispose();
+                    return await resposta;
+                }
+                else
+                {
+                    response.Dispose();
+                    client.Dispose();
+                    return "ERRO";
+                }
+            }
+
         }
         #endregion
 

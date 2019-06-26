@@ -82,6 +82,7 @@
             this.Controls.Add(this.panel1);
             this.Name = "ComboBoxSimples";
             this.Size = new System.Drawing.Size(401, 49);
+            this.Resize += new System.EventHandler(this.ComboBoxSimples_Resize);
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();

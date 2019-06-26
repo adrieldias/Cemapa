@@ -402,9 +402,8 @@
           <Property Name="STEP_SINCRONIZACAO" Type="varchar2" MaxLength="15" />
           <Property Name="VAL_DESPESAS" Type="number" Precision="11" Scale="2" />
           <Property Name="IND_SINC_MAX_ROTEIRIZADOR" Type="char" MaxLength="1" />
-          <Property Name="DESC_SITUACAO_MARKETPLACE" Type="varchar2" MaxLength="30" />
           <Property Name="COD_PEDIDO_MARKETPLACE" Type="varchar2" MaxLength="60" />
-          <Property Name="DESC_SITUACAO_SKYHUB" Type="varchar2" MaxLength="30" />
+          <Property Name="DESC_SITUACAO_MARKETPLACE" Type="varchar2" MaxLength="30" />
         </EntityType>
         <EntityType Name="TB_PEDIDO_ITEM">
           <Key>
@@ -604,6 +603,7 @@
           <Property Name="VAL_COMPRIMENTO" Type="number" Precision="6" Scale="2" />
           <Property Name="COD_PRODUTO_SKYHUB" Type="number" Precision="6" Scale="0" Nullable="false" />
           <Property Name="COD_PRODUTO" Type="number" Precision="6" Scale="0" Nullable="false" />
+          <Property Name="COD_PRODUTO_SKYHUB_PAI" Type="number" Precision="6" Scale="0" />
         </EntityType>
         <EntityType Name="TB_PROPRIEDADE">
           <Key>
@@ -2492,6 +2492,7 @@
           <NavigationProperty Name="TB_PRODUTO_CATEGORIA_SKYHUB" Relationship="Model.FK_CAT_SKYXPROD_SKY" FromRole="TB_PRODUTO_SKYHUB" ToRole="TB_PRODUTO_CATEGORIA_SKYHUB" />
           <NavigationProperty Name="TB_PRODUTO_ESP_SKYHUB" Relationship="Model.FK_ESP_SKYXPROD_SKY" FromRole="TB_PRODUTO_SKYHUB" ToRole="TB_PRODUTO_ESP_SKYHUB" />
           <NavigationProperty Name="TB_PRODUTO_IMAGEM_SKYHUB" Relationship="Model.FK_IMG_SKYXPROD_SKY" FromRole="TB_PRODUTO_SKYHUB" ToRole="TB_PRODUTO_IMAGEM_SKYHUB" />
+          <Property Name="COD_PRODUTO_SKYHUB_PAI" Type="Int32" Nullable="true" />
         </EntityType>
         <EntityType Name="TB_SINCRONIZACAO_SKYHUB">
           <Key>
@@ -2658,7 +2659,7 @@
           <Property Name="STEP_SINCRONIZACAO" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="VAL_DESPESAS" Type="Decimal" Precision="11" Scale="2" />
           <Property Name="IND_SINC_MAX_ROTEIRIZADOR" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="DESC_SITUACAO_SKYHUB" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_SITUACAO_MARKETPLACE" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="COD_PEDIDO_MARKETPLACE" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="TB_CADASTRO" Relationship="Model.FK_PEDIDO_CABXCADASTRO" FromRole="TB_PEDIDO_CAB" ToRole="TB_CADASTRO" />
           <NavigationProperty Name="TB_CADASTRO1" Relationship="Model.FK_PEDIDOXCADASTROTRANSP" FromRole="TB_PEDIDO_CAB" ToRole="TB_CADASTRO" />
@@ -3462,6 +3463,7 @@
           <EntitySetMapping Name="TB_PRODUTO_SKYHUB">
             <EntityTypeMapping TypeName="Model.TB_PRODUTO_SKYHUB">
               <MappingFragment StoreEntitySet="TB_PRODUTO_SKYHUB">
+                <ScalarProperty Name="COD_PRODUTO_SKYHUB_PAI" ColumnName="COD_PRODUTO_SKYHUB_PAI" />
                 <ScalarProperty Name="VAL_COMPRIMENTO" ColumnName="VAL_COMPRIMENTO" />
                 <ScalarProperty Name="VAL_LARGURA" ColumnName="VAL_LARGURA" />
                 <ScalarProperty Name="VAL_ALTURA" ColumnName="VAL_ALTURA" />
@@ -3499,8 +3501,8 @@
           <EntitySetMapping Name="TB_PEDIDO_CAB">
             <EntityTypeMapping TypeName="Model.TB_PEDIDO_CAB">
               <MappingFragment StoreEntitySet="TB_PEDIDO_CAB">
+                <ScalarProperty Name="DESC_SITUACAO_MARKETPLACE" ColumnName="DESC_SITUACAO_MARKETPLACE" />
                 <ScalarProperty Name="COD_PEDIDO_MARKETPLACE" ColumnName="COD_PEDIDO_MARKETPLACE" />
-                <ScalarProperty Name="DESC_SITUACAO_SKYHUB" ColumnName="DESC_SITUACAO_SKYHUB" />
                 <ScalarProperty Name="IND_SINC_MAX_ROTEIRIZADOR" ColumnName="IND_SINC_MAX_ROTEIRIZADOR" />
                 <ScalarProperty Name="VAL_DESPESAS" ColumnName="VAL_DESPESAS" />
                 <ScalarProperty Name="STEP_SINCRONIZACAO" ColumnName="STEP_SINCRONIZACAO" />
