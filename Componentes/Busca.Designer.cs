@@ -43,7 +43,6 @@
             this.txtBusca.Size = new System.Drawing.Size(688, 15);
             this.txtBusca.TabIndex = 0;
             this.txtBusca.Text = "DIGITE PARA PROCURAR";
-            this.txtBusca.TextChanged += new System.EventHandler(this.txtBusca_TextChanged);
             this.txtBusca.Enter += new System.EventHandler(this.txtBusca_Enter);
             this.txtBusca.Leave += new System.EventHandler(this.txtBusca_Leave);
             // 

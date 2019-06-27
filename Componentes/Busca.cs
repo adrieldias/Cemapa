@@ -14,27 +14,49 @@ namespace Componentes
 {
     public partial class Busca : UserControl
     {
-        [Description("BindingSorce"), Category("Cemapa")]
-        public BindingSource BindingSource { get; set; }
-        [Description("URI"), Category("Cemapa")]
-        public string URI { get; set; }
-        [Description("definition"), Category("Cemapa")]
-        public dynamic definition { get; set; }
+        #region Eventos
+        public event EventHandler TextBoxTextChanged;
+        
+
+        private void HandleTextBoxTextChanged(object sender, EventArgs e)
+        {
+            this.OnTextBoxTextChanged(EventArgs.Empty);
+        }      
+
+        protected virtual void OnTextBoxTextChanged(EventArgs e)
+        {
+            EventHandler handler = this.TextBoxTextChanged;
+            if (handler != null)
+            {
+                handler(this, e);
+            }
+        }
+        #endregion
+
+        #region Propriedades
+        [Description("Text"), Category("Cemapa")]
+        public override string Text
+        {
+            get => txtBusca.Text;
+            set => txtBusca.Text = value;
+        }
+        #endregion
         public Busca()
         {
             InitializeComponent();
+            txtBusca.TextChanged += this.HandleTextBoxTextChanged;
         }
-        public async void Buscar(string texto)
+        public async Task<object> Buscar(string uri, dynamic definition, object param)
         {
             var anonymousType = JsonConvert.DeserializeAnonymousType(
-                (await RunAsyncGet(URI, texto)), definition);
-            BindingSource.DataSource = anonymousType.Data;
+                (await RunAsyncPost(uri, param)), definition);
+            return anonymousType.Data;
         }
-        public async void ListarTodos()
+        public async Task<object> ListarTodos(string uri, dynamic definition)
         {
             var anonymousType = JsonConvert.DeserializeAnonymousType(
-                (await RunAsyncGet(URI)), definition);
-            BindingSource.DataSource = anonymousType.Data;
+                (await RunAsyncGet(uri)), definition);
+            return anonymousType.Data;
         }
         public static async Task<string> RunAsyncGet(string uri, string valor)
         {
@@ -87,13 +109,15 @@ namespace Componentes
                 }
             }
         }
-
-        private void txtBusca_TextChanged(object sender, EventArgs e)
+        public static async Task<string> RunAsyncPost(string Uri, Object valor)
         {
-            if (txtBusca.Text != "DIGITE PARA PROCURAR")
-                Buscar(txtBusca.Text);
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Accept.Clear();
+                var response = await client.PostAsJsonAsync(new Uri(Uri), valor);
+                return await response.Content.ReadAsStringAsync();
+            }
         }
-
         private void txtBusca_Enter(object sender, EventArgs e)
         {
             txtBusca.SelectAll();
@@ -103,6 +127,11 @@ namespace Componentes
         {
             if (txtBusca.Text.Trim() == "")
                 txtBusca.Text = "DIGITE PARA PROCURAR";
+        }
+
+        private void txtBusca_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
