@@ -15,32 +15,16 @@ using Cliente.Forms.Modelo;
 using Cliente.Utils;
 using System.Reflection;
 using System.Configuration;
+using System.Runtime.InteropServices;
 
 namespace Cliente.Forms
 {
     public partial class FCadastroHome : FModeloHome
     {
         public BindingSource CadastroBindingSource { get; set; }
-
-        public FCadastroHome()
+        dynamic definition = new
         {
-            InitializeComponent();
-            this.Inicializa();
-            if (CadastroBindingSource == null)
-                CadastroBindingSource = new BindingSource();
-            CadastroBindingSource.CurrentChanged += new EventHandler(CadastroBindingSource_CurrentChanged);
-        }
-
-        private void CadastroBindingSource_CurrentChanged(object sender, EventArgs e)
-        {
-            
-        }
-
-        private async void FCadastroHome_Load(object sender, EventArgs e)
-        {
-            var definition = new
-            {
-                Data = new[] {
+            Data = new[] {
                     new {
                         CODIGO = 0,
                         TIPO = string.Empty,
@@ -57,23 +41,42 @@ namespace Cliente.Forms
                         CLASSIFICACAO = string.Empty
                     }
                 }
-            };
-            
-            // Busca os dados no servidor
-            var anonymousType = JsonConvert.DeserializeAnonymousType(
-                (await RunAsyncGet(
-                    string.Format("{0}{1}", ConfigurationManager.AppSettings["UriCadastro"], "GetPersonalizado")
-                    )), definition);
-
-            CadastroBindingSource.DataSource = anonymousType.Data;
-            dataGridView1.DataSource = CadastroBindingSource.DataSource;
+        };
+        public FCadastroHome()
+        {
+            InitializeComponent();
+            this.Inicializa();
+            if (CadastroBindingSource == null)
+                CadastroBindingSource = new BindingSource();
+            CadastroBindingSource.CurrentChanged += new EventHandler(CadastroBindingSource_CurrentChanged);
+            dataGridView1.DataSource = CadastroBindingSource;
         }
 
-        
+        private void CadastroBindingSource_CurrentChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+        private async void FCadastroHome_Load(object sender, EventArgs e)
+        {
+            // Busca os dados no servidor
+            //var anonymousType = JsonConvert.DeserializeAnonymousType(
+            //    (await RunAsyncGet(
+            //        string.Format("{0}{1}", ConfigurationManager.AppSettings["UriCadastro"], "GetPersonalizado")
+            //        )), definition);
+            
+            CadastroBindingSource.DataSource = (await busca1.ListarTodos(string.Format("{0}{1}", ConfigurationManager.AppSettings["UriCadastro"], "GetPersonalizado"), definition));
+
+
+            busca1.Focus();
+        }
+
+
 
         private void btNovo_Click(object sender, EventArgs e)
         {
-
+            FCadastroCad f = new FCadastroCad("INSERIR");
+            f.Show();
         }
 
         private void btAlterar_Click(object sender, EventArgs e)
@@ -111,5 +114,18 @@ namespace Cliente.Forms
                 
             }
         }
+
+        private async void busca1_TextBoxTextChanged(object sender, EventArgs e)
+        {
+            if (busca1.Text != "DIGITE PARA PROCURAR")
+            {
+                Cliente.POCO.TB_CADASTRO c = new POCO.TB_CADASTRO();
+                c.NOME = busca1.Text;
+                CadastroBindingSource.DataSource = (await busca1.Buscar(string.Format("{0}{1}", ConfigurationManager.AppSettings["UriCadastro"], 
+                    "GetPersonalizado"), definition, c));
+            }
+        }
+
+   
     }
 }
