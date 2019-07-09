@@ -750,7 +750,6 @@ namespace Cemapa.Controllers
                                                                 COD_PRODUTO = (int)wCodProduto,
                                                                 VAL_UNITARIO = Convert.ToDecimal(item.original_price),
                                                                 QT_PEDIDO = item.qty,
-                                                                COD_LOTE_TIPO = 1,
                                                                 COD_TRIBUTACAO = wCodTributacao
                                                             }
                                                         );
@@ -1361,9 +1360,9 @@ namespace Cemapa.Controllers
         {
             if (
                 produtoSkyhub.COD_PRODUTO < 1 ||
-                produtoSkyhub.VAL_ALTURA < 1 ||
-                produtoSkyhub.VAL_COMPRIMENTO < 1 ||
-                produtoSkyhub.VAL_LARGURA < 1 ||
+                produtoSkyhub.VAL_ALTURA < 0 ||
+                produtoSkyhub.VAL_COMPRIMENTO < 0 ||
+                produtoSkyhub.VAL_LARGURA < 0 ||
                 String.IsNullOrEmpty(produtoSkyhub.DESC_DESCRICAO) ||
                 String.IsNullOrEmpty(produtoSkyhub.DESC_MARCA) ||
                 String.IsNullOrEmpty(produtoSkyhub.DESC_PRODUTO) ||
