@@ -33,15 +33,15 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.txbsNome = new Componentes.TextBoxSimples();
-            this.txbsNomeFantasia = new Componentes.TextBoxSimples();
-            this.txbsTelefone = new Componentes.TextBoxSimples();
-            this.txbsCelular = new Componentes.TextBoxSimples();
-            this.txbsEmailXML = new Componentes.TextBoxSimples();
-            this.txbsEmailContato = new Componentes.TextBoxSimples();
-            this.txbsCodigo = new Componentes.TextBoxSimples();
+            this.tbsCodigo = new Componentes.TextBoxSimples();
             this.cbsTipoCadastro = new Componentes.ComboBoxSimples();
+            this.tbsNome = new Componentes.TextBoxSimples();
             this.cbsFisicaJuridica = new Componentes.ComboBoxSimples();
+            this.tbsNomeFantasia = new Componentes.TextBoxSimples();
+            this.tbsTelefone = new Componentes.TextBoxSimples();
+            this.tbsCelular = new Componentes.TextBoxSimples();
+            this.tbsEmailXML = new Componentes.TextBoxSimples();
+            this.tbsEmailContato = new Componentes.TextBoxSimples();
             this.cbsClassificacao = new Componentes.ComboBoxSimples();
             this.cbsVendedor = new Componentes.ComboBoxSimples();
             this.tabPage4 = new System.Windows.Forms.TabPage();
@@ -58,7 +58,6 @@
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.tbsEmpresa = new Componentes.TextBoxSimples();
             this.tbsFuncao = new Componentes.TextBoxSimples();
-            this.tbsTrabalhoTelefone = new Componentes.TextBoxSimples();
             this.tbsCrc = new Componentes.TextBoxSimples();
             this.tbsSequencial = new Componentes.TextBoxSimples();
             this.tbsValidadeCrc = new Componentes.TextBoxSimples();
@@ -67,6 +66,8 @@
             this.cbsQualificacaoSocio = new Componentes.ComboBoxSimples();
             this.tbsPercParticCapitalTotal = new Componentes.TextBoxSimples();
             this.tbsPercParticCapitalVolante = new Componentes.TextBoxSimples();
+            this.tbsTelComercial = new Componentes.TextBoxSimples();
+            this.cbsFilial = new Componentes.ComboBoxSimples();
             this.pCabecalho.SuspendLayout();
             this.slickBlueTabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -143,24 +144,27 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.tableLayoutPanel1.Controls.Add(this.pictureBox1, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.txbsNome, 0, 4);
-            this.tableLayoutPanel1.Controls.Add(this.txbsNomeFantasia, 5, 4);
-            this.tableLayoutPanel1.Controls.Add(this.txbsTelefone, 0, 5);
-            this.tableLayoutPanel1.Controls.Add(this.txbsCelular, 2, 5);
-            this.tableLayoutPanel1.Controls.Add(this.txbsEmailXML, 4, 5);
-            this.tableLayoutPanel1.Controls.Add(this.txbsEmailContato, 7, 5);
-            this.tableLayoutPanel1.Controls.Add(this.txbsCodigo, 0, 2);
-            this.tableLayoutPanel1.Controls.Add(this.cbsTipoCadastro, 0, 3);
-            this.tableLayoutPanel1.Controls.Add(this.cbsFisicaJuridica, 5, 3);
-            this.tableLayoutPanel1.Controls.Add(this.cbsClassificacao, 0, 6);
-            this.tableLayoutPanel1.Controls.Add(this.cbsVendedor, 2, 6);
+            this.tableLayoutPanel1.Controls.Add(this.pictureBox1, 9, 0);
+            this.tableLayoutPanel1.Controls.Add(this.tbsCodigo, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.cbsTipoCadastro, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.tbsNome, 0, 2);
+            this.tableLayoutPanel1.Controls.Add(this.cbsFisicaJuridica, 5, 1);
+            this.tableLayoutPanel1.Controls.Add(this.tbsNomeFantasia, 5, 2);
+            this.tableLayoutPanel1.Controls.Add(this.tbsTelefone, 0, 3);
+            this.tableLayoutPanel1.Controls.Add(this.tbsCelular, 2, 3);
+            this.tableLayoutPanel1.Controls.Add(this.cbsVendedor, 5, 4);
+            this.tableLayoutPanel1.Controls.Add(this.cbsClassificacao, 3, 4);
+            this.tableLayoutPanel1.Controls.Add(this.tbsEmailXML, 0, 4);
+            this.tableLayoutPanel1.Controls.Add(this.tbsTelComercial, 4, 3);
+            this.tableLayoutPanel1.Controls.Add(this.tbsEmailContato, 6, 3);
+            this.tableLayoutPanel1.Controls.Add(this.cbsFilial, 0, 5);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 8;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 150F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 10F));
+            this.tableLayoutPanel1.RowCount = 9;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 70F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
@@ -175,114 +179,30 @@
             this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tableLayoutPanel1.SetColumnSpan(this.pictureBox1, 2);
             this.pictureBox1.ErrorImage = null;
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
             this.pictureBox1.InitialImage = null;
-            this.pictureBox1.Location = new System.Drawing.Point(3, 3);
+            this.pictureBox1.Location = new System.Drawing.Point(678, 3);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(144, 144);
+            this.pictureBox1.Size = new System.Drawing.Size(75, 64);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 4;
             this.pictureBox1.TabStop = false;
             // 
-            // txbsNome
+            // tbsCodigo
             // 
-            this.txbsNome.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.txbsNome.AutoSize = true;
-            this.tableLayoutPanel1.SetColumnSpan(this.txbsNome, 5);
-            this.txbsNome.Font = new System.Drawing.Font("Calibri Light", 12F);
-            this.txbsNome.Label = "NOME";
-            this.txbsNome.Location = new System.Drawing.Point(4, 264);
-            this.txbsNome.Margin = new System.Windows.Forms.Padding(4);
-            this.txbsNome.Name = "txbsNome";
-            this.txbsNome.PasswordChar = '\0';
-            this.txbsNome.Size = new System.Drawing.Size(367, 42);
-            this.txbsNome.TabIndex = 26;
-            // 
-            // txbsNomeFantasia
-            // 
-            this.txbsNomeFantasia.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.txbsNomeFantasia.AutoSize = true;
-            this.tableLayoutPanel1.SetColumnSpan(this.txbsNomeFantasia, 5);
-            this.txbsNomeFantasia.Font = new System.Drawing.Font("Calibri Light", 12F);
-            this.txbsNomeFantasia.Label = "NOME FANTASIA";
-            this.txbsNomeFantasia.Location = new System.Drawing.Point(379, 264);
-            this.txbsNomeFantasia.Margin = new System.Windows.Forms.Padding(4);
-            this.txbsNomeFantasia.Name = "txbsNomeFantasia";
-            this.txbsNomeFantasia.PasswordChar = '\0';
-            this.txbsNomeFantasia.Size = new System.Drawing.Size(373, 42);
-            this.txbsNomeFantasia.TabIndex = 27;
-            // 
-            // txbsTelefone
-            // 
-            this.txbsTelefone.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.txbsTelefone.AutoSize = true;
-            this.tableLayoutPanel1.SetColumnSpan(this.txbsTelefone, 2);
-            this.txbsTelefone.Font = new System.Drawing.Font("Calibri Light", 12F);
-            this.txbsTelefone.Label = "TELEFONE";
-            this.txbsTelefone.Location = new System.Drawing.Point(4, 314);
-            this.txbsTelefone.Margin = new System.Windows.Forms.Padding(4);
-            this.txbsTelefone.Name = "txbsTelefone";
-            this.txbsTelefone.PasswordChar = '\0';
-            this.txbsTelefone.Size = new System.Drawing.Size(142, 42);
-            this.txbsTelefone.TabIndex = 29;
-            // 
-            // txbsCelular
-            // 
-            this.txbsCelular.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.txbsCelular.AutoSize = true;
-            this.tableLayoutPanel1.SetColumnSpan(this.txbsCelular, 2);
-            this.txbsCelular.Font = new System.Drawing.Font("Calibri Light", 12F);
-            this.txbsCelular.Label = "CELULAR";
-            this.txbsCelular.Location = new System.Drawing.Point(154, 314);
-            this.txbsCelular.Margin = new System.Windows.Forms.Padding(4);
-            this.txbsCelular.Name = "txbsCelular";
-            this.txbsCelular.PasswordChar = '\0';
-            this.txbsCelular.Size = new System.Drawing.Size(142, 42);
-            this.txbsCelular.TabIndex = 30;
-            // 
-            // txbsEmailXML
-            // 
-            this.txbsEmailXML.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.txbsEmailXML.AutoSize = true;
-            this.tableLayoutPanel1.SetColumnSpan(this.txbsEmailXML, 3);
-            this.txbsEmailXML.Font = new System.Drawing.Font("Calibri Light", 12F);
-            this.txbsEmailXML.Label = "E-MAIL PARA XML";
-            this.txbsEmailXML.Location = new System.Drawing.Point(304, 314);
-            this.txbsEmailXML.Margin = new System.Windows.Forms.Padding(4);
-            this.txbsEmailXML.Name = "txbsEmailXML";
-            this.txbsEmailXML.PasswordChar = '\0';
-            this.txbsEmailXML.Size = new System.Drawing.Size(217, 42);
-            this.txbsEmailXML.TabIndex = 31;
-            // 
-            // txbsEmailContato
-            // 
-            this.txbsEmailContato.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.txbsEmailContato.AutoSize = true;
-            this.tableLayoutPanel1.SetColumnSpan(this.txbsEmailContato, 3);
-            this.txbsEmailContato.Font = new System.Drawing.Font("Calibri Light", 12F);
-            this.txbsEmailContato.Label = "E-MAIL PARA CONTATO";
-            this.txbsEmailContato.Location = new System.Drawing.Point(529, 314);
-            this.txbsEmailContato.Margin = new System.Windows.Forms.Padding(4);
-            this.txbsEmailContato.Name = "txbsEmailContato";
-            this.txbsEmailContato.PasswordChar = '\0';
-            this.txbsEmailContato.Size = new System.Drawing.Size(223, 42);
-            this.txbsEmailContato.TabIndex = 32;
-            // 
-            // txbsCodigo
-            // 
-            this.txbsCodigo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.txbsCodigo.AutoSize = true;
-            this.tableLayoutPanel1.SetColumnSpan(this.txbsCodigo, 2);
-            this.txbsCodigo.Font = new System.Drawing.Font("Calibri Light", 12F);
-            this.txbsCodigo.Label = "CÓDIGO";
-            this.txbsCodigo.Location = new System.Drawing.Point(4, 164);
-            this.txbsCodigo.Margin = new System.Windows.Forms.Padding(4);
-            this.txbsCodigo.Name = "txbsCodigo";
-            this.txbsCodigo.PasswordChar = '\0';
-            this.txbsCodigo.Size = new System.Drawing.Size(142, 42);
-            this.txbsCodigo.TabIndex = 35;
+            this.tbsCodigo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbsCodigo.AutoSize = true;
+            this.tableLayoutPanel1.SetColumnSpan(this.tbsCodigo, 2);
+            this.tbsCodigo.Font = new System.Drawing.Font("Calibri Light", 12F);
+            this.tbsCodigo.Label = "CÓDIGO";
+            this.tbsCodigo.Location = new System.Drawing.Point(4, 23);
+            this.tbsCodigo.Margin = new System.Windows.Forms.Padding(4, 6, 4, 2);
+            this.tbsCodigo.Name = "tbsCodigo";
+            this.tbsCodigo.PasswordChar = '\0';
+            this.tbsCodigo.Size = new System.Drawing.Size(142, 45);
+            this.tbsCodigo.TabIndex = 35;
             // 
             // cbsTipoCadastro
             // 
@@ -293,7 +213,7 @@
             this.tableLayoutPanel1.SetColumnSpan(this.cbsTipoCadastro, 5);
             this.cbsTipoCadastro.DisplayMember = "";
             this.cbsTipoCadastro.Label = "TIPO";
-            this.cbsTipoCadastro.Location = new System.Drawing.Point(3, 213);
+            this.cbsTipoCadastro.Location = new System.Drawing.Point(3, 73);
             this.cbsTipoCadastro.Name = "cbsTipoCadastro";
             this.cbsTipoCadastro.SelectedIndex = -1;
             this.cbsTipoCadastro.SelectedText = null;
@@ -301,6 +221,20 @@
             this.cbsTipoCadastro.Size = new System.Drawing.Size(369, 44);
             this.cbsTipoCadastro.TabIndex = 38;
             this.cbsTipoCadastro.ValueMember = "";
+            // 
+            // tbsNome
+            // 
+            this.tbsNome.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbsNome.AutoSize = true;
+            this.tableLayoutPanel1.SetColumnSpan(this.tbsNome, 5);
+            this.tbsNome.Font = new System.Drawing.Font("Calibri Light", 12F);
+            this.tbsNome.Label = "NOME";
+            this.tbsNome.Location = new System.Drawing.Point(4, 124);
+            this.tbsNome.Margin = new System.Windows.Forms.Padding(4);
+            this.tbsNome.Name = "tbsNome";
+            this.tbsNome.PasswordChar = '\0';
+            this.tbsNome.Size = new System.Drawing.Size(367, 42);
+            this.tbsNome.TabIndex = 26;
             // 
             // cbsFisicaJuridica
             // 
@@ -311,7 +245,7 @@
             this.tableLayoutPanel1.SetColumnSpan(this.cbsFisicaJuridica, 5);
             this.cbsFisicaJuridica.DisplayMember = "";
             this.cbsFisicaJuridica.Label = "PESSOA FÍSICA/JURÍDICA";
-            this.cbsFisicaJuridica.Location = new System.Drawing.Point(378, 213);
+            this.cbsFisicaJuridica.Location = new System.Drawing.Point(378, 73);
             this.cbsFisicaJuridica.Name = "cbsFisicaJuridica";
             this.cbsFisicaJuridica.SelectedIndex = -1;
             this.cbsFisicaJuridica.SelectedText = null;
@@ -319,6 +253,76 @@
             this.cbsFisicaJuridica.Size = new System.Drawing.Size(375, 44);
             this.cbsFisicaJuridica.TabIndex = 39;
             this.cbsFisicaJuridica.ValueMember = "";
+            // 
+            // tbsNomeFantasia
+            // 
+            this.tbsNomeFantasia.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbsNomeFantasia.AutoSize = true;
+            this.tableLayoutPanel1.SetColumnSpan(this.tbsNomeFantasia, 5);
+            this.tbsNomeFantasia.Font = new System.Drawing.Font("Calibri Light", 12F);
+            this.tbsNomeFantasia.Label = "NOME FANTASIA";
+            this.tbsNomeFantasia.Location = new System.Drawing.Point(379, 124);
+            this.tbsNomeFantasia.Margin = new System.Windows.Forms.Padding(4);
+            this.tbsNomeFantasia.Name = "tbsNomeFantasia";
+            this.tbsNomeFantasia.PasswordChar = '\0';
+            this.tbsNomeFantasia.Size = new System.Drawing.Size(373, 42);
+            this.tbsNomeFantasia.TabIndex = 27;
+            // 
+            // tbsTelefone
+            // 
+            this.tbsTelefone.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbsTelefone.AutoSize = true;
+            this.tableLayoutPanel1.SetColumnSpan(this.tbsTelefone, 2);
+            this.tbsTelefone.Font = new System.Drawing.Font("Calibri Light", 12F);
+            this.tbsTelefone.Label = "TELEFONE";
+            this.tbsTelefone.Location = new System.Drawing.Point(4, 174);
+            this.tbsTelefone.Margin = new System.Windows.Forms.Padding(4);
+            this.tbsTelefone.Name = "tbsTelefone";
+            this.tbsTelefone.PasswordChar = '\0';
+            this.tbsTelefone.Size = new System.Drawing.Size(142, 42);
+            this.tbsTelefone.TabIndex = 29;
+            // 
+            // tbsCelular
+            // 
+            this.tbsCelular.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbsCelular.AutoSize = true;
+            this.tableLayoutPanel1.SetColumnSpan(this.tbsCelular, 2);
+            this.tbsCelular.Font = new System.Drawing.Font("Calibri Light", 12F);
+            this.tbsCelular.Label = "CELULAR";
+            this.tbsCelular.Location = new System.Drawing.Point(154, 174);
+            this.tbsCelular.Margin = new System.Windows.Forms.Padding(4);
+            this.tbsCelular.Name = "tbsCelular";
+            this.tbsCelular.PasswordChar = '\0';
+            this.tbsCelular.Size = new System.Drawing.Size(142, 42);
+            this.tbsCelular.TabIndex = 30;
+            // 
+            // tbsEmailXML
+            // 
+            this.tbsEmailXML.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbsEmailXML.AutoSize = true;
+            this.tableLayoutPanel1.SetColumnSpan(this.tbsEmailXML, 3);
+            this.tbsEmailXML.Font = new System.Drawing.Font("Calibri Light", 12F);
+            this.tbsEmailXML.Label = "E-MAIL PARA XML";
+            this.tbsEmailXML.Location = new System.Drawing.Point(4, 224);
+            this.tbsEmailXML.Margin = new System.Windows.Forms.Padding(4);
+            this.tbsEmailXML.Name = "tbsEmailXML";
+            this.tbsEmailXML.PasswordChar = '\0';
+            this.tbsEmailXML.Size = new System.Drawing.Size(217, 42);
+            this.tbsEmailXML.TabIndex = 31;
+            // 
+            // tbsEmailContato
+            // 
+            this.tbsEmailContato.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbsEmailContato.AutoSize = true;
+            this.tableLayoutPanel1.SetColumnSpan(this.tbsEmailContato, 4);
+            this.tbsEmailContato.Font = new System.Drawing.Font("Calibri Light", 12F);
+            this.tbsEmailContato.Label = "E-MAIL PARA CONTATO";
+            this.tbsEmailContato.Location = new System.Drawing.Point(454, 174);
+            this.tbsEmailContato.Margin = new System.Windows.Forms.Padding(4);
+            this.tbsEmailContato.Name = "tbsEmailContato";
+            this.tbsEmailContato.PasswordChar = '\0';
+            this.tbsEmailContato.Size = new System.Drawing.Size(298, 42);
+            this.tbsEmailContato.TabIndex = 32;
             // 
             // cbsClassificacao
             // 
@@ -329,7 +333,7 @@
             this.tableLayoutPanel1.SetColumnSpan(this.cbsClassificacao, 2);
             this.cbsClassificacao.DisplayMember = "";
             this.cbsClassificacao.Label = "CLASSIFICAÇÃO";
-            this.cbsClassificacao.Location = new System.Drawing.Point(3, 363);
+            this.cbsClassificacao.Location = new System.Drawing.Point(228, 223);
             this.cbsClassificacao.Name = "cbsClassificacao";
             this.cbsClassificacao.SelectedIndex = -1;
             this.cbsClassificacao.SelectedText = null;
@@ -347,12 +351,12 @@
             this.tableLayoutPanel1.SetColumnSpan(this.cbsVendedor, 5);
             this.cbsVendedor.DisplayMember = "";
             this.cbsVendedor.Label = "VENDEDOR";
-            this.cbsVendedor.Location = new System.Drawing.Point(153, 363);
+            this.cbsVendedor.Location = new System.Drawing.Point(378, 223);
             this.cbsVendedor.Name = "cbsVendedor";
             this.cbsVendedor.SelectedIndex = -1;
             this.cbsVendedor.SelectedText = null;
             this.cbsVendedor.SelectedValue = null;
-            this.cbsVendedor.Size = new System.Drawing.Size(369, 44);
+            this.cbsVendedor.Size = new System.Drawing.Size(375, 44);
             this.cbsVendedor.TabIndex = 41;
             this.cbsVendedor.ValueMember = "";
             // 
@@ -492,8 +496,6 @@
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
             this.tableLayoutPanel4.Controls.Add(this.tbsEmpresa, 0, 0);
-            this.tableLayoutPanel4.Controls.Add(this.tbsFuncao, 4, 0);
-            this.tableLayoutPanel4.Controls.Add(this.tbsTrabalhoTelefone, 7, 0);
             this.tableLayoutPanel4.Controls.Add(this.tbsCrc, 0, 1);
             this.tableLayoutPanel4.Controls.Add(this.tbsSequencial, 3, 1);
             this.tableLayoutPanel4.Controls.Add(this.tbsValidadeCrc, 7, 1);
@@ -502,6 +504,7 @@
             this.tableLayoutPanel4.Controls.Add(this.cbsQualificacaoSocio, 3, 3);
             this.tableLayoutPanel4.Controls.Add(this.tbsPercParticCapitalTotal, 0, 4);
             this.tableLayoutPanel4.Controls.Add(this.tbsPercParticCapitalVolante, 3, 4);
+            this.tableLayoutPanel4.Controls.Add(this.tbsFuncao, 5, 0);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel4.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
@@ -520,13 +523,13 @@
             this.tbsEmpresa.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tbsEmpresa.AutoSize = true;
-            this.tableLayoutPanel4.SetColumnSpan(this.tbsEmpresa, 4);
+            this.tableLayoutPanel4.SetColumnSpan(this.tbsEmpresa, 5);
             this.tbsEmpresa.Font = new System.Drawing.Font("Calibri Light", 12F);
             this.tbsEmpresa.Label = "EMPRESA";
             this.tbsEmpresa.Location = new System.Drawing.Point(3, 3);
             this.tbsEmpresa.Name = "tbsEmpresa";
             this.tbsEmpresa.PasswordChar = '\0';
-            this.tbsEmpresa.Size = new System.Drawing.Size(294, 44);
+            this.tbsEmpresa.Size = new System.Drawing.Size(369, 44);
             this.tbsEmpresa.TabIndex = 0;
             // 
             // tbsFuncao
@@ -534,28 +537,14 @@
             this.tbsFuncao.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tbsFuncao.AutoSize = true;
-            this.tableLayoutPanel4.SetColumnSpan(this.tbsFuncao, 3);
+            this.tableLayoutPanel4.SetColumnSpan(this.tbsFuncao, 5);
             this.tbsFuncao.Font = new System.Drawing.Font("Calibri Light", 12F);
             this.tbsFuncao.Label = "FUNÇÃO";
-            this.tbsFuncao.Location = new System.Drawing.Point(303, 3);
+            this.tbsFuncao.Location = new System.Drawing.Point(378, 3);
             this.tbsFuncao.Name = "tbsFuncao";
             this.tbsFuncao.PasswordChar = '\0';
-            this.tbsFuncao.Size = new System.Drawing.Size(219, 44);
+            this.tbsFuncao.Size = new System.Drawing.Size(375, 44);
             this.tbsFuncao.TabIndex = 1;
-            // 
-            // tbsTrabalhoTelefone
-            // 
-            this.tbsTrabalhoTelefone.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbsTrabalhoTelefone.AutoSize = true;
-            this.tableLayoutPanel4.SetColumnSpan(this.tbsTrabalhoTelefone, 3);
-            this.tbsTrabalhoTelefone.Font = new System.Drawing.Font("Calibri Light", 12F);
-            this.tbsTrabalhoTelefone.Label = "TELEFONE";
-            this.tbsTrabalhoTelefone.Location = new System.Drawing.Point(528, 3);
-            this.tbsTrabalhoTelefone.Name = "tbsTrabalhoTelefone";
-            this.tbsTrabalhoTelefone.PasswordChar = '\0';
-            this.tbsTrabalhoTelefone.Size = new System.Drawing.Size(225, 44);
-            this.tbsTrabalhoTelefone.TabIndex = 2;
             // 
             // tbsCrc
             // 
@@ -671,6 +660,37 @@
             this.tbsPercParticCapitalVolante.Size = new System.Drawing.Size(219, 44);
             this.tbsPercParticCapitalVolante.TabIndex = 10;
             // 
+            // tbsTelComercial
+            // 
+            this.tbsTelComercial.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbsTelComercial.AutoSize = true;
+            this.tableLayoutPanel1.SetColumnSpan(this.tbsTelComercial, 2);
+            this.tbsTelComercial.Font = new System.Drawing.Font("Calibri Light", 12F);
+            this.tbsTelComercial.Label = "TELEFONE COMERCIAL";
+            this.tbsTelComercial.Location = new System.Drawing.Point(303, 173);
+            this.tbsTelComercial.Name = "tbsTelComercial";
+            this.tbsTelComercial.PasswordChar = '\0';
+            this.tbsTelComercial.Size = new System.Drawing.Size(144, 44);
+            this.tbsTelComercial.TabIndex = 42;
+            // 
+            // cbsFilial
+            // 
+            this.cbsFilial.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbsFilial.AutoSize = true;
+            this.cbsFilial.BindingSource = null;
+            this.tableLayoutPanel1.SetColumnSpan(this.cbsFilial, 5);
+            this.cbsFilial.DisplayMember = "";
+            this.cbsFilial.Label = "FILIAL";
+            this.cbsFilial.Location = new System.Drawing.Point(3, 273);
+            this.cbsFilial.Name = "cbsFilial";
+            this.cbsFilial.SelectedIndex = -1;
+            this.cbsFilial.SelectedText = null;
+            this.cbsFilial.SelectedValue = null;
+            this.cbsFilial.Size = new System.Drawing.Size(369, 44);
+            this.cbsFilial.TabIndex = 43;
+            this.cbsFilial.ValueMember = "";
+            // 
             // FCadastroCad
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -711,13 +731,13 @@
         private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private Componentes.TextBoxSimples txbsNome;
-        private Componentes.TextBoxSimples txbsNomeFantasia;
-        private Componentes.TextBoxSimples txbsTelefone;
-        private Componentes.TextBoxSimples txbsCelular;
-        private Componentes.TextBoxSimples txbsEmailXML;
-        private Componentes.TextBoxSimples txbsEmailContato;
-        private Componentes.TextBoxSimples txbsCodigo;
+        private Componentes.TextBoxSimples tbsNome;
+        private Componentes.TextBoxSimples tbsNomeFantasia;
+        private Componentes.TextBoxSimples tbsTelefone;
+        private Componentes.TextBoxSimples tbsCelular;
+        private Componentes.TextBoxSimples tbsEmailXML;
+        private Componentes.TextBoxSimples tbsEmailContato;
+        private Componentes.TextBoxSimples tbsCodigo;
         private Componentes.ComboBoxSimples cbsTipoCadastro;
         private Componentes.ComboBoxSimples cbsFisicaJuridica;
         private Componentes.ComboBoxSimples cbsClassificacao;
@@ -727,7 +747,6 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
         private Componentes.TextBoxSimples tbsEmpresa;
         private Componentes.TextBoxSimples tbsFuncao;
-        private Componentes.TextBoxSimples tbsTrabalhoTelefone;
         private Componentes.TextBoxSimples tbsCrc;
         private Componentes.TextBoxSimples tbsSequencial;
         private Componentes.TextBoxSimples tbsValidadeCrc;
@@ -744,5 +763,7 @@
         private System.Windows.Forms.Button btExcluirEndereco;
         private System.Windows.Forms.Button btAlterarEndereco;
         private System.Windows.Forms.Button btNovoEndereco;
+        private Componentes.TextBoxSimples tbsTelComercial;
+        private Componentes.ComboBoxSimples cbsFilial;
     }
 }

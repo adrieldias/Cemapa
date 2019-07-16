@@ -32,6 +32,7 @@ namespace Cliente.Forms
         public BindingSource CadastroBindingSource { get; set; }
         public BindingSource EnderecoBindingSource { get; set; }
         public BindingSource QualificacaoSocioBindingSource { get; set; }
+        public BindingSource FilialBindingSource { get; set; }
 
         #endregion
 
@@ -56,25 +57,27 @@ namespace Cliente.Forms
                 var cadastro = new TB_CADASTRO();
                 CadastroBindingSource.DataSource = cadastro;
                 CadastroBindingSource.AddNew();
+                (CadastroBindingSource.Current as TB_CADASTRO).COD_CADASTRO = -1;
             }   
 
             // DataBindings
-            txbsCodigo.DataBindings.Add("Text", CadastroBindingSource.Current, "COD_CADASTRO");
-            txbsNome.DataBindings.Add("Text", CadastroBindingSource.Current, "NOME");
-            txbsNomeFantasia.DataBindings.Add("Text", CadastroBindingSource.Current, "DESC_FANTASIA");
-            txbsTelefone.DataBindings.Add("Text", CadastroBindingSource.Current, "DESC_TELEFONE");
-            txbsCelular.DataBindings.Add("Text", CadastroBindingSource.Current, "DESC_CELULAR");
-            txbsEmailXML.DataBindings.Add("Text", CadastroBindingSource.Current, "DESC_E_MAIL");
-            txbsEmailContato.DataBindings.Add("Text", CadastroBindingSource.Current, "DESC_E_MAIL1");
+            tbsCodigo.DataBindings.Add("Text", CadastroBindingSource.Current, "COD_CADASTRO");
+            tbsNome.DataBindings.Add("Text", CadastroBindingSource.Current, "NOME");
+            tbsNomeFantasia.DataBindings.Add("Text", CadastroBindingSource.Current, "DESC_FANTASIA");
+            tbsTelefone.DataBindings.Add("Text", CadastroBindingSource.Current, "DESC_TELEFONE");
+            tbsCelular.DataBindings.Add("Text", CadastroBindingSource.Current, "DESC_CELULAR");
+            tbsEmailXML.DataBindings.Add("Text", CadastroBindingSource.Current, "DESC_E_MAIL");
+            tbsEmailContato.DataBindings.Add("Text", CadastroBindingSource.Current, "DESC_E_MAIL1");
             tbsEmpresa.DataBindings.Add("Text", CadastroBindingSource.Current, "DESC_EMPRESA");
             tbsFuncao.DataBindings.Add("Text", CadastroBindingSource.Current, "DESC_FUNCAO");
-            tbsTrabalhoTelefone.DataBindings.Add("Text", CadastroBindingSource.Current, "DESC_FONE_EMPRESA");
+            tbsTelComercial.DataBindings.Add("Text", CadastroBindingSource.Current, "DESC_TELEFONE_COMERCIAL");
             tbsCrc.DataBindings.Add("Text", CadastroBindingSource.Current, "DESC_CRC");
             tbsSequencial.DataBindings.Add("Text", CadastroBindingSource.Current, "NUM_SEQ_CRC");
             tbsValidadeCrc.DataBindings.Add("Text", CadastroBindingSource.Current, "DT_CRC");
             tbsDtFimSociedade.DataBindings.Add("Text", CadastroBindingSource.Current, "DT_CANCELAMENTO");
             tbsPercParticCapitalTotal.DataBindings.Add("Text", CadastroBindingSource.Current, "PERC_CAP_TOT");
             tbsPercParticCapitalVolante.DataBindings.Add("Text", CadastroBindingSource.Current, "PERC_CAP_VOT");
+            
 
             //cbsTipoCadastro
             if (TipoCadastroBindingSource == null)
@@ -169,12 +172,32 @@ namespace Cliente.Forms
             if ((CadastroBindingSource.Current as TB_CADASTRO).COD_QUALIFICACAO_SOCIO != null)
             {
                 var objQualif
-                    = QualificacaoSocioBindingSource.List.OfType<TB_QUALIFICACAO_SOCIO>().First(q => q.COD_QUALIFICACAO_SOCIO == (QualificacaoSocioBindingSource.Current as TB_QUALIFICACAO_SOCIO).COD_QUALIFICACAO_SOCIO);
+                    = QualificacaoSocioBindingSource.List.OfType<TB_QUALIFICACAO_SOCIO>().First(q => q.COD_QUALIFICACAO_SOCIO == (CadastroBindingSource.Current as TB_CADASTRO).COD_QUALIFICACAO_SOCIO);
                 var pos = QualificacaoSocioBindingSource.IndexOf(objQualif);
                 QualificacaoSocioBindingSource.Position = pos;
                 objQualif = null;
                 pos = 0;
             }
+
+            //cbsFilial
+            //if (FilialBindingSource == null)
+            //    FilialBindingSource = new BindingSource();
+            //FilialBindingSource.DataSource
+            //    = JsonConvert.DeserializeAnonymousType((await RunAsyncGet(
+            //    ConfigurationManager.AppSettings["UriFilial"]
+            //    )), new List<TB_FILIAL>());
+            //cbsFilial.BindingSource = FilialBindingSource;
+            //cbsFilial.DisplayMember = "DESC_QUALIFICACAO_SOCIO";
+            //cbsFilial.SelectedIndex = -1;
+            //if ((CadastroBindingSource.Current as TB_CADASTRO).COD_FILIAL != null)
+            //{
+            //    var objQualif
+            //        = FilialBindingSource.List.OfType<TB_FILIAL>().First(q => q.COD_FILIAL == (CadastroBindingSource.Current as TB_CADASTRO).COD_FILIAL);
+            //    var pos = FilialBindingSource.IndexOf(objQualif);
+            //    FilialBindingSource.Position = pos;
+            //    objQualif = null;
+            //    pos = 0;
+            //}
 
             //dgvPropriedades
             if (PropriedadeBindingSource == null)
@@ -276,13 +299,20 @@ namespace Cliente.Forms
             this.lbNome.Text = "FORMULÁRIO DE CADASTRO";
         }
 
-        private void btSalvar_Click(object sender, EventArgs e)
+        private async void btSalvar_Click(object sender, EventArgs e)
         {
             (CadastroBindingSource.Current as TB_CADASTRO).TB_CADASTRO_ENDERECOS
                 .Add(EnderecoBindingSource.Current as TB_CADASTRO_ENDERECOS);
             (CadastroBindingSource.Current as TB_CADASTRO).TB_PROPRIEDADE
                 .Add(PropriedadeBindingSource.Current as TB_PROPRIEDADE);
+            (CadastroBindingSource.Current as TB_CADASTRO).COD_TIPO_CADASTRO
+                = (TipoCadastroBindingSource.Current as TB_TIPO_CADASTRO).COD_TIPO_CADASTRO;
             CadastroBindingSource.EndEdit();
+            MessageBox.Show(
+            await RunAsyncPost(
+                string.Format("{0}/{1}", ConfigurationManager.AppSettings["UriCadastro"], "Save"), CadastroBindingSource.Current)
+                
+                );
         }
 
         private void btCancelar_Click(object sender, EventArgs e)
