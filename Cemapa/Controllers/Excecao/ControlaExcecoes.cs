@@ -60,7 +60,7 @@ namespace Cemapa.Models
     {
         public static string ErroAprofundado(Exception except)
         {
-            while (except.Message == "An error occurred while updating the entries. See the inner exception for details.")
+            while ((except.Message == "An error occurred while updating the entries. See the inner exception for details.") || (except.Message == "An error occurred while executing the command definition. See the inner exception for details."))
             {
                 except = except.InnerException;
             }

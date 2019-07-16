@@ -22,7 +22,8 @@ namespace Cemapa.Controllers
         {
             db.Configuration.LazyLoadingEnabled = false;
             var query = (from c in db.TB_CADASTRO
-                            //.Include("TB_CIDADE")                            
+                            //.Include("TB_CIDADE")  
+                            .AsNoTracking()
                         orderby c.DT_CADASTRO descending
                         //select c //traz todos os campos
                         select new
@@ -41,6 +42,40 @@ namespace Cemapa.Controllers
                             FANTASIA = c.DESC_FANTASIA,
                             CLASSIFICACAO = c.TB_CLASS_CADASTRO.DESC_CLASSIFICACAO                            
                         }).Take(100);
+
+            return new System.Web.Mvc.JsonResult()
+            {
+                Data = query,
+                JsonRequestBehavior = System.Web.Mvc.JsonRequestBehavior.AllowGet
+            };
+        }
+        //[Route("API/Cadastro/GetPersonalizado")]
+        [HttpPost]
+        public System.Web.Mvc.JsonResult GetPersonalizado([FromBody] TB_CADASTRO cadastro)
+        {
+            db.Configuration.LazyLoadingEnabled = false;
+            var query = (from c in db.TB_CADASTRO
+                             //.Include("TB_CIDADE") 
+                             .AsNoTracking()
+                         where c.NOME.StartsWith(cadastro.NOME)
+                         orderby c.DT_CADASTRO descending
+                         //select c //traz todos os campos
+                         select new
+                         {
+                             CODIGO = c.COD_CADASTRO,
+                             TIPO = c.TB_TIPO_CADASTRO.DESC_TIPO_CADASTRO,
+                             NOME = c.NOME,
+                             TELEFONE = c.DESC_TELEFONE,
+                             CELULAR = c.DESC_CELULAR,
+                             CNPJ_CPF = c.NUM_CGC_CPF,
+                             ENDERECO = c.DESC_ENDERECO,
+                             //CodCidade = c.COD_CIDADE,
+                             CIDADE = c.TB_CIDADE.DESC_CIDADE,
+                             BAIRRO = c.DESC_BAIRRO,
+                             INSCRICAO = c.NUM_INSCRICAO,
+                             FANTASIA = c.DESC_FANTASIA,
+                             CLASSIFICACAO = c.TB_CLASS_CADASTRO.DESC_CLASSIFICACAO
+                         });
 
             return new System.Web.Mvc.JsonResult()
             {
