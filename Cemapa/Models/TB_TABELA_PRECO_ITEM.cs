@@ -12,12 +12,14 @@ namespace Cemapa.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class TB_SEQUENCIA
+    public partial class TB_TABELA_PRECO_ITEM
     {
-        public string NOME_SEQUENCIA { get; set; }
-        public int COD_FILIAL { get; set; }
-        public int VAL_SEQUENCIA { get; set; }
+        public int COD_TABELA_PRECO_ITEM { get; set; }
+        public int COD_TABELA_PRECO_CAB { get; set; }
+        public long COD_PRODUTO { get; set; }
+        public decimal VAL_PRECO { get; set; }
     
-        public virtual TB_FILIAL TB_FILIAL { get; set; }
+        public virtual TB_PRODUTO TB_PRODUTO { get; set; }
+        public virtual TB_TABELA_PRECO_CAB TB_TABELA_PRECO_CAB { get; set; }
     }
 }

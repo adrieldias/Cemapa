@@ -14,9 +14,9 @@ namespace Cemapa.Models
     
     public partial class TB_PRODUTO_CATEGORIA_SKYHUB
     {
+        public string DESC_CATEGORIA { get; set; }
         public int COD_PRODUTO_CATEGORIA_SKYHUB { get; set; }
         public int COD_PRODUTO_SKYHUB { get; set; }
-        public string DESC_CATEGORIA { get; set; }
     
         public virtual TB_PRODUTO_SKYHUB TB_PRODUTO_SKYHUB { get; set; }
     }

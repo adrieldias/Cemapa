@@ -12,31 +12,19 @@ namespace Cemapa.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class TB_CIDADE
+    public partial class TB_RAMO
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public TB_CIDADE()
+        public TB_RAMO()
         {
-            this.TB_FILIAL = new HashSet<TB_FILIAL>();
             this.TB_CADASTRO = new HashSet<TB_CADASTRO>();
-            this.TB_PROPRIEDADE = new HashSet<TB_PROPRIEDADE>();
         }
     
-        public int COD_CIDADE { get; set; }
-        public string DESC_CIDADE { get; set; }
-        public string COD_ESTADO { get; set; }
-        public string COD_PRACA { get; set; }
-        public Nullable<int> COD_DFC { get; set; }
-        public Nullable<short> COD_MUNICIPIO_SC { get; set; }
-        public string COD_CIDADE_IBGE { get; set; }
+        public int COD_RAMO { get; set; }
+        public string DESC_RAMO { get; set; }
         public string IND_SINC_MAX_ROTEIRIZADOR { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TB_FILIAL> TB_FILIAL { get; set; }
-        public virtual TB_ESTADO TB_ESTADO { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TB_CADASTRO> TB_CADASTRO { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TB_PROPRIEDADE> TB_PROPRIEDADE { get; set; }
     }
 }

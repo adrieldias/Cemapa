@@ -22,8 +22,6 @@ namespace Cemapa.Models
             this.TB_PRODUTO_IMAGEM_SKYHUB = new HashSet<TB_PRODUTO_IMAGEM_SKYHUB>();
         }
     
-        public int COD_PRODUTO_SKYHUB { get; set; }
-        public int COD_PRODUTO { get; set; }
         public string IND_SINCRONIZA { get; set; }
         public string DESC_PRODUTO { get; set; }
         public string DESC_DESCRICAO { get; set; }
@@ -32,6 +30,8 @@ namespace Cemapa.Models
         public Nullable<decimal> VAL_ALTURA { get; set; }
         public Nullable<decimal> VAL_LARGURA { get; set; }
         public Nullable<decimal> VAL_COMPRIMENTO { get; set; }
+        public int COD_PRODUTO_SKYHUB { get; set; }
+        public long COD_PRODUTO { get; set; }
         public Nullable<int> COD_PRODUTO_SKYHUB_PAI { get; set; }
     
         public virtual TB_PRODUTO TB_PRODUTO { get; set; }

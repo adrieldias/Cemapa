@@ -167,10 +167,19 @@
     <Compile Include="Models\OrdensSkyhub.cs" />
     <Compile Include="Models\PLPsSkyhub.cs" />
     <Compile Include="Models\ProdutosSkyhub.cs" />
+    <Compile Include="Models\TB_BANCO_AGENCIA.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_BC_CREDITO_PISCOFINS.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TB_CADASTRO.cs">
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TB_CADASTRO_ENDERECOS.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_CENTRO_CUSTO.cs">
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TB_CIDADE.cs">
@@ -179,10 +188,34 @@
     <Compile Include="Models\TB_CLASSE.cs">
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TB_CLASSE_CONSUMO.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TB_CLASS_CADASTRO.cs">
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TB_CONFIGURACAO_SKYHUB.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_CONTA_CORRENTE.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_CRITERIO_ESCRIT.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_CST_COFINS.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_CST_PIS.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_CULTURA.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_DEPARTAMENTO.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_ENERGIA_TENSAO.cs">
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TB_ESTADO.cs">
@@ -194,7 +227,55 @@
     <Compile Include="Models\TB_ESTOQUE.cs">
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TB_FILIAL.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_FORMA_TRIBUTACAO.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_GENERO_PRODUTO.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_GRUPO_CUSTOS.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_HISTORICO.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_HISTORICO_CONTABIL.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_INCIDENCIA_TRIBUTARIA.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_INCIDENCIA_TRIBUTARIA_PREV.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_IND_APROPRIACAO_CREDITO.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_LISTA_SERVICO.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_LOTE_TIPO.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_MARCA.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_MENSAGEM.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TB_MOTIVO.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_NATUREZA_JURIDICA.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_NF_ELETRONICA_CONFIG.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_OPERACAO.cs">
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TB_PAIS.cs">
@@ -204,6 +285,9 @@
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TB_PEDIDO_ITEM.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_PRAZO_VENCIMENTO.cs">
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TB_PRODUTO.cs">
@@ -227,16 +311,34 @@
     <Compile Include="Models\TB_QUALIFICACAO_SOCIO.cs">
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TB_RAMO.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TB_REGIAO.cs">
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TB_SEQUENCIA.cs">
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TB_SERIE.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_SERIE_MODELO.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TB_SINCRONIZACAO_SKYHUB.cs">
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TB_TABELA_PRECO_CAB.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_TABELA_PRECO_ITEM.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TB_TIPO_CADASTRO.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_TIPO_CONTRIBUICAO.cs">
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TB_TIPO_PROPRIEDADE.cs">

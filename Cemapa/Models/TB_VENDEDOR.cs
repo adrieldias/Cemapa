@@ -62,14 +62,15 @@ namespace Cemapa.Models
         public string IND_AMOSTRA { get; set; }
         public string IND_SEM_NOTA { get; set; }
         public string DESC_BAIRRO { get; set; }
+        public string DESC_E_MAIL1 { get; set; }
         public Nullable<decimal> PERC_COMISSAO3 { get; set; }
         public Nullable<decimal> PERC_COMISSAO4 { get; set; }
-        public string DESC_E_MAIL1 { get; set; }
         public string IND_SINC_MAX_ROTEIRIZADOR { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TB_CADASTRO> TB_CADASTRO { get; set; }
         public virtual TB_ESTADO TB_ESTADO { get; set; }
+        public virtual TB_FILIAL TB_FILIAL { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TB_PEDIDO_CAB> TB_PEDIDO_CAB { get; set; }
     }

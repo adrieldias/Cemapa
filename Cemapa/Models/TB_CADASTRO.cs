@@ -18,6 +18,9 @@ namespace Cemapa.Models
         public TB_CADASTRO()
         {
             this.TB_CADASTRO_ENDERECOS = new HashSet<TB_CADASTRO_ENDERECOS>();
+            this.TB_FILIAL = new HashSet<TB_FILIAL>();
+            this.TB_FILIAL1 = new HashSet<TB_FILIAL>();
+            this.TB_LOTE_TIPO = new HashSet<TB_LOTE_TIPO>();
             this.TB_PROPRIEDADE = new HashSet<TB_PROPRIEDADE>();
             this.TB_PEDIDO_CAB = new HashSet<TB_PEDIDO_CAB>();
             this.TB_PEDIDO_CAB1 = new HashSet<TB_PEDIDO_CAB>();
@@ -155,6 +158,8 @@ namespace Cemapa.Models
         public string DESC_QUALIFICACAO { get; set; }
         public Nullable<decimal> PERC_ESPECIAL_PECA { get; set; }
         public Nullable<decimal> PERC_ESPECIAL_SERVICO { get; set; }
+        public string DESC_E_MAIL_CONJUGE { get; set; }
+        public string DESC_TELEFONE_CONJUGE { get; set; }
         public Nullable<System.DateTime> DT_ALTERACAO { get; set; }
         public string IND_ATACADO_VAREJO { get; set; }
         public Nullable<System.DateTime> DT_ULT_ALTERACAO { get; set; }
@@ -195,20 +200,29 @@ namespace Cemapa.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TB_CADASTRO_ENDERECOS> TB_CADASTRO_ENDERECOS { get; set; }
+        public virtual TB_CIDADE TB_CIDADE { get; set; }
         public virtual TB_CLASS_CADASTRO TB_CLASS_CADASTRO { get; set; }
         public virtual TB_ESTADO TB_ESTADO { get; set; }
         public virtual TB_ESTADO_CIVIL TB_ESTADO_CIVIL { get; set; }
         public virtual TB_ESTADO TB_ESTADO1 { get; set; }
-        public virtual TB_MOTIVO TB_MOTIVO { get; set; }
-        public virtual TB_PAIS TB_PAIS { get; set; }
-        public virtual TB_QUALIFICACAO_SOCIO TB_QUALIFICACAO_SOCIO { get; set; }
+        public virtual TB_REGIAO TB_REGIAO { get; set; }
         public virtual TB_TIPO_CADASTRO TB_TIPO_CADASTRO { get; set; }
         public virtual TB_USUARIO TB_USUARIO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TB_FILIAL> TB_FILIAL { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TB_FILIAL> TB_FILIAL1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TB_LOTE_TIPO> TB_LOTE_TIPO { get; set; }
+        public virtual TB_MOTIVO TB_MOTIVO { get; set; }
+        public virtual TB_PAIS TB_PAIS { get; set; }
+        public virtual TB_QUALIFICACAO_SOCIO TB_QUALIFICACAO_SOCIO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TB_PROPRIEDADE> TB_PROPRIEDADE { get; set; }
-        public virtual TB_CIDADE TB_CIDADE { get; set; }
-        public virtual TB_REGIAO TB_REGIAO { get; set; }
+        public virtual TB_RAMO TB_RAMO { get; set; }
+        public virtual TB_TABELA_PRECO_CAB TB_TABELA_PRECO_CAB { get; set; }
         public virtual TB_VENDEDOR TB_VENDEDOR { get; set; }
+        public virtual TB_OPERACAO TB_OPERACAO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TB_PEDIDO_CAB> TB_PEDIDO_CAB { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -16,7 +16,7 @@ namespace Cemapa.Models
     {
         public int COD_PEDIDO_ITEM { get; set; }
         public Nullable<int> COD_PEDIDO_CAB { get; set; }
-        public Nullable<int> COD_PRODUTO { get; set; }
+        public Nullable<long> COD_PRODUTO { get; set; }
         public Nullable<int> COD_TRIBUTACAO { get; set; }
         public decimal QT_PEDIDO { get; set; }
         public decimal VAL_UNITARIO { get; set; }
@@ -51,7 +51,9 @@ namespace Cemapa.Models
         public Nullable<decimal> VAL_DIAMETRO { get; set; }
         public string IND_SINC_MAX_ROTEIRIZADOR { get; set; }
     
-        public virtual TB_PEDIDO_CAB TB_PEDIDO_CAB { get; set; }
+        public virtual TB_MARCA TB_MARCA { get; set; }
         public virtual TB_PRODUTO TB_PRODUTO { get; set; }
+        public virtual TB_TABELA_PRECO_CAB TB_TABELA_PRECO_CAB { get; set; }
+        public virtual TB_PEDIDO_CAB TB_PEDIDO_CAB { get; set; }
     }
 }

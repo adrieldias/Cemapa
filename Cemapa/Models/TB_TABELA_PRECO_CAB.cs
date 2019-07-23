@@ -12,31 +12,26 @@ namespace Cemapa.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class TB_CIDADE
+    public partial class TB_TABELA_PRECO_CAB
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public TB_CIDADE()
+        public TB_TABELA_PRECO_CAB()
         {
-            this.TB_FILIAL = new HashSet<TB_FILIAL>();
             this.TB_CADASTRO = new HashSet<TB_CADASTRO>();
-            this.TB_PROPRIEDADE = new HashSet<TB_PROPRIEDADE>();
+            this.TB_TABELA_PRECO_ITEM = new HashSet<TB_TABELA_PRECO_ITEM>();
+            this.TB_PEDIDO_ITEM = new HashSet<TB_PEDIDO_ITEM>();
         }
     
-        public int COD_CIDADE { get; set; }
-        public string DESC_CIDADE { get; set; }
-        public string COD_ESTADO { get; set; }
-        public string COD_PRACA { get; set; }
-        public Nullable<int> COD_DFC { get; set; }
-        public Nullable<short> COD_MUNICIPIO_SC { get; set; }
-        public string COD_CIDADE_IBGE { get; set; }
-        public string IND_SINC_MAX_ROTEIRIZADOR { get; set; }
+        public int COD_TABELA_PRECO_CAB { get; set; }
+        public string DESC_TABELA_PRECO { get; set; }
+        public string IND_SITUACAO { get; set; }
+        public string IND_BLOQUEIA_DESCONTO { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TB_FILIAL> TB_FILIAL { get; set; }
-        public virtual TB_ESTADO TB_ESTADO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TB_CADASTRO> TB_CADASTRO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TB_PROPRIEDADE> TB_PROPRIEDADE { get; set; }
+        public virtual ICollection<TB_TABELA_PRECO_ITEM> TB_TABELA_PRECO_ITEM { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TB_PEDIDO_ITEM> TB_PEDIDO_ITEM { get; set; }
     }
 }

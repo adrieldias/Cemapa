@@ -16,7 +16,7 @@ namespace Cemapa.Models
     {
         public int COD_LOTE_TIPO { get; set; }
         public int COD_FILIAL { get; set; }
-        public int COD_PRODUTO { get; set; }
+        public long COD_PRODUTO { get; set; }
         public Nullable<decimal> VL_CUSTO_MEDIO { get; set; }
         public Nullable<decimal> VL_ULTIMO_CUSTO { get; set; }
         public Nullable<decimal> VL_CUSTO_DOLAR { get; set; }
@@ -36,6 +36,8 @@ namespace Cemapa.Models
         public string DESC_HASH_MD5 { get; set; }
         public Nullable<decimal> VL_CUSTO_COMISSAO { get; set; }
     
+        public virtual TB_FILIAL TB_FILIAL { get; set; }
+        public virtual TB_LOTE_TIPO TB_LOTE_TIPO { get; set; }
         public virtual TB_PRODUTO TB_PRODUTO { get; set; }
     }
 }

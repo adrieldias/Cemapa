@@ -12,31 +12,29 @@ namespace Cemapa.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class TB_CIDADE
+    public partial class TB_SERIE
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public TB_CIDADE()
+        public TB_SERIE()
         {
             this.TB_FILIAL = new HashSet<TB_FILIAL>();
-            this.TB_CADASTRO = new HashSet<TB_CADASTRO>();
-            this.TB_PROPRIEDADE = new HashSet<TB_PROPRIEDADE>();
+            this.TB_USUARIO = new HashSet<TB_USUARIO>();
+            this.TB_USUARIO1 = new HashSet<TB_USUARIO>();
         }
     
-        public int COD_CIDADE { get; set; }
-        public string DESC_CIDADE { get; set; }
-        public string COD_ESTADO { get; set; }
-        public string COD_PRACA { get; set; }
-        public Nullable<int> COD_DFC { get; set; }
-        public Nullable<short> COD_MUNICIPIO_SC { get; set; }
-        public string COD_CIDADE_IBGE { get; set; }
-        public string IND_SINC_MAX_ROTEIRIZADOR { get; set; }
+        public string COD_SERIE { get; set; }
+        public Nullable<int> NUM_SERIE { get; set; }
+        public int COD_FILIAL { get; set; }
+        public string COD_SERIE_MODELO { get; set; }
+        public Nullable<short> NUM_SERIE_FISCAL { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TB_FILIAL> TB_FILIAL { get; set; }
-        public virtual TB_ESTADO TB_ESTADO { get; set; }
+        public virtual TB_FILIAL TB_FILIAL1 { get; set; }
+        public virtual TB_SERIE_MODELO TB_SERIE_MODELO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TB_CADASTRO> TB_CADASTRO { get; set; }
+        public virtual ICollection<TB_USUARIO> TB_USUARIO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TB_PROPRIEDADE> TB_PROPRIEDADE { get; set; }
+        public virtual ICollection<TB_USUARIO> TB_USUARIO1 { get; set; }
     }
 }

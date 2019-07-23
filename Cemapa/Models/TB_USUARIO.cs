@@ -26,7 +26,7 @@ namespace Cemapa.Models
         public byte NUM_DIAS_ALTERACAO { get; set; }
         public string IND_PRIVILEGIO { get; set; }
         public byte COD_DEPARTAMENTO { get; set; }
-        public byte COD_FILIAL { get; set; }
+        public int COD_FILIAL { get; set; }
         public string NOME { get; set; }
         public string COD_SERIE_PADRAO { get; set; }
         public Nullable<int> COD_CLIENTE_PADRAO { get; set; }
@@ -55,7 +55,14 @@ namespace Cemapa.Models
         public Nullable<int> COD_FINALIDADE_PAGAR { get; set; }
         public string DESC_IMPRESSORA_VALE_PRODUTO { get; set; }
         public string DESC_IMPRESSORA_ZEBRA_EPL { get; set; }
+        public string DESC_EMAIL { get; set; }
+        public string DESC_SENHA_EMAIL { get; set; }
+        public string DESC_SMTP { get; set; }
+        public Nullable<byte> NUM_PORTA_SMTP { get; set; }
+        public string IND_SSL { get; set; }
     
+        public virtual TB_SERIE TB_SERIE { get; set; }
+        public virtual TB_SERIE TB_SERIE1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TB_CADASTRO> TB_CADASTRO { get; set; }
     }
