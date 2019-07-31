@@ -96,7 +96,7 @@ namespace Cemapa.Models
         public Nullable<short> COD_PRODUTO_SIAGRO { get; set; }
         public string COD_TIPO_PRODUTO { get; set; }
         public string COD_CST_IPI { get; set; }
-        public Nullable<bool> NUM_ORIGEM { get; set; }
+        public Nullable<short> NUM_ORIGEM { get; set; }
         public string DESC_CONCENTRACAO { get; set; }
         public string COD_CST_COFINS { get; set; }
         public string COD_CST_PIS { get; set; }
@@ -113,7 +113,7 @@ namespace Cemapa.Models
         public string IND_ARREDONDAMENTO_TRUNCAMENTO { get; set; }
         public string IND_PROD_PROPRIA_TERCEIRO { get; set; }
         public string IND_MARCENARIA { get; set; }
-        public Nullable<bool> IND_QTD_ETIQUETAS { get; set; }
+        public Nullable<short> IND_QTD_ETIQUETAS { get; set; }
         public string DESC_HASH_MD5 { get; set; }
         public Nullable<decimal> PERC_MARGEM_MINIMA { get; set; }
         public string IND_PRECO_VENDA_ETIQUETA { get; set; }

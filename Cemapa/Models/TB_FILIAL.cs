@@ -85,7 +85,7 @@ namespace Cemapa.Models
         public string IND_IMPRIME_PEDIDO { get; set; }
         public string IND_CONTINGENCIA { get; set; }
         public string NUM_NIRE { get; set; }
-        public Nullable<bool> IND_AMBIENTE_NFE { get; set; }
+        public Nullable<short> IND_AMBIENTE_NFE { get; set; }
         public string IND_TIPO_NOTA { get; set; }
         public Nullable<int> COD_CADASTRO_RESPONSAVEL { get; set; }
         public Nullable<byte> IND_SISTEMA_NFE { get; set; }
@@ -100,22 +100,22 @@ namespace Cemapa.Models
         public string IND_LOGIN_NFE { get; set; }
         public string DESC_CERTIFICADO { get; set; }
         public string DESC_LOGOTIPO_DANFE { get; set; }
-        public Nullable<bool> IND_REGIME_TRIBUTARIO { get; set; }
+        public Nullable<short> IND_REGIME_TRIBUTARIO { get; set; }
         public string DESC_VERSAO_NFE { get; set; }
         public Nullable<System.DateTime> DT_CONTINGENCIA { get; set; }
         public string DESC_JUST_CONTINGENCIA { get; set; }
         public string IND_OCULTA_FONE_DANFE { get; set; }
         public string COD_ENERGIA_TENSAO { get; set; }
         public string COD_CLASSE_CONSUMO { get; set; }
-        public Nullable<bool> IND_TIPO_ENERGIA { get; set; }
+        public Nullable<short> IND_TIPO_ENERGIA { get; set; }
         public string IND_TIPO_ATIVIDADE { get; set; }
         public string IND_PERFIL_SPED { get; set; }
         public string IND_ST { get; set; }
         public string IND_REGIME_ESPECIAL { get; set; }
-        public Nullable<bool> COD_INC_TRIB { get; set; }
-        public Nullable<bool> COD_APROPRIACAO_CRED { get; set; }
-        public Nullable<bool> COD_TIPO_CONT { get; set; }
-        public Nullable<bool> COD_CRITERIO_ESCRIT { get; set; }
+        public Nullable<short> COD_INC_TRIB { get; set; }
+        public Nullable<short> COD_APROPRIACAO_CRED { get; set; }
+        public Nullable<short> COD_TIPO_CONT { get; set; }
+        public Nullable<short> COD_CRITERIO_ESCRIT { get; set; }
         public string IND_IPI { get; set; }
         public string IND_PERMITE_IMP_EXP { get; set; }
         public string COD_SERIE_MODELO { get; set; }
@@ -126,9 +126,9 @@ namespace Cemapa.Models
         public Nullable<int> NUM_PORTA_SMTP { get; set; }
         public string IND_SSL { get; set; }
         public string DESC_CNAE { get; set; }
-        public Nullable<bool> COD_INC_TRIB_PREV { get; set; }
+        public Nullable<short> COD_INC_TRIB_PREV { get; set; }
         public string IND_CONTINGENCIA_CTE { get; set; }
-        public Nullable<bool> IND_AMBIENTE_CTE { get; set; }
+        public Nullable<short> IND_AMBIENTE_CTE { get; set; }
         public string IND_VIAS_DACTE { get; set; }
         public Nullable<byte> NUM_VIAS_DACTE { get; set; }
         public Nullable<System.DateTime> DT_CONTINGENCIA_CTE { get; set; }
@@ -143,12 +143,12 @@ namespace Cemapa.Models
         public string DESC_ID_LOJA_TEF { get; set; }
         public Nullable<int> COD_NBS_PADRAO { get; set; }
         public string DESC_LPT_RECIBO { get; set; }
-        public Nullable<bool> IND_AMBIENTE_MDFE { get; set; }
+        public Nullable<short> IND_AMBIENTE_MDFE { get; set; }
         public string IND_VIAS_DAMDFE { get; set; }
         public Nullable<byte> NUM_VIAS_DAMDFE { get; set; }
         public string DESC_VERSAO_MDFE { get; set; }
         public string DESC_HASH_MD5 { get; set; }
-        public Nullable<bool> IND_ORIENTACAO_PAG_DANFE { get; set; }
+        public Nullable<short> IND_ORIENTACAO_PAG_DANFE { get; set; }
         public Nullable<decimal> PERC_ALIQ_CRED_ICMSSN { get; set; }
         public string IND_CONSIDERA_DESC_BC { get; set; }
         public string DESC_LOGOTIPO_DAMDFE { get; set; }
@@ -157,16 +157,16 @@ namespace Cemapa.Models
         public Nullable<int> COD_COFINS_DCTF { get; set; }
         public string IND_CONSIDERA_IPI_BC_ICMS { get; set; }
         public string IND_CONSIDERA_IPI_BC_SUBST { get; set; }
-        public Nullable<bool> IND_TIPO_EMITENTE_MDFE { get; set; }
+        public Nullable<short> IND_TIPO_EMITENTE_MDFE { get; set; }
         public string IND_CONTINGENCIA_NFCE { get; set; }
-        public Nullable<bool> IND_AMBIENTE_NFCE { get; set; }
+        public Nullable<short> IND_AMBIENTE_NFCE { get; set; }
         public string IND_VIAS_DANFE_NFCE { get; set; }
         public Nullable<byte> NUM_VIAS_DANFE_NFCE { get; set; }
         public Nullable<System.DateTime> DT_CONTINGENCIA_NFCE { get; set; }
         public string DESC_JUST_CONTINGENCIA_NFCE { get; set; }
         public string DESC_VERSAO_NFCE { get; set; }
         public string IND_CONSUMIDOR_FINAL { get; set; }
-        public Nullable<bool> IND_RESP_SEGURO_PADRAO { get; set; }
+        public Nullable<short> IND_RESP_SEGURO_PADRAO { get; set; }
         public string IND_PEDAGIO_INCLUSO { get; set; }
         public string IND_CONSIDERA_RED_BASE_SUBST { get; set; }
         public string DESC_APOLICE_SEGURO_PADRAO { get; set; }
@@ -190,7 +190,7 @@ namespace Cemapa.Models
         public Nullable<decimal> COD_CADASTRO_ENG_RESPONSAVEL { get; set; }
         public Nullable<System.DateTime> DT_REVISAO_ENG_RESPONSAVEL { get; set; }
         public string DESC_VERSAO_NFSE { get; set; }
-        public Nullable<bool> IND_AMBIENTE_NFSE { get; set; }
+        public Nullable<short> IND_AMBIENTE_NFSE { get; set; }
         public string DESC_SENHA_WS_NFSE { get; set; }
         public string DESC_EMAIL_XML_MENSAL { get; set; }
         public string IND_LOGOTIPO_DANFE_NFCE { get; set; }

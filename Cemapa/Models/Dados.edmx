@@ -3598,7 +3598,7 @@
           <Property Name="IND_IMPRIME_PEDIDO" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="IND_CONTINGENCIA" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="NUM_NIRE" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
-          <Property Name="IND_AMBIENTE_NFE" Type="Boolean" />
+          <Property Name="IND_AMBIENTE_NFE" Type="Int16" />
           <Property Name="IND_TIPO_NOTA" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="COD_CADASTRO_RESPONSAVEL" Type="Int32" />
           <Property Name="IND_SISTEMA_NFE" Type="Byte" />
@@ -3613,22 +3613,22 @@
           <Property Name="IND_LOGIN_NFE" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="DESC_CERTIFICADO" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="DESC_LOGOTIPO_DANFE" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="IND_REGIME_TRIBUTARIO" Type="Boolean" />
+          <Property Name="IND_REGIME_TRIBUTARIO" Type="Int16" />
           <Property Name="DESC_VERSAO_NFE" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
           <Property Name="DT_CONTINGENCIA" Type="DateTime" />
           <Property Name="DESC_JUST_CONTINGENCIA" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
           <Property Name="IND_OCULTA_FONE_DANFE" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="COD_ENERGIA_TENSAO" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="COD_CLASSE_CONSUMO" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="IND_TIPO_ENERGIA" Type="Boolean" />
+          <Property Name="IND_TIPO_ENERGIA" Type="Int16" />
           <Property Name="IND_TIPO_ATIVIDADE" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="IND_PERFIL_SPED" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="IND_ST" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="IND_REGIME_ESPECIAL" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="COD_INC_TRIB" Type="Boolean" />
-          <Property Name="COD_APROPRIACAO_CRED" Type="Boolean" />
-          <Property Name="COD_TIPO_CONT" Type="Boolean" />
-          <Property Name="COD_CRITERIO_ESCRIT" Type="Boolean" />
+          <Property Name="COD_INC_TRIB" Type="Int16" />
+          <Property Name="COD_APROPRIACAO_CRED" Type="Int16" />
+          <Property Name="COD_TIPO_CONT" Type="Int16" />
+          <Property Name="COD_CRITERIO_ESCRIT" Type="Int16" />
           <Property Name="IND_IPI" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="IND_PERMITE_IMP_EXP" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="COD_SERIE_MODELO" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
@@ -3639,9 +3639,9 @@
           <Property Name="NUM_PORTA_SMTP" Type="Int32" />
           <Property Name="IND_SSL" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="DESC_CNAE" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
-          <Property Name="COD_INC_TRIB_PREV" Type="Boolean" />
+          <Property Name="COD_INC_TRIB_PREV" Type="Int16" />
           <Property Name="IND_CONTINGENCIA_CTE" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="IND_AMBIENTE_CTE" Type="Boolean" />
+          <Property Name="IND_AMBIENTE_CTE" Type="Int16" />
           <Property Name="IND_VIAS_DACTE" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="NUM_VIAS_DACTE" Type="Byte" />
           <Property Name="DT_CONTINGENCIA_CTE" Type="DateTime" />
@@ -3656,12 +3656,12 @@
           <Property Name="DESC_ID_LOJA_TEF" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
           <Property Name="COD_NBS_PADRAO" Type="Int32" />
           <Property Name="DESC_LPT_RECIBO" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="IND_AMBIENTE_MDFE" Type="Boolean" />
+          <Property Name="IND_AMBIENTE_MDFE" Type="Int16" />
           <Property Name="IND_VIAS_DAMDFE" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="NUM_VIAS_DAMDFE" Type="Byte" />
           <Property Name="DESC_VERSAO_MDFE" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
           <Property Name="DESC_HASH_MD5" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
-          <Property Name="IND_ORIENTACAO_PAG_DANFE" Type="Boolean" />
+          <Property Name="IND_ORIENTACAO_PAG_DANFE" Type="Int16" />
           <Property Name="PERC_ALIQ_CRED_ICMSSN" Type="Decimal" Precision="5" Scale="2" />
           <Property Name="IND_CONSIDERA_DESC_BC" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="DESC_LOGOTIPO_DAMDFE" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
@@ -3670,16 +3670,16 @@
           <Property Name="COD_COFINS_DCTF" Type="Int32" />
           <Property Name="IND_CONSIDERA_IPI_BC_ICMS" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="IND_CONSIDERA_IPI_BC_SUBST" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="IND_TIPO_EMITENTE_MDFE" Type="Boolean" />
+          <Property Name="IND_TIPO_EMITENTE_MDFE" Type="Int16" />
           <Property Name="IND_CONTINGENCIA_NFCE" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="IND_AMBIENTE_NFCE" Type="Boolean" />
+          <Property Name="IND_AMBIENTE_NFCE" Type="Int16" />
           <Property Name="IND_VIAS_DANFE_NFCE" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="NUM_VIAS_DANFE_NFCE" Type="Byte" />
           <Property Name="DT_CONTINGENCIA_NFCE" Type="DateTime" />
           <Property Name="DESC_JUST_CONTINGENCIA_NFCE" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
           <Property Name="DESC_VERSAO_NFCE" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
           <Property Name="IND_CONSUMIDOR_FINAL" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="IND_RESP_SEGURO_PADRAO" Type="Boolean" />
+          <Property Name="IND_RESP_SEGURO_PADRAO" Type="Int16" />
           <Property Name="IND_PEDAGIO_INCLUSO" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="IND_CONSIDERA_RED_BASE_SUBST" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="DESC_APOLICE_SEGURO_PADRAO" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
@@ -3703,7 +3703,7 @@
           <Property Name="COD_CADASTRO_ENG_RESPONSAVEL" Type="Decimal" Precision="38" Scale="0" />
           <Property Name="DT_REVISAO_ENG_RESPONSAVEL" Type="DateTime" />
           <Property Name="DESC_VERSAO_NFSE" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="IND_AMBIENTE_NFSE" Type="Boolean" />
+          <Property Name="IND_AMBIENTE_NFSE" Type="Int16" />
           <Property Name="DESC_SENHA_WS_NFSE" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="DESC_EMAIL_XML_MENSAL" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="IND_LOGOTIPO_DANFE_NFCE" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
@@ -3767,7 +3767,7 @@
           <Key>
             <PropertyRef Name="COD_APRO_CRED" />
           </Key>
-          <Property Name="COD_APRO_CRED" Type="Boolean" Nullable="false" />
+          <Property Name="COD_APRO_CRED" Type="Int16" Nullable="false" />
           <Property Name="DESC_METOD_APROP" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="TB_FILIAL" Relationship="Model.FK_FILIAL_X_APROP_CREDITO" FromRole="TB_IND_APROPRIACAO_CREDITO" ToRole="TB_FILIAL" />
         </EntityType>
@@ -3807,7 +3807,7 @@
           <Key>
             <PropertyRef Name="COD_CRITERIO_ESCRIT" />
           </Key>
-          <Property Name="COD_CRITERIO_ESCRIT" Type="Boolean" Nullable="false" />
+          <Property Name="COD_CRITERIO_ESCRIT" Type="Int16" Nullable="false" />
           <Property Name="DESC_CRITERIO_ESCRIT" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="TB_FILIAL" Relationship="Model.FK_FILIAL_X_CRITERIO_ESCRIT" FromRole="TB_CRITERIO_ESCRIT" ToRole="TB_FILIAL" />
         </EntityType>
@@ -3847,7 +3847,7 @@
           <Key>
             <PropertyRef Name="COD_INC_TRIB" />
           </Key>
-          <Property Name="COD_INC_TRIB" Type="Boolean" Nullable="false" />
+          <Property Name="COD_INC_TRIB" Type="Int16" Nullable="false" />
           <Property Name="DESC_INC_TRIB" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="TB_FILIAL" Relationship="Model.FK_FILIAL_X_INCID_TRIB" FromRole="TB_INCIDENCIA_TRIBUTARIA" ToRole="TB_FILIAL" />
         </EntityType>
@@ -3855,7 +3855,7 @@
           <Key>
             <PropertyRef Name="COD_INC_TRIB" />
           </Key>
-          <Property Name="COD_INC_TRIB" Type="Boolean" Nullable="false" />
+          <Property Name="COD_INC_TRIB" Type="Int16" Nullable="false" />
           <Property Name="DESC_INC_TRIB" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="TB_FILIAL" Relationship="Model.FK_FILIALXINCIDENCIA_TRIB_PREV" FromRole="TB_INCIDENCIA_TRIBUTARIA_PREV" ToRole="TB_FILIAL" />
         </EntityType>
@@ -3942,7 +3942,7 @@
           <Key>
             <PropertyRef Name="COD_TIPO_CONT" />
           </Key>
-          <Property Name="COD_TIPO_CONT" Type="Boolean" Nullable="false" />
+          <Property Name="COD_TIPO_CONT" Type="Int16" Nullable="false" />
           <Property Name="DESC_TIPO_CONT" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="TB_FILIAL" Relationship="Model.FK_FILIAL_X_TIPO_CONTRIBUICAO" FromRole="TB_TIPO_CONTRIBUICAO" ToRole="TB_FILIAL" />
         </EntityType>
@@ -4246,7 +4246,7 @@
           <Property Name="DESC_CPF_AUTORIZADO3" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
           <Property Name="DESC_OUTRAS_GRANTIAS" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="DESC_GARANTIAS_OUTRAS" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="NUM_DIA_VISITA" Type="Boolean" />
+          <Property Name="NUM_DIA_VISITA" Type="Int16" />
           <Property Name="DESC_FREQUENCIA_VISITA" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="NUM_HORA_VISITA" Type="Int16" />
           <Property Name="NUM_DIA_VENCTO" Type="Byte" />
@@ -4272,11 +4272,11 @@
           <Property Name="COD_UF_VEICULO" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
           <Property Name="DESC_DISTRITO" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="COD_AVALISTA" Type="Int32" />
-          <Property Name="IND_ISS_RETIDO" Type="Boolean" />
+          <Property Name="IND_ISS_RETIDO" Type="Int16" />
           <Property Name="PERC_BASE_SUBSTITUICAO" Type="Decimal" Precision="5" Scale="2" />
           <Property Name="PERC_ALIQ_SUBSTITUICAO" Type="Decimal" Precision="5" Scale="2" />
           <Property Name="DESC_LEI_SUBSTITUICAO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IND_REGIME_TRIBUTARIO" Type="Boolean" />
+          <Property Name="IND_REGIME_TRIBUTARIO" Type="Int16" />
           <Property Name="PERC_DESCONTO2" Type="Decimal" Precision="5" Scale="2" />
           <Property Name="PERC_DEDUCAO_NFSE" Type="Decimal" Precision="5" Scale="2" />
           <Property Name="COD_QUALIFICACAO_SOCIO" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
@@ -4294,7 +4294,7 @@
           <Property Name="NUM_SEQ_CRC" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="DT_CRC" Type="DateTime" />
           <Property Name="PERC_ROYALTIES" Type="Decimal" Precision="5" Scale="2" />
-          <Property Name="IND_TIPO_PROPRIETARIO" Type="Boolean" Nullable="false" />
+          <Property Name="IND_TIPO_PROPRIETARIO" Type="Int16" Nullable="false" />
           <Property Name="DESC_RNTRC" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="DESC_TAF" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
           <Property Name="DESC_NRO_REG_ESTADUAL" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
@@ -4397,7 +4397,7 @@
           <Property Name="COD_PRODUTO_SIAGRO" Type="Int16" />
           <Property Name="COD_TIPO_PRODUTO" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
           <Property Name="COD_CST_IPI" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
-          <Property Name="NUM_ORIGEM" Type="Boolean" />
+          <Property Name="NUM_ORIGEM" Type="Int16" />
           <Property Name="DESC_CONCENTRACAO" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="COD_CST_COFINS" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
           <Property Name="COD_CST_PIS" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
@@ -4414,7 +4414,7 @@
           <Property Name="IND_ARREDONDAMENTO_TRUNCAMENTO" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="IND_PROD_PROPRIA_TERCEIRO" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="IND_MARCENARIA" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="IND_QTD_ETIQUETAS" Type="Boolean" />
+          <Property Name="IND_QTD_ETIQUETAS" Type="Int16" />
           <Property Name="DESC_HASH_MD5" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
           <Property Name="PERC_MARGEM_MINIMA" Type="Decimal" Precision="5" Scale="2" />
           <Property Name="IND_PRECO_VENDA_ETIQUETA" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
@@ -5685,7 +5685,7 @@
           <Property Name="COD_CONTABIL_CSSL_DBB" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="IND_CONTROLE_ESTOQUE" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="IND_GERA_MEMORANDO" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="IND_FINALIDADE_NFE" Type="Boolean" />
+          <Property Name="IND_FINALIDADE_NFE" Type="Int16" />
           <Property Name="COD_CONTABIL_CONTRATO_INC_DEB" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="COD_CONTABIL_CONTRATO_INC_CRED" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="COD_CONT_VAR_CAMBIAL_POS_DEB" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
@@ -5708,7 +5708,7 @@
           <Property Name="COD_SERIE_MODELO" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
           <Property Name="IND_EMITE_RECIBO_ENTRADA" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="IND_MODAL_CTE" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
-          <Property Name="IND_TIPO_CTE" Type="Boolean" />
+          <Property Name="IND_TIPO_CTE" Type="Int16" />
           <Property Name="COD_CST_PIS" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
           <Property Name="COD_CST_COFINS" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
           <Property Name="IND_SEGUNDA_VIA_CUPOM" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
@@ -5921,7 +5921,7 @@
           <Property Name="DT_USUARIO" Type="DateTime" />
           <Property Name="COD_PEDIDO_WEB" Type="Int32" />
           <Property Name="LOCAL_ULTIMA_ALTERACAO" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="STEP_PEDIDO_WEB" Type="Boolean" />
+          <Property Name="STEP_PEDIDO_WEB" Type="Int16" />
           <Property Name="COD_OBRA" Type="Int32" />
           <Property Name="IND_CONSUMIDOR_FINAL" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="COD_VEICULO" Type="Int32" />

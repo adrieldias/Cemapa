@@ -111,8 +111,8 @@ namespace Cemapa.Controllers
                         db.Entry(cadastro).State = EntityState.Modified;
                     }
                     else
-                    {                        
-                        cadastro.COD_CADASTRO = 0;
+                    {   
+                        cadastro.COD_CADASTRO = db.Database.SqlQuery<int>("SELECT SQCADASTRO.nextval FROM dual").First();
                         cadastro.IND_SEXO_CATEGORIA = "M";
                         cadastro.DT_CADASTRO = System.DateTime.Now;
                         db.Entry(cadastro).State = EntityState.Added;

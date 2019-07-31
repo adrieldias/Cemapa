@@ -81,7 +81,7 @@ namespace Cemapa.Models
         public Nullable<System.DateTime> DT_USUARIO { get; set; }
         public Nullable<int> COD_PEDIDO_WEB { get; set; }
         public string LOCAL_ULTIMA_ALTERACAO { get; set; }
-        public Nullable<bool> STEP_PEDIDO_WEB { get; set; }
+        public Nullable<short> STEP_PEDIDO_WEB { get; set; }
         public Nullable<int> COD_OBRA { get; set; }
         public string IND_CONSUMIDOR_FINAL { get; set; }
         public Nullable<int> COD_VEICULO { get; set; }

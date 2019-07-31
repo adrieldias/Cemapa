@@ -32,7 +32,7 @@ namespace Cliente.Forms
         public BindingSource CadastroBindingSource { get; set; }
         public BindingSource EnderecoBindingSource { get; set; }
         public BindingSource QualificacaoSocioBindingSource { get; set; }
-        public BindingSource FilialBindingSource { get; set; }
+        public BindingSource FilialBindingSource { get; set; }        
 
         #endregion
 
@@ -77,6 +77,7 @@ namespace Cliente.Forms
             tbsDtFimSociedade.DataBindings.Add("Text", CadastroBindingSource.Current, "DT_CANCELAMENTO");
             tbsPercParticCapitalTotal.DataBindings.Add("Text", CadastroBindingSource.Current, "PERC_CAP_TOT");
             tbsPercParticCapitalVolante.DataBindings.Add("Text", CadastroBindingSource.Current, "PERC_CAP_VOT");
+            tbsDtSeprocado.DataBindings.Add("Text", CadastroBindingSource.Current, "DT_SEPROCADO");
             
 
             //cbsTipoCadastro
@@ -120,8 +121,39 @@ namespace Cliente.Forms
                 pos = 0;
             }
 
+            //cbsRegimeTributário
+            List<POCO.RegimeTributario> ListaRegimeTributario = new List<RegimeTributario>();
+            var nRegime = new RegimeTributario();
+            nRegime.IND_REGIME_TRIBUTARIO = null;
+            nRegime.DESC_REGIME_TRIBUTARIO = string.Empty;
+            var simples = new RegimeTributario();
+            simples.IND_REGIME_TRIBUTARIO = 1;
+            simples.DESC_REGIME_TRIBUTARIO = "SIMPLES NACIONAL";
+            var simplesExcesso = new RegimeTributario();
+            simplesExcesso.IND_REGIME_TRIBUTARIO = 2;
+            simplesExcesso.DESC_REGIME_TRIBUTARIO = "SIMPLES NACIONAL - EXCESSO";
+            var normal = new RegimeTributario();
+            normal.IND_REGIME_TRIBUTARIO = 3;
+            normal.DESC_REGIME_TRIBUTARIO = "NORMAL";
+            ListaRegimeTributario.Add(simples);
+            ListaRegimeTributario.Add(simplesExcesso);
+            ListaRegimeTributario.Add(normal);
+            BindingSource RegimeTributarioBindingSource = new BindingSource();
+            RegimeTributarioBindingSource.DataSource = ListaRegimeTributario;
+            cbsRegimeTributario.BindingSource = RegimeTributarioBindingSource;
+            cbsRegimeTributario.DisplayMember = "DESC_REGIME_TRIBUTARIO";
+            if((CadastroBindingSource.Current as TB_CADASTRO).IND_REGIME_TRIBUTARIO != null)
+            {
+                var objRegime = RegimeTributarioBindingSource.List.OfType<POCO.RegimeTributario>().First(p => p.IND_REGIME_TRIBUTARIO == ((TB_CADASTRO)CadastroBindingSource.Current).IND_REGIME_TRIBUTARIO);
+                var pos = RegimeTributarioBindingSource.IndexOf(objRegime);
+                fisicaJuridicaBindingSource.Position = pos;
+                objRegime = null;
+                pos = 0;
+            }
+
+
             //cbsClassCadastro            
-            if(ClassCadastroBindingSource == null)
+            if (ClassCadastroBindingSource == null)
                 ClassCadastroBindingSource = new BindingSource();
             ClassCadastroBindingSource.DataSource = JsonConvert.DeserializeAnonymousType((await RunAsyncGet(
                 ConfigurationManager.AppSettings["UriClassCadastro"]
@@ -180,24 +212,24 @@ namespace Cliente.Forms
             }
 
             //cbsFilial
-            //if (FilialBindingSource == null)
-            //    FilialBindingSource = new BindingSource();
-            //FilialBindingSource.DataSource
-            //    = JsonConvert.DeserializeAnonymousType((await RunAsyncGet(
-            //    ConfigurationManager.AppSettings["UriFilial"]
-            //    )), new List<TB_FILIAL>());
-            //cbsFilial.BindingSource = FilialBindingSource;
-            //cbsFilial.DisplayMember = "DESC_QUALIFICACAO_SOCIO";
-            //cbsFilial.SelectedIndex = -1;
-            //if ((CadastroBindingSource.Current as TB_CADASTRO).COD_FILIAL != null)
-            //{
-            //    var objQualif
-            //        = FilialBindingSource.List.OfType<TB_FILIAL>().First(q => q.COD_FILIAL == (CadastroBindingSource.Current as TB_CADASTRO).COD_FILIAL);
-            //    var pos = FilialBindingSource.IndexOf(objQualif);
-            //    FilialBindingSource.Position = pos;
-            //    objQualif = null;
-            //    pos = 0;
-            //}
+            if (FilialBindingSource == null)
+                FilialBindingSource = new BindingSource();
+            FilialBindingSource.DataSource
+                = JsonConvert.DeserializeAnonymousType((await RunAsyncGet(
+                string.Format("{0}/{1}", ConfigurationManager.AppSettings["UriFilial"], "Get")
+                )), new List<TB_FILIAL>());
+            cbsFilial.BindingSource = FilialBindingSource;
+            cbsFilial.DisplayMember = "DESC_FILIAL";
+            cbsFilial.SelectedIndex = -1;
+            if ((CadastroBindingSource.Current as TB_CADASTRO).COD_FILIAL != null)
+            {
+                var objQualif
+                    = FilialBindingSource.List.OfType<TB_FILIAL>().First(q => q.COD_FILIAL == (CadastroBindingSource.Current as TB_CADASTRO).COD_FILIAL);
+                var pos = FilialBindingSource.IndexOf(objQualif);
+                FilialBindingSource.Position = pos;
+                objQualif = null;
+                pos = 0;
+            }
 
             //dgvPropriedades
             if (PropriedadeBindingSource == null)
@@ -307,6 +339,8 @@ namespace Cliente.Forms
                 .Add(PropriedadeBindingSource.Current as TB_PROPRIEDADE);
             (CadastroBindingSource.Current as TB_CADASTRO).COD_TIPO_CADASTRO
                 = (TipoCadastroBindingSource.Current as TB_TIPO_CADASTRO).COD_TIPO_CADASTRO;
+            (CadastroBindingSource.Current as TB_CADASTRO).COD_FILIAL
+                = (FilialBindingSource.Current as TB_FILIAL).COD_FILIAL;
             CadastroBindingSource.EndEdit();
             MessageBox.Show(
             await RunAsyncPost(

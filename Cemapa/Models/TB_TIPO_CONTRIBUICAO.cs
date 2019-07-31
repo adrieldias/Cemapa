@@ -20,7 +20,7 @@ namespace Cemapa.Models
             this.TB_FILIAL = new HashSet<TB_FILIAL>();
         }
     
-        public bool COD_TIPO_CONT { get; set; }
+        public short COD_TIPO_CONT { get; set; }
         public string DESC_TIPO_CONT { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -125,7 +125,7 @@ namespace Cemapa.Models
         public string COD_CONTABIL_CSSL_DBB { get; set; }
         public string IND_CONTROLE_ESTOQUE { get; set; }
         public string IND_GERA_MEMORANDO { get; set; }
-        public Nullable<bool> IND_FINALIDADE_NFE { get; set; }
+        public Nullable<short> IND_FINALIDADE_NFE { get; set; }
         public string COD_CONTABIL_CONTRATO_INC_DEB { get; set; }
         public string COD_CONTABIL_CONTRATO_INC_CRED { get; set; }
         public string COD_CONT_VAR_CAMBIAL_POS_DEB { get; set; }
@@ -148,7 +148,7 @@ namespace Cemapa.Models
         public string COD_SERIE_MODELO { get; set; }
         public string IND_EMITE_RECIBO_ENTRADA { get; set; }
         public string IND_MODAL_CTE { get; set; }
-        public Nullable<bool> IND_TIPO_CTE { get; set; }
+        public Nullable<short> IND_TIPO_CTE { get; set; }
         public string COD_CST_PIS { get; set; }
         public string COD_CST_COFINS { get; set; }
         public string IND_SEGUNDA_VIA_CUPOM { get; set; }

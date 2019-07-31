@@ -106,11 +106,13 @@
       <DependentUpon>FCadastroHome.cs</DependentUpon>
     </Compile>
     <Compile Include="POCO\FisicaJuridica.cs" />
+    <Compile Include="POCO\RegimeTributario.cs" />
     <Compile Include="POCO\TB_CADASTRO.cs" />
     <Compile Include="POCO\TB_CADASTRO_ENDERECOS.cs" />
     <Compile Include="POCO\TB_CIDADE.cs" />
     <Compile Include="POCO\TB_CLASS_CADASTRO.cs" />
     <Compile Include="POCO\TB_ESTADO.cs" />
+    <Compile Include="POCO\TB_FILIAL.cs" />
     <Compile Include="POCO\TB_PAIS.cs" />
     <Compile Include="POCO\TB_PRODUTO.cs" />
     <Compile Include="POCO\TB_PROPRIEDADE.cs" />

@@ -143,7 +143,7 @@ namespace Cemapa.Models
         public string DESC_CPF_AUTORIZADO3 { get; set; }
         public string DESC_OUTRAS_GRANTIAS { get; set; }
         public string DESC_GARANTIAS_OUTRAS { get; set; }
-        public Nullable<bool> NUM_DIA_VISITA { get; set; }
+        public Nullable<short> NUM_DIA_VISITA { get; set; }
         public string DESC_FREQUENCIA_VISITA { get; set; }
         public Nullable<short> NUM_HORA_VISITA { get; set; }
         public Nullable<byte> NUM_DIA_VENCTO { get; set; }
@@ -169,11 +169,11 @@ namespace Cemapa.Models
         public string COD_UF_VEICULO { get; set; }
         public string DESC_DISTRITO { get; set; }
         public Nullable<int> COD_AVALISTA { get; set; }
-        public Nullable<bool> IND_ISS_RETIDO { get; set; }
+        public Nullable<short> IND_ISS_RETIDO { get; set; }
         public Nullable<decimal> PERC_BASE_SUBSTITUICAO { get; set; }
         public Nullable<decimal> PERC_ALIQ_SUBSTITUICAO { get; set; }
         public string DESC_LEI_SUBSTITUICAO { get; set; }
-        public Nullable<bool> IND_REGIME_TRIBUTARIO { get; set; }
+        public Nullable<short> IND_REGIME_TRIBUTARIO { get; set; }
         public Nullable<decimal> PERC_DESCONTO2 { get; set; }
         public Nullable<decimal> PERC_DEDUCAO_NFSE { get; set; }
         public string COD_QUALIFICACAO_SOCIO { get; set; }
@@ -191,7 +191,7 @@ namespace Cemapa.Models
         public string NUM_SEQ_CRC { get; set; }
         public Nullable<System.DateTime> DT_CRC { get; set; }
         public Nullable<decimal> PERC_ROYALTIES { get; set; }
-        public bool IND_TIPO_PROPRIETARIO { get; set; }
+        public short IND_TIPO_PROPRIETARIO { get; set; }
         public string DESC_RNTRC { get; set; }
         public string DESC_TAF { get; set; }
         public string DESC_NRO_REG_ESTADUAL { get; set; }
