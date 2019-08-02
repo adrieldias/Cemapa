@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Cliente.POCO
 {
-    public class RegimeTributario
+    public class ConsumidorFinal
     {
-        public short? IND_REGIME_TRIBUTARIO { get; set; }
-        public string DESC_REGIME_TRIBUTARIO { get; set; }
+        public string IND_CONSUMIDOR_FINAL { get; set; }
+        public string DESC_CONSUMIDOR_FINAL { get; set; }
     }
 }

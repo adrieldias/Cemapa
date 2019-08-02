@@ -105,6 +105,7 @@
     <Compile Include="Forms\FCadastroHome.Designer.cs">
       <DependentUpon>FCadastroHome.cs</DependentUpon>
     </Compile>
+    <Compile Include="POCO\ConsumidorFinal.cs" />
     <Compile Include="POCO\FisicaJuridica.cs" />
     <Compile Include="POCO\RegimeTributario.cs" />
     <Compile Include="POCO\TB_CADASTRO.cs" />

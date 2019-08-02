@@ -40,12 +40,15 @@
             this.tbsNomeFantasia = new Componentes.TextBoxSimples();
             this.tbsTelefone = new Componentes.TextBoxSimples();
             this.tbsCelular = new Componentes.TextBoxSimples();
-            this.cbsVendedor = new Componentes.ComboBoxSimples();
             this.cbsClassificacao = new Componentes.ComboBoxSimples();
             this.tbsEmailXML = new Componentes.TextBoxSimples();
             this.tbsTelComercial = new Componentes.TextBoxSimples();
             this.tbsEmailContato = new Componentes.TextBoxSimples();
             this.cbsFilial = new Componentes.ComboBoxSimples();
+            this.cbsVendedor = new Componentes.ComboBoxSimples();
+            this.tbsDtSeprocado = new Componentes.TextBoxSimples();
+            this.cbsRegimeTributario = new Componentes.ComboBoxSimples();
+            this.cbsConsumidorFinal = new Componentes.ComboBoxSimples();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.btExcluirEndereco = new System.Windows.Forms.Button();
             this.btAlterarEndereco = new System.Windows.Forms.Button();
@@ -68,8 +71,6 @@
             this.tbsPercParticCapitalTotal = new Componentes.TextBoxSimples();
             this.tbsPercParticCapitalVolante = new Componentes.TextBoxSimples();
             this.tbsFuncao = new Componentes.TextBoxSimples();
-            this.tbsDtSeprocado = new Componentes.TextBoxSimples();
-            this.cbsRegimeTributario = new Componentes.ComboBoxSimples();
             this.pCabecalho.SuspendLayout();
             this.slickBlueTabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -162,6 +163,7 @@
             this.tableLayoutPanel1.Controls.Add(this.cbsVendedor, 5, 5);
             this.tableLayoutPanel1.Controls.Add(this.tbsDtSeprocado, 5, 4);
             this.tableLayoutPanel1.Controls.Add(this.cbsRegimeTributario, 7, 4);
+            this.tableLayoutPanel1.Controls.Add(this.cbsConsumidorFinal, 0, 6);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -180,9 +182,7 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox1.ErrorImage = null;
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
             this.pictureBox1.InitialImage = null;
@@ -300,24 +300,6 @@
             this.tbsCelular.Size = new System.Drawing.Size(142, 42);
             this.tbsCelular.TabIndex = 30;
             // 
-            // cbsVendedor
-            // 
-            this.cbsVendedor.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.cbsVendedor.AutoSize = true;
-            this.cbsVendedor.BindingSource = null;
-            this.tableLayoutPanel1.SetColumnSpan(this.cbsVendedor, 5);
-            this.cbsVendedor.DisplayMember = "";
-            this.cbsVendedor.Label = "VENDEDOR";
-            this.cbsVendedor.Location = new System.Drawing.Point(378, 273);
-            this.cbsVendedor.Name = "cbsVendedor";
-            this.cbsVendedor.SelectedIndex = -1;
-            this.cbsVendedor.SelectedText = null;
-            this.cbsVendedor.SelectedValue = null;
-            this.cbsVendedor.Size = new System.Drawing.Size(375, 44);
-            this.cbsVendedor.TabIndex = 41;
-            this.cbsVendedor.ValueMember = "";
-            // 
             // cbsClassificacao
             // 
             this.cbsClassificacao.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -394,6 +376,71 @@
             this.cbsFilial.Size = new System.Drawing.Size(369, 44);
             this.cbsFilial.TabIndex = 43;
             this.cbsFilial.ValueMember = "";
+            // 
+            // cbsVendedor
+            // 
+            this.cbsVendedor.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbsVendedor.AutoSize = true;
+            this.cbsVendedor.BindingSource = null;
+            this.tableLayoutPanel1.SetColumnSpan(this.cbsVendedor, 5);
+            this.cbsVendedor.DisplayMember = "";
+            this.cbsVendedor.Label = "VENDEDOR";
+            this.cbsVendedor.Location = new System.Drawing.Point(378, 273);
+            this.cbsVendedor.Name = "cbsVendedor";
+            this.cbsVendedor.SelectedIndex = -1;
+            this.cbsVendedor.SelectedText = null;
+            this.cbsVendedor.SelectedValue = null;
+            this.cbsVendedor.Size = new System.Drawing.Size(375, 44);
+            this.cbsVendedor.TabIndex = 41;
+            this.cbsVendedor.ValueMember = "";
+            // 
+            // tbsDtSeprocado
+            // 
+            this.tbsDtSeprocado.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbsDtSeprocado.AutoSize = true;
+            this.tableLayoutPanel1.SetColumnSpan(this.tbsDtSeprocado, 2);
+            this.tbsDtSeprocado.Font = new System.Drawing.Font("Calibri Light", 12F);
+            this.tbsDtSeprocado.Label = "DATA SEPROCADO";
+            this.tbsDtSeprocado.Location = new System.Drawing.Point(378, 223);
+            this.tbsDtSeprocado.Name = "tbsDtSeprocado";
+            this.tbsDtSeprocado.PasswordChar = '\0';
+            this.tbsDtSeprocado.Size = new System.Drawing.Size(144, 44);
+            this.tbsDtSeprocado.TabIndex = 44;
+            // 
+            // cbsRegimeTributario
+            // 
+            this.cbsRegimeTributario.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbsRegimeTributario.AutoSize = true;
+            this.cbsRegimeTributario.BindingSource = null;
+            this.tableLayoutPanel1.SetColumnSpan(this.cbsRegimeTributario, 3);
+            this.cbsRegimeTributario.DisplayMember = "";
+            this.cbsRegimeTributario.Label = "REGIME TRIBUTÁRIO";
+            this.cbsRegimeTributario.Location = new System.Drawing.Point(528, 223);
+            this.cbsRegimeTributario.Name = "cbsRegimeTributario";
+            this.cbsRegimeTributario.SelectedIndex = -1;
+            this.cbsRegimeTributario.SelectedText = null;
+            this.cbsRegimeTributario.SelectedValue = null;
+            this.cbsRegimeTributario.Size = new System.Drawing.Size(225, 44);
+            this.cbsRegimeTributario.TabIndex = 45;
+            this.cbsRegimeTributario.ValueMember = "";
+            // 
+            // cbsConsumidorFinal
+            // 
+            this.cbsConsumidorFinal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbsConsumidorFinal.AutoSize = true;
+            this.cbsConsumidorFinal.BindingSource = null;
+            this.tableLayoutPanel1.SetColumnSpan(this.cbsConsumidorFinal, 2);
+            this.cbsConsumidorFinal.DisplayMember = "";
+            this.cbsConsumidorFinal.Label = "CONSUMIDOR FINAL";
+            this.cbsConsumidorFinal.Location = new System.Drawing.Point(3, 323);
+            this.cbsConsumidorFinal.Name = "cbsConsumidorFinal";
+            this.cbsConsumidorFinal.SelectedIndex = -1;
+            this.cbsConsumidorFinal.SelectedText = null;
+            this.cbsConsumidorFinal.SelectedValue = null;
+            this.cbsConsumidorFinal.Size = new System.Drawing.Size(144, 44);
+            this.cbsConsumidorFinal.TabIndex = 46;
+            this.cbsConsumidorFinal.ValueMember = "";
             // 
             // tabPage4
             // 
@@ -695,36 +742,6 @@
             this.tbsFuncao.Size = new System.Drawing.Size(375, 44);
             this.tbsFuncao.TabIndex = 1;
             // 
-            // tbsDtSeprocado
-            // 
-            this.tbsDtSeprocado.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbsDtSeprocado.AutoSize = true;
-            this.tableLayoutPanel1.SetColumnSpan(this.tbsDtSeprocado, 2);
-            this.tbsDtSeprocado.Font = new System.Drawing.Font("Calibri Light", 12F);
-            this.tbsDtSeprocado.Label = "DATA SEPROCADO";
-            this.tbsDtSeprocado.Location = new System.Drawing.Point(378, 223);
-            this.tbsDtSeprocado.Name = "tbsDtSeprocado";
-            this.tbsDtSeprocado.PasswordChar = '\0';
-            this.tbsDtSeprocado.Size = new System.Drawing.Size(144, 44);
-            this.tbsDtSeprocado.TabIndex = 44;
-            // 
-            // cbsRegimeTributario
-            // 
-            this.cbsRegimeTributario.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.cbsRegimeTributario.AutoSize = true;
-            this.cbsRegimeTributario.BindingSource = null;
-            this.tableLayoutPanel1.SetColumnSpan(this.cbsRegimeTributario, 3);
-            this.cbsRegimeTributario.DisplayMember = "";
-            this.cbsRegimeTributario.Label = "REGIME TRIBUTÁRIO";
-            this.cbsRegimeTributario.Location = new System.Drawing.Point(528, 223);
-            this.cbsRegimeTributario.Name = "cbsRegimeTributario";
-            this.cbsRegimeTributario.SelectedIndex = -1;
-            this.cbsRegimeTributario.SelectedText = null;
-            this.cbsRegimeTributario.SelectedValue = null;
-            this.cbsRegimeTributario.Size = new System.Drawing.Size(225, 44);
-            this.cbsRegimeTributario.TabIndex = 45;
-            this.cbsRegimeTributario.ValueMember = "";
-            // 
             // FCadastroCad
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -801,5 +818,6 @@
         private Componentes.ComboBoxSimples cbsFilial;
         private Componentes.TextBoxSimples tbsDtSeprocado;
         private Componentes.ComboBoxSimples cbsRegimeTributario;
+        private Componentes.ComboBoxSimples cbsConsumidorFinal;
     }
 }

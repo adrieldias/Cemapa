@@ -80,7 +80,7 @@ namespace Componentes
 
         public new string Text
         {
-            get => this.comboBox1.Text;            
+            get => comboBox1.Text;            
         }
 
         [Description("Label do ComboBox"), Category("Cemapa")]
@@ -125,8 +125,7 @@ namespace Componentes
             InitializeComponent();
             comboBox1.DropDown += this.HandleComboBoxDropDown;
             comboBox1.DropDownClosed += this.HandleComboBoxDropDownClosed;
-            comboBox1.SelectedValueChanged += this.HandleSelectedValueChanged;           
-
+            comboBox1.SelectedValueChanged += this.HandleSelectedValueChanged;            
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)
@@ -169,7 +168,7 @@ namespace Componentes
         {   
             if (comboBox1.SelectedValue != null)
                 this.SelectedValue = comboBox1.SelectedValue.ToString();
-            this.SelectedText = comboBox1.SelectedText;
+            this.SelectedText = comboBox1.SelectedText;            
         }
 
         private void comboBox1_KeyPress(object sender, KeyPressEventArgs e)
