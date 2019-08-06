@@ -1014,26 +1014,13 @@ namespace Cemapa.Controllers
                                                     ean = wInfosProduto.DESC_COD_BARRA,
                                                     nbm = wInfosProduto.NUM_GENERO_NCM
                                                 };
-
-                                                //Categorias devem ser alteradas para cada registro montar uma string com o padrão da skyhub
                                                 
-                                                List<string> wCategoriasSeparadas = new List<string>();
-                                                
-                                                foreach (var categoria in produtoSkyhub.TB_PRODUTO_CATEGORIA_SKYHUB)
-                                                {
-                                                    wCategoriasSeparadas.Add(categoria.DESC_CATEGORIA);
-                                                }
-                                                
-                                                if (wCategoriasSeparadas.Count > 0)
-                                                {
-                                                    ProdutoSku.categories.Add(
-                                                        new Category
-                                                        {
-                                                            code = 1,
-                                                            name = string.Join(" > ", wCategoriasSeparadas)
-                                                        }
-                                                    );
-                                                }
+                                                ProdutoSku.categories.Add(
+                                                    new Category
+                                                    {
+                                                        name = produtoSkyhub.DESC_CATEGORIA
+                                                    }
+                                                );
 
                                                 foreach (var espec in produtoSkyhub.TB_PRODUTO_ESP_SKYHUB)
                                                 {

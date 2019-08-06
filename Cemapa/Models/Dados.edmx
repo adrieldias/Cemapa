@@ -1291,6 +1291,7 @@
           <Property Name="COD_PRODUTO_SKYHUB" Type="number" Precision="6" Scale="0" Nullable="false" />
           <Property Name="COD_PRODUTO" Type="number" Precision="14" Scale="0" Nullable="false" />
           <Property Name="COD_PRODUTO_SKYHUB_PAI" Type="number" Precision="6" Scale="0" />
+          <Property Name="DESC_CATEGORIA" Type="varchar2" MaxLength="150" />
         </EntityType>
         <EntityType Name="TB_PROPRIEDADE">
           <Key>
@@ -4810,6 +4811,7 @@
           <NavigationProperty Name="TB_PRODUTO_CATEGORIA_SKYHUB" Relationship="Model.FK_CAT_SKYXPROD_SKY" FromRole="TB_PRODUTO_SKYHUB" ToRole="TB_PRODUTO_CATEGORIA_SKYHUB" />
           <NavigationProperty Name="TB_PRODUTO_ESP_SKYHUB" Relationship="Model.FK_ESP_SKYXPROD_SKY" FromRole="TB_PRODUTO_SKYHUB" ToRole="TB_PRODUTO_ESP_SKYHUB" />
           <NavigationProperty Name="TB_PRODUTO_IMAGEM_SKYHUB" Relationship="Model.FK_IMG_SKYXPROD_SKY" FromRole="TB_PRODUTO_SKYHUB" ToRole="TB_PRODUTO_IMAGEM_SKYHUB" />
+          <Property Name="DESC_CATEGORIA" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_PROD_SKYXPRODUTO">
           <End Type="Model.TB_PRODUTO" Role="TB_PRODUTO" Multiplicity="1" />
@@ -7028,6 +7030,7 @@
           <EntitySetMapping Name="TB_PRODUTO_SKYHUB">
             <EntityTypeMapping TypeName="Model.TB_PRODUTO_SKYHUB">
               <MappingFragment StoreEntitySet="TB_PRODUTO_SKYHUB">
+                <ScalarProperty Name="DESC_CATEGORIA" ColumnName="DESC_CATEGORIA" />
                 <ScalarProperty Name="COD_PRODUTO_SKYHUB_PAI" ColumnName="COD_PRODUTO_SKYHUB_PAI" />
                 <ScalarProperty Name="COD_PRODUTO" ColumnName="COD_PRODUTO" />
                 <ScalarProperty Name="COD_PRODUTO_SKYHUB" ColumnName="COD_PRODUTO_SKYHUB" />

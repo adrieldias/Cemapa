@@ -33,6 +33,7 @@ namespace Cemapa.Models
         public int COD_PRODUTO_SKYHUB { get; set; }
         public long COD_PRODUTO { get; set; }
         public Nullable<int> COD_PRODUTO_SKYHUB_PAI { get; set; }
+        public string DESC_CATEGORIA { get; set; }
     
         public virtual TB_PRODUTO TB_PRODUTO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
