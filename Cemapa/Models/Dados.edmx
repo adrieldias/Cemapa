@@ -332,7 +332,6 @@
           <Property Name="DESC_USUARIO_EMAIL" Type="varchar2" MaxLength="40" />
           <Property Name="DESC_TOKEN_INTEGRACAO" Type="varchar2" MaxLength="30" />
           <Property Name="DESC_TOKEN_ACCOUNT" Type="varchar2" MaxLength="30" />
-          <Property Name="IND_SINCRONIZA_PRODUTOS" Type="char" MaxLength="1" />
           <Property Name="COD_CONFIGURACAO_SKYHUB" Type="number" Precision="6" Scale="0" Nullable="false" />
           <Property Name="COD_FILIAL" Type="number" Precision="6" Scale="0" Nullable="false" />
           <Property Name="COD_OPERACAO" Type="number" Precision="6" Scale="0" Nullable="false" />
@@ -412,6 +411,30 @@
           <Property Name="COD_DEPARTAMENTO" Type="number" Precision="6" Scale="0" Nullable="false" />
           <Property Name="DESC_DEPARTAMENTO" Type="varchar2" MaxLength="30" Nullable="false" />
           <Property Name="IND_FLUXO_CAIXA" Type="varchar2" MaxLength="3" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'SISTEMA.TB_EMAIL' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="TB_EMAIL">
+          <Key>
+            <PropertyRef Name="DESC_EMAIL" />
+            <PropertyRef Name="DESC_SENHA" />
+            <PropertyRef Name="DESC_SMTP" />
+            <PropertyRef Name="NUM_PORTA_SMTP" />
+            <PropertyRef Name="DESC_POP3" />
+            <PropertyRef Name="NUM_PORTA_POP3" />
+            <PropertyRef Name="COD_EMAIL" />
+          </Key>
+          <Property Name="DESC_EMAIL" Type="varchar2" MaxLength="40" Nullable="false" />
+          <Property Name="DESC_SENHA" Type="varchar2" MaxLength="30" Nullable="false" />
+          <Property Name="DESC_SMTP" Type="varchar2" MaxLength="40" Nullable="false" />
+          <Property Name="NUM_PORTA_SMTP" Type="number" Precision="6" Scale="0" Nullable="false" />
+          <Property Name="DESC_POP3" Type="varchar2" MaxLength="40" Nullable="false" />
+          <Property Name="NUM_PORTA_POP3" Type="number" Precision="6" Scale="0" Nullable="false" />
+          <Property Name="COD_EMAIL" Type="number" Precision="6" Scale="0" Nullable="false" />
+          <Property Name="DESC_MENSAGEM" Type="clob" />
+          <Property Name="DESC_HOME_PAGE" Type="varchar2" MaxLength="40" />
+          <Property Name="QTD_COTA" Type="number" Precision="5" Scale="0" />
+          <Property Name="IND_SSL" Type="char" MaxLength="1" />
         </EntityType>
         <EntityType Name="TB_ENERGIA_TENSAO">
           <Key>
@@ -1249,38 +1272,10 @@
           <Property Name="IND_SINC_MAX_ROTEIRIZADOR" Type="char" MaxLength="1" />
           <Property Name="PERC_COMISSAO_PRODUCAO" Type="number" Precision="5" Scale="2" />
         </EntityType>
-        <EntityType Name="TB_PRODUTO_CATEGORIA_SKYHUB">
-          <Key>
-            <PropertyRef Name="COD_PRODUTO_CATEGORIA_SKYHUB" />
-          </Key>
-          <Property Name="DESC_CATEGORIA" Type="varchar2" MaxLength="150" />
-          <Property Name="COD_PRODUTO_CATEGORIA_SKYHUB" Type="number" Precision="6" Scale="0" Nullable="false" />
-          <Property Name="COD_PRODUTO_SKYHUB" Type="number" Precision="6" Scale="0" Nullable="false" />
-        </EntityType>
-        <EntityType Name="TB_PRODUTO_ESP_SKYHUB">
-          <Key>
-            <PropertyRef Name="COD_PRODUTO_ESP_SKYHUB" />
-          </Key>
-          <Property Name="DESC_ESPECIFICACAO" Type="varchar2" MaxLength="100" />
-          <Property Name="VAL_ESPECIFICACAO" Type="varchar2" MaxLength="100" />
-          <Property Name="IND_ATIVO" Type="char" MaxLength="1" />
-          <Property Name="COD_PRODUTO_ESP_SKYHUB" Type="number" Precision="6" Scale="0" Nullable="false" />
-          <Property Name="COD_PRODUTO_SKYHUB" Type="number" Precision="6" Scale="0" Nullable="false" />
-        </EntityType>
-        <EntityType Name="TB_PRODUTO_IMAGEM_SKYHUB">
-          <Key>
-            <PropertyRef Name="COD_PRODUTO_IMAGEM_SKYHUB" />
-          </Key>
-          <Property Name="DESC_IMAGEM" Type="varchar2" MaxLength="100" />
-          <Property Name="IND_ATIVO" Type="char" MaxLength="1" />
-          <Property Name="COD_PRODUTO_IMAGEM_SKYHUB" Type="number" Precision="6" Scale="0" Nullable="false" />
-          <Property Name="COD_PRODUTO_SKYHUB" Type="number" Precision="6" Scale="0" Nullable="false" />
-        </EntityType>
         <EntityType Name="TB_PRODUTO_SKYHUB">
           <Key>
             <PropertyRef Name="COD_PRODUTO_SKYHUB" />
           </Key>
-          <Property Name="IND_SINCRONIZA" Type="char" MaxLength="1" />
           <Property Name="DESC_PRODUTO" Type="varchar2" MaxLength="50" />
           <Property Name="DESC_DESCRICAO" Type="varchar2" MaxLength="200" />
           <Property Name="DESC_STATUS" Type="varchar2" MaxLength="10" />
@@ -1292,6 +1287,34 @@
           <Property Name="COD_PRODUTO" Type="number" Precision="14" Scale="0" Nullable="false" />
           <Property Name="COD_PRODUTO_SKYHUB_PAI" Type="number" Precision="6" Scale="0" />
           <Property Name="DESC_CATEGORIA" Type="varchar2" MaxLength="150" />
+          <Property Name="DESC_LINK_IMAGEM_1" Type="varchar2" MaxLength="100" />
+          <Property Name="DESC_LINK_IMAGEM_2" Type="varchar2" MaxLength="100" />
+          <Property Name="DESC_LINK_IMAGEM_3" Type="varchar2" MaxLength="100" />
+          <Property Name="DESC_LINK_IMAGEM_4" Type="varchar2" MaxLength="100" />
+          <Property Name="ESP_ALIMENTACAO" Type="varchar2" MaxLength="30" />
+          <Property Name="ESP_APARELHOSCOMPATIVEIS" Type="varchar2" MaxLength="30" />
+          <Property Name="ESP_CONTEUDODAEMBALAGEM" Type="varchar2" MaxLength="30" />
+          <Property Name="ESP_COR" Type="varchar2" MaxLength="30" />
+          <Property Name="ESP_CORFICHATECNICA" Type="varchar2" MaxLength="30" />
+          <Property Name="ESP_DATADELANCAMENTONOMERCADO" Type="varchar2" MaxLength="30" />
+          <Property Name="ESP_DIMENSOESEMBALAGEM" Type="varchar2" MaxLength="30" />
+          <Property Name="ESP_DIMENSOESPRODUTO" Type="varchar2" MaxLength="30" />
+          <Property Name="ESP_FABRICANTE" Type="varchar2" MaxLength="30" />
+          <Property Name="ESP_GARANTIADEFORNECEDOR" Type="varchar2" MaxLength="30" />
+          <Property Name="ESP_MAISINFORMACOES" Type="varchar2" MaxLength="30" />
+          <Property Name="ESP_MANUAL" Type="varchar2" MaxLength="30" />
+          <Property Name="ESP_MARCA" Type="varchar2" MaxLength="30" />
+          <Property Name="ESP_MATERIALCOMPOSICAO" Type="varchar2" MaxLength="30" />
+          <Property Name="ESP_MODELO" Type="varchar2" MaxLength="30" />
+          <Property Name="ESP_PESOLIQDAEMBALAGEMCPRODUTO" Type="varchar2" MaxLength="30" />
+          <Property Name="ESP_PESOLIQDOPRODUTO" Type="varchar2" MaxLength="30" />
+          <Property Name="ESP_RECURSOSFUNCIONALIDADES" Type="varchar2" MaxLength="30" />
+          <Property Name="ESP_REFERENCIADOMODELO" Type="varchar2" MaxLength="30" />
+          <Property Name="ESP_SAC" Type="varchar2" MaxLength="30" />
+          <Property Name="ESP_TAMANHO" Type="varchar2" MaxLength="30" />
+          <Property Name="ESP_VIDEO" Type="varchar2" MaxLength="30" />
+          <Property Name="ESP_VOLTAGEM" Type="varchar2" MaxLength="30" />
+          <Property Name="VAL_PESO" Type="number" Precision="6" Scale="2" />
         </EntityType>
         <EntityType Name="TB_PROPRIEDADE">
           <Key>
@@ -1754,18 +1777,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_CAT_SKYXPROD_SKY">
-          <End Role="TB_PRODUTO_SKYHUB" Type="Self.TB_PRODUTO_SKYHUB" Multiplicity="1" />
-          <End Role="TB_PRODUTO_CATEGORIA_SKYHUB" Type="Self.TB_PRODUTO_CATEGORIA_SKYHUB" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TB_PRODUTO_SKYHUB">
-              <PropertyRef Name="COD_PRODUTO_SKYHUB" />
-            </Principal>
-            <Dependent Role="TB_PRODUTO_CATEGORIA_SKYHUB">
-              <PropertyRef Name="COD_PRODUTO_SKYHUB" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_CONF_SKYXFILIAL">
           <End Role="TB_FILIAL" Type="Self.TB_FILIAL" Multiplicity="1" />
           <End Role="TB_CONFIGURACAO_SKYHUB" Type="Self.TB_CONFIGURACAO_SKYHUB" Multiplicity="*" />
@@ -1799,18 +1810,6 @@
             </Principal>
             <Dependent Role="TB_CONTA_CORRENTE">
               <PropertyRef Name="COD_FILIAL" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ESP_SKYXPROD_SKY">
-          <End Role="TB_PRODUTO_SKYHUB" Type="Self.TB_PRODUTO_SKYHUB" Multiplicity="1" />
-          <End Role="TB_PRODUTO_ESP_SKYHUB" Type="Self.TB_PRODUTO_ESP_SKYHUB" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TB_PRODUTO_SKYHUB">
-              <PropertyRef Name="COD_PRODUTO_SKYHUB" />
-            </Principal>
-            <Dependent Role="TB_PRODUTO_ESP_SKYHUB">
-              <PropertyRef Name="COD_PRODUTO_SKYHUB" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2055,18 +2054,6 @@
             </Principal>
             <Dependent Role="TB_HISTORICO">
               <PropertyRef Name="COD_GRUPO" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_IMG_SKYXPROD_SKY">
-          <End Role="TB_PRODUTO_SKYHUB" Type="Self.TB_PRODUTO_SKYHUB" Multiplicity="1" />
-          <End Role="TB_PRODUTO_IMAGEM_SKYHUB" Type="Self.TB_PRODUTO_IMAGEM_SKYHUB" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TB_PRODUTO_SKYHUB">
-              <PropertyRef Name="COD_PRODUTO_SKYHUB" />
-            </Principal>
-            <Dependent Role="TB_PRODUTO_IMAGEM_SKYHUB">
-              <PropertyRef Name="COD_PRODUTO_SKYHUB" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2641,9 +2628,6 @@
           <EntitySet Name="TB_PEDIDO_ITEM" EntityType="Self.TB_PEDIDO_ITEM" Schema="SISTEMA" store:Type="Tables" />
           <EntitySet Name="TB_PRAZO_VENCIMENTO" EntityType="Self.TB_PRAZO_VENCIMENTO" Schema="SISTEMA" store:Type="Tables" />
           <EntitySet Name="TB_PRODUTO" EntityType="Self.TB_PRODUTO" Schema="SISTEMA" store:Type="Tables" />
-          <EntitySet Name="TB_PRODUTO_CATEGORIA_SKYHUB" EntityType="Self.TB_PRODUTO_CATEGORIA_SKYHUB" Schema="SISTEMA" store:Type="Tables" />
-          <EntitySet Name="TB_PRODUTO_ESP_SKYHUB" EntityType="Self.TB_PRODUTO_ESP_SKYHUB" Schema="SISTEMA" store:Type="Tables" />
-          <EntitySet Name="TB_PRODUTO_IMAGEM_SKYHUB" EntityType="Self.TB_PRODUTO_IMAGEM_SKYHUB" Schema="SISTEMA" store:Type="Tables" />
           <EntitySet Name="TB_PRODUTO_SKYHUB" EntityType="Self.TB_PRODUTO_SKYHUB" Schema="SISTEMA" store:Type="Tables" />
           <EntitySet Name="TB_PROPRIEDADE" EntityType="Self.TB_PROPRIEDADE" Schema="SISTEMA" store:Type="Tables" />
           <EntitySet Name="TB_QUALIFICACAO_SOCIO" EntityType="Self.TB_QUALIFICACAO_SOCIO" Schema="SISTEMA" store:Type="Tables" />
@@ -2661,6 +2645,21 @@
           <EntitySet Name="TB_TRIBUTACAO" EntityType="Self.TB_TRIBUTACAO" Schema="SISTEMA" store:Type="Tables" />
           <EntitySet Name="TB_USUARIO" EntityType="Self.TB_USUARIO" Schema="SISTEMA" store:Type="Tables" />
           <EntitySet Name="TB_VENDEDOR" EntityType="Self.TB_VENDEDOR" Schema="SISTEMA" store:Type="Tables" />
+          <EntitySet Name="TB_EMAIL" EntityType="Self.TB_EMAIL" store:Type="Tables" store:Schema="SISTEMA">
+            <DefiningQuery>SELECT 
+"TB_EMAIL"."DESC_EMAIL" AS "DESC_EMAIL", 
+"TB_EMAIL"."DESC_SENHA" AS "DESC_SENHA", 
+"TB_EMAIL"."DESC_SMTP" AS "DESC_SMTP", 
+"TB_EMAIL"."NUM_PORTA_SMTP" AS "NUM_PORTA_SMTP", 
+"TB_EMAIL"."DESC_POP3" AS "DESC_POP3", 
+"TB_EMAIL"."NUM_PORTA_POP3" AS "NUM_PORTA_POP3", 
+"TB_EMAIL"."COD_EMAIL" AS "COD_EMAIL", 
+"TB_EMAIL"."DESC_MENSAGEM" AS "DESC_MENSAGEM", 
+"TB_EMAIL"."DESC_HOME_PAGE" AS "DESC_HOME_PAGE", 
+"TB_EMAIL"."QTD_COTA" AS "QTD_COTA", 
+"TB_EMAIL"."IND_SSL" AS "IND_SSL"
+FROM "SISTEMA"."TB_EMAIL" "TB_EMAIL"</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_BANCO_AGENCIAXESTADO" Association="Self.FK_BANCO_AGENCIAXESTADO">
             <End Role="TB_ESTADO" EntitySet="TB_ESTADO" />
             <End Role="TB_BANCO_AGENCIA" EntitySet="TB_BANCO_AGENCIA" />
@@ -2725,10 +2724,6 @@
             <End Role="TB_VENDEDOR" EntitySet="TB_VENDEDOR" />
             <End Role="TB_CADASTRO" EntitySet="TB_CADASTRO" />
           </AssociationSet>
-          <AssociationSet Name="FK_CAT_SKYXPROD_SKY" Association="Self.FK_CAT_SKYXPROD_SKY">
-            <End Role="TB_PRODUTO_SKYHUB" EntitySet="TB_PRODUTO_SKYHUB" />
-            <End Role="TB_PRODUTO_CATEGORIA_SKYHUB" EntitySet="TB_PRODUTO_CATEGORIA_SKYHUB" />
-          </AssociationSet>
           <AssociationSet Name="FK_CONF_SKYXFILIAL" Association="Self.FK_CONF_SKYXFILIAL">
             <End Role="TB_FILIAL" EntitySet="TB_FILIAL" />
             <End Role="TB_CONFIGURACAO_SKYHUB" EntitySet="TB_CONFIGURACAO_SKYHUB" />
@@ -2740,10 +2735,6 @@
           <AssociationSet Name="FK_CONTA_CORRENTEXFILIAL" Association="Self.FK_CONTA_CORRENTEXFILIAL">
             <End Role="TB_FILIAL" EntitySet="TB_FILIAL" />
             <End Role="TB_CONTA_CORRENTE" EntitySet="TB_CONTA_CORRENTE" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ESP_SKYXPROD_SKY" Association="Self.FK_ESP_SKYXPROD_SKY">
-            <End Role="TB_PRODUTO_SKYHUB" EntitySet="TB_PRODUTO_SKYHUB" />
-            <End Role="TB_PRODUTO_ESP_SKYHUB" EntitySet="TB_PRODUTO_ESP_SKYHUB" />
           </AssociationSet>
           <AssociationSet Name="FK_ESTOQUEXFILIAL" Association="Self.FK_ESTOQUEXFILIAL">
             <End Role="TB_FILIAL" EntitySet="TB_FILIAL" />
@@ -2824,10 +2815,6 @@
           <AssociationSet Name="FK_HISTORICOXGRUPO_CUSTOS" Association="Self.FK_HISTORICOXGRUPO_CUSTOS">
             <End Role="TB_GRUPO_CUSTOS" EntitySet="TB_GRUPO_CUSTOS" />
             <End Role="TB_HISTORICO" EntitySet="TB_HISTORICO" />
-          </AssociationSet>
-          <AssociationSet Name="FK_IMG_SKYXPROD_SKY" Association="Self.FK_IMG_SKYXPROD_SKY">
-            <End Role="TB_PRODUTO_SKYHUB" EntitySet="TB_PRODUTO_SKYHUB" />
-            <End Role="TB_PRODUTO_IMAGEM_SKYHUB" EntitySet="TB_PRODUTO_IMAGEM_SKYHUB" />
           </AssociationSet>
           <AssociationSet Name="FK_LOTEXCADASTRO" Association="Self.FK_LOTEXCADASTRO">
             <End Role="TB_CADASTRO" EntitySet="TB_CADASTRO" />
@@ -3190,21 +3177,6 @@
             <End Role="TB_PRODUTO" EntitySet="TB_PRODUTO" />
             <End Role="TB_PRODUTO_SKYHUB" EntitySet="TB_PRODUTO_SKYHUB" />
           </AssociationSet>
-          <EntitySet Name="TB_PRODUTO_CATEGORIA_SKYHUB" EntityType="Model.TB_PRODUTO_CATEGORIA_SKYHUB" />
-          <AssociationSet Name="FK_CAT_SKYXPROD_SKY" Association="Model.FK_CAT_SKYXPROD_SKY">
-            <End Role="TB_PRODUTO_SKYHUB" EntitySet="TB_PRODUTO_SKYHUB" />
-            <End Role="TB_PRODUTO_CATEGORIA_SKYHUB" EntitySet="TB_PRODUTO_CATEGORIA_SKYHUB" />
-          </AssociationSet>
-          <EntitySet Name="TB_PRODUTO_ESP_SKYHUB" EntityType="Model.TB_PRODUTO_ESP_SKYHUB" />
-          <AssociationSet Name="FK_ESP_SKYXPROD_SKY" Association="Model.FK_ESP_SKYXPROD_SKY">
-            <End Role="TB_PRODUTO_SKYHUB" EntitySet="TB_PRODUTO_SKYHUB" />
-            <End Role="TB_PRODUTO_ESP_SKYHUB" EntitySet="TB_PRODUTO_ESP_SKYHUB" />
-          </AssociationSet>
-          <EntitySet Name="TB_PRODUTO_IMAGEM_SKYHUB" EntityType="Model.TB_PRODUTO_IMAGEM_SKYHUB" />
-          <AssociationSet Name="FK_IMG_SKYXPROD_SKY" Association="Model.FK_IMG_SKYXPROD_SKY">
-            <End Role="TB_PRODUTO_SKYHUB" EntitySet="TB_PRODUTO_SKYHUB" />
-            <End Role="TB_PRODUTO_IMAGEM_SKYHUB" EntitySet="TB_PRODUTO_IMAGEM_SKYHUB" />
-          </AssociationSet>
           <EntitySet Name="TB_QUALIFICACAO_SOCIO" EntityType="Model.TB_QUALIFICACAO_SOCIO" />
           <AssociationSet Name="FK_CADASTROXQUALIFICACAOSOCIO" Association="Model.FK_CADASTROXQUALIFICACAOSOCIO">
             <End Role="TB_QUALIFICACAO_SOCIO" EntitySet="TB_QUALIFICACAO_SOCIO" />
@@ -3409,6 +3381,7 @@
             <End Role="TB_CLASSE" EntitySet="TB_CLASSE" />
             <End Role="TB_PRODUTO" EntitySet="TB_PRODUTO" />
           </AssociationSet>
+          <EntitySet Name="TB_EMAIL" EntityType="Model.TB_EMAIL" />
           </EntityContainer>
         <EntityType Name="TB_CADASTRO_ENDERECOS">
           <Key>
@@ -4796,7 +4769,6 @@
           <Key>
             <PropertyRef Name="COD_PRODUTO_SKYHUB" />
           </Key>
-          <Property Name="IND_SINCRONIZA" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="DESC_PRODUTO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="DESC_DESCRICAO" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="DESC_STATUS" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
@@ -4808,10 +4780,35 @@
           <Property Name="COD_PRODUTO" Type="Int64" Nullable="false" />
           <Property Name="COD_PRODUTO_SKYHUB_PAI" Type="Int32" />
           <NavigationProperty Name="TB_PRODUTO" Relationship="Model.FK_PROD_SKYXPRODUTO" FromRole="TB_PRODUTO_SKYHUB" ToRole="TB_PRODUTO" />
-          <NavigationProperty Name="TB_PRODUTO_CATEGORIA_SKYHUB" Relationship="Model.FK_CAT_SKYXPROD_SKY" FromRole="TB_PRODUTO_SKYHUB" ToRole="TB_PRODUTO_CATEGORIA_SKYHUB" />
-          <NavigationProperty Name="TB_PRODUTO_ESP_SKYHUB" Relationship="Model.FK_ESP_SKYXPROD_SKY" FromRole="TB_PRODUTO_SKYHUB" ToRole="TB_PRODUTO_ESP_SKYHUB" />
-          <NavigationProperty Name="TB_PRODUTO_IMAGEM_SKYHUB" Relationship="Model.FK_IMG_SKYXPROD_SKY" FromRole="TB_PRODUTO_SKYHUB" ToRole="TB_PRODUTO_IMAGEM_SKYHUB" />
           <Property Name="DESC_CATEGORIA" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_LINK_IMAGEM_1" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_LINK_IMAGEM_2" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_LINK_IMAGEM_3" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_LINK_IMAGEM_4" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ESP_ALIMENTACAO" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ESP_APARELHOSCOMPATIVEIS" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ESP_CONTEUDODAEMBALAGEM" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ESP_COR" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ESP_CORFICHATECNICA" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ESP_DATADELANCAMENTONOMERCADO" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ESP_DIMENSOESEMBALAGEM" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ESP_DIMENSOESPRODUTO" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ESP_FABRICANTE" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ESP_GARANTIADEFORNECEDOR" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ESP_MAISINFORMACOES" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ESP_MANUAL" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ESP_MARCA" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ESP_MATERIALCOMPOSICAO" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ESP_MODELO" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ESP_PESOLIQDAEMBALAGEMCPRODUTO" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ESP_PESOLIQDOPRODUTO" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ESP_RECURSOSFUNCIONALIDADES" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ESP_REFERENCIADOMODELO" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ESP_SAC" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ESP_TAMANHO" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ESP_VIDEO" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ESP_VOLTAGEM" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="VAL_PESO" Type="Decimal" Precision="6" Scale="2" />
         </EntityType>
         <Association Name="FK_PROD_SKYXPRODUTO">
           <End Type="Model.TB_PRODUTO" Role="TB_PRODUTO" Multiplicity="1" />
@@ -4822,72 +4819,6 @@
             </Principal>
             <Dependent Role="TB_PRODUTO_SKYHUB">
               <PropertyRef Name="COD_PRODUTO" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="TB_PRODUTO_CATEGORIA_SKYHUB">
-          <Key>
-            <PropertyRef Name="COD_PRODUTO_CATEGORIA_SKYHUB" />
-          </Key>
-          <Property Name="DESC_CATEGORIA" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="COD_PRODUTO_CATEGORIA_SKYHUB" Type="Int32" Nullable="false" />
-          <Property Name="COD_PRODUTO_SKYHUB" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="TB_PRODUTO_SKYHUB" Relationship="Model.FK_CAT_SKYXPROD_SKY" FromRole="TB_PRODUTO_CATEGORIA_SKYHUB" ToRole="TB_PRODUTO_SKYHUB" />
-        </EntityType>
-        <Association Name="FK_CAT_SKYXPROD_SKY">
-          <End Type="Model.TB_PRODUTO_SKYHUB" Role="TB_PRODUTO_SKYHUB" Multiplicity="1" />
-          <End Type="Model.TB_PRODUTO_CATEGORIA_SKYHUB" Role="TB_PRODUTO_CATEGORIA_SKYHUB" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TB_PRODUTO_SKYHUB">
-              <PropertyRef Name="COD_PRODUTO_SKYHUB" />
-            </Principal>
-            <Dependent Role="TB_PRODUTO_CATEGORIA_SKYHUB">
-              <PropertyRef Name="COD_PRODUTO_SKYHUB" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="TB_PRODUTO_ESP_SKYHUB">
-          <Key>
-            <PropertyRef Name="COD_PRODUTO_ESP_SKYHUB" />
-          </Key>
-          <Property Name="DESC_ESPECIFICACAO" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="VAL_ESPECIFICACAO" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="IND_ATIVO" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="COD_PRODUTO_ESP_SKYHUB" Type="Int32" Nullable="false" />
-          <Property Name="COD_PRODUTO_SKYHUB" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="TB_PRODUTO_SKYHUB" Relationship="Model.FK_ESP_SKYXPROD_SKY" FromRole="TB_PRODUTO_ESP_SKYHUB" ToRole="TB_PRODUTO_SKYHUB" />
-        </EntityType>
-        <Association Name="FK_ESP_SKYXPROD_SKY">
-          <End Type="Model.TB_PRODUTO_SKYHUB" Role="TB_PRODUTO_SKYHUB" Multiplicity="1" />
-          <End Type="Model.TB_PRODUTO_ESP_SKYHUB" Role="TB_PRODUTO_ESP_SKYHUB" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TB_PRODUTO_SKYHUB">
-              <PropertyRef Name="COD_PRODUTO_SKYHUB" />
-            </Principal>
-            <Dependent Role="TB_PRODUTO_ESP_SKYHUB">
-              <PropertyRef Name="COD_PRODUTO_SKYHUB" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="TB_PRODUTO_IMAGEM_SKYHUB">
-          <Key>
-            <PropertyRef Name="COD_PRODUTO_IMAGEM_SKYHUB" />
-          </Key>
-          <Property Name="DESC_IMAGEM" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="IND_ATIVO" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="COD_PRODUTO_IMAGEM_SKYHUB" Type="Int32" Nullable="false" />
-          <Property Name="COD_PRODUTO_SKYHUB" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="TB_PRODUTO_SKYHUB" Relationship="Model.FK_IMG_SKYXPROD_SKY" FromRole="TB_PRODUTO_IMAGEM_SKYHUB" ToRole="TB_PRODUTO_SKYHUB" />
-        </EntityType>
-        <Association Name="FK_IMG_SKYXPROD_SKY">
-          <End Type="Model.TB_PRODUTO_SKYHUB" Role="TB_PRODUTO_SKYHUB" Multiplicity="1" />
-          <End Type="Model.TB_PRODUTO_IMAGEM_SKYHUB" Role="TB_PRODUTO_IMAGEM_SKYHUB" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TB_PRODUTO_SKYHUB">
-              <PropertyRef Name="COD_PRODUTO_SKYHUB" />
-            </Principal>
-            <Dependent Role="TB_PRODUTO_IMAGEM_SKYHUB">
-              <PropertyRef Name="COD_PRODUTO_SKYHUB" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -6110,7 +6041,6 @@
           <Property Name="DESC_USUARIO_EMAIL" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
           <Property Name="DESC_TOKEN_INTEGRACAO" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="DESC_TOKEN_ACCOUNT" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="IND_SINCRONIZA_PRODUTOS" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="COD_CONFIGURACAO_SKYHUB" Type="Int32" Nullable="false" />
           <Property Name="COD_FILIAL" Type="Int32" Nullable="false" />
           <Property Name="COD_OPERACAO" Type="Int32" Nullable="false" />
@@ -6173,6 +6103,28 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="TB_EMAIL">
+          <Key>
+            <PropertyRef Name="DESC_EMAIL" />
+            <PropertyRef Name="DESC_SENHA" />
+            <PropertyRef Name="DESC_SMTP" />
+            <PropertyRef Name="NUM_PORTA_SMTP" />
+            <PropertyRef Name="DESC_POP3" />
+            <PropertyRef Name="NUM_PORTA_POP3" />
+            <PropertyRef Name="COD_EMAIL" />
+          </Key>
+          <Property Name="DESC_EMAIL" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_SENHA" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_SMTP" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="NUM_PORTA_SMTP" Type="Int32" Nullable="false" />
+          <Property Name="DESC_POP3" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="NUM_PORTA_POP3" Type="Int32" Nullable="false" />
+          <Property Name="COD_EMAIL" Type="Int32" Nullable="false" />
+          <Property Name="DESC_MENSAGEM" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_HOME_PAGE" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="QTD_COTA" Type="Int16" />
+          <Property Name="IND_SSL" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -7030,6 +6982,34 @@
           <EntitySetMapping Name="TB_PRODUTO_SKYHUB">
             <EntityTypeMapping TypeName="Model.TB_PRODUTO_SKYHUB">
               <MappingFragment StoreEntitySet="TB_PRODUTO_SKYHUB">
+                <ScalarProperty Name="VAL_PESO" ColumnName="VAL_PESO" />
+                <ScalarProperty Name="ESP_VOLTAGEM" ColumnName="ESP_VOLTAGEM" />
+                <ScalarProperty Name="ESP_VIDEO" ColumnName="ESP_VIDEO" />
+                <ScalarProperty Name="ESP_TAMANHO" ColumnName="ESP_TAMANHO" />
+                <ScalarProperty Name="ESP_SAC" ColumnName="ESP_SAC" />
+                <ScalarProperty Name="ESP_REFERENCIADOMODELO" ColumnName="ESP_REFERENCIADOMODELO" />
+                <ScalarProperty Name="ESP_RECURSOSFUNCIONALIDADES" ColumnName="ESP_RECURSOSFUNCIONALIDADES" />
+                <ScalarProperty Name="ESP_PESOLIQDOPRODUTO" ColumnName="ESP_PESOLIQDOPRODUTO" />
+                <ScalarProperty Name="ESP_PESOLIQDAEMBALAGEMCPRODUTO" ColumnName="ESP_PESOLIQDAEMBALAGEMCPRODUTO" />
+                <ScalarProperty Name="ESP_MODELO" ColumnName="ESP_MODELO" />
+                <ScalarProperty Name="ESP_MATERIALCOMPOSICAO" ColumnName="ESP_MATERIALCOMPOSICAO" />
+                <ScalarProperty Name="ESP_MARCA" ColumnName="ESP_MARCA" />
+                <ScalarProperty Name="ESP_MANUAL" ColumnName="ESP_MANUAL" />
+                <ScalarProperty Name="ESP_MAISINFORMACOES" ColumnName="ESP_MAISINFORMACOES" />
+                <ScalarProperty Name="ESP_GARANTIADEFORNECEDOR" ColumnName="ESP_GARANTIADEFORNECEDOR" />
+                <ScalarProperty Name="ESP_FABRICANTE" ColumnName="ESP_FABRICANTE" />
+                <ScalarProperty Name="ESP_DIMENSOESPRODUTO" ColumnName="ESP_DIMENSOESPRODUTO" />
+                <ScalarProperty Name="ESP_DIMENSOESEMBALAGEM" ColumnName="ESP_DIMENSOESEMBALAGEM" />
+                <ScalarProperty Name="ESP_DATADELANCAMENTONOMERCADO" ColumnName="ESP_DATADELANCAMENTONOMERCADO" />
+                <ScalarProperty Name="ESP_CORFICHATECNICA" ColumnName="ESP_CORFICHATECNICA" />
+                <ScalarProperty Name="ESP_COR" ColumnName="ESP_COR" />
+                <ScalarProperty Name="ESP_CONTEUDODAEMBALAGEM" ColumnName="ESP_CONTEUDODAEMBALAGEM" />
+                <ScalarProperty Name="ESP_APARELHOSCOMPATIVEIS" ColumnName="ESP_APARELHOSCOMPATIVEIS" />
+                <ScalarProperty Name="ESP_ALIMENTACAO" ColumnName="ESP_ALIMENTACAO" />
+                <ScalarProperty Name="DESC_LINK_IMAGEM_4" ColumnName="DESC_LINK_IMAGEM_4" />
+                <ScalarProperty Name="DESC_LINK_IMAGEM_3" ColumnName="DESC_LINK_IMAGEM_3" />
+                <ScalarProperty Name="DESC_LINK_IMAGEM_2" ColumnName="DESC_LINK_IMAGEM_2" />
+                <ScalarProperty Name="DESC_LINK_IMAGEM_1" ColumnName="DESC_LINK_IMAGEM_1" />
                 <ScalarProperty Name="DESC_CATEGORIA" ColumnName="DESC_CATEGORIA" />
                 <ScalarProperty Name="COD_PRODUTO_SKYHUB_PAI" ColumnName="COD_PRODUTO_SKYHUB_PAI" />
                 <ScalarProperty Name="COD_PRODUTO" ColumnName="COD_PRODUTO" />
@@ -7041,37 +7021,6 @@
                 <ScalarProperty Name="DESC_STATUS" ColumnName="DESC_STATUS" />
                 <ScalarProperty Name="DESC_DESCRICAO" ColumnName="DESC_DESCRICAO" />
                 <ScalarProperty Name="DESC_PRODUTO" ColumnName="DESC_PRODUTO" />
-                <ScalarProperty Name="IND_SINCRONIZA" ColumnName="IND_SINCRONIZA" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TB_PRODUTO_CATEGORIA_SKYHUB">
-            <EntityTypeMapping TypeName="Model.TB_PRODUTO_CATEGORIA_SKYHUB">
-              <MappingFragment StoreEntitySet="TB_PRODUTO_CATEGORIA_SKYHUB">
-                <ScalarProperty Name="COD_PRODUTO_SKYHUB" ColumnName="COD_PRODUTO_SKYHUB" />
-                <ScalarProperty Name="COD_PRODUTO_CATEGORIA_SKYHUB" ColumnName="COD_PRODUTO_CATEGORIA_SKYHUB" />
-                <ScalarProperty Name="DESC_CATEGORIA" ColumnName="DESC_CATEGORIA" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TB_PRODUTO_ESP_SKYHUB">
-            <EntityTypeMapping TypeName="Model.TB_PRODUTO_ESP_SKYHUB">
-              <MappingFragment StoreEntitySet="TB_PRODUTO_ESP_SKYHUB">
-                <ScalarProperty Name="COD_PRODUTO_SKYHUB" ColumnName="COD_PRODUTO_SKYHUB" />
-                <ScalarProperty Name="COD_PRODUTO_ESP_SKYHUB" ColumnName="COD_PRODUTO_ESP_SKYHUB" />
-                <ScalarProperty Name="IND_ATIVO" ColumnName="IND_ATIVO" />
-                <ScalarProperty Name="VAL_ESPECIFICACAO" ColumnName="VAL_ESPECIFICACAO" />
-                <ScalarProperty Name="DESC_ESPECIFICACAO" ColumnName="DESC_ESPECIFICACAO" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TB_PRODUTO_IMAGEM_SKYHUB">
-            <EntityTypeMapping TypeName="Model.TB_PRODUTO_IMAGEM_SKYHUB">
-              <MappingFragment StoreEntitySet="TB_PRODUTO_IMAGEM_SKYHUB">
-                <ScalarProperty Name="COD_PRODUTO_SKYHUB" ColumnName="COD_PRODUTO_SKYHUB" />
-                <ScalarProperty Name="COD_PRODUTO_IMAGEM_SKYHUB" ColumnName="COD_PRODUTO_IMAGEM_SKYHUB" />
-                <ScalarProperty Name="IND_ATIVO" ColumnName="IND_ATIVO" />
-                <ScalarProperty Name="DESC_IMAGEM" ColumnName="DESC_IMAGEM" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -7762,7 +7711,6 @@
                 <ScalarProperty Name="COD_OPERACAO" ColumnName="COD_OPERACAO" />
                 <ScalarProperty Name="COD_FILIAL" ColumnName="COD_FILIAL" />
                 <ScalarProperty Name="COD_CONFIGURACAO_SKYHUB" ColumnName="COD_CONFIGURACAO_SKYHUB" />
-                <ScalarProperty Name="IND_SINCRONIZA_PRODUTOS" ColumnName="IND_SINCRONIZA_PRODUTOS" />
                 <ScalarProperty Name="DESC_TOKEN_ACCOUNT" ColumnName="DESC_TOKEN_ACCOUNT" />
                 <ScalarProperty Name="DESC_TOKEN_INTEGRACAO" ColumnName="DESC_TOKEN_INTEGRACAO" />
                 <ScalarProperty Name="DESC_USUARIO_EMAIL" ColumnName="DESC_USUARIO_EMAIL" />
@@ -7787,6 +7735,23 @@
                 <ScalarProperty Name="PERC_COMISSAO1" ColumnName="PERC_COMISSAO1" />
                 <ScalarProperty Name="DESC_CLASSE" ColumnName="DESC_CLASSE" />
                 <ScalarProperty Name="COD_CLASSE" ColumnName="COD_CLASSE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TB_EMAIL">
+            <EntityTypeMapping TypeName="Model.TB_EMAIL">
+              <MappingFragment StoreEntitySet="TB_EMAIL">
+                <ScalarProperty Name="IND_SSL" ColumnName="IND_SSL" />
+                <ScalarProperty Name="QTD_COTA" ColumnName="QTD_COTA" />
+                <ScalarProperty Name="DESC_HOME_PAGE" ColumnName="DESC_HOME_PAGE" />
+                <ScalarProperty Name="DESC_MENSAGEM" ColumnName="DESC_MENSAGEM" />
+                <ScalarProperty Name="COD_EMAIL" ColumnName="COD_EMAIL" />
+                <ScalarProperty Name="NUM_PORTA_POP3" ColumnName="NUM_PORTA_POP3" />
+                <ScalarProperty Name="DESC_POP3" ColumnName="DESC_POP3" />
+                <ScalarProperty Name="NUM_PORTA_SMTP" ColumnName="NUM_PORTA_SMTP" />
+                <ScalarProperty Name="DESC_SMTP" ColumnName="DESC_SMTP" />
+                <ScalarProperty Name="DESC_SENHA" ColumnName="DESC_SENHA" />
+                <ScalarProperty Name="DESC_EMAIL" ColumnName="DESC_EMAIL" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

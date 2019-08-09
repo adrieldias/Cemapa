@@ -8,6 +8,7 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Web.Http;
 using Cemapa.Models;
+using System.Net.Mail;
 
 namespace Cemapa.Controllers
 {
@@ -104,7 +105,7 @@ namespace Cemapa.Controllers
                                         ErrorPLP body = new ErrorPLP();
                                         body = await response.Content.ReadAsAsync<ErrorPLP>();
 
-                                        throw new Exception($"Erro ao agrupar pedido em uma PLP. {codMarketplace}: {response.ReasonPhrase}. Conteúdo: {body.message}");
+                                        throw new Exception($"Não foi possível agrupar pedido em uma PLP. {codMarketplace}: {response.ReasonPhrase}. Conteúdo: {body.message}");
                                     }
                                 }
                             }
@@ -114,7 +115,7 @@ namespace Cemapa.Controllers
                             Error body = new Error();
                             body = await response.Content.ReadAsAsync<Error>();
 
-                            throw new Exception($"Erro ao buscar PLPs na skyhub. {codMarketplace}: {response.ReasonPhrase}. Conteúdo: {body.error}");
+                            throw new Exception($"Não foi possível buscar PLPs na skyhub. {codMarketplace}: {response.ReasonPhrase}. Conteúdo: {body.error}");
                         }
 
                         //Variavel controla numero máximo de iterações do loop, para não resultar em uma chamada sem fim.
@@ -127,7 +128,7 @@ namespace Cemapa.Controllers
                         //Caso fez varias buscas e não encontrou nada, encerra e drop o erro.
                         //Se acontecer esse caso, é provavel que exista uma possibilidade não prevista sobre gerar as etiquetas.
 
-                        throw new Exception($"Erro ao procurar PLP na skyhub. {codMarketplace}: Tentou procurar a PLP por muito tempo, e não encontrou nada");
+                        throw new Exception($"Não foi possível procurar PLP na skyhub. {codMarketplace}: Tentou procurar a PLP por muito tempo, e não encontrou nada");
                     }
 
                     //Finalmente recupera a etiqueta, enviando o código da PLP encontrada anteriormente.
@@ -146,7 +147,7 @@ namespace Cemapa.Controllers
 
                     if (!response.IsSuccessStatusCode)
                     {
-                        throw new Exception($"Erro ao baixar etiqueta. {codMarketplace}: {response.ReasonPhrase}. Conteúdo: {response.Content.ReadAsStringAsync()}");
+                        throw new Exception($"Não foi possível baixar etiqueta. {codMarketplace}: {response.ReasonPhrase}. Conteúdo: {response.Content.ReadAsStringAsync()}");
                     }
 
                     return new HttpResponseMessage()
@@ -164,7 +165,107 @@ namespace Cemapa.Controllers
             {
                 return Request.CreateResponse(
                     HttpStatusCode.InternalServerError,
-                    $"Erro: {except.Message}"
+                    $"Erro: {ResolucaoExcecoes.ErroAprofundado(except)}"
+                );
+            }
+        }
+
+        [HttpGet]
+        public async Task<HttpResponseMessage> SincronizaStatusPedido(int codFilial, string codMarketplace)
+        {
+            //Busca pelo pedido na skyhub, e atualiza o status para o sistema.
+            //Esse método deve acontecer automatico quando ocorrem os sincronismos.
+            //É uma segunda opção caso algum dia não esteja sincronizando devido a algum problema.
+
+            try
+            {
+                if (codFilial == 0)
+                {
+                    throw new Exception("Informe a filial");
+                }
+
+                if (codMarketplace == "")
+                {
+                    throw new Exception("Código do pedido do marketplace inválido");
+                }
+
+                //Encontra a filial para buscar informações de acesso.
+                //Também garante que um pedido não irá se misturar com o pedido de outra filial
+                //Podendo confundir as contas às quais os pedidos são sincronizados
+
+                TB_CONFIGURACAO_SKYHUB configuracaoSkyhub = GetConfiguracao(codFilial);
+
+                if (configuracaoSkyhub != null)
+                {
+                    HttpClient Http = new HttpClient
+                    {
+                        BaseAddress = new Uri("https://api.skyhub.com.br")
+                    };
+
+                    Http.DefaultRequestHeaders.Accept.Clear();
+                    Http.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                    Http.DefaultRequestHeaders.Add("X-User-Email", configuracaoSkyhub.DESC_USUARIO_EMAIL);
+                    Http.DefaultRequestHeaders.Add("X-Api-Key", configuracaoSkyhub.DESC_TOKEN_INTEGRACAO);
+                    Http.DefaultRequestHeaders.Add("X-Accountmanager-Key", configuracaoSkyhub.DESC_TOKEN_ACCOUNT);
+                    Http.DefaultRequestHeaders.Add("Accept", "application/json;charset=UTF-8");
+
+                    HttpResponseMessage response = await Http.GetAsync($"/orders/{codMarketplace}");
+
+                    Order ordem = new Order();
+                    ordem = await response.Content.ReadAsAsync<Order>();
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        if (ordem != null)
+                        {
+                            //Se houve uma resposta de sucesso, atualiza o campo DESC_SITUACAO_SKYHUB na tabela TB_PEDIDO_CAB
+
+                            TB_PEDIDO_CAB wPedido = (from p in db.TB_PEDIDO_CAB
+                                                     where (p.COD_PEDIDO_MARKETPLACE == codMarketplace)
+                                                     select p).FirstOrDefault();
+                            if (wPedido != null)
+                            {
+                                wPedido.DESC_SITUACAO_MARKETPLACE = ordem.status.type;
+                                db.Entry(wPedido).State = EntityState.Modified;
+                                db.SaveChanges();
+                            }
+                            else
+                            {
+                                throw new Exception($"Erro ao atualizar pedido no sistema. Não encontrado: {codMarketplace}");
+                            }
+                        }
+                        else
+                        {
+                            Error body = new Error();
+                            body = await response.Content.ReadAsAsync<Error>();
+
+                            throw new Exception($"Erro ao solicitar pedido {codMarketplace}. Conteúdo: Pedido não encontrado");
+                        }
+                    }
+                    else
+                    {
+                        Error body = new Error();
+                        body = await response.Content.ReadAsAsync<Error>();
+
+                        throw new Exception($"Erro no retorno da Skyhub. {codMarketplace}: {response.ReasonPhrase}. Conteúdo: {body.error}");
+                    }
+                }
+                else
+                {
+                    throw new Exception($"Filial não encontrada: {codFilial}");
+                }
+
+                return Request.CreateResponse(
+                    HttpStatusCode.OK,
+                    "Pedido atualizado"
+                );
+            }
+            catch (Exception except)
+            {
+                return Request.CreateResponse(
+                    HttpStatusCode.InternalServerError,
+                    $"Erro: {ResolucaoExcecoes.ErroAprofundado(except)}"
                 );
             }
         }
@@ -253,7 +354,7 @@ namespace Cemapa.Controllers
             {
                 return Request.CreateResponse(
                     HttpStatusCode.InternalServerError,
-                    $"Erro: {except.Message}"
+                    $"Erro: {ResolucaoExcecoes.ErroAprofundado(except)}"
                 );
             }
         }
@@ -340,7 +441,7 @@ namespace Cemapa.Controllers
             {
                 return Request.CreateResponse(
                     HttpStatusCode.InternalServerError,
-                    $"Erro: {except.Message}"
+                    $"Erro: {ResolucaoExcecoes.ErroAprofundado(except)}"
                 );
             }
         }
@@ -449,7 +550,7 @@ namespace Cemapa.Controllers
             {
                 return Request.CreateResponse(
                     HttpStatusCode.InternalServerError,
-                    $"Erro: {except.Message}"
+                    $"Erro: {ResolucaoExcecoes.ErroAprofundado(except)}"
                 );
             }
         }
@@ -521,7 +622,7 @@ namespace Cemapa.Controllers
             {
                 return Request.CreateResponse(
                     HttpStatusCode.InternalServerError,
-                    $"Erro: {except.Message}"
+                    $"Erro: {ResolucaoExcecoes.ErroAprofundado(except)}"
                 );
             }
         }
@@ -620,7 +721,7 @@ namespace Cemapa.Controllers
             {
                 return Request.CreateResponse(
                     HttpStatusCode.InternalServerError,
-                    $"Erro: {except.Message}"
+                    $"Erro: {ResolucaoExcecoes.ErroAprofundado(except)}"
                 );
             }
         }
@@ -758,6 +859,24 @@ namespace Cemapa.Controllers
                                                     db.Entry(wPedidoCab).State = EntityState.Added;
                                                     db.SaveChanges();
 
+                                                    //Quando um pedido novo for baixado para o sistema, envia um e-mail para os seguintes destinatários:
+                                                    
+                                                    try
+                                                    {
+                                                        List<string> eDestinatarios = new List<string>
+                                                        {
+                                                            "gyan0012@hotmail.com",
+                                                            "marcos@cemapa.com",
+                                                            "cemapa@cemapa.com"
+                                                        };
+
+                                                        EnviaEmail(eDestinatarios, "Novo pedido aprovado.", $"Um novo pedido foi aprovado pelo marketplace. Código: {ordem.code}");
+                                                    }
+                                                    catch (Exception)
+                                                    {
+                                                        //Não consegui pensar como se comportará a requisição caso o e-mail não tenha sido enviado
+                                                    }
+
                                                     wTotalCriados++;
                                                 }
                                             break;
@@ -765,7 +884,7 @@ namespace Cemapa.Controllers
                                             case "CANCELED":
                                                 //Pedidos com status CANCELED são necessários para saber quando um cliente cancelou sua compra
 
-                                                if (!db.TB_PEDIDO_CAB.Any(p => p.COD_PEDIDO_MARKETPLACE == ordem.code))
+                                                if (db.TB_PEDIDO_CAB.Any(p => p.COD_PEDIDO_MARKETPLACE == ordem.code))
                                                 {
                                                     TB_PEDIDO_CAB wPedidoCab = GetPedidoPorMarketplace(ordem);
                                                     wPedidoCab.IND_SITUACAO = "2";
@@ -782,7 +901,7 @@ namespace Cemapa.Controllers
                                             case "INVOICE":
                                                 //Pedidos com status INVOICE provavelmente não ocorrerão, pois esse status é acionado pelo vendedor
 
-                                                if (!db.TB_PEDIDO_CAB.Any(p => p.COD_PEDIDO_MARKETPLACE == ordem.code))
+                                                if (db.TB_PEDIDO_CAB.Any(p => p.COD_PEDIDO_MARKETPLACE == ordem.code))
                                                 {
                                                     TB_PEDIDO_CAB wPedidoCab = GetPedidoPorMarketplace(ordem);
                                                     wPedidoCab.DESC_SITUACAO_MARKETPLACE = "INVOICE";
@@ -796,15 +915,14 @@ namespace Cemapa.Controllers
 
                                             case "SHIPPED":
                                                 //Pedido com status SHIPPED, indica que o pedido foi entrega a transportadora.
-                                                //Provavelmente não ocorrerão, quem notifica este pedido é a própria B2W quando
-                                                //recebe tais informações dos correios
+                                                //Então é necessário sincronizar o status do pedido no sistema
 
                                                 //Importante resaltar que pedidos que não utilizam os serviços de entrega da B2W
                                                 //que no caso é feita pelos correios, o próprio vendedor deve informar a API sobre dados
                                                 //da entrega, tais como código de rastreio, descrição da transportadora, etc...
                                                 //O Sistema por enquanto esta implementado apenas para utilizar a B2W entregas.
 
-                                                if (!db.TB_PEDIDO_CAB.Any(p => p.COD_PEDIDO_MARKETPLACE == ordem.code))
+                                                if (db.TB_PEDIDO_CAB.Any(p => p.COD_PEDIDO_MARKETPLACE == ordem.code))
                                                 {
                                                     TB_PEDIDO_CAB wPedidoCab = GetPedidoPorMarketplace(ordem);
                                                     wPedidoCab.DESC_SITUACAO_MARKETPLACE = "SHIPPED";
@@ -818,9 +936,10 @@ namespace Cemapa.Controllers
 
                                             case "DELIVERED":
                                                 //Pedidos com status DELIVERED indicam que o comprador recebeu o produto.
+                                                //Então é necessário sincronizar o status do pedido no sistema
                                                 //Esse status é atualizado pelo comprador.
 
-                                                if (!db.TB_PEDIDO_CAB.Any(p => p.COD_PEDIDO_MARKETPLACE == ordem.code))
+                                                if (db.TB_PEDIDO_CAB.Any(p => p.COD_PEDIDO_MARKETPLACE == ordem.code))
                                                 {
                                                     TB_PEDIDO_CAB wPedidoCab = GetPedidoPorMarketplace(ordem);
                                                     wPedidoCab.DESC_SITUACAO_MARKETPLACE = "DELIVERED";
@@ -834,8 +953,9 @@ namespace Cemapa.Controllers
 
                                             case "SHIPMENT_EXCEPTION":
                                                 //Pedidos com status SHIPMENT_EXCEPTION pode ocorrer quando houver algum problema com a entrega.
+                                                //Então é necessário sincronizar o status do pedido no sistema
 
-                                                if (!db.TB_PEDIDO_CAB.Any(p => p.COD_PEDIDO_MARKETPLACE == ordem.code))
+                                                if (db.TB_PEDIDO_CAB.Any(p => p.COD_PEDIDO_MARKETPLACE == ordem.code))
                                                 {
                                                     TB_PEDIDO_CAB wPedidoCab = GetPedidoPorMarketplace(ordem);
                                                     wPedidoCab.DESC_SITUACAO_MARKETPLACE = "SHIPMENT_EXCEPTION";
@@ -849,8 +969,9 @@ namespace Cemapa.Controllers
 
                                             case "PAYMENT_OVERDUE":
                                                 //Pedidos com status PAYMENT_OVERDUE ocorre quando o boleto estiver com a data de pagamento vencido.
+                                                //Então é necessário sincronizar o status do pedido no sistema
 
-                                                if (!db.TB_PEDIDO_CAB.Any(p => p.COD_PEDIDO_MARKETPLACE == ordem.code))
+                                                if (db.TB_PEDIDO_CAB.Any(p => p.COD_PEDIDO_MARKETPLACE == ordem.code))
                                                 {
                                                     TB_PEDIDO_CAB wPedidoCab = GetPedidoPorMarketplace(ordem);
                                                     wPedidoCab.DESC_SITUACAO_MARKETPLACE = "PAYMENT_OVERDUE";
@@ -1006,7 +1127,7 @@ namespace Cemapa.Controllers
                                                     status = produtoSkyhub.DESC_STATUS,
                                                     qty = Convert.ToInt32(wTotalEstoque),
                                                     price = Convert.ToDouble(wInfosProduto.VAL_VAREJO),
-                                                    weight = Convert.ToDouble(wInfosProduto.NUM_PESO_BRUTO),
+                                                    weight = Convert.ToDouble(produtoSkyhub.VAL_PESO),
                                                     width = Convert.ToDouble(produtoSkyhub.VAL_LARGURA),
                                                     height = Convert.ToDouble(produtoSkyhub.VAL_ALTURA),
                                                     length = Convert.ToDouble(produtoSkyhub.VAL_COMPRIMENTO),
@@ -1018,25 +1139,39 @@ namespace Cemapa.Controllers
                                                 ProdutoSku.categories.Add(
                                                     new Category
                                                     {
+                                                        code = Convert.ToInt64(produtoSkyhub.DESC_CATEGORIA.GetHashCode()),
                                                         name = produtoSkyhub.DESC_CATEGORIA
                                                     }
                                                 );
 
-                                                foreach (var espec in produtoSkyhub.TB_PRODUTO_ESP_SKYHUB)
-                                                {
-                                                    ProdutoSku.specifications.Add(
-                                                        new Specification
-                                                        {
-                                                            key = espec.DESC_ESPECIFICACAO,
-                                                            value = espec.VAL_ESPECIFICACAO
-                                                        }
-                                                    );
-                                                }
+                                                ProdutoSku.AddSpecificationsCustom("Alimentação", produtoSkyhub.ESP_ALIMENTACAO);
+                                                ProdutoSku.AddSpecificationsCustom("Aparelhos compatíveis", produtoSkyhub.ESP_APARELHOSCOMPATIVEIS);
+                                                ProdutoSku.AddSpecificationsCustom("Conteúdo da embalagem", produtoSkyhub.ESP_CONTEUDODAEMBALAGEM);
+                                                ProdutoSku.AddSpecificationsCustom("Cor", produtoSkyhub.ESP_COR);
+                                                ProdutoSku.AddSpecificationsCustom("Cor - ficha técnica", produtoSkyhub.ESP_CORFICHATECNICA);
+                                                ProdutoSku.AddSpecificationsCustom("Data de Lançamento no Mercado", produtoSkyhub.ESP_DATADELANCAMENTONOMERCADO);
+                                                ProdutoSku.AddSpecificationsCustom("Dimensões Embalagem - cm (AxLxP)", produtoSkyhub.ESP_DIMENSOESEMBALAGEM);
+                                                ProdutoSku.AddSpecificationsCustom("Dimensões Produto - cm (AxLxP)", produtoSkyhub.ESP_DIMENSOESPRODUTO);
+                                                ProdutoSku.AddSpecificationsCustom("Fabricante", produtoSkyhub.ESP_FABRICANTE);
+                                                ProdutoSku.AddSpecificationsCustom("Garantia do Fornecedor", produtoSkyhub.ESP_GARANTIADEFORNECEDOR);
+                                                ProdutoSku.AddSpecificationsCustom("Mais informações", produtoSkyhub.ESP_MAISINFORMACOES);
+                                                ProdutoSku.AddSpecificationsCustom("Manual", produtoSkyhub.ESP_MANUAL);
+                                                ProdutoSku.AddSpecificationsCustom("Marca", produtoSkyhub.ESP_MARCA);
+                                                ProdutoSku.AddSpecificationsCustom("Material/Composição", produtoSkyhub.ESP_MATERIALCOMPOSICAO);
+                                                ProdutoSku.AddSpecificationsCustom("Modelo", produtoSkyhub.ESP_MODELO);
+                                                ProdutoSku.AddSpecificationsCustom("Peso liq. da embalagem c/ produto (Kg)", produtoSkyhub.ESP_PESOLIQDAEMBALAGEMCPRODUTO);
+                                                ProdutoSku.AddSpecificationsCustom("Peso liq. do produto (Kg)", produtoSkyhub.ESP_PESOLIQDOPRODUTO);
+                                                ProdutoSku.AddSpecificationsCustom("Recursos/Funcionalidades", produtoSkyhub.ESP_RECURSOSFUNCIONALIDADES);
+                                                ProdutoSku.AddSpecificationsCustom("Referência do Modelo", produtoSkyhub.ESP_REFERENCIADOMODELO);
+                                                ProdutoSku.AddSpecificationsCustom("SAC do Fabricante", produtoSkyhub.ESP_SAC);
+                                                ProdutoSku.AddSpecificationsCustom("Tamanho", produtoSkyhub.ESP_TAMANHO);
+                                                ProdutoSku.AddSpecificationsCustom("Vídeo", produtoSkyhub.ESP_VIDEO);
+                                                ProdutoSku.AddSpecificationsCustom("Voltagem", produtoSkyhub.ESP_VOLTAGEM);
 
-                                                foreach (var imagem in produtoSkyhub.TB_PRODUTO_IMAGEM_SKYHUB)
-                                                {
-                                                    ProdutoSku.images.Add(imagem.DESC_IMAGEM);
-                                                }
+                                                ProdutoSku.AddImagesCustom(produtoSkyhub.DESC_LINK_IMAGEM_1);
+                                                ProdutoSku.AddImagesCustom(produtoSkyhub.DESC_LINK_IMAGEM_2);
+                                                ProdutoSku.AddImagesCustom(produtoSkyhub.DESC_LINK_IMAGEM_3);
+                                                ProdutoSku.AddImagesCustom(produtoSkyhub.DESC_LINK_IMAGEM_4);
 
                                                 List<TB_PRODUTO_SKYHUB> variacoes = GetVariacoes(produtoSkyhub);
 
@@ -1055,17 +1190,30 @@ namespace Cemapa.Controllers
                                                             ean = wInfosVariacao.DESC_COD_BARRA
                                                         };
 
-                                                        foreach (var espec in variacao.TB_PRODUTO_ESP_SKYHUB)
-                                                        {
-                                                            wProdutoVariacao.specifications.Add(
-                                                                new Specification
-                                                                {
-                                                                    key = espec.DESC_ESPECIFICACAO,
-                                                                    value = espec.VAL_ESPECIFICACAO
-                                                                }
-                                                            );
-                                                        }
-
+                                                        wProdutoVariacao.AddSpecificationsCustom("Alimentação", variacao.ESP_ALIMENTACAO);
+                                                        wProdutoVariacao.AddSpecificationsCustom("Aparelhos compatíveis", variacao.ESP_APARELHOSCOMPATIVEIS);
+                                                        wProdutoVariacao.AddSpecificationsCustom("Conteúdo da embalagem", variacao.ESP_CONTEUDODAEMBALAGEM);
+                                                        wProdutoVariacao.AddSpecificationsCustom("Cor", variacao.ESP_COR);
+                                                        wProdutoVariacao.AddSpecificationsCustom("Cor - ficha técnica", variacao.ESP_CORFICHATECNICA);
+                                                        wProdutoVariacao.AddSpecificationsCustom("Data de Lançamento no Mercado", variacao.ESP_DATADELANCAMENTONOMERCADO);
+                                                        wProdutoVariacao.AddSpecificationsCustom("Dimensões Embalagem - cm (AxLxP)", variacao.ESP_DIMENSOESEMBALAGEM);
+                                                        wProdutoVariacao.AddSpecificationsCustom("Dimensões Produto - cm (AxLxP)", variacao.ESP_DIMENSOESPRODUTO);
+                                                        wProdutoVariacao.AddSpecificationsCustom("Fabricante", variacao.ESP_FABRICANTE);
+                                                        wProdutoVariacao.AddSpecificationsCustom("Garantia do Fornecedor", variacao.ESP_GARANTIADEFORNECEDOR);
+                                                        wProdutoVariacao.AddSpecificationsCustom("Mais informações", variacao.ESP_MAISINFORMACOES);
+                                                        wProdutoVariacao.AddSpecificationsCustom("Manual", variacao.ESP_MANUAL);
+                                                        wProdutoVariacao.AddSpecificationsCustom("Marca", variacao.ESP_MARCA);
+                                                        wProdutoVariacao.AddSpecificationsCustom("Material/Composição", variacao.ESP_MATERIALCOMPOSICAO);
+                                                        wProdutoVariacao.AddSpecificationsCustom("Modelo", variacao.ESP_MODELO);
+                                                        wProdutoVariacao.AddSpecificationsCustom("Peso liq. da embalagem c/ produto (Kg)", variacao.ESP_PESOLIQDAEMBALAGEMCPRODUTO);
+                                                        wProdutoVariacao.AddSpecificationsCustom("Peso liq. do produto (Kg)", variacao.ESP_PESOLIQDOPRODUTO);
+                                                        wProdutoVariacao.AddSpecificationsCustom("Recursos/Funcionalidades", variacao.ESP_RECURSOSFUNCIONALIDADES);
+                                                        wProdutoVariacao.AddSpecificationsCustom("Referência do Modelo", variacao.ESP_REFERENCIADOMODELO);
+                                                        wProdutoVariacao.AddSpecificationsCustom("SAC do Fabricante", variacao.ESP_SAC);
+                                                        wProdutoVariacao.AddSpecificationsCustom("Tamanho", variacao.ESP_TAMANHO);
+                                                        wProdutoVariacao.AddSpecificationsCustom("Vídeo", variacao.ESP_VIDEO);
+                                                        wProdutoVariacao.AddSpecificationsCustom("Voltagem", variacao.ESP_VOLTAGEM);
+                                                        
                                                         wProdutoVariacao.specifications.Add(
                                                             new Specification
                                                             {
@@ -1074,11 +1222,11 @@ namespace Cemapa.Controllers
                                                             }
                                                         );
 
-                                                        foreach (var imagem in variacao.TB_PRODUTO_IMAGEM_SKYHUB)
-                                                        {
-                                                            wProdutoVariacao.images.Add(imagem.DESC_IMAGEM);
-                                                        }
-
+                                                        wProdutoVariacao.AddImagesCustom(variacao.DESC_LINK_IMAGEM_1);
+                                                        wProdutoVariacao.AddImagesCustom(variacao.DESC_LINK_IMAGEM_2);
+                                                        wProdutoVariacao.AddImagesCustom(variacao.DESC_LINK_IMAGEM_3);
+                                                        wProdutoVariacao.AddImagesCustom(variacao.DESC_LINK_IMAGEM_4);
+                                                        
                                                         ProdutoSku.variations.Add(wProdutoVariacao);
                                                     }
                                                     else
@@ -1323,7 +1471,6 @@ namespace Cemapa.Controllers
         {
             return (from produtoSkyhub in db.TB_PRODUTO_SKYHUB
                     where produtoSkyhub.COD_PRODUTO == sincronizacaoSkyhub.COD_PRODUTO
-                    && produtoSkyhub.IND_SINCRONIZA == "S"
                     select produtoSkyhub).ToList();
         }
 
@@ -1535,6 +1682,54 @@ namespace Cemapa.Controllers
             else
             {
                 return wProduto.COD_PRODUTO;
+            }
+        }
+        
+        private void EnviaEmail(List<string> eDestinos, string assunto, string corpo)
+        {
+            try
+            {
+                //TB_EMAIL wConfigEmail = (from e in db.TB_EMAIL where (e.DESC_EMAIL == "sistema@cemapa.com") select e).FirstOrDefault();
+
+                TB_EMAIL wConfigEmail = new TB_EMAIL
+                {
+                    DESC_EMAIL = "sistema@cemapa.com",
+                    DESC_SENHA = "C3mapaNFe",
+                    NUM_PORTA_SMTP = 587,
+                    DESC_SMTP = "smtp.cemapa.com",
+                    IND_SSL = "N"
+                };
+
+                if (wConfigEmail != null)
+                {
+                    using (SmtpClient smtp = new SmtpClient())
+                    {
+                        smtp.Host = wConfigEmail.DESC_SMTP;
+                        smtp.Port = wConfigEmail.NUM_PORTA_SMTP;
+                        smtp.EnableSsl = wConfigEmail.IND_SSL == "S" ? true : false;
+                        smtp.UseDefaultCredentials = false;
+                        smtp.Credentials = new NetworkCredential(wConfigEmail.DESC_EMAIL, wConfigEmail.DESC_SENHA);
+
+                        using (MailMessage mail = new MailMessage())
+                        {
+                            mail.From = new MailAddress(wConfigEmail.DESC_EMAIL);
+
+                            foreach (string destino in eDestinos)
+                            {
+                                mail.To.Add(new MailAddress(destino));
+                            }
+
+                            mail.Subject = assunto;
+                            mail.Body = corpo;
+
+                            smtp.Send(mail);
+                        }
+                    }
+                }
+            }
+            catch (Exception except)
+            {
+                throw new Exception(except.Message);
             }
         }
     }

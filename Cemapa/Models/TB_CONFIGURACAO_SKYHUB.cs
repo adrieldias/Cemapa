@@ -18,7 +18,6 @@ namespace Cemapa.Models
         public string DESC_USUARIO_EMAIL { get; set; }
         public string DESC_TOKEN_INTEGRACAO { get; set; }
         public string DESC_TOKEN_ACCOUNT { get; set; }
-        public string IND_SINCRONIZA_PRODUTOS { get; set; }
         public int COD_CONFIGURACAO_SKYHUB { get; set; }
         public int COD_FILIAL { get; set; }
         public int COD_OPERACAO { get; set; }

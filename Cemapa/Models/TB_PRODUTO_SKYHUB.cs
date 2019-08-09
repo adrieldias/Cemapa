@@ -14,15 +14,6 @@ namespace Cemapa.Models
     
     public partial class TB_PRODUTO_SKYHUB
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public TB_PRODUTO_SKYHUB()
-        {
-            this.TB_PRODUTO_CATEGORIA_SKYHUB = new HashSet<TB_PRODUTO_CATEGORIA_SKYHUB>();
-            this.TB_PRODUTO_ESP_SKYHUB = new HashSet<TB_PRODUTO_ESP_SKYHUB>();
-            this.TB_PRODUTO_IMAGEM_SKYHUB = new HashSet<TB_PRODUTO_IMAGEM_SKYHUB>();
-        }
-    
-        public string IND_SINCRONIZA { get; set; }
         public string DESC_PRODUTO { get; set; }
         public string DESC_DESCRICAO { get; set; }
         public string DESC_STATUS { get; set; }
@@ -34,13 +25,35 @@ namespace Cemapa.Models
         public long COD_PRODUTO { get; set; }
         public Nullable<int> COD_PRODUTO_SKYHUB_PAI { get; set; }
         public string DESC_CATEGORIA { get; set; }
+        public string DESC_LINK_IMAGEM_1 { get; set; }
+        public string DESC_LINK_IMAGEM_2 { get; set; }
+        public string DESC_LINK_IMAGEM_3 { get; set; }
+        public string DESC_LINK_IMAGEM_4 { get; set; }
+        public string ESP_ALIMENTACAO { get; set; }
+        public string ESP_APARELHOSCOMPATIVEIS { get; set; }
+        public string ESP_CONTEUDODAEMBALAGEM { get; set; }
+        public string ESP_COR { get; set; }
+        public string ESP_CORFICHATECNICA { get; set; }
+        public string ESP_DATADELANCAMENTONOMERCADO { get; set; }
+        public string ESP_DIMENSOESEMBALAGEM { get; set; }
+        public string ESP_DIMENSOESPRODUTO { get; set; }
+        public string ESP_FABRICANTE { get; set; }
+        public string ESP_GARANTIADEFORNECEDOR { get; set; }
+        public string ESP_MAISINFORMACOES { get; set; }
+        public string ESP_MANUAL { get; set; }
+        public string ESP_MARCA { get; set; }
+        public string ESP_MATERIALCOMPOSICAO { get; set; }
+        public string ESP_MODELO { get; set; }
+        public string ESP_PESOLIQDAEMBALAGEMCPRODUTO { get; set; }
+        public string ESP_PESOLIQDOPRODUTO { get; set; }
+        public string ESP_RECURSOSFUNCIONALIDADES { get; set; }
+        public string ESP_REFERENCIADOMODELO { get; set; }
+        public string ESP_SAC { get; set; }
+        public string ESP_TAMANHO { get; set; }
+        public string ESP_VIDEO { get; set; }
+        public string ESP_VOLTAGEM { get; set; }
+        public Nullable<decimal> VAL_PESO { get; set; }
     
         public virtual TB_PRODUTO TB_PRODUTO { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TB_PRODUTO_CATEGORIA_SKYHUB> TB_PRODUTO_CATEGORIA_SKYHUB { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TB_PRODUTO_ESP_SKYHUB> TB_PRODUTO_ESP_SKYHUB { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TB_PRODUTO_IMAGEM_SKYHUB> TB_PRODUTO_IMAGEM_SKYHUB { get; set; }
     }
 }

@@ -26,6 +26,28 @@ namespace Cemapa.Models
         public List<string> variation_attributes = new List<string>();
         public List<Specification> specifications = new List<Specification>();
         public List<Variation> variations = new List<Variation>();
+
+        public void AddSpecificationsCustom(string nKey, string nValue)
+        {
+            if (!String.IsNullOrEmpty(nValue))
+            {
+                specifications.Add(
+                    new Specification
+                    {
+                        key = nKey,
+                        value = nValue
+                    }
+                );
+            }
+        }
+
+        public void AddImagesCustom(string nLink)
+        {
+            if (!String.IsNullOrEmpty(nLink))
+            {
+                images.Add(nLink);
+            }
+        }
     }
 
     public class Specification
@@ -48,5 +70,27 @@ namespace Cemapa.Models
         public double price { get; set; } //Key usada apenas para validações internas
         public List<string> images = new List<string>();
         public List<Specification> specifications = new List<Specification>();
+
+        public void AddSpecificationsCustom(string nKey, string nValue)
+        {
+            if (!String.IsNullOrEmpty(nValue))
+            {
+                specifications.Add(
+                    new Specification
+                    {
+                        key = nKey,
+                        value = nValue
+                    }
+                );
+            }
+        }
+
+        public void AddImagesCustom(string nLink)
+        {
+            if (!String.IsNullOrEmpty(nLink))
+            {
+                images.Add(nLink);
+            }
+        }
     }
 }

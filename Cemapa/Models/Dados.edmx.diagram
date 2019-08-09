@@ -74,12 +74,6 @@
         <AssociationConnector Association="Model.FK_PRODUTOXTRIBUTACAO" />
         <EntityTypeShape EntityType="Model.TB_PRODUTO_SKYHUB" Width="1.5" PointX="8.25" PointY="8.25" IsExpanded="false" />
         <AssociationConnector Association="Model.FK_PROD_SKYXPRODUTO" />
-        <EntityTypeShape EntityType="Model.TB_PRODUTO_CATEGORIA_SKYHUB" Width="1.5" PointX="10.25" PointY="7.375" IsExpanded="false" />
-        <AssociationConnector Association="Model.FK_CAT_SKYXPROD_SKY" />
-        <EntityTypeShape EntityType="Model.TB_PRODUTO_ESP_SKYHUB" Width="1.5" PointX="10.25" PointY="8.25" IsExpanded="false" />
-        <AssociationConnector Association="Model.FK_ESP_SKYXPROD_SKY" />
-        <EntityTypeShape EntityType="Model.TB_PRODUTO_IMAGEM_SKYHUB" Width="1.5" PointX="10.25" PointY="9" IsExpanded="false" />
-        <AssociationConnector Association="Model.FK_IMG_SKYXPROD_SKY" />
         <EntityTypeShape EntityType="Model.TB_QUALIFICACAO_SOCIO" Width="1.5" PointX="0.5" PointY="3.125" IsExpanded="false" />
         <AssociationConnector Association="Model.FK_CADASTROXQUALIFICACAOSOCIO" />
         <EntityTypeShape EntityType="Model.TB_PROPRIEDADE" Width="1.5" PointX="2.625" PointY="5.75" IsExpanded="false" />
@@ -152,6 +146,7 @@
         <AssociationConnector Association="Model.FK_CONF_SKYXOPERACAO" />
         <EntityTypeShape EntityType="Model.TB_CLASSE" Width="1.5" PointX="4.125" PointY="7.125" IsExpanded="false" />
         <AssociationConnector Association="Model.FK_PRODUTOXCLASSE" />
+        <EntityTypeShape EntityType="Model.TB_EMAIL" Width="1.5" PointX="0.5" PointY="11.25" IsExpanded="false" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

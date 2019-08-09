@@ -216,6 +216,9 @@
     <Compile Include="Models\TB_DEPARTAMENTO.cs">
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TB_EMAIL.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TB_ENERGIA_TENSAO.cs">
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
@@ -292,15 +295,6 @@
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TB_PRODUTO.cs">
-      <DependentUpon>Dados.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TB_PRODUTO_CATEGORIA_SKYHUB.cs">
-      <DependentUpon>Dados.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TB_PRODUTO_ESP_SKYHUB.cs">
-      <DependentUpon>Dados.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TB_PRODUTO_IMAGEM_SKYHUB.cs">
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TB_PRODUTO_SKYHUB.cs">
