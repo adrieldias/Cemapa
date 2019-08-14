@@ -1276,7 +1276,7 @@ warning 6002: The table/view 'SISTEMA.TB_EMAIL' does not have a primary key defi
           <Key>
             <PropertyRef Name="COD_PRODUTO_SKYHUB" />
           </Key>
-          <Property Name="DESC_PRODUTO" Type="varchar2" MaxLength="50" />
+          <Property Name="DESC_PRODUTO" Type="varchar2" MaxLength="100" />
           <Property Name="DESC_DESCRICAO" Type="varchar2" MaxLength="200" />
           <Property Name="DESC_STATUS" Type="varchar2" MaxLength="10" />
           <Property Name="DESC_MARCA" Type="varchar2" MaxLength="15" />
@@ -1287,10 +1287,10 @@ warning 6002: The table/view 'SISTEMA.TB_EMAIL' does not have a primary key defi
           <Property Name="COD_PRODUTO" Type="number" Precision="14" Scale="0" Nullable="false" />
           <Property Name="COD_PRODUTO_SKYHUB_PAI" Type="number" Precision="6" Scale="0" />
           <Property Name="DESC_CATEGORIA" Type="varchar2" MaxLength="150" />
-          <Property Name="DESC_LINK_IMAGEM_1" Type="varchar2" MaxLength="100" />
-          <Property Name="DESC_LINK_IMAGEM_2" Type="varchar2" MaxLength="100" />
-          <Property Name="DESC_LINK_IMAGEM_3" Type="varchar2" MaxLength="100" />
-          <Property Name="DESC_LINK_IMAGEM_4" Type="varchar2" MaxLength="100" />
+          <Property Name="DESC_LINK_IMAGEM_1" Type="varchar2" MaxLength="200" />
+          <Property Name="DESC_LINK_IMAGEM_2" Type="varchar2" MaxLength="200" />
+          <Property Name="DESC_LINK_IMAGEM_3" Type="varchar2" MaxLength="200" />
+          <Property Name="DESC_LINK_IMAGEM_4" Type="varchar2" MaxLength="200" />
           <Property Name="ESP_ALIMENTACAO" Type="varchar2" MaxLength="30" />
           <Property Name="ESP_APARELHOSCOMPATIVEIS" Type="varchar2" MaxLength="30" />
           <Property Name="ESP_CONTEUDODAEMBALAGEM" Type="varchar2" MaxLength="30" />
@@ -1315,6 +1315,7 @@ warning 6002: The table/view 'SISTEMA.TB_EMAIL' does not have a primary key defi
           <Property Name="ESP_VIDEO" Type="varchar2" MaxLength="30" />
           <Property Name="ESP_VOLTAGEM" Type="varchar2" MaxLength="30" />
           <Property Name="VAL_PESO" Type="number" Precision="6" Scale="2" />
+          <Property Name="DESC_CONEXAO_MARKETPLACE" Type="varchar2" MaxLength="10" />
         </EntityType>
         <EntityType Name="TB_PROPRIEDADE">
           <Key>
@@ -4809,6 +4810,7 @@ FROM "SISTEMA"."TB_EMAIL" "TB_EMAIL"</DefiningQuery>
           <Property Name="ESP_VIDEO" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="ESP_VOLTAGEM" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="VAL_PESO" Type="Decimal" Precision="6" Scale="2" />
+          <Property Name="DESC_CONEXAO_MARKETPLACE" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_PROD_SKYXPRODUTO">
           <End Type="Model.TB_PRODUTO" Role="TB_PRODUTO" Multiplicity="1" />
@@ -6982,6 +6984,7 @@ FROM "SISTEMA"."TB_EMAIL" "TB_EMAIL"</DefiningQuery>
           <EntitySetMapping Name="TB_PRODUTO_SKYHUB">
             <EntityTypeMapping TypeName="Model.TB_PRODUTO_SKYHUB">
               <MappingFragment StoreEntitySet="TB_PRODUTO_SKYHUB">
+                <ScalarProperty Name="DESC_CONEXAO_MARKETPLACE" ColumnName="DESC_CONEXAO_MARKETPLACE" />
                 <ScalarProperty Name="VAL_PESO" ColumnName="VAL_PESO" />
                 <ScalarProperty Name="ESP_VOLTAGEM" ColumnName="ESP_VOLTAGEM" />
                 <ScalarProperty Name="ESP_VIDEO" ColumnName="ESP_VIDEO" />

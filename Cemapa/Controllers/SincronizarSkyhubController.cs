@@ -17,6 +17,167 @@ namespace Cemapa.Controllers
         private Entities db = new Entities();
 
         [HttpGet]
+        public async Task<HttpResponseMessage> AtualizarStatusConexao(int codFilial, int codProduto = 0)
+        {
+            try
+            {
+                //Começa a busca pela sincronização do status de conexão.
+                //O status de conexão é o status de um produto, que esta na skyhub e mostra se ele está ou não conectado com a b2w.
+                //Esse status é importante para quem usa o sistema ter uma idéia dos produtos que estão ok e os que precisam de atenção.
+
+                int wTotalAlterados = 0;
+
+                ControlaExcecoes.Limpa();
+
+                //Busca todas as configurações ativas para se conectar com a API.
+
+                List<TB_CONFIGURACAO_SKYHUB> configuracoesSkyhub = GetConfiguracoes();
+
+                foreach (var configuracaoSkyhub in configuracoesSkyhub)
+                {
+                    HttpClient Http = new HttpClient
+                    {
+                        BaseAddress = new Uri("https://api.skyhub.com.br")
+                    };
+
+                    //Busca as configurações para se conectar com a API.
+
+                    Http.DefaultRequestHeaders.Accept.Clear();
+                    Http.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                    Http.DefaultRequestHeaders.Add("X-User-Email", configuracaoSkyhub.DESC_USUARIO_EMAIL);
+                    Http.DefaultRequestHeaders.Add("X-Api-Key", configuracaoSkyhub.DESC_TOKEN_INTEGRACAO);
+                    Http.DefaultRequestHeaders.Add("X-Accountmanager-Key", configuracaoSkyhub.DESC_TOKEN_ACCOUNT);
+                    Http.DefaultRequestHeaders.Add("Accept", "application/json;charset=UTF-8");
+                    
+                    //Se for específicado um produto para atualizar, então irá atualizar somente ele. Se não for específicado nenhum
+                    //irá atualizar todos os status de todos os produtos.
+
+                    if(codProduto > 0)
+                    {
+                        //Irá buscar pelo produto específicado para atualizar o status da conexão.
+                        
+                        try
+                        {
+                            TB_PRODUTO_SKYHUB wProdutoAtualizar = GetProdutosSkyhubPorCodigoProduto(codProduto);
+
+                            HttpResponseMessage response = await Http.GetAsync($"/products/{wProdutoAtualizar.COD_PRODUTO}");
+
+                            if (!response.IsSuccessStatusCode)
+                            {
+                                throw new Exception("Erro na respota da API na chamada GET: " + response.ReasonPhrase);
+                            }
+
+                            ProdutoSkyhub produtoSkyhub = new ProdutoSkyhub();
+                            produtoSkyhub = await response.Content.ReadAsAsync<ProdutoSkyhub>();
+
+                            //Busca pela chave platform, que contenha o valor B2W, para buscar seu status e atualizar o campo no banco
+
+                            Association associacao = new Association();
+                            associacao = produtoSkyhub.associations.Find(x => x.platform.Contains("B2W"));
+
+                            if (associacao == null)
+                            {
+                                wProdutoAtualizar.DESC_CONEXAO_MARKETPLACE = "unknow";
+
+                                db.Entry(wProdutoAtualizar).State = EntityState.Modified;
+                                db.SaveChanges();
+                            }
+                            else
+                            {
+                                wProdutoAtualizar.DESC_CONEXAO_MARKETPLACE = associacao.status;
+
+                                db.Entry(wProdutoAtualizar).State = EntityState.Modified;
+                                db.SaveChanges();
+                            }
+
+                            wTotalAlterados++;
+                        }
+                        catch (Exception except)
+                        {
+                            ControlaExcecoes.Add($"Filial: {configuracaoSkyhub.COD_FILIAL}", ResolucaoExcecoes.ErroAprofundado(except));
+                        }
+                    }
+                    else
+                    {
+                        //Irá passar por todos os produtos para sincronizar o status da conexão.
+
+                        List<TB_PRODUTO_SKYHUB> todosProdutoSkyhub = GetProdutosSkyhub();
+
+                        foreach (TB_PRODUTO_SKYHUB wProdutoAtualizar in todosProdutoSkyhub)
+                        {
+                            try
+                            {
+                                HttpResponseMessage response = await Http.GetAsync($"/products/{wProdutoAtualizar.COD_PRODUTO}");
+
+                                if (!response.IsSuccessStatusCode)
+                                {
+                                    throw new Exception("Erro na respota da API na chamada GET: " + response.ReasonPhrase);
+                                }
+
+                                ProdutoSkyhub produtoSkyhub = new ProdutoSkyhub();
+                                produtoSkyhub = await response.Content.ReadAsAsync<ProdutoSkyhub>();
+
+                                //Busca pela chave platform, que contenha o valor B2W, para buscar seu status e atualizar o campo no banco
+
+                                Association associacao = new Association();
+                                associacao = produtoSkyhub.associations.Find(x => x.platform.Contains("B2W"));
+
+                                if (associacao == null)
+                                {
+                                    wProdutoAtualizar.DESC_CONEXAO_MARKETPLACE = "unknow";
+
+                                    db.Entry(wProdutoAtualizar).State = EntityState.Modified;
+                                    db.SaveChanges();
+                                }
+                                else
+                                {
+                                    wProdutoAtualizar.DESC_CONEXAO_MARKETPLACE = associacao.status;
+
+                                    db.Entry(wProdutoAtualizar).State = EntityState.Modified;
+                                    db.SaveChanges();
+                                }
+
+                                wTotalAlterados++;
+                            }
+                            catch (Exception except)
+                            {
+                                ControlaExcecoes.Add($"Filial: {configuracaoSkyhub.COD_FILIAL}, Produto: {wProdutoAtualizar.COD_PRODUTO}", ResolucaoExcecoes.ErroAprofundado(except));
+                            }
+                        }
+                    }
+                }
+
+                //Biblioteca ControlaExcecoes armazenou todos os erros ocorridos, caso não ocorra nenhum erro,
+                //então o método SemExcecoes retornará verdadeiro.
+
+                if (ControlaExcecoes.SemExcecoes())
+                {
+                    return Request.CreateResponse(
+                        HttpStatusCode.OK,
+                        $"Os status de conexão foram atualizados. Atualizados: {wTotalAlterados}. "
+                    );
+                }
+                else
+                {
+                    return Request.CreateResponse(
+                        HttpStatusCode.InternalServerError,
+                        $"Nem todos os status de conexão foram atualizados. Atualizados: {wTotalAlterados}. " +
+                        $"{string.Join(", ", ControlaExcecoes.Excecoes)}"
+                    );
+                }
+            }
+            catch (Exception except)
+            {
+                return Request.CreateResponse(
+                    HttpStatusCode.InternalServerError,
+                    $"Não foi possível começar a atualização. {ResolucaoExcecoes.ErroAprofundado(except)}"
+                );
+
+            }
+        }
+
+        [HttpGet]
         public async Task<HttpResponseMessage> DownloadEtiqueta(int codFilial, string codMarketplace)
         {
             //Este método buscar por PLPs, que nada mais são do que agrupamentos de pedidos, para imprimir em etiquetas.
@@ -1453,6 +1614,19 @@ namespace Cemapa.Controllers
                     select configuracaoSkyhub).ToList();
         }
 
+        private List<TB_PRODUTO_SKYHUB> GetProdutosSkyhub()
+        {
+            return (from produtoSkyhub in db.TB_PRODUTO_SKYHUB
+                    select produtoSkyhub).ToList();
+        }
+
+        private TB_PRODUTO_SKYHUB GetProdutosSkyhubPorCodigoProduto(int codProduto)
+        {
+            return (from produtoSkyhub in db.TB_PRODUTO_SKYHUB
+                    where (produtoSkyhub.COD_PRODUTO == codProduto)
+                    select produtoSkyhub).FirstOrDefault();
+        }
+
         private TB_CONFIGURACAO_SKYHUB GetConfiguracao(int codFilial)
         {
             return (from configuracaoSkyhub in db.TB_CONFIGURACAO_SKYHUB
@@ -1684,7 +1858,7 @@ namespace Cemapa.Controllers
                 return wProduto.COD_PRODUTO;
             }
         }
-        
+
         private void EnviaEmail(List<string> eDestinos, string assunto, string corpo)
         {
             try
