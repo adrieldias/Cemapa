@@ -168,7 +168,6 @@
           <Property Name="DESC_PLACA" Type="varchar2" MaxLength="8" />
           <Property Name="PERC_DESCONTO" Type="number" Precision="5" Scale="2" />
           <Property Name="IND_LIBERA_BLOQUETO" Type="char" MaxLength="3" />
-          <Property Name="DT_CONSULTA_SINTREGA" Type="date" />
           <Property Name="DT_CONSULTA_SINTEGRA" Type="date" />
           <Property Name="DESC_PROFISSAO_CONJUGE" Type="varchar2" MaxLength="30" />
           <Property Name="DT_NASCIMENTO_CONJUGE" Type="date" />
@@ -190,7 +189,6 @@
           <Property Name="DESC_CPF_AUTORIZADO1" Type="varchar2" MaxLength="11" />
           <Property Name="DESC_CPF_AUTORIZADO2" Type="varchar2" MaxLength="11" />
           <Property Name="DESC_CPF_AUTORIZADO3" Type="varchar2" MaxLength="11" />
-          <Property Name="DESC_OUTRAS_GRANTIAS" Type="varchar2" MaxLength="20" />
           <Property Name="DESC_GARANTIAS_OUTRAS" Type="varchar2" MaxLength="20" />
           <Property Name="NUM_DIA_VISITA" Type="number" Precision="1" Scale="0" />
           <Property Name="DESC_FREQUENCIA_VISITA" Type="char" MaxLength="1" />
@@ -335,6 +333,14 @@
           <Property Name="COD_CONFIGURACAO_SKYHUB" Type="number" Precision="6" Scale="0" Nullable="false" />
           <Property Name="COD_FILIAL" Type="number" Precision="6" Scale="0" Nullable="false" />
           <Property Name="COD_OPERACAO" Type="number" Precision="6" Scale="0" Nullable="false" />
+          <Property Name="COD_CLASS_CADASTRO" Type="number" Precision="6" Scale="0" />
+          <Property Name="COD_RAMO_FISICA" Type="number" Precision="6" Scale="0" />
+          <Property Name="COD_RAMO_JURIDICA" Type="number" Precision="6" Scale="0" />
+          <Property Name="COD_TIPO_CADASTRO" Type="number" Precision="6" Scale="0" />
+          <Property Name="COD_DEPARTAMENTO" Type="number" Precision="6" Scale="0" />
+          <Property Name="COD_LOTE_TIPO" Type="number" Precision="6" Scale="0" />
+          <Property Name="IND_TIPO_PAGAMENTO" Type="varchar2" MaxLength="12" />
+          <Property Name="COD_VENDEDOR" Type="number" Precision="6" Scale="0" />
         </EntityType>
         <EntityType Name="TB_CONTA_CORRENTE">
           <Key>
@@ -1778,6 +1784,30 @@ warning 6002: The table/view 'SISTEMA.TB_EMAIL' does not have a primary key defi
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_CONF_SKYXCLASS_CADASTRO">
+          <End Role="TB_CLASS_CADASTRO" Type="Self.TB_CLASS_CADASTRO" Multiplicity="0..1" />
+          <End Role="TB_CONFIGURACAO_SKYHUB" Type="Self.TB_CONFIGURACAO_SKYHUB" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_CLASS_CADASTRO">
+              <PropertyRef Name="COD_CLASS_CADASTRO" />
+            </Principal>
+            <Dependent Role="TB_CONFIGURACAO_SKYHUB">
+              <PropertyRef Name="COD_CLASS_CADASTRO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CONF_SKYXDEPARTAMENTO">
+          <End Role="TB_DEPARTAMENTO" Type="Self.TB_DEPARTAMENTO" Multiplicity="0..1" />
+          <End Role="TB_CONFIGURACAO_SKYHUB" Type="Self.TB_CONFIGURACAO_SKYHUB" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_DEPARTAMENTO">
+              <PropertyRef Name="COD_DEPARTAMENTO" />
+            </Principal>
+            <Dependent Role="TB_CONFIGURACAO_SKYHUB">
+              <PropertyRef Name="COD_DEPARTAMENTO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_CONF_SKYXFILIAL">
           <End Role="TB_FILIAL" Type="Self.TB_FILIAL" Multiplicity="1" />
           <End Role="TB_CONFIGURACAO_SKYHUB" Type="Self.TB_CONFIGURACAO_SKYHUB" Multiplicity="*" />
@@ -1790,6 +1820,18 @@ warning 6002: The table/view 'SISTEMA.TB_EMAIL' does not have a primary key defi
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_CONF_SKYXLOTE_TIPO">
+          <End Role="TB_LOTE_TIPO" Type="Self.TB_LOTE_TIPO" Multiplicity="0..1" />
+          <End Role="TB_CONFIGURACAO_SKYHUB" Type="Self.TB_CONFIGURACAO_SKYHUB" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_LOTE_TIPO">
+              <PropertyRef Name="COD_LOTE_TIPO" />
+            </Principal>
+            <Dependent Role="TB_CONFIGURACAO_SKYHUB">
+              <PropertyRef Name="COD_LOTE_TIPO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_CONF_SKYXOPERACAO">
           <End Role="TB_OPERACAO" Type="Self.TB_OPERACAO" Multiplicity="1" />
           <End Role="TB_CONFIGURACAO_SKYHUB" Type="Self.TB_CONFIGURACAO_SKYHUB" Multiplicity="*" />
@@ -1799,6 +1841,54 @@ warning 6002: The table/view 'SISTEMA.TB_EMAIL' does not have a primary key defi
             </Principal>
             <Dependent Role="TB_CONFIGURACAO_SKYHUB">
               <PropertyRef Name="COD_OPERACAO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CONF_SKYXRAMOF">
+          <End Role="TB_RAMO" Type="Self.TB_RAMO" Multiplicity="0..1" />
+          <End Role="TB_CONFIGURACAO_SKYHUB" Type="Self.TB_CONFIGURACAO_SKYHUB" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_RAMO">
+              <PropertyRef Name="COD_RAMO" />
+            </Principal>
+            <Dependent Role="TB_CONFIGURACAO_SKYHUB">
+              <PropertyRef Name="COD_RAMO_FISICA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CONF_SKYXRAMOJ">
+          <End Role="TB_RAMO" Type="Self.TB_RAMO" Multiplicity="0..1" />
+          <End Role="TB_CONFIGURACAO_SKYHUB" Type="Self.TB_CONFIGURACAO_SKYHUB" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_RAMO">
+              <PropertyRef Name="COD_RAMO" />
+            </Principal>
+            <Dependent Role="TB_CONFIGURACAO_SKYHUB">
+              <PropertyRef Name="COD_RAMO_JURIDICA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CONF_SKYXTIPO_CADASTRO">
+          <End Role="TB_TIPO_CADASTRO" Type="Self.TB_TIPO_CADASTRO" Multiplicity="0..1" />
+          <End Role="TB_CONFIGURACAO_SKYHUB" Type="Self.TB_CONFIGURACAO_SKYHUB" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_TIPO_CADASTRO">
+              <PropertyRef Name="COD_TIPO_CADASTRO" />
+            </Principal>
+            <Dependent Role="TB_CONFIGURACAO_SKYHUB">
+              <PropertyRef Name="COD_TIPO_CADASTRO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CONF_SKYXVENDEDOR">
+          <End Role="TB_VENDEDOR" Type="Self.TB_VENDEDOR" Multiplicity="0..1" />
+          <End Role="TB_CONFIGURACAO_SKYHUB" Type="Self.TB_CONFIGURACAO_SKYHUB" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_VENDEDOR">
+              <PropertyRef Name="COD_VENDEDOR" />
+            </Principal>
+            <Dependent Role="TB_CONFIGURACAO_SKYHUB">
+              <PropertyRef Name="COD_VENDEDOR" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2725,12 +2815,40 @@ FROM "SISTEMA"."TB_EMAIL" "TB_EMAIL"</DefiningQuery>
             <End Role="TB_VENDEDOR" EntitySet="TB_VENDEDOR" />
             <End Role="TB_CADASTRO" EntitySet="TB_CADASTRO" />
           </AssociationSet>
+          <AssociationSet Name="FK_CONF_SKYXCLASS_CADASTRO" Association="Self.FK_CONF_SKYXCLASS_CADASTRO">
+            <End Role="TB_CLASS_CADASTRO" EntitySet="TB_CLASS_CADASTRO" />
+            <End Role="TB_CONFIGURACAO_SKYHUB" EntitySet="TB_CONFIGURACAO_SKYHUB" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CONF_SKYXDEPARTAMENTO" Association="Self.FK_CONF_SKYXDEPARTAMENTO">
+            <End Role="TB_DEPARTAMENTO" EntitySet="TB_DEPARTAMENTO" />
+            <End Role="TB_CONFIGURACAO_SKYHUB" EntitySet="TB_CONFIGURACAO_SKYHUB" />
+          </AssociationSet>
           <AssociationSet Name="FK_CONF_SKYXFILIAL" Association="Self.FK_CONF_SKYXFILIAL">
             <End Role="TB_FILIAL" EntitySet="TB_FILIAL" />
             <End Role="TB_CONFIGURACAO_SKYHUB" EntitySet="TB_CONFIGURACAO_SKYHUB" />
           </AssociationSet>
+          <AssociationSet Name="FK_CONF_SKYXLOTE_TIPO" Association="Self.FK_CONF_SKYXLOTE_TIPO">
+            <End Role="TB_LOTE_TIPO" EntitySet="TB_LOTE_TIPO" />
+            <End Role="TB_CONFIGURACAO_SKYHUB" EntitySet="TB_CONFIGURACAO_SKYHUB" />
+          </AssociationSet>
           <AssociationSet Name="FK_CONF_SKYXOPERACAO" Association="Self.FK_CONF_SKYXOPERACAO">
             <End Role="TB_OPERACAO" EntitySet="TB_OPERACAO" />
+            <End Role="TB_CONFIGURACAO_SKYHUB" EntitySet="TB_CONFIGURACAO_SKYHUB" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CONF_SKYXRAMOF" Association="Self.FK_CONF_SKYXRAMOF">
+            <End Role="TB_RAMO" EntitySet="TB_RAMO" />
+            <End Role="TB_CONFIGURACAO_SKYHUB" EntitySet="TB_CONFIGURACAO_SKYHUB" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CONF_SKYXRAMOJ" Association="Self.FK_CONF_SKYXRAMOJ">
+            <End Role="TB_RAMO" EntitySet="TB_RAMO" />
+            <End Role="TB_CONFIGURACAO_SKYHUB" EntitySet="TB_CONFIGURACAO_SKYHUB" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CONF_SKYXTIPO_CADASTRO" Association="Self.FK_CONF_SKYXTIPO_CADASTRO">
+            <End Role="TB_TIPO_CADASTRO" EntitySet="TB_TIPO_CADASTRO" />
+            <End Role="TB_CONFIGURACAO_SKYHUB" EntitySet="TB_CONFIGURACAO_SKYHUB" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CONF_SKYXVENDEDOR" Association="Self.FK_CONF_SKYXVENDEDOR">
+            <End Role="TB_VENDEDOR" EntitySet="TB_VENDEDOR" />
             <End Role="TB_CONFIGURACAO_SKYHUB" EntitySet="TB_CONFIGURACAO_SKYHUB" />
           </AssociationSet>
           <AssociationSet Name="FK_CONTA_CORRENTEXFILIAL" Association="Self.FK_CONTA_CORRENTEXFILIAL">
@@ -3383,6 +3501,34 @@ FROM "SISTEMA"."TB_EMAIL" "TB_EMAIL"</DefiningQuery>
             <End Role="TB_PRODUTO" EntitySet="TB_PRODUTO" />
           </AssociationSet>
           <EntitySet Name="TB_EMAIL" EntityType="Model.TB_EMAIL" />
+          <AssociationSet Name="FK_CONF_SKYXCLASS_CADASTRO" Association="Model.FK_CONF_SKYXCLASS_CADASTRO">
+            <End Role="TB_CLASS_CADASTRO" EntitySet="TB_CLASS_CADASTRO" />
+            <End Role="TB_CONFIGURACAO_SKYHUB" EntitySet="TB_CONFIGURACAO_SKYHUB" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CONF_SKYXRAMOF" Association="Model.FK_CONF_SKYXRAMOF">
+            <End Role="TB_RAMO" EntitySet="TB_RAMO" />
+            <End Role="TB_CONFIGURACAO_SKYHUB" EntitySet="TB_CONFIGURACAO_SKYHUB" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CONF_SKYXRAMOJ" Association="Model.FK_CONF_SKYXRAMOJ">
+            <End Role="TB_RAMO" EntitySet="TB_RAMO" />
+            <End Role="TB_CONFIGURACAO_SKYHUB" EntitySet="TB_CONFIGURACAO_SKYHUB" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CONF_SKYXTIPO_CADASTRO" Association="Model.FK_CONF_SKYXTIPO_CADASTRO">
+            <End Role="TB_TIPO_CADASTRO" EntitySet="TB_TIPO_CADASTRO" />
+            <End Role="TB_CONFIGURACAO_SKYHUB" EntitySet="TB_CONFIGURACAO_SKYHUB" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CONF_SKYXDEPARTAMENTO" Association="Model.FK_CONF_SKYXDEPARTAMENTO">
+            <End Role="TB_DEPARTAMENTO" EntitySet="TB_DEPARTAMENTO" />
+            <End Role="TB_CONFIGURACAO_SKYHUB" EntitySet="TB_CONFIGURACAO_SKYHUB" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CONF_SKYXLOTE_TIPO" Association="Model.FK_CONF_SKYXLOTE_TIPO">
+            <End Role="TB_LOTE_TIPO" EntitySet="TB_LOTE_TIPO" />
+            <End Role="TB_CONFIGURACAO_SKYHUB" EntitySet="TB_CONFIGURACAO_SKYHUB" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CONF_SKYXVENDEDOR" Association="Model.FK_CONF_SKYXVENDEDOR">
+            <End Role="TB_VENDEDOR" EntitySet="TB_VENDEDOR" />
+            <End Role="TB_CONFIGURACAO_SKYHUB" EntitySet="TB_CONFIGURACAO_SKYHUB" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="TB_CADASTRO_ENDERECOS">
           <Key>
@@ -3416,6 +3562,7 @@ FROM "SISTEMA"."TB_EMAIL" "TB_EMAIL"</DefiningQuery>
           <Property Name="PERC_EQUIPAMENTO" Type="Decimal" Precision="5" Scale="2" />
           <Property Name="IND_SEPROCADO_LOJA" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <NavigationProperty Name="TB_CADASTRO" Relationship="Model.FK_CADASTROXCLASS_CADASTRO" FromRole="TB_CLASS_CADASTRO" ToRole="TB_CADASTRO" />
+          <NavigationProperty Name="TB_CONFIGURACAO_SKYHUB" Relationship="Model.FK_CONF_SKYXCLASS_CADASTRO" FromRole="TB_CLASS_CADASTRO" ToRole="TB_CONFIGURACAO_SKYHUB" />
         </EntityType>
         <EntityType Name="TB_CIDADE">
           <Key>
@@ -3461,6 +3608,7 @@ FROM "SISTEMA"."TB_EMAIL" "TB_EMAIL"</DefiningQuery>
           <Property Name="COD_TIPO_CADASTRO" Type="Int32" Nullable="false" />
           <Property Name="DESC_TIPO_CADASTRO" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="TB_CADASTRO" Relationship="Model.FK_CADASTROXTIPO_CADASTRO" FromRole="TB_TIPO_CADASTRO" ToRole="TB_CADASTRO" />
+          <NavigationProperty Name="TB_CONFIGURACAO_SKYHUB" Relationship="Model.FK_CONF_SKYXTIPO_CADASTRO" FromRole="TB_TIPO_CADASTRO" ToRole="TB_CONFIGURACAO_SKYHUB" />
         </EntityType>
         <EntityType Name="TB_USUARIO">
           <Key>
@@ -4197,7 +4345,6 @@ FROM "SISTEMA"."TB_EMAIL" "TB_EMAIL"</DefiningQuery>
           <Property Name="DESC_PLACA" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
           <Property Name="PERC_DESCONTO" Type="Decimal" Precision="5" Scale="2" />
           <Property Name="IND_LIBERA_BLOQUETO" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
-          <Property Name="DT_CONSULTA_SINTREGA" Type="DateTime" />
           <Property Name="DT_CONSULTA_SINTEGRA" Type="DateTime" />
           <Property Name="DESC_PROFISSAO_CONJUGE" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="DT_NASCIMENTO_CONJUGE" Type="DateTime" />
@@ -4219,7 +4366,6 @@ FROM "SISTEMA"."TB_EMAIL" "TB_EMAIL"</DefiningQuery>
           <Property Name="DESC_CPF_AUTORIZADO1" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
           <Property Name="DESC_CPF_AUTORIZADO2" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
           <Property Name="DESC_CPF_AUTORIZADO3" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
-          <Property Name="DESC_OUTRAS_GRANTIAS" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="DESC_GARANTIAS_OUTRAS" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="NUM_DIA_VISITA" Type="Int16" />
           <Property Name="DESC_FREQUENCIA_VISITA" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
@@ -4588,6 +4734,7 @@ FROM "SISTEMA"."TB_EMAIL" "TB_EMAIL"</DefiningQuery>
           <NavigationProperty Name="TB_CADASTRO" Relationship="Model.FK_LOTEXCADASTRO" FromRole="TB_LOTE_TIPO" ToRole="TB_CADASTRO" />
           <NavigationProperty Name="TB_PRODUTO" Relationship="Model.FK_LOTEXPRODUTO" FromRole="TB_LOTE_TIPO" ToRole="TB_PRODUTO" />
           <NavigationProperty Name="TB_ESTOQUE" Relationship="Model.FK_ESTOQUEXLOTE_TIPO" FromRole="TB_LOTE_TIPO" ToRole="TB_ESTOQUE" />
+          <NavigationProperty Name="TB_CONFIGURACAO_SKYHUB" Relationship="Model.FK_CONF_SKYXLOTE_TIPO" FromRole="TB_LOTE_TIPO" ToRole="TB_CONFIGURACAO_SKYHUB" />
         </EntityType>
         <Association Name="FK_LOTEXCADASTRO">
           <End Type="Model.TB_CADASTRO" Role="TB_CADASTRO" Multiplicity="0..1" />
@@ -4965,6 +5112,8 @@ FROM "SISTEMA"."TB_EMAIL" "TB_EMAIL"</DefiningQuery>
           <Property Name="DESC_RAMO" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="IND_SINC_MAX_ROTEIRIZADOR" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <NavigationProperty Name="TB_CADASTRO" Relationship="Model.FK_CADASTROXRAMO" FromRole="TB_RAMO" ToRole="TB_CADASTRO" />
+          <NavigationProperty Name="TB_CONFIGURACAO_SKYHUB" Relationship="Model.FK_CONF_SKYXRAMOF" FromRole="TB_RAMO" ToRole="TB_CONFIGURACAO_SKYHUB" />
+          <NavigationProperty Name="TB_CONFIGURACAO_SKYHUB1" Relationship="Model.FK_CONF_SKYXRAMOJ" FromRole="TB_RAMO" ToRole="TB_CONFIGURACAO_SKYHUB" />
         </EntityType>
         <Association Name="FK_CADASTROXRAMO">
           <End Type="Model.TB_RAMO" Role="TB_RAMO" Multiplicity="0..1" />
@@ -4996,6 +5145,7 @@ FROM "SISTEMA"."TB_EMAIL" "TB_EMAIL"</DefiningQuery>
           <Property Name="IND_FLUXO_CAIXA" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="TB_HISTORICO" Relationship="Model.FK_HISTORICOXDEPARTAMENTO" FromRole="TB_DEPARTAMENTO" ToRole="TB_HISTORICO" />
           <NavigationProperty Name="TB_PEDIDO_CAB" Relationship="Model.FK_PEDIDOXDEPARTAMENTO" FromRole="TB_DEPARTAMENTO" ToRole="TB_PEDIDO_CAB" />
+          <NavigationProperty Name="TB_CONFIGURACAO_SKYHUB" Relationship="Model.FK_CONF_SKYXDEPARTAMENTO" FromRole="TB_DEPARTAMENTO" ToRole="TB_CONFIGURACAO_SKYHUB" />
         </EntityType>
         <EntityType Name="TB_MARCA">
           <Key>
@@ -5378,6 +5528,7 @@ FROM "SISTEMA"."TB_EMAIL" "TB_EMAIL"</DefiningQuery>
           <NavigationProperty Name="TB_ESTADO" Relationship="Model.FK_VENDEDORXESTADO" FromRole="TB_VENDEDOR" ToRole="TB_ESTADO" />
           <NavigationProperty Name="TB_FILIAL" Relationship="Model.FK_VENDEDORXFILIAL" FromRole="TB_VENDEDOR" ToRole="TB_FILIAL" />
           <NavigationProperty Name="TB_PEDIDO_CAB" Relationship="Model.FK_PEDIDO_CABXVENDEDOR" FromRole="TB_VENDEDOR" ToRole="TB_PEDIDO_CAB" />
+          <NavigationProperty Name="TB_CONFIGURACAO_SKYHUB" Relationship="Model.FK_CONF_SKYXVENDEDOR" FromRole="TB_VENDEDOR" ToRole="TB_CONFIGURACAO_SKYHUB" />
         </EntityType>
         <Association Name="FK_CADASTROXVENDEDOR">
           <End Type="Model.TB_VENDEDOR" Role="TB_VENDEDOR" Multiplicity="0..1" />
@@ -6048,6 +6199,21 @@ FROM "SISTEMA"."TB_EMAIL" "TB_EMAIL"</DefiningQuery>
           <Property Name="COD_OPERACAO" Type="Int32" Nullable="false" />
           <NavigationProperty Name="TB_FILIAL" Relationship="Model.FK_CONF_SKYXFILIAL" FromRole="TB_CONFIGURACAO_SKYHUB" ToRole="TB_FILIAL" />
           <NavigationProperty Name="TB_OPERACAO" Relationship="Model.FK_CONF_SKYXOPERACAO" FromRole="TB_CONFIGURACAO_SKYHUB" ToRole="TB_OPERACAO" />
+          <Property Name="COD_CLASS_CADASTRO" Type="Int32" />
+          <Property Name="COD_RAMO_FISICA" Type="Int32" />
+          <Property Name="COD_RAMO_JURIDICA" Type="Int32" />
+          <Property Name="COD_TIPO_CADASTRO" Type="Int32" />
+          <NavigationProperty Name="TB_CLASS_CADASTRO" Relationship="Model.FK_CONF_SKYXCLASS_CADASTRO" FromRole="TB_CONFIGURACAO_SKYHUB" ToRole="TB_CLASS_CADASTRO" />
+          <NavigationProperty Name="TB_RAMO" Relationship="Model.FK_CONF_SKYXRAMOF" FromRole="TB_CONFIGURACAO_SKYHUB" ToRole="TB_RAMO" />
+          <NavigationProperty Name="TB_RAMO1" Relationship="Model.FK_CONF_SKYXRAMOJ" FromRole="TB_CONFIGURACAO_SKYHUB" ToRole="TB_RAMO" />
+          <NavigationProperty Name="TB_TIPO_CADASTRO" Relationship="Model.FK_CONF_SKYXTIPO_CADASTRO" FromRole="TB_CONFIGURACAO_SKYHUB" ToRole="TB_TIPO_CADASTRO" />
+          <Property Name="COD_DEPARTAMENTO" Type="Int32" />
+          <Property Name="COD_LOTE_TIPO" Type="Int32" />
+          <Property Name="IND_TIPO_PAGAMENTO" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TB_DEPARTAMENTO" Relationship="Model.FK_CONF_SKYXDEPARTAMENTO" FromRole="TB_CONFIGURACAO_SKYHUB" ToRole="TB_DEPARTAMENTO" />
+          <NavigationProperty Name="TB_LOTE_TIPO" Relationship="Model.FK_CONF_SKYXLOTE_TIPO" FromRole="TB_CONFIGURACAO_SKYHUB" ToRole="TB_LOTE_TIPO" />
+          <Property Name="COD_VENDEDOR" Type="Int32" />
+          <NavigationProperty Name="TB_VENDEDOR" Relationship="Model.FK_CONF_SKYXVENDEDOR" FromRole="TB_CONFIGURACAO_SKYHUB" ToRole="TB_VENDEDOR" />
         </EntityType>
         <Association Name="FK_CONF_SKYXFILIAL">
           <End Type="Model.TB_FILIAL" Role="TB_FILIAL" Multiplicity="1" />
@@ -6127,6 +6293,90 @@ FROM "SISTEMA"."TB_EMAIL" "TB_EMAIL"</DefiningQuery>
           <Property Name="QTD_COTA" Type="Int16" />
           <Property Name="IND_SSL" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
         </EntityType>
+        <Association Name="FK_CONF_SKYXCLASS_CADASTRO">
+          <End Type="Model.TB_CLASS_CADASTRO" Role="TB_CLASS_CADASTRO" Multiplicity="0..1" />
+          <End Type="Model.TB_CONFIGURACAO_SKYHUB" Role="TB_CONFIGURACAO_SKYHUB" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_CLASS_CADASTRO">
+              <PropertyRef Name="COD_CLASS_CADASTRO" />
+            </Principal>
+            <Dependent Role="TB_CONFIGURACAO_SKYHUB">
+              <PropertyRef Name="COD_CLASS_CADASTRO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CONF_SKYXRAMOF">
+          <End Type="Model.TB_RAMO" Role="TB_RAMO" Multiplicity="0..1" />
+          <End Type="Model.TB_CONFIGURACAO_SKYHUB" Role="TB_CONFIGURACAO_SKYHUB" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_RAMO">
+              <PropertyRef Name="COD_RAMO" />
+            </Principal>
+            <Dependent Role="TB_CONFIGURACAO_SKYHUB">
+              <PropertyRef Name="COD_RAMO_FISICA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CONF_SKYXRAMOJ">
+          <End Type="Model.TB_RAMO" Role="TB_RAMO" Multiplicity="0..1" />
+          <End Type="Model.TB_CONFIGURACAO_SKYHUB" Role="TB_CONFIGURACAO_SKYHUB" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_RAMO">
+              <PropertyRef Name="COD_RAMO" />
+            </Principal>
+            <Dependent Role="TB_CONFIGURACAO_SKYHUB">
+              <PropertyRef Name="COD_RAMO_JURIDICA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CONF_SKYXTIPO_CADASTRO">
+          <End Type="Model.TB_TIPO_CADASTRO" Role="TB_TIPO_CADASTRO" Multiplicity="0..1" />
+          <End Type="Model.TB_CONFIGURACAO_SKYHUB" Role="TB_CONFIGURACAO_SKYHUB" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_TIPO_CADASTRO">
+              <PropertyRef Name="COD_TIPO_CADASTRO" />
+            </Principal>
+            <Dependent Role="TB_CONFIGURACAO_SKYHUB">
+              <PropertyRef Name="COD_TIPO_CADASTRO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CONF_SKYXDEPARTAMENTO">
+          <End Type="Model.TB_DEPARTAMENTO" Role="TB_DEPARTAMENTO" Multiplicity="0..1" />
+          <End Type="Model.TB_CONFIGURACAO_SKYHUB" Role="TB_CONFIGURACAO_SKYHUB" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_DEPARTAMENTO">
+              <PropertyRef Name="COD_DEPARTAMENTO" />
+            </Principal>
+            <Dependent Role="TB_CONFIGURACAO_SKYHUB">
+              <PropertyRef Name="COD_DEPARTAMENTO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CONF_SKYXLOTE_TIPO">
+          <End Type="Model.TB_LOTE_TIPO" Role="TB_LOTE_TIPO" Multiplicity="0..1" />
+          <End Type="Model.TB_CONFIGURACAO_SKYHUB" Role="TB_CONFIGURACAO_SKYHUB" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_LOTE_TIPO">
+              <PropertyRef Name="COD_LOTE_TIPO" />
+            </Principal>
+            <Dependent Role="TB_CONFIGURACAO_SKYHUB">
+              <PropertyRef Name="COD_LOTE_TIPO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CONF_SKYXVENDEDOR">
+          <End Type="Model.TB_VENDEDOR" Role="TB_VENDEDOR" Multiplicity="0..1" />
+          <End Type="Model.TB_CONFIGURACAO_SKYHUB" Role="TB_CONFIGURACAO_SKYHUB" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_VENDEDOR">
+              <PropertyRef Name="COD_VENDEDOR" />
+            </Principal>
+            <Dependent Role="TB_CONFIGURACAO_SKYHUB">
+              <PropertyRef Name="COD_VENDEDOR" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -6642,7 +6892,6 @@ FROM "SISTEMA"."TB_EMAIL" "TB_EMAIL"</DefiningQuery>
                 <ScalarProperty Name="DESC_FREQUENCIA_VISITA" ColumnName="DESC_FREQUENCIA_VISITA" />
                 <ScalarProperty Name="NUM_DIA_VISITA" ColumnName="NUM_DIA_VISITA" />
                 <ScalarProperty Name="DESC_GARANTIAS_OUTRAS" ColumnName="DESC_GARANTIAS_OUTRAS" />
-                <ScalarProperty Name="DESC_OUTRAS_GRANTIAS" ColumnName="DESC_OUTRAS_GRANTIAS" />
                 <ScalarProperty Name="DESC_CPF_AUTORIZADO3" ColumnName="DESC_CPF_AUTORIZADO3" />
                 <ScalarProperty Name="DESC_CPF_AUTORIZADO2" ColumnName="DESC_CPF_AUTORIZADO2" />
                 <ScalarProperty Name="DESC_CPF_AUTORIZADO1" ColumnName="DESC_CPF_AUTORIZADO1" />
@@ -6664,7 +6913,6 @@ FROM "SISTEMA"."TB_EMAIL" "TB_EMAIL"</DefiningQuery>
                 <ScalarProperty Name="DT_NASCIMENTO_CONJUGE" ColumnName="DT_NASCIMENTO_CONJUGE" />
                 <ScalarProperty Name="DESC_PROFISSAO_CONJUGE" ColumnName="DESC_PROFISSAO_CONJUGE" />
                 <ScalarProperty Name="DT_CONSULTA_SINTEGRA" ColumnName="DT_CONSULTA_SINTEGRA" />
-                <ScalarProperty Name="DT_CONSULTA_SINTREGA" ColumnName="DT_CONSULTA_SINTREGA" />
                 <ScalarProperty Name="IND_LIBERA_BLOQUETO" ColumnName="IND_LIBERA_BLOQUETO" />
                 <ScalarProperty Name="PERC_DESCONTO" ColumnName="PERC_DESCONTO" />
                 <ScalarProperty Name="DESC_PLACA" ColumnName="DESC_PLACA" />
@@ -7711,6 +7959,14 @@ FROM "SISTEMA"."TB_EMAIL" "TB_EMAIL"</DefiningQuery>
           <EntitySetMapping Name="TB_CONFIGURACAO_SKYHUB">
             <EntityTypeMapping TypeName="Model.TB_CONFIGURACAO_SKYHUB">
               <MappingFragment StoreEntitySet="TB_CONFIGURACAO_SKYHUB">
+                <ScalarProperty Name="COD_VENDEDOR" ColumnName="COD_VENDEDOR" />
+                <ScalarProperty Name="IND_TIPO_PAGAMENTO" ColumnName="IND_TIPO_PAGAMENTO" />
+                <ScalarProperty Name="COD_LOTE_TIPO" ColumnName="COD_LOTE_TIPO" />
+                <ScalarProperty Name="COD_DEPARTAMENTO" ColumnName="COD_DEPARTAMENTO" />
+                <ScalarProperty Name="COD_TIPO_CADASTRO" ColumnName="COD_TIPO_CADASTRO" />
+                <ScalarProperty Name="COD_RAMO_JURIDICA" ColumnName="COD_RAMO_JURIDICA" />
+                <ScalarProperty Name="COD_RAMO_FISICA" ColumnName="COD_RAMO_FISICA" />
+                <ScalarProperty Name="COD_CLASS_CADASTRO" ColumnName="COD_CLASS_CADASTRO" />
                 <ScalarProperty Name="COD_OPERACAO" ColumnName="COD_OPERACAO" />
                 <ScalarProperty Name="COD_FILIAL" ColumnName="COD_FILIAL" />
                 <ScalarProperty Name="COD_CONFIGURACAO_SKYHUB" ColumnName="COD_CONFIGURACAO_SKYHUB" />

@@ -21,8 +21,23 @@ namespace Cemapa.Models
         public int COD_CONFIGURACAO_SKYHUB { get; set; }
         public int COD_FILIAL { get; set; }
         public int COD_OPERACAO { get; set; }
+        public Nullable<int> COD_CLASS_CADASTRO { get; set; }
+        public Nullable<int> COD_RAMO_FISICA { get; set; }
+        public Nullable<int> COD_RAMO_JURIDICA { get; set; }
+        public Nullable<int> COD_TIPO_CADASTRO { get; set; }
+        public Nullable<int> COD_DEPARTAMENTO { get; set; }
+        public Nullable<int> COD_LOTE_TIPO { get; set; }
+        public string IND_TIPO_PAGAMENTO { get; set; }
+        public Nullable<int> COD_VENDEDOR { get; set; }
     
         public virtual TB_FILIAL TB_FILIAL { get; set; }
         public virtual TB_OPERACAO TB_OPERACAO { get; set; }
+        public virtual TB_CLASS_CADASTRO TB_CLASS_CADASTRO { get; set; }
+        public virtual TB_RAMO TB_RAMO { get; set; }
+        public virtual TB_RAMO TB_RAMO1 { get; set; }
+        public virtual TB_TIPO_CADASTRO TB_TIPO_CADASTRO { get; set; }
+        public virtual TB_DEPARTAMENTO TB_DEPARTAMENTO { get; set; }
+        public virtual TB_LOTE_TIPO TB_LOTE_TIPO { get; set; }
+        public virtual TB_VENDEDOR TB_VENDEDOR { get; set; }
     }
 }

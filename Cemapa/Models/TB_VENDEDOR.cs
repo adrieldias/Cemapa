@@ -19,6 +19,7 @@ namespace Cemapa.Models
         {
             this.TB_CADASTRO = new HashSet<TB_CADASTRO>();
             this.TB_PEDIDO_CAB = new HashSet<TB_PEDIDO_CAB>();
+            this.TB_CONFIGURACAO_SKYHUB = new HashSet<TB_CONFIGURACAO_SKYHUB>();
         }
     
         public int COD_VENDEDOR { get; set; }
@@ -73,5 +74,7 @@ namespace Cemapa.Models
         public virtual TB_FILIAL TB_FILIAL { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TB_PEDIDO_CAB> TB_PEDIDO_CAB { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TB_CONFIGURACAO_SKYHUB> TB_CONFIGURACAO_SKYHUB { get; set; }
     }
 }

@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using Cemapa.Models;
 using System.Net.Mail;
+using System.Text.RegularExpressions;
+using System.IO;
+using Newtonsoft.Json;
 
 namespace Cemapa.Controllers
 {
@@ -63,35 +66,37 @@ namespace Cemapa.Controllers
 
                             HttpResponseMessage response = await Http.GetAsync($"/products/{wProdutoAtualizar.COD_PRODUTO}");
 
-                            if (!response.IsSuccessStatusCode)
+                            if (response.IsSuccessStatusCode)
                             {
-                                throw new Exception("Erro na respota da API na chamada GET: " + response.ReasonPhrase);
-                            }
+                                ProdutoSkyhub produtoSkyhub = new ProdutoSkyhub();
+                                produtoSkyhub = await response.Content.ReadAsAsync<ProdutoSkyhub>();
 
-                            ProdutoSkyhub produtoSkyhub = new ProdutoSkyhub();
-                            produtoSkyhub = await response.Content.ReadAsAsync<ProdutoSkyhub>();
+                                //Busca pela chave platform, que contenha o valor B2W, para buscar seu status e atualizar o campo no banco
 
-                            //Busca pela chave platform, que contenha o valor B2W, para buscar seu status e atualizar o campo no banco
+                                Association associacao = new Association();
+                                associacao = produtoSkyhub.associations.Find(x => x.platform.Contains("B2W"));
 
-                            Association associacao = new Association();
-                            associacao = produtoSkyhub.associations.Find(x => x.platform.Contains("B2W"));
+                                if (associacao == null)
+                                {
+                                    wProdutoAtualizar.DESC_CONEXAO_MARKETPLACE = "unknow";
 
-                            if (associacao == null)
-                            {
-                                wProdutoAtualizar.DESC_CONEXAO_MARKETPLACE = "unknow";
+                                    db.Entry(wProdutoAtualizar).State = EntityState.Modified;
+                                    db.SaveChanges();
+                                }
+                                else
+                                {
+                                    wProdutoAtualizar.DESC_CONEXAO_MARKETPLACE = associacao.status;
 
-                                db.Entry(wProdutoAtualizar).State = EntityState.Modified;
-                                db.SaveChanges();
+                                    db.Entry(wProdutoAtualizar).State = EntityState.Modified;
+                                    db.SaveChanges();
+                                }
+
+                                wTotalAlterados++;
                             }
                             else
                             {
-                                wProdutoAtualizar.DESC_CONEXAO_MARKETPLACE = associacao.status;
-
-                                db.Entry(wProdutoAtualizar).State = EntityState.Modified;
-                                db.SaveChanges();
+                                throw new Exception("Erro na respota da API na chamada GET: " + response.ReasonPhrase);
                             }
-
-                            wTotalAlterados++;
                         }
                         catch (Exception except)
                         {
@@ -851,7 +856,7 @@ namespace Cemapa.Controllers
                                                  select p).FirstOrDefault();
                         if (wPedido != null)
                         {
-                            wPedido.DESC_SITUACAO_MARKETPLACE = "INVOICE";
+                            wPedido.DESC_SITUACAO_MARKETPLACE = "INVOICED";
                             db.Entry(wPedido).State = EntityState.Modified;
                             db.SaveChanges();
                         }
@@ -886,7 +891,7 @@ namespace Cemapa.Controllers
                 );
             }
         }
-
+        
         [HttpGet]
         public async Task<HttpResponseMessage> SincronizaPedidos()
         {
@@ -919,6 +924,8 @@ namespace Cemapa.Controllers
                         Http.DefaultRequestHeaders.Add("X-Accountmanager-Key", configuracaoSkyhub.DESC_TOKEN_ACCOUNT);
                         Http.DefaultRequestHeaders.Add("Accept", "application/json;charset=UTF-8");
 
+                        ConfiguracaoEstaOK(configuracaoSkyhub);
+
                         //Busca por um pedido na fila
                         //A fila é usada para consumir pedidos em ordem. Após consumir um pedido, é necessário em até 5 minutos,
                         //deleta-lo da fila para que a API entenda que este pedido foi salvo com sucesso no sistema.
@@ -931,13 +938,13 @@ namespace Cemapa.Controllers
 
                             HttpResponseMessage response = await Http.GetAsync("/queues/orders");
 
-                            Order ordem = new Order();
-                            ordem = await response.Content.ReadAsAsync<Order>();
-
                             if (response.IsSuccessStatusCode)
                             {
                                 try
                                 {
+                                    Order ordem = new Order();
+                                    ordem = await response.Content.ReadAsAsync<Order>();
+
                                     //Verifica se ainda existem pedidos na fila, caso retorne nulo, então todos os pedidos já estão sincronizados
 
                                     if (ordem != null)
@@ -954,20 +961,21 @@ namespace Cemapa.Controllers
                                                 {
                                                     //Gera os códigos necessários para gerar um pedido no sistema
 
-                                                    int wCadastro = GetCodCadastro(ordem);
-                                                    int wSequencia = GetSequencia(ordem);
+                                                    TB_CADASTRO wCadastro = SelecionaComprador(
+                                                        ordem,
+                                                        Convert.ToInt32(configuracaoSkyhub.COD_RAMO_FISICA),
+                                                        Convert.ToInt32(configuracaoSkyhub.COD_RAMO_JURIDICA),
+                                                        Convert.ToInt32(configuracaoSkyhub.COD_CLASS_CADASTRO),
+                                                        Convert.ToInt32(configuracaoSkyhub.COD_TIPO_CADASTRO)
+                                                    );
+
+                                                    TB_SEQUENCIA wSequencia = SelecionaSequencia(
+                                                        ordem,
+                                                        configuracaoSkyhub.COD_FILIAL
+                                                    );
+
                                                     int wCodigoPedido = db.Database.SqlQuery<int>("SELECT SQPEDIDO.NEXTVAL FROM DUAL").First();
-
-                                                    if (wCadastro == -1)
-                                                    {
-                                                        throw new Exception($"Cliente não encontrado e não foi possível cadastrar: {ordem.customer.name}");
-                                                    }
-
-                                                    if (wSequencia == -1)
-                                                    {
-                                                        throw new Exception("Não existe uma sequência para pedidos, corrija antes de sincronizar");
-                                                    }
-
+                                                    
                                                     //Cria o novo pedido trazendo dados da API e algumas informações padrões no sistema
 
                                                     TB_PEDIDO_CAB wPedidoCab = new TB_PEDIDO_CAB()
@@ -975,44 +983,35 @@ namespace Cemapa.Controllers
                                                         COD_PEDIDO_CAB = wCodigoPedido,
                                                         COD_FILIAL = Convert.ToInt32(configuracaoSkyhub.COD_FILIAL),
                                                         COD_OPERACAO = Convert.ToInt32(configuracaoSkyhub.COD_OPERACAO),
-                                                        COD_CADASTRO = wCadastro,
-                                                        NUM_PEDIDO = wSequencia,
+                                                        COD_CADASTRO = wCadastro.COD_CADASTRO,
+                                                        NUM_PEDIDO = wSequencia.VAL_SEQUENCIA,
                                                         DT_EMISSAO = ordem.updated_at,
                                                         IND_SITUACAO = "1",
-                                                        IND_TIPO_PAGAMENTO = "A VISTA",
+                                                        COD_DEPARTAMENTO = configuracaoSkyhub.COD_DEPARTAMENTO,
+                                                        IND_TIPO_PAGAMENTO = configuracaoSkyhub.IND_TIPO_PAGAMENTO,
+                                                        COD_VENDEDOR = configuracaoSkyhub.COD_VENDEDOR,
                                                         IND_TIPO_FRETE = "CIF",
                                                         COD_PEDIDO_MARKETPLACE = ordem.code,
                                                         DESC_COMPLEMENTO_OBS = "Pedido do marketplace: " + ordem.code,
                                                         DESC_SITUACAO_MARKETPLACE = "APPROVED",
-                                                        PERC_COMISSAO = 0,
-                                                        COD_DEPARTAMENTO = 1
+                                                        PERC_COMISSAO = 0
                                                     };
 
                                                     foreach (Item item in ordem.items)
                                                     {
                                                         int wCodItem = db.Database.SqlQuery<int>("SELECT SQPEDIDO_ITEM.NEXTVAL FROM DUAL").First();
-                                                        int wCodTributacao = GetTributacao(item);
-                                                        long wCodProduto = GetProdutosSkyhub(item);
-                                                        
-                                                        if (wCodTributacao == -1)
-                                                        {
-                                                            throw new Exception("Produto não possui nenhuma tributação configurada. Produto: " + item.id);
-                                                        }
-
-                                                        if (wCodProduto == -1)
-                                                        {
-                                                            throw new Exception("Produto não encontrado: " + wCodProduto);
-                                                        }
+                                                        TB_PRODUTO wProdutoSistema = SelecionaProduto(item);
 
                                                         wPedidoCab.TB_PEDIDO_ITEM.Add(
                                                             new TB_PEDIDO_ITEM()
                                                             {
                                                                 COD_PEDIDO_ITEM = wCodItem,
                                                                 COD_PEDIDO_CAB = wCodigoPedido,
-                                                                COD_PRODUTO = (int)wCodProduto,
+                                                                COD_PRODUTO = wProdutoSistema.COD_PRODUTO,
+                                                                COD_TRIBUTACAO = wProdutoSistema.COD_TRIBUTACAO,
+                                                                COD_LOTE_TIPO = configuracaoSkyhub.COD_LOTE_TIPO,
                                                                 VAL_UNITARIO = Convert.ToDecimal(item.original_price),
-                                                                QT_PEDIDO = item.qty,
-                                                                COD_TRIBUTACAO = wCodTributacao
+                                                                QT_PEDIDO = item.qty
                                                             }
                                                         );
                                                     }
@@ -1033,9 +1032,9 @@ namespace Cemapa.Controllers
 
                                                         EnviaEmail(eDestinatarios, "Novo pedido aprovado.", $"Um novo pedido foi aprovado pelo marketplace. Código: {ordem.code}");
                                                     }
-                                                    catch (Exception)
+                                                    catch (Exception except)
                                                     {
-                                                        //Não consegui pensar como se comportará a requisição caso o e-mail não tenha sido enviado
+                                                        ControlaExcecoes.Add($"Não conseguiu enviar um ou mais e-mails. Filial: {configuracaoSkyhub.COD_FILIAL}", ResolucaoExcecoes.ErroAprofundado(except));
                                                     }
 
                                                     wTotalCriados++;
@@ -1059,13 +1058,13 @@ namespace Cemapa.Controllers
                                                 }
                                             break;
 
-                                            case "INVOICE":
+                                            case "INVOICED":
                                                 //Pedidos com status INVOICE provavelmente não ocorrerão, pois esse status é acionado pelo vendedor
 
                                                 if (db.TB_PEDIDO_CAB.Any(p => p.COD_PEDIDO_MARKETPLACE == ordem.code))
                                                 {
                                                     TB_PEDIDO_CAB wPedidoCab = GetPedidoPorMarketplace(ordem);
-                                                    wPedidoCab.DESC_SITUACAO_MARKETPLACE = "INVOICE";
+                                                    wPedidoCab.DESC_SITUACAO_MARKETPLACE = "INVOICED";
 
                                                     db.Entry(wPedidoCab).State = EntityState.Modified;
                                                     db.SaveChanges();
@@ -1173,7 +1172,7 @@ namespace Cemapa.Controllers
                             }
                             else
                             {
-                                ControlaExcecoes.Add($"Erro ao realizar chamada GET. Filial: {configuracaoSkyhub.COD_FILIAL}", response.ReasonPhrase);
+                                ControlaExcecoes.Add($"Erro ao realizar chamada GET. Filial: {configuracaoSkyhub.COD_FILIAL}", response.ReasonPhrase); //Remover a leitura do content
                                 continue;
                             }
                         }
@@ -1259,239 +1258,227 @@ namespace Cemapa.Controllers
 
                                             TB_PRODUTO wInfosProduto = InfosProduto(configuracaoSkyhub, produtoSkyhub);
                                             decimal wTotalEstoque = TotalEstoque(configuracaoSkyhub, produtoSkyhub);
-                                            
+
                                             //Faz algumas verificações em alguns campos antes de sincronizar.
                                             //Caso não esteja tudo ok, este produto não será sincronizado
 
-                                            if (ProdutoEstaOK(produtoSkyhub))
+                                            ProdutoEstaOK(produtoSkyhub);
+                                            
+                                            HttpClient Http = new HttpClient
                                             {
-                                                HttpClient Http = new HttpClient
-                                                {
-                                                    BaseAddress = new Uri("https://api.skyhub.com.br")
-                                                };
+                                                BaseAddress = new Uri("https://api.skyhub.com.br")
+                                            };
 
-                                                Http.DefaultRequestHeaders.Accept.Clear();
-                                                Http.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                                            Http.DefaultRequestHeaders.Accept.Clear();
+                                            Http.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                                                Http.DefaultRequestHeaders.Add("X-User-Email", configuracaoSkyhub.DESC_USUARIO_EMAIL);
-                                                Http.DefaultRequestHeaders.Add("X-Api-Key", configuracaoSkyhub.DESC_TOKEN_INTEGRACAO);
-                                                Http.DefaultRequestHeaders.Add("X-Accountmanager-Key", configuracaoSkyhub.DESC_TOKEN_ACCOUNT);
-                                                Http.DefaultRequestHeaders.Add("Accept", "application/json;charset=UTF-8");
+                                            Http.DefaultRequestHeaders.Add("X-User-Email", configuracaoSkyhub.DESC_USUARIO_EMAIL);
+                                            Http.DefaultRequestHeaders.Add("X-Api-Key", configuracaoSkyhub.DESC_TOKEN_INTEGRACAO);
+                                            Http.DefaultRequestHeaders.Add("X-Accountmanager-Key", configuracaoSkyhub.DESC_TOKEN_ACCOUNT);
+                                            Http.DefaultRequestHeaders.Add("Accept", "application/json;charset=UTF-8");
 
-                                                //Instancia o produto da Classe ProdutoSkyhub, criada conforme a estrutura especificada no manual da API.
+                                            //Instancia o produto da Classe ProdutoSkyhub, criada conforme a estrutura especificada no manual da API.
 
-                                                ProdutoSkyhub ProdutoSku = new ProdutoSkyhub
-                                                {
-                                                    sku = produtoSkyhub.COD_PRODUTO,
-                                                    name = produtoSkyhub.DESC_PRODUTO,
-                                                    description = produtoSkyhub.DESC_DESCRICAO,
-                                                    status = produtoSkyhub.DESC_STATUS,
-                                                    qty = Convert.ToInt32(wTotalEstoque),
-                                                    price = Convert.ToDouble(wInfosProduto.VAL_VAREJO),
-                                                    weight = Convert.ToDouble(produtoSkyhub.VAL_PESO),
-                                                    width = Convert.ToDouble(produtoSkyhub.VAL_LARGURA),
-                                                    height = Convert.ToDouble(produtoSkyhub.VAL_ALTURA),
-                                                    length = Convert.ToDouble(produtoSkyhub.VAL_COMPRIMENTO),
-                                                    brand = produtoSkyhub.DESC_MARCA,
-                                                    ean = wInfosProduto.DESC_COD_BARRA,
-                                                    nbm = wInfosProduto.NUM_GENERO_NCM
-                                                };
+                                            ProdutoSkyhub ProdutoSku = new ProdutoSkyhub
+                                            {
+                                                sku = produtoSkyhub.COD_PRODUTO,
+                                                name = produtoSkyhub.DESC_PRODUTO,
+                                                description = produtoSkyhub.DESC_DESCRICAO,
+                                                status = produtoSkyhub.DESC_STATUS,
+                                                qty = Convert.ToInt32(wTotalEstoque),
+                                                price = Convert.ToDouble(wInfosProduto.VAL_VAREJO),
+                                                weight = Convert.ToDouble(produtoSkyhub.VAL_PESO),
+                                                width = Convert.ToDouble(produtoSkyhub.VAL_LARGURA),
+                                                height = Convert.ToDouble(produtoSkyhub.VAL_ALTURA),
+                                                length = Convert.ToDouble(produtoSkyhub.VAL_COMPRIMENTO),
+                                                brand = produtoSkyhub.DESC_MARCA,
+                                                ean = wInfosProduto.DESC_COD_BARRA,
+                                                nbm = wInfosProduto.NUM_GENERO_NCM
+                                            };
                                                 
-                                                ProdutoSku.categories.Add(
-                                                    new Category
+                                            ProdutoSku.categories.Add(
+                                                new Category
+                                                {
+                                                    code = Convert.ToInt64(produtoSkyhub.DESC_CATEGORIA.GetHashCode()),
+                                                    name = produtoSkyhub.DESC_CATEGORIA
+                                                }
+                                            );
+
+                                            ProdutoSku.AddSpecificationsCustom("Alimentação", produtoSkyhub.ESP_ALIMENTACAO);
+                                            ProdutoSku.AddSpecificationsCustom("Aparelhos compatíveis", produtoSkyhub.ESP_APARELHOSCOMPATIVEIS);
+                                            ProdutoSku.AddSpecificationsCustom("Conteúdo da embalagem", produtoSkyhub.ESP_CONTEUDODAEMBALAGEM);
+                                            ProdutoSku.AddSpecificationsCustom("Cor", produtoSkyhub.ESP_COR);
+                                            ProdutoSku.AddSpecificationsCustom("Cor - ficha técnica", produtoSkyhub.ESP_CORFICHATECNICA);
+                                            ProdutoSku.AddSpecificationsCustom("Data de Lançamento no Mercado", produtoSkyhub.ESP_DATADELANCAMENTONOMERCADO);
+                                            ProdutoSku.AddSpecificationsCustom("Dimensões Embalagem - cm (AxLxP)", produtoSkyhub.ESP_DIMENSOESEMBALAGEM);
+                                            ProdutoSku.AddSpecificationsCustom("Dimensões Produto - cm (AxLxP)", produtoSkyhub.ESP_DIMENSOESPRODUTO);
+                                            ProdutoSku.AddSpecificationsCustom("Fabricante", produtoSkyhub.ESP_FABRICANTE);
+                                            ProdutoSku.AddSpecificationsCustom("Garantia do Fornecedor", produtoSkyhub.ESP_GARANTIADEFORNECEDOR);
+                                            ProdutoSku.AddSpecificationsCustom("Mais informações", produtoSkyhub.ESP_MAISINFORMACOES);
+                                            ProdutoSku.AddSpecificationsCustom("Manual", produtoSkyhub.ESP_MANUAL);
+                                            ProdutoSku.AddSpecificationsCustom("Marca", produtoSkyhub.ESP_MARCA);
+                                            ProdutoSku.AddSpecificationsCustom("Material/Composição", produtoSkyhub.ESP_MATERIALCOMPOSICAO);
+                                            ProdutoSku.AddSpecificationsCustom("Modelo", produtoSkyhub.ESP_MODELO);
+                                            ProdutoSku.AddSpecificationsCustom("Peso liq. da embalagem c/ produto (Kg)", produtoSkyhub.ESP_PESOLIQDAEMBALAGEMCPRODUTO);
+                                            ProdutoSku.AddSpecificationsCustom("Peso liq. do produto (Kg)", produtoSkyhub.ESP_PESOLIQDOPRODUTO);
+                                            ProdutoSku.AddSpecificationsCustom("Recursos/Funcionalidades", produtoSkyhub.ESP_RECURSOSFUNCIONALIDADES);
+                                            ProdutoSku.AddSpecificationsCustom("Referência do Modelo", produtoSkyhub.ESP_REFERENCIADOMODELO);
+                                            ProdutoSku.AddSpecificationsCustom("SAC do Fabricante", produtoSkyhub.ESP_SAC);
+                                            ProdutoSku.AddSpecificationsCustom("Tamanho", produtoSkyhub.ESP_TAMANHO);
+                                            ProdutoSku.AddSpecificationsCustom("Vídeo", produtoSkyhub.ESP_VIDEO);
+                                            ProdutoSku.AddSpecificationsCustom("Voltagem", produtoSkyhub.ESP_VOLTAGEM);
+
+                                            ProdutoSku.AddImagesCustom(produtoSkyhub.DESC_LINK_IMAGEM_1);
+                                            ProdutoSku.AddImagesCustom(produtoSkyhub.DESC_LINK_IMAGEM_2);
+                                            ProdutoSku.AddImagesCustom(produtoSkyhub.DESC_LINK_IMAGEM_3);
+                                            ProdutoSku.AddImagesCustom(produtoSkyhub.DESC_LINK_IMAGEM_4);
+
+                                            List<TB_PRODUTO_SKYHUB> variacoes = GetVariacoes(produtoSkyhub);
+
+                                            foreach (var variacao in variacoes)
+                                            {
+                                                TB_PRODUTO wInfosVariacao = InfosProduto(configuracaoSkyhub, variacao);
+                                                decimal wTotalEstoqueVar = TotalEstoque(configuracaoSkyhub, variacao);
+
+                                                Variation wProdutoVariacao = new Variation
+                                                {
+                                                    sku = variacao.COD_PRODUTO,
+                                                    price = Convert.ToDouble(wInfosVariacao.VAL_VAREJO),
+                                                    qty = Convert.ToInt32(wTotalEstoqueVar),
+                                                    ean = wInfosVariacao.DESC_COD_BARRA
+                                                };
+
+                                                wProdutoVariacao.AddSpecificationsCustom("Alimentação", variacao.ESP_ALIMENTACAO);
+                                                wProdutoVariacao.AddSpecificationsCustom("Aparelhos compatíveis", variacao.ESP_APARELHOSCOMPATIVEIS);
+                                                wProdutoVariacao.AddSpecificationsCustom("Conteúdo da embalagem", variacao.ESP_CONTEUDODAEMBALAGEM);
+                                                wProdutoVariacao.AddSpecificationsCustom("Cor", variacao.ESP_COR);
+                                                wProdutoVariacao.AddSpecificationsCustom("Cor - ficha técnica", variacao.ESP_CORFICHATECNICA);
+                                                wProdutoVariacao.AddSpecificationsCustom("Data de Lançamento no Mercado", variacao.ESP_DATADELANCAMENTONOMERCADO);
+                                                wProdutoVariacao.AddSpecificationsCustom("Dimensões Embalagem - cm (AxLxP)", variacao.ESP_DIMENSOESEMBALAGEM);
+                                                wProdutoVariacao.AddSpecificationsCustom("Dimensões Produto - cm (AxLxP)", variacao.ESP_DIMENSOESPRODUTO);
+                                                wProdutoVariacao.AddSpecificationsCustom("Fabricante", variacao.ESP_FABRICANTE);
+                                                wProdutoVariacao.AddSpecificationsCustom("Garantia do Fornecedor", variacao.ESP_GARANTIADEFORNECEDOR);
+                                                wProdutoVariacao.AddSpecificationsCustom("Mais informações", variacao.ESP_MAISINFORMACOES);
+                                                wProdutoVariacao.AddSpecificationsCustom("Manual", variacao.ESP_MANUAL);
+                                                wProdutoVariacao.AddSpecificationsCustom("Marca", variacao.ESP_MARCA);
+                                                wProdutoVariacao.AddSpecificationsCustom("Material/Composição", variacao.ESP_MATERIALCOMPOSICAO);
+                                                wProdutoVariacao.AddSpecificationsCustom("Modelo", variacao.ESP_MODELO);
+                                                wProdutoVariacao.AddSpecificationsCustom("Peso liq. da embalagem c/ produto (Kg)", variacao.ESP_PESOLIQDAEMBALAGEMCPRODUTO);
+                                                wProdutoVariacao.AddSpecificationsCustom("Peso liq. do produto (Kg)", variacao.ESP_PESOLIQDOPRODUTO);
+                                                wProdutoVariacao.AddSpecificationsCustom("Recursos/Funcionalidades", variacao.ESP_RECURSOSFUNCIONALIDADES);
+                                                wProdutoVariacao.AddSpecificationsCustom("Referência do Modelo", variacao.ESP_REFERENCIADOMODELO);
+                                                wProdutoVariacao.AddSpecificationsCustom("SAC do Fabricante", variacao.ESP_SAC);
+                                                wProdutoVariacao.AddSpecificationsCustom("Tamanho", variacao.ESP_TAMANHO);
+                                                wProdutoVariacao.AddSpecificationsCustom("Vídeo", variacao.ESP_VIDEO);
+                                                wProdutoVariacao.AddSpecificationsCustom("Voltagem", variacao.ESP_VOLTAGEM);
+                                                        
+                                                wProdutoVariacao.specifications.Add(
+                                                    new Specification
                                                     {
-                                                        code = Convert.ToInt64(produtoSkyhub.DESC_CATEGORIA.GetHashCode()),
-                                                        name = produtoSkyhub.DESC_CATEGORIA
+                                                        key = "price",
+                                                        value = Convert.ToString(wInfosVariacao.VAL_VAREJO)
                                                     }
                                                 );
 
-                                                ProdutoSku.AddSpecificationsCustom("Alimentação", produtoSkyhub.ESP_ALIMENTACAO);
-                                                ProdutoSku.AddSpecificationsCustom("Aparelhos compatíveis", produtoSkyhub.ESP_APARELHOSCOMPATIVEIS);
-                                                ProdutoSku.AddSpecificationsCustom("Conteúdo da embalagem", produtoSkyhub.ESP_CONTEUDODAEMBALAGEM);
-                                                ProdutoSku.AddSpecificationsCustom("Cor", produtoSkyhub.ESP_COR);
-                                                ProdutoSku.AddSpecificationsCustom("Cor - ficha técnica", produtoSkyhub.ESP_CORFICHATECNICA);
-                                                ProdutoSku.AddSpecificationsCustom("Data de Lançamento no Mercado", produtoSkyhub.ESP_DATADELANCAMENTONOMERCADO);
-                                                ProdutoSku.AddSpecificationsCustom("Dimensões Embalagem - cm (AxLxP)", produtoSkyhub.ESP_DIMENSOESEMBALAGEM);
-                                                ProdutoSku.AddSpecificationsCustom("Dimensões Produto - cm (AxLxP)", produtoSkyhub.ESP_DIMENSOESPRODUTO);
-                                                ProdutoSku.AddSpecificationsCustom("Fabricante", produtoSkyhub.ESP_FABRICANTE);
-                                                ProdutoSku.AddSpecificationsCustom("Garantia do Fornecedor", produtoSkyhub.ESP_GARANTIADEFORNECEDOR);
-                                                ProdutoSku.AddSpecificationsCustom("Mais informações", produtoSkyhub.ESP_MAISINFORMACOES);
-                                                ProdutoSku.AddSpecificationsCustom("Manual", produtoSkyhub.ESP_MANUAL);
-                                                ProdutoSku.AddSpecificationsCustom("Marca", produtoSkyhub.ESP_MARCA);
-                                                ProdutoSku.AddSpecificationsCustom("Material/Composição", produtoSkyhub.ESP_MATERIALCOMPOSICAO);
-                                                ProdutoSku.AddSpecificationsCustom("Modelo", produtoSkyhub.ESP_MODELO);
-                                                ProdutoSku.AddSpecificationsCustom("Peso liq. da embalagem c/ produto (Kg)", produtoSkyhub.ESP_PESOLIQDAEMBALAGEMCPRODUTO);
-                                                ProdutoSku.AddSpecificationsCustom("Peso liq. do produto (Kg)", produtoSkyhub.ESP_PESOLIQDOPRODUTO);
-                                                ProdutoSku.AddSpecificationsCustom("Recursos/Funcionalidades", produtoSkyhub.ESP_RECURSOSFUNCIONALIDADES);
-                                                ProdutoSku.AddSpecificationsCustom("Referência do Modelo", produtoSkyhub.ESP_REFERENCIADOMODELO);
-                                                ProdutoSku.AddSpecificationsCustom("SAC do Fabricante", produtoSkyhub.ESP_SAC);
-                                                ProdutoSku.AddSpecificationsCustom("Tamanho", produtoSkyhub.ESP_TAMANHO);
-                                                ProdutoSku.AddSpecificationsCustom("Vídeo", produtoSkyhub.ESP_VIDEO);
-                                                ProdutoSku.AddSpecificationsCustom("Voltagem", produtoSkyhub.ESP_VOLTAGEM);
-
-                                                ProdutoSku.AddImagesCustom(produtoSkyhub.DESC_LINK_IMAGEM_1);
-                                                ProdutoSku.AddImagesCustom(produtoSkyhub.DESC_LINK_IMAGEM_2);
-                                                ProdutoSku.AddImagesCustom(produtoSkyhub.DESC_LINK_IMAGEM_3);
-                                                ProdutoSku.AddImagesCustom(produtoSkyhub.DESC_LINK_IMAGEM_4);
-
-                                                List<TB_PRODUTO_SKYHUB> variacoes = GetVariacoes(produtoSkyhub);
-
-                                                foreach (var variacao in variacoes)
-                                                {
-                                                    if (ProdutoEstaOK(variacao))
-                                                    {
-                                                        TB_PRODUTO wInfosVariacao = InfosProduto(configuracaoSkyhub, variacao);
-                                                        decimal wTotalEstoqueVar = TotalEstoque(configuracaoSkyhub, variacao);
-
-                                                        Variation wProdutoVariacao = new Variation
-                                                        {
-                                                            sku = variacao.COD_PRODUTO,
-                                                            price = Convert.ToDouble(wInfosVariacao.VAL_VAREJO),
-                                                            qty = Convert.ToInt32(wTotalEstoqueVar),
-                                                            ean = wInfosVariacao.DESC_COD_BARRA
-                                                        };
-
-                                                        wProdutoVariacao.AddSpecificationsCustom("Alimentação", variacao.ESP_ALIMENTACAO);
-                                                        wProdutoVariacao.AddSpecificationsCustom("Aparelhos compatíveis", variacao.ESP_APARELHOSCOMPATIVEIS);
-                                                        wProdutoVariacao.AddSpecificationsCustom("Conteúdo da embalagem", variacao.ESP_CONTEUDODAEMBALAGEM);
-                                                        wProdutoVariacao.AddSpecificationsCustom("Cor", variacao.ESP_COR);
-                                                        wProdutoVariacao.AddSpecificationsCustom("Cor - ficha técnica", variacao.ESP_CORFICHATECNICA);
-                                                        wProdutoVariacao.AddSpecificationsCustom("Data de Lançamento no Mercado", variacao.ESP_DATADELANCAMENTONOMERCADO);
-                                                        wProdutoVariacao.AddSpecificationsCustom("Dimensões Embalagem - cm (AxLxP)", variacao.ESP_DIMENSOESEMBALAGEM);
-                                                        wProdutoVariacao.AddSpecificationsCustom("Dimensões Produto - cm (AxLxP)", variacao.ESP_DIMENSOESPRODUTO);
-                                                        wProdutoVariacao.AddSpecificationsCustom("Fabricante", variacao.ESP_FABRICANTE);
-                                                        wProdutoVariacao.AddSpecificationsCustom("Garantia do Fornecedor", variacao.ESP_GARANTIADEFORNECEDOR);
-                                                        wProdutoVariacao.AddSpecificationsCustom("Mais informações", variacao.ESP_MAISINFORMACOES);
-                                                        wProdutoVariacao.AddSpecificationsCustom("Manual", variacao.ESP_MANUAL);
-                                                        wProdutoVariacao.AddSpecificationsCustom("Marca", variacao.ESP_MARCA);
-                                                        wProdutoVariacao.AddSpecificationsCustom("Material/Composição", variacao.ESP_MATERIALCOMPOSICAO);
-                                                        wProdutoVariacao.AddSpecificationsCustom("Modelo", variacao.ESP_MODELO);
-                                                        wProdutoVariacao.AddSpecificationsCustom("Peso liq. da embalagem c/ produto (Kg)", variacao.ESP_PESOLIQDAEMBALAGEMCPRODUTO);
-                                                        wProdutoVariacao.AddSpecificationsCustom("Peso liq. do produto (Kg)", variacao.ESP_PESOLIQDOPRODUTO);
-                                                        wProdutoVariacao.AddSpecificationsCustom("Recursos/Funcionalidades", variacao.ESP_RECURSOSFUNCIONALIDADES);
-                                                        wProdutoVariacao.AddSpecificationsCustom("Referência do Modelo", variacao.ESP_REFERENCIADOMODELO);
-                                                        wProdutoVariacao.AddSpecificationsCustom("SAC do Fabricante", variacao.ESP_SAC);
-                                                        wProdutoVariacao.AddSpecificationsCustom("Tamanho", variacao.ESP_TAMANHO);
-                                                        wProdutoVariacao.AddSpecificationsCustom("Vídeo", variacao.ESP_VIDEO);
-                                                        wProdutoVariacao.AddSpecificationsCustom("Voltagem", variacao.ESP_VOLTAGEM);
+                                                wProdutoVariacao.AddImagesCustom(variacao.DESC_LINK_IMAGEM_1);
+                                                wProdutoVariacao.AddImagesCustom(variacao.DESC_LINK_IMAGEM_2);
+                                                wProdutoVariacao.AddImagesCustom(variacao.DESC_LINK_IMAGEM_3);
+                                                wProdutoVariacao.AddImagesCustom(variacao.DESC_LINK_IMAGEM_4);
                                                         
-                                                        wProdutoVariacao.specifications.Add(
-                                                            new Specification
-                                                            {
-                                                                key = "price",
-                                                                value = Convert.ToString(wInfosVariacao.VAL_VAREJO)
-                                                            }
-                                                        );
-
-                                                        wProdutoVariacao.AddImagesCustom(variacao.DESC_LINK_IMAGEM_1);
-                                                        wProdutoVariacao.AddImagesCustom(variacao.DESC_LINK_IMAGEM_2);
-                                                        wProdutoVariacao.AddImagesCustom(variacao.DESC_LINK_IMAGEM_3);
-                                                        wProdutoVariacao.AddImagesCustom(variacao.DESC_LINK_IMAGEM_4);
-                                                        
-                                                        ProdutoSku.variations.Add(wProdutoVariacao);
-                                                    }
-                                                    else
-                                                    {
-                                                        throw new Exception("Variação de produto não preenchido corretamente");
-                                                    }
-
-                                                }
-
-                                                //Agora cria a key variation_attributes, que é gerada com base nas especificações
-                                                //do produto pai e de suas variações. Caso exista alguma variação com mesma key mas
-                                                //value diferente, então esse produto tem variações de atributos.
-
-                                                foreach (Specification specification in ProdutoSku.specifications)
-                                                {
-                                                    bool wAchou = false;
-
-                                                    foreach (Variation variation in ProdutoSku.variations)
-                                                    {
-                                                        foreach (Specification variSpecification in variation.specifications)
-                                                        {
-                                                            if ((variSpecification.key == specification.key) && (variSpecification.value != specification.value))
-                                                            {
-                                                                wAchou = true;
-                                                            }
-                                                        }
-                                                    }
-
-                                                    if (wAchou)
-                                                    {
-                                                        ProdutoSku.variation_attributes.Add(specification.key);
-                                                    }
-                                                }
-                                                
-                                                //Adiciona o produto skyhub na chave "products", padrão da API.
-
-                                                Dictionary<string, ProdutoSkyhub> products = new Dictionary<string, ProdutoSkyhub>{{ "product", ProdutoSku }};
-
-                                                //Por fim, executa a chamada Http conforme a requisição registrada na tabela TB_SINCRONIZACAO_SKYHUB
-                                                //e caso ocorra algum erro, grava um log com informações.
-
-                                                switch (sincronizacaoSkyhub.TIPO_ACAO)
-                                                {
-                                                    case "PUT":
-                                                        {
-                                                            HttpResponseMessage response = await Http.PutAsJsonAsync("/products/" + ProdutoSku.sku, products);
-
-                                                            if (!response.IsSuccessStatusCode)
-                                                            {
-                                                                if (response.StatusCode == HttpStatusCode.NotFound)
-                                                                {
-                                                                    sincronizacaoSkyhub.TIPO_ACAO = "POST";
-                                                                    db.SaveChanges();
-                                                                    saveRegistro = false;
-                                                                }
-                                                                else
-                                                                {
-                                                                    throw new Exception("Erro na respota da API na chamada PUT: " + response.ReasonPhrase);
-                                                                }
-                                                            }
-
-                                                            totalAtualizados++;
-                                                        }
-                                                        break;
-                                                    case "DELETE":
-                                                        {
-                                                            HttpResponseMessage response = await Http.DeleteAsync("/products/" + ProdutoSku.sku);
-
-                                                            if (!response.IsSuccessStatusCode)
-                                                            {
-                                                                if (response.StatusCode == HttpStatusCode.NotFound)
-                                                                {
-                                                                    //Diminui para depois aumentar, ou seja, permanecer o valor que esta.
-                                                                    //Usado para uma tentativa de deletar um produto que já foi apagado não somar.
-
-                                                                    totalDeletados--;
-                                                                }
-                                                                else
-                                                                {
-                                                                    throw new Exception("Erro na respota da API na chamada DELETE: " + response.ReasonPhrase);
-                                                                }
-                                                            }
-
-                                                            totalDeletados++;
-                                                        }
-                                                        break;
-                                                    case "POST":
-                                                        {
-                                                            HttpResponseMessage response = await Http.PostAsJsonAsync("/products", products);
-
-                                                            if (!response.IsSuccessStatusCode)
-                                                            {
-                                                                throw new Exception("Erro na respota da API na chamada POST: " + response.ReasonPhrase);
-                                                            }
-
-                                                            totalCriados++;
-                                                        }
-                                                        break;
-                                                }
+                                                ProdutoSku.variations.Add(wProdutoVariacao);
                                             }
-                                            else
+
+                                            //Agora cria a key variation_attributes, que é gerada com base nas especificações
+                                            //do produto pai e de suas variações. Caso exista alguma variação com mesma key mas
+                                            //value diferente, então esse produto tem variações de atributos.
+
+                                            foreach (Specification specification in ProdutoSku.specifications)
                                             {
-                                                throw new Exception("Produto não preenchido corretamente");
+                                                bool wAchou = false;
+
+                                                foreach (Variation variation in ProdutoSku.variations)
+                                                {
+                                                    foreach (Specification variSpecification in variation.specifications)
+                                                    {
+                                                        if ((variSpecification.key == specification.key) && (variSpecification.value != specification.value))
+                                                        {
+                                                            wAchou = true;
+                                                        }
+                                                    }
+                                                }
+
+                                                if (wAchou)
+                                                {
+                                                    ProdutoSku.variation_attributes.Add(specification.key);
+                                                }
                                             }
+                                                
+                                            //Adiciona o produto skyhub na chave "products", padrão da API.
+
+                                            Dictionary<string, ProdutoSkyhub> products = new Dictionary<string, ProdutoSkyhub>{{ "product", ProdutoSku }};
+
+                                            //Por fim, executa a chamada Http conforme a requisição registrada na tabela TB_SINCRONIZACAO_SKYHUB
+                                            //e caso ocorra algum erro, grava um log com informações.
+
+                                            switch (sincronizacaoSkyhub.TIPO_ACAO)
+                                            {
+                                                case "PUT":
+                                                    {
+                                                        HttpResponseMessage response = await Http.PutAsJsonAsync("/products/" + ProdutoSku.sku, products);
+
+                                                        if (!response.IsSuccessStatusCode)
+                                                        {
+                                                            if (response.StatusCode == HttpStatusCode.NotFound)
+                                                            {
+                                                                sincronizacaoSkyhub.TIPO_ACAO = "POST";
+                                                                db.SaveChanges();
+                                                                saveRegistro = false;
+                                                            }
+                                                            else
+                                                            {
+                                                                throw new Exception("Erro na respota da API na chamada PUT: " + response.ReasonPhrase);
+                                                            }
+                                                        }
+
+                                                        totalAtualizados++;
+                                                    }
+                                                    break;
+                                                case "DELETE":
+                                                    {
+                                                        HttpResponseMessage response = await Http.DeleteAsync("/products/" + ProdutoSku.sku);
+
+                                                        if (!response.IsSuccessStatusCode)
+                                                        {
+                                                            if (response.StatusCode == HttpStatusCode.NotFound)
+                                                            {
+                                                                //Diminui para depois aumentar, ou seja, permanecer o valor que esta.
+                                                                //Usado para uma tentativa de deletar um produto que já foi apagado não somar.
+
+                                                                totalDeletados--;
+                                                            }
+                                                            else
+                                                            {
+                                                                throw new Exception("Erro na respota da API na chamada DELETE: " + response.ReasonPhrase);
+                                                            }
+                                                        }
+
+                                                        totalDeletados++;
+                                                    }
+                                                    break;
+                                                case "POST":
+                                                    {
+                                                        HttpResponseMessage response = await Http.PostAsJsonAsync("/products", products);
+
+                                                        if (!response.IsSuccessStatusCode)
+                                                        {
+                                                            throw new Exception("Erro na respota da API na chamada POST: " + response.ReasonPhrase);
+                                                        }
+
+                                                        totalCriados++;
+                                                    }
+                                                    break;
+                                            }
+                                            
                                         }
                                         catch (Exception except)
                                         {
@@ -1673,23 +1660,46 @@ namespace Cemapa.Controllers
             return wTotalestoque;
         }
 
-        private bool ProdutoEstaOK(TB_PRODUTO_SKYHUB produtoSkyhub)
+        private void ProdutoEstaOK(TB_PRODUTO_SKYHUB produtoSkyhub)
         {
-            if (
-                produtoSkyhub.COD_PRODUTO < 1 ||
-                produtoSkyhub.VAL_ALTURA < 0 ||
-                produtoSkyhub.VAL_COMPRIMENTO < 0 ||
-                produtoSkyhub.VAL_LARGURA < 0 ||
-                String.IsNullOrEmpty(produtoSkyhub.DESC_DESCRICAO) ||
-                String.IsNullOrEmpty(produtoSkyhub.DESC_MARCA) ||
-                String.IsNullOrEmpty(produtoSkyhub.DESC_PRODUTO) ||
-                String.IsNullOrEmpty(produtoSkyhub.DESC_STATUS)
-                )
-            {
-                return false;
-            }
+            if (produtoSkyhub.VAL_ALTURA < 0)
+                throw new Exception($"Produto skyhub: altura inválida, produto: {produtoSkyhub.COD_PRODUTO}");
+            if (produtoSkyhub.VAL_COMPRIMENTO < 0)
+                throw new Exception($"Produto skyhub: comprimento inválida, produto: {produtoSkyhub.COD_PRODUTO}");
+            if (produtoSkyhub.VAL_LARGURA < 0)
+                throw new Exception($"Produto skyhub: Altura inválida, produto: {produtoSkyhub.COD_PRODUTO}");
+            if (String.IsNullOrEmpty(produtoSkyhub.DESC_DESCRICAO))
+                throw new Exception($"Produto skyhub: ficha técnica inválida, produto: {produtoSkyhub.COD_PRODUTO}");
+            if (String.IsNullOrEmpty(produtoSkyhub.DESC_MARCA))
+                throw new Exception($"Produto skyhub: marca inválida, produto: {produtoSkyhub.COD_PRODUTO}");
+            if (String.IsNullOrEmpty(produtoSkyhub.DESC_PRODUTO))
+                throw new Exception($"Produto skyhub: descrição do produto inválido, produto: {produtoSkyhub.COD_PRODUTO}");
+            if (String.IsNullOrEmpty(produtoSkyhub.DESC_STATUS))
+                throw new Exception($"Produto skyhub: status inválido, produto: {produtoSkyhub.COD_PRODUTO}");
+        }
 
-            return true;
+        private void ConfiguracaoEstaOK(TB_CONFIGURACAO_SKYHUB configuracaoSkyhub)
+        {
+            if (configuracaoSkyhub.COD_CLASS_CADASTRO < 0)
+                throw new Exception($"Configuração skyhub: classe de cadastro inválido, filial: {configuracaoSkyhub.COD_FILIAL}");
+            if (configuracaoSkyhub.COD_DEPARTAMENTO < 0)
+                throw new Exception($"Configuração skyhub: departamento inválido, filial: {configuracaoSkyhub.COD_FILIAL}");
+            if (configuracaoSkyhub.COD_LOTE_TIPO < 0)
+                throw new Exception($"Configuração skyhub: lote inválido, filial: {configuracaoSkyhub.COD_FILIAL}");
+            if (configuracaoSkyhub.COD_RAMO_FISICA < 0)
+                throw new Exception($"Configuração skyhub: ramo para pessoa física inválido, filial: {configuracaoSkyhub.COD_FILIAL}");
+            if (configuracaoSkyhub.COD_RAMO_JURIDICA < 0)
+                throw new Exception($"Configuração skyhub:  ramo para pessoa jurídica inválido, filial: {configuracaoSkyhub.COD_FILIAL}");
+            if (configuracaoSkyhub.COD_VENDEDOR < 0)
+                throw new Exception($"Configuração skyhub: vendedor inválido, filial: {configuracaoSkyhub.COD_FILIAL}");
+            if (String.IsNullOrEmpty(configuracaoSkyhub.IND_TIPO_PAGAMENTO))
+                throw new Exception($"Configuração skyhub: tipo de pagamento inválido, filial: {configuracaoSkyhub.COD_FILIAL}");
+            if (String.IsNullOrEmpty(configuracaoSkyhub.DESC_TOKEN_ACCOUNT))
+                throw new Exception($"Configuração skyhub: token inválido, filial: {configuracaoSkyhub.COD_FILIAL}");
+            if (String.IsNullOrEmpty(configuracaoSkyhub.DESC_TOKEN_INTEGRACAO))
+                throw new Exception($"Configuração skyhub: token inválido, filial: {configuracaoSkyhub.COD_FILIAL}");
+            if (String.IsNullOrEmpty(configuracaoSkyhub.DESC_USUARIO_EMAIL))
+                throw new Exception($"Configuração skyhub: e-mail inválido, filial: {configuracaoSkyhub.COD_FILIAL}");
         }
 
         private TB_PEDIDO_CAB GetPedidoPorMarketplace(Order ordem)
@@ -1700,93 +1710,126 @@ namespace Cemapa.Controllers
             return wPedido;
         }
 
-        private int GetCodCadastro(Order ordem)
+        private TB_CADASTRO SelecionaComprador(Order ordem, int codRamoFisica, int codRamoJuridica, int codClassificacaoCad, int codTipoCad)
         {
-            TB_CADASTRO wCadastro = (from c in db.TB_CADASTRO
-                                     where (c.NUM_CGC_CPF == ordem.customer.vat_number)
-                                     select c).FirstOrDefault();
-            if (wCadastro == null)
+            //Método irá trazer comprador já cadastrado ou caso não exista, cadastra.
+            //Recebe os dados da ordem vindo da skyhub.
+
+            try
             {
-                string wEstado = ordem.shipping_address.region.ToUpper();
-                string wCpf_cnpj = ordem.customer.vat_number;
-                string wNome = ordem.customer.name.ToUpper();
-                string wSexo = ordem.customer.gender == "male" ? "M" : "F";
-                string wBairro = ordem.shipping_address.neighborhood;
-                string wEmail = ordem.customer.email;
-                DateTime wNascimento = Convert.ToDateTime(ordem.customer.date_of_birth);
-                string wCelular = ordem.shipping_address.phone;
-                string wTelefone = ordem.shipping_address.secondary_phone;
-                string wEndereco = ordem.shipping_address.street + ", " + ordem.shipping_address.number;
-                string wComplemento = ordem.shipping_address.complement;
-                int wTipoCadastro;
+                //Pré-processa os dados, formatando-os para nosso sistema.
 
-                TB_TIPO_CADASTRO wTipoCad = (from tc in db.TB_TIPO_CADASTRO
-                                             where (tc.DESC_TIPO_CADASTRO == "CLIENTE WEB")
-                                             select tc).FirstOrDefault();
-                if (wTipoCad == null)
+                ordem.shipping_address.region = ordem.shipping_address.region.ToUpper();
+                ordem.customer.name = ordem.customer.name.ToUpper();
+                ordem.customer.gender = ordem.customer.gender == "male" ? "M" : "F";
+                ordem.shipping_address.neighborhood = ordem.shipping_address.neighborhood.ToUpper();
+                ordem.shipping_address.street = ordem.shipping_address.street.ToUpper();
+                ordem.shipping_address.complement = ordem.shipping_address.complement?.ToUpper();
+                ordem.shipping_address.postcode = String.Format(@"{0:00000\-000}", Convert.ToInt64(ordem.shipping_address.postcode));
+                ordem.shipping_address.city = ordem.shipping_address.city.ToUpper();
+
+                int qtCpfCnpj = Regex.Replace(ordem.customer.vat_number, "[^0-9]", "").Length;
+                string indCgc = "F";
+                
+                if (qtCpfCnpj == 11)
                 {
-                    int wCodigoTipoCad = db.Database.SqlQuery<int>("SELECT SQTIPO_CADASTRO.NEXTVAL FROM DUAL").First();
+                    ordem.customer.vat_number = String.Format(@"{0:000\.000\.000\-00}", Convert.ToInt64(ordem.customer.vat_number));
+                    ordem.customer.state_registration = "";
+                    indCgc = "F";
+                }
+                else if(qtCpfCnpj == 14)
+                {
+                    ordem.customer.vat_number = String.Format(@"{0:00\.000\.000/0000\-00}", Convert.ToInt64(ordem.customer.vat_number));
+                    ordem.customer.state_registration = ordem.customer.state_registration.ToUpper();
+                    indCgc = "J";
+                }
 
-                    TB_TIPO_CADASTRO wNovoTipoCadastro = new TB_TIPO_CADASTRO()
+                //Busca o comprador no banco de dados. Caso não encontre, começa o processo de cadastro.
+                //Caso encontre, atualiza alguns dados.
+                
+                TB_CADASTRO wCadastro = (from c in db.TB_CADASTRO
+                                         where (c.NUM_CGC_CPF == ordem.customer.vat_number)
+                                         select c).FirstOrDefault();
+
+                //Busca a cidade para esse comprador, Caso não encontre, também cadastra.
+
+                TB_CIDADE wCidade = (from c in db.TB_CIDADE
+                                         where (c.DESC_CIDADE == ordem.shipping_address.city)
+                                         select c).FirstOrDefault();
+                if (wCidade == null)
+                {
+                    int wCodigoCidade = db.Database.SqlQuery<int>("SELECT SQCIDADE.NEXTVAL FROM DUAL").First();
+
+                    wCidade = new TB_CIDADE()
                     {
-                        COD_TIPO_CADASTRO = wCodigoTipoCad,
-                        DESC_TIPO_CADASTRO = "CLIENTE WEB"
+                        COD_CIDADE = wCodigoCidade,
+                        DESC_CIDADE = ordem.shipping_address.city,
+                        COD_ESTADO = ordem.shipping_address.region
                     };
 
-                    db.Entry(wNovoTipoCadastro).State = EntityState.Added;
-                    wTipoCadastro = wCodigoTipoCad;
+                    db.Entry(wCadastro).State = EntityState.Added;
+                }
+
+                if (wCadastro == null)
+                {
+                    int wCodigoCadastro = db.Database.SqlQuery<int>("SELECT SQCADASTRO.NEXTVAL FROM DUAL").First();
+
+                    wCadastro = new TB_CADASTRO()
+                    {
+                        COD_CADASTRO = wCodigoCadastro,
+                        NOME = ordem.customer.name,
+                        COD_TIPO_CADASTRO = codTipoCad,
+                        NUM_CGC_CPF = ordem.customer.vat_number,
+                        DESC_E_MAIL = ordem.customer.email,
+                        DT_NASCIMENTO = Convert.ToDateTime(ordem.customer.date_of_birth),
+                        DT_CADASTRO = DateTime.Now,
+                        DESC_CELULAR = ordem.shipping_address.secondary_phone,
+                        DESC_TELEFONE = ordem.shipping_address.phone,
+                        DESC_ENDERECO = $"{ordem.shipping_address.street.ToUpper()}, {ordem.shipping_address.number}",
+                        DESC_COMPLEMENTO = ordem.shipping_address.complement,
+                        DESC_BAIRRO = ordem.shipping_address.neighborhood,
+                        COD_ESTADO = ordem.shipping_address.region,
+                        IND_SEXO_CATEGORIA = ordem.customer.gender,
+                        IND_FISICA_JURIDICA = indCgc,
+                        COD_CIDADE = wCidade.COD_CIDADE,
+                        DESC_CIDADE = ordem.shipping_address.city,
+                        DESC_CEP = ordem.shipping_address.postcode,
+                        COD_RAMO = indCgc == "J" ? codRamoJuridica : codRamoFisica,
+                        COD_CLASS_CADASTRO = codClassificacaoCad,
+                        IND_LIBERA_VENDA = "NAO",
+                        IND_LIBERA_BLOQUETO = "NAO",
+                        NUM_INSCRICAO = "",
+                        COD_USUARIO = 1,
+                        COD_PAIS = 1
+                    };
+
+                    db.Entry(wCadastro).State = EntityState.Added;
                 }
                 else
                 {
-                    wTipoCadastro = wTipoCad.COD_TIPO_CADASTRO;
+                    wCadastro.NOME = ordem.customer.name;
+                    wCadastro.DESC_E_MAIL = ordem.customer.email;
+                    wCadastro.DESC_CELULAR = ordem.shipping_address.secondary_phone;
+                    wCadastro.DESC_TELEFONE = ordem.shipping_address.phone;
+                    wCadastro.DESC_ENDERECO = $"{ordem.shipping_address.street.ToUpper()}, {ordem.shipping_address.number}";
+                    wCadastro.DESC_COMPLEMENTO = ordem.shipping_address.complement;
+                    wCadastro.DESC_BAIRRO = ordem.shipping_address.neighborhood;
+                    wCadastro.COD_ESTADO = ordem.shipping_address.region;
+                    wCadastro.COD_CIDADE = wCidade.COD_CIDADE;
+                    wCadastro.DESC_CIDADE = ordem.shipping_address.city;
+                    wCadastro.DESC_CEP = ordem.shipping_address.postcode;
+
+                    db.Entry(wCadastro).State = EntityState.Modified;
                 }
 
+                db.SaveChanges();
 
-                if (ordem.billing_address.number == "")
-                {
-                    wEndereco = ordem.billing_address.street;
-                }
-
-                if (!db.TB_ESTADO.Any(e => e.COD_ESTADO == wEstado))
-                {
-                    throw new Exception("Estado não encontrado: " + wEstado);
-                }
-
-                if (wCpf_cnpj.Length < 10)
-                {
-                    throw new Exception("CPF ou CNPJ inválido. " + wCpf_cnpj);
-                }
-
-                int wCodigoCadastro = db.Database.SqlQuery<int>("SELECT SQCADASTRO.NEXTVAL FROM DUAL").First();
-
-                TB_CADASTRO wNovoCadastro = new TB_CADASTRO()
-                {
-                    COD_CADASTRO = wCodigoCadastro,
-                    NOME = wNome,
-                    COD_TIPO_CADASTRO = wTipoCadastro,
-                    NUM_CGC_CPF = wCpf_cnpj,
-                    DESC_E_MAIL = wEmail,
-                    DT_NASCIMENTO = wNascimento,
-                    DT_CADASTRO = DateTime.Now,
-                    DESC_CELULAR = wCelular,
-                    DESC_TELEFONE = wTelefone,
-                    DESC_ENDERECO = wEndereco,
-                    DESC_COMPLEMENTO = wComplemento,
-                    DESC_BAIRRO = wBairro,
-                    COD_ESTADO = wEstado,
-                    IND_SEXO_CATEGORIA = wSexo,
-                    IND_FISICA_JURIDICA = "F"
-                };
-
-                db.Entry(wNovoCadastro).State = EntityState.Added;
-
-                return wCodigoCadastro;
+                return wCadastro;
             }
-            else
+            catch (Exception except)
             {
-                return wCadastro.COD_CADASTRO;
+                throw new Exception("Cliente não cadastrado: " + except.Message);
             }
-
         }
 
         private int GetLoteTipo(Item item)
@@ -1807,55 +1850,87 @@ namespace Cemapa.Controllers
             }
         }
 
-        private int GetTributacao(Item item)
+        private TB_PRODUTO SelecionaProduto(Item item)
         {
-            long wCodigo = Convert.ToInt64(item.id);
+            try
+            {
+                //Busca pelo produto no sistema a partir do item de uma compra.
+                //Tais valores serão utilizados para adicionar o item ao pedido.
+                //Caso o produto não seja encontrado no sistema, então cadastra conforme informações da skyhub.
+                long id = Convert.ToInt64(item.id);
 
-            TB_PRODUTO wProduto = (from p in db.TB_PRODUTO
-                                   where (p.COD_PRODUTO == wCodigo)
-                                   select p).FirstOrDefault();
-            if (wProduto.COD_TRIBUTACAO < 1)
-            {
-                return -1;
+                TB_PRODUTO wProduto = (from p in db.TB_PRODUTO
+                                       where (p.COD_PRODUTO == id)
+                                       select p).FirstOrDefault();
+                if(wProduto == null)
+                {
+                    //Com as informações do item, pré-processa os dados, para salvar um novo produto no sistema.
+                    //Este produto será trazido apenas para cadastro do pedido, este produto necessita de atenção.
+                    //Esse caso ocorreu devido a um produto que existe na skyhub mas foi apagado do sistema, dessa forma,
+                    //quando baixar um pedido, este produto precisa ser criado.
+
+                    item.name = $"(PRODUTO EXISTENTE APENAS NA SKYHUB!){item.name.ToUpper()}";
+
+                    TB_CLASSE wClasse = (from c in db.TB_CLASSE select c).FirstOrDefault();
+                    TB_TRIBUTACAO wTributacao = (from t in db.TB_TRIBUTACAO select t).FirstOrDefault();
+
+                    wProduto = new TB_PRODUTO
+                    {
+                        COD_PRODUTO = Convert.ToInt64(item.id),
+                        DESC_PRODUTO = item.name,
+                        VAL_VAREJO = Convert.ToDecimal(item.special_price),
+                        COD_TRIBUTACAO = wTributacao.COD_TRIBUTACAO,
+                        COD_CLASSE = wClasse.COD_CLASSE,
+                        IND_TIPO_PRODUTO = "Comercial",
+                        PERC_ISS = 0,
+                        PERC_INSS = 0
+                    };
+
+                    db.Entry(wProduto).State = EntityState.Added;
+                    db.SaveChanges();
+                }
+
+                return wProduto;
             }
-            else
+            catch (Exception except)
             {
-                return wProduto.COD_TRIBUTACAO;
+                throw new Exception("Não foi possível selecionar produto: " + except.Message);
             }
         }
 
-        private int GetSequencia(Order ordem)
+        private TB_SEQUENCIA SelecionaSequencia(Order ordem, int codFilial)
         {
-            TB_SEQUENCIA seq = (from s in db.TB_SEQUENCIA
-                       where (s.NOME_SEQUENCIA == "PEDIDO")
-                       select s).FirstOrDefault();
-            if(seq == null)
+            try
             {
-                return -1;
-            }
-            else
-            {
-                int val = seq.VAL_SEQUENCIA;
-                seq.VAL_SEQUENCIA++;
+                //Busca valor da sequência para pedidos. Caso não encontre, cadastra uma nova.
+
+                TB_SEQUENCIA wSequencia = (from s in db.TB_SEQUENCIA
+                                    where ((s.NOME_SEQUENCIA == "PEDIDO") && (s.COD_FILIAL == codFilial))
+                                    select s).FirstOrDefault();
+                if (wSequencia == null)
+                {
+                    wSequencia = new TB_SEQUENCIA
+                    {
+                        VAL_SEQUENCIA = 1,
+                        COD_FILIAL = codFilial,
+                        NOME_SEQUENCIA = "PEDIDO"
+                    };
+
+                    db.Entry(wSequencia).State = EntityState.Added;
+                }
+                else
+                {
+                    wSequencia.VAL_SEQUENCIA++;
+                    db.Entry(wSequencia).State = EntityState.Modified;
+                }
+
                 db.SaveChanges();
-                return val;
-            }
-        }
 
-        private long GetProdutosSkyhub(Item item)
-        {
-            long wCodigo = Convert.ToInt64(item.id);
-
-            TB_PRODUTO wProduto = (from p in db.TB_PRODUTO
-                                   where (p.COD_PRODUTO == wCodigo)
-                                   select p).FirstOrDefault();
-            if (wProduto.COD_PRODUTO < 1)
-            {
-                return -1;
+                return wSequencia;
             }
-            else
+            catch (Exception except)
             {
-                return wProduto.COD_PRODUTO;
+                throw new Exception("Erro ao buscar sequência de pedido : " + except.Message);
             }
         }
 

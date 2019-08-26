@@ -119,7 +119,6 @@ namespace Cemapa.Models
         public string DESC_PLACA { get; set; }
         public Nullable<decimal> PERC_DESCONTO { get; set; }
         public string IND_LIBERA_BLOQUETO { get; set; }
-        public Nullable<System.DateTime> DT_CONSULTA_SINTREGA { get; set; }
         public Nullable<System.DateTime> DT_CONSULTA_SINTEGRA { get; set; }
         public string DESC_PROFISSAO_CONJUGE { get; set; }
         public Nullable<System.DateTime> DT_NASCIMENTO_CONJUGE { get; set; }
@@ -141,7 +140,6 @@ namespace Cemapa.Models
         public string DESC_CPF_AUTORIZADO1 { get; set; }
         public string DESC_CPF_AUTORIZADO2 { get; set; }
         public string DESC_CPF_AUTORIZADO3 { get; set; }
-        public string DESC_OUTRAS_GRANTIAS { get; set; }
         public string DESC_GARANTIAS_OUTRAS { get; set; }
         public Nullable<short> NUM_DIA_VISITA { get; set; }
         public string DESC_FREQUENCIA_VISITA { get; set; }
