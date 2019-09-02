@@ -181,11 +181,11 @@ namespace Cemapa.Controllers
 
             }
         }
-
+        
         [HttpGet]
         public async Task<HttpResponseMessage> DownloadEtiqueta(int codFilial, string codMarketplace)
         {
-            //Este método buscar por PLPs, que nada mais são do que agrupamentos de pedidos, para imprimir em etiquetas.
+            //Este método busca por PLPs, que nada mais são do que agrupamentos de pedidos para imprimir em etiquetas.
             //Problema que a forma de acessar e imprimir etiquetas pode precisar de algumas chamadas.
             
             bool wAchouPlp = false;
@@ -206,126 +206,137 @@ namespace Cemapa.Controllers
                 
                 TB_CONFIGURACAO_SKYHUB configuracaoSkyhub = GetConfiguracao(codFilial);
 
-                if (configuracaoSkyhub != null)
+                ConfiguracaoEstaOK(configuracaoSkyhub);
+                
+                //Primeira requisição, faz uma chamada para verificar se uma PLP ja existe.
+
+                HttpClient Http = new HttpClient
                 {
-                    //Primeira requisição, faz uma chamada para verificar se uma PLP ja existe.
+                    BaseAddress = new Uri("https://api.skyhub.com.br")
+                };
 
-                    HttpClient Http = new HttpClient
-                    {
-                        BaseAddress = new Uri("https://api.skyhub.com.br")
-                    };
-
-                    Http.DefaultRequestHeaders.Accept.Clear();
+                Http.DefaultRequestHeaders.Accept.Clear();
                     
-                    Http.DefaultRequestHeaders.Add("X-User-Email", configuracaoSkyhub.DESC_USUARIO_EMAIL);
-                    Http.DefaultRequestHeaders.Add("X-Api-Key", configuracaoSkyhub.DESC_TOKEN_INTEGRACAO);
-                    Http.DefaultRequestHeaders.Add("X-Accountmanager-Key", configuracaoSkyhub.DESC_TOKEN_ACCOUNT);
+                Http.DefaultRequestHeaders.Add("X-User-Email", configuracaoSkyhub.DESC_USUARIO_EMAIL);
+                Http.DefaultRequestHeaders.Add("X-Api-Key", configuracaoSkyhub.DESC_TOKEN_INTEGRACAO);
+                Http.DefaultRequestHeaders.Add("X-Accountmanager-Key", configuracaoSkyhub.DESC_TOKEN_ACCOUNT);
 
-                    Http.DefaultRequestHeaders.Add("Accept", "application/json;charset=UTF-8");
-                    Http.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                    HttpResponseMessage response;
+                Http.DefaultRequestHeaders.Add("Accept", "application/json;charset=UTF-8");
+                Http.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                HttpResponseMessage response;
 
-                    while (!wAchouPlp || wMaximoIteracoes <= 0)
+                while (!wAchouPlp || wMaximoIteracoes <= 0)
+                {
+                    response = await Http.GetAsync($"shipments/b2w");
+
+                    if (response.IsSuccessStatusCode)
                     {
-                        response = await Http.GetAsync($"shipments/b2w");
+                        //Caso encontre a PLP correspondente ao código do pedido solicitado,
+                        //então copia o código da PLP para imprimir em seguida.
 
-                        if (response.IsSuccessStatusCode)
+                        PLPs plps = await response.Content.ReadAsAsync<PLPs>();
+
+                        foreach (Plp plp in plps.plp)
                         {
-                            //Caso encontre a PLP correspondente ao código do pedido solicitado,
-                            //então copia o código da PLP para imprimir em seguida.
-
-                            PLPs plps = await response.Content.ReadAsAsync<PLPs>();
-
-                            foreach (Plp plp in plps.plp)
+                            foreach (OrderPLP ordem in plp.orders)
                             {
-                                foreach (OrderPLP ordem in plp.orders)
+                                if (ordem.code == codMarketplace)
                                 {
-                                    if (ordem.code == codMarketplace)
-                                    {
-                                        wAchouPlp = true;
-                                        wCodigoPlp = plp.id;
-                                    }
+                                    wAchouPlp = true;
+                                    wCodigoPlp = plp.id;
                                 }
                             }
+                        }
 
-                            if (!wAchouPlp)
-                            {
-                                //Caso não encontre a PLP com o código do pedido solicitado, então é necessário
-                                //realizar o agrupamento, para depois novamente busca-la.
+                        if (!wAchouPlp)
+                        {
+                            //Caso não encontre a PLP com o código do pedido solicitado, então é necessário
+                            //realizar o agrupamento, para depois novamente busca-la.
 
-                                List<string> codigos = new List<string> { codMarketplace };
-                                Dictionary<string, List<string>> agrupamentos = new Dictionary<string, List<string>> { { "order_remote_codes", codigos } };
+                            List<string> codigos = new List<string> { codMarketplace };
+                            Dictionary<string, List<string>> agrupamentos = new Dictionary<string, List<string>> { { "order_remote_codes", codigos } };
                                 
+                            response = await Http.PostAsJsonAsync($"shipments/b2w", agrupamentos);
+
+                            if (!response.IsSuccessStatusCode)
+                            {
+                                //Caso a skyhub já encontre alguma PLP existente para esse pedido, então ele desagrupa e
+                                //retorna um erro, porém na próxima chamada existe a certeza de que o pedido será agrupado
+                                //em uma nova PLP.
+
                                 response = await Http.PostAsJsonAsync($"shipments/b2w", agrupamentos);
 
                                 if (!response.IsSuccessStatusCode)
                                 {
-                                    //Caso a skyhub já encontre alguma PLP existente para esse pedido, então ele desagrupa e
-                                    //retorna um erro, porém na próxima chamada existe a certeza de que o pedido será agrupado
-                                    //em uma nova PLP.
+                                    ErrorPLP body = new ErrorPLP();
 
-                                    response = await Http.PostAsJsonAsync($"shipments/b2w", agrupamentos);
-
-                                    if (!response.IsSuccessStatusCode)
+                                    try
                                     {
-                                        ErrorPLP body = new ErrorPLP();
                                         body = await response.Content.ReadAsAsync<ErrorPLP>();
-
-                                        throw new Exception($"Não foi possível agrupar pedido em uma PLP. {codMarketplace}: {response.ReasonPhrase}. Conteúdo: {body.message}");
                                     }
+                                    catch (Exception)
+                                    {
+                                        throw new Exception($"Não foi possível agrupar pedido em uma PLP. {codMarketplace}: {response.ReasonPhrase}, {response.Content.ReadAsAsync<string>()}");
+                                    }
+
+                                    throw new Exception($"Não foi possível agrupar pedido em uma PLP. {codMarketplace}: {response.ReasonPhrase}. Conteúdo: {body.message}");
                                 }
                             }
                         }
-                        else
-                        {
-                            Error body = new Error();
-                            body = await response.Content.ReadAsAsync<Error>();
+                    }
+                    else
+                    {
+                        Error body = new Error();
 
-                            throw new Exception($"Não foi possível buscar PLPs na skyhub. {codMarketplace}: {response.ReasonPhrase}. Conteúdo: {body.error}");
+                        try
+                        {
+                            body = await response.Content.ReadAsAsync<Error>();
+                        }
+                        catch (Exception)
+                        {
+                            throw new Exception($"Não foi possível buscar PLPs na skyhub. {codMarketplace}: {response.ReasonPhrase}, {response.Content.ReadAsAsync<string>()}");
                         }
 
-                        //Variavel controla numero máximo de iterações do loop, para não resultar em uma chamada sem fim.
-
-                        wMaximoIteracoes--;
+                        throw new Exception($"Não foi possível buscar PLPs na skyhub. {codMarketplace}: {response.ReasonPhrase}. Conteúdo: {body.error}");
                     }
 
-                    if (!wAchouPlp && wMaximoIteracoes <= 0)
-                    {
-                        //Caso fez varias buscas e não encontrou nada, encerra e drop o erro.
-                        //Se acontecer esse caso, é provavel que exista uma possibilidade não prevista sobre gerar as etiquetas.
+                    //Variavel controla numero máximo de iterações do loop, para não resultar em uma chamada sem fim.
 
-                        throw new Exception($"Não foi possível procurar PLP na skyhub. {codMarketplace}: Tentou procurar a PLP por muito tempo, e não encontrou nada");
-                    }
-
-                    //Finalmente recupera a etiqueta, enviando o código da PLP encontrada anteriormente.
-
-                    Http.DefaultRequestHeaders.Clear();
-                    Http.DefaultRequestHeaders.Accept.Clear();
-                    
-                    Http.DefaultRequestHeaders.Add("X-User-Email", configuracaoSkyhub.DESC_USUARIO_EMAIL);
-                    Http.DefaultRequestHeaders.Add("X-Api-Key", configuracaoSkyhub.DESC_TOKEN_INTEGRACAO);
-                    Http.DefaultRequestHeaders.Add("X-Accountmanager-Key", configuracaoSkyhub.DESC_TOKEN_ACCOUNT);
-                    
-                    Http.DefaultRequestHeaders.Add("Accept", "application/pdf;charset=UTF-8");
-                    Http.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/pdf"));
-
-                    response = await Http.GetAsync($"shipments/b2w/view?plp_id={wCodigoPlp}");
-
-                    if (!response.IsSuccessStatusCode)
-                    {
-                        throw new Exception($"Não foi possível baixar etiqueta. {codMarketplace}: {response.ReasonPhrase}. Conteúdo: {response.Content.ReadAsStringAsync()}");
-                    }
-
-                    return new HttpResponseMessage()
-                    {
-                        StatusCode = HttpStatusCode.OK,
-                        Content = response.Content
-                    };
+                    wMaximoIteracoes--;
                 }
-                else
+
+                if (!wAchouPlp && wMaximoIteracoes <= 0)
                 {
-                    throw new Exception($"Filial não encontrada: {codFilial}");
+                    //Caso fez varias buscas e não encontrou nada, encerra e drop o erro.
+                    //Se acontecer esse caso, é provavel que exista uma possibilidade não prevista sobre gerar as etiquetas.
+
+                    throw new Exception($"Não foi possível procurar PLP na skyhub. {codMarketplace}: Tentou procurar a PLP várias vezes e não encontrou nada");
                 }
+
+                //Finalmente recupera a etiqueta, enviando o código da PLP encontrada anteriormente.
+
+                Http.DefaultRequestHeaders.Clear();
+                Http.DefaultRequestHeaders.Accept.Clear();
+                    
+                Http.DefaultRequestHeaders.Add("X-User-Email", configuracaoSkyhub.DESC_USUARIO_EMAIL);
+                Http.DefaultRequestHeaders.Add("X-Api-Key", configuracaoSkyhub.DESC_TOKEN_INTEGRACAO);
+                Http.DefaultRequestHeaders.Add("X-Accountmanager-Key", configuracaoSkyhub.DESC_TOKEN_ACCOUNT);
+                    
+                Http.DefaultRequestHeaders.Add("Accept", "application/pdf;charset=UTF-8");
+                Http.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/pdf"));
+
+                response = await Http.GetAsync($"shipments/b2w/view?plp_id={wCodigoPlp}");
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    throw new Exception($"Não foi possível baixar etiqueta. {codMarketplace}: {response.ReasonPhrase}. Conteúdo: {response.Content.ReadAsStringAsync()}");
+                }
+
+                return new HttpResponseMessage()
+                {
+                    StatusCode = HttpStatusCode.OK,
+                    Content = response.Content
+                };
             }
             catch (Exception except)
             {
@@ -361,52 +372,44 @@ namespace Cemapa.Controllers
 
                 TB_CONFIGURACAO_SKYHUB configuracaoSkyhub = GetConfiguracao(codFilial);
 
-                if (configuracaoSkyhub != null)
+                ConfiguracaoEstaOK(configuracaoSkyhub);
+                
+                HttpClient Http = new HttpClient
                 {
-                    HttpClient Http = new HttpClient
+                    BaseAddress = new Uri("https://api.skyhub.com.br")
+                };
+
+                Http.DefaultRequestHeaders.Accept.Clear();
+                Http.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                Http.DefaultRequestHeaders.Add("X-User-Email", configuracaoSkyhub.DESC_USUARIO_EMAIL);
+                Http.DefaultRequestHeaders.Add("X-Api-Key", configuracaoSkyhub.DESC_TOKEN_INTEGRACAO);
+                Http.DefaultRequestHeaders.Add("X-Accountmanager-Key", configuracaoSkyhub.DESC_TOKEN_ACCOUNT);
+                Http.DefaultRequestHeaders.Add("Accept", "application/json;charset=UTF-8");
+
+                HttpResponseMessage response = await Http.GetAsync($"/orders/{codMarketplace}");
+
+                Order ordem = new Order();
+                ordem = await response.Content.ReadAsAsync<Order>();
+
+                if (response.IsSuccessStatusCode)
+                {
+                    if (ordem != null)
                     {
-                        BaseAddress = new Uri("https://api.skyhub.com.br")
-                    };
+                        //Se houve uma resposta de sucesso, atualiza o campo DESC_SITUACAO_SKYHUB na tabela TB_PEDIDO_CAB
 
-                    Http.DefaultRequestHeaders.Accept.Clear();
-                    Http.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-                    Http.DefaultRequestHeaders.Add("X-User-Email", configuracaoSkyhub.DESC_USUARIO_EMAIL);
-                    Http.DefaultRequestHeaders.Add("X-Api-Key", configuracaoSkyhub.DESC_TOKEN_INTEGRACAO);
-                    Http.DefaultRequestHeaders.Add("X-Accountmanager-Key", configuracaoSkyhub.DESC_TOKEN_ACCOUNT);
-                    Http.DefaultRequestHeaders.Add("Accept", "application/json;charset=UTF-8");
-
-                    HttpResponseMessage response = await Http.GetAsync($"/orders/{codMarketplace}");
-
-                    Order ordem = new Order();
-                    ordem = await response.Content.ReadAsAsync<Order>();
-
-                    if (response.IsSuccessStatusCode)
-                    {
-                        if (ordem != null)
+                        TB_PEDIDO_CAB wPedido = (from p in db.TB_PEDIDO_CAB
+                                                    where (p.COD_PEDIDO_MARKETPLACE == codMarketplace)
+                                                    select p).FirstOrDefault();
+                        if (wPedido != null)
                         {
-                            //Se houve uma resposta de sucesso, atualiza o campo DESC_SITUACAO_SKYHUB na tabela TB_PEDIDO_CAB
-
-                            TB_PEDIDO_CAB wPedido = (from p in db.TB_PEDIDO_CAB
-                                                     where (p.COD_PEDIDO_MARKETPLACE == codMarketplace)
-                                                     select p).FirstOrDefault();
-                            if (wPedido != null)
-                            {
-                                wPedido.DESC_SITUACAO_MARKETPLACE = ordem.status.type;
-                                db.Entry(wPedido).State = EntityState.Modified;
-                                db.SaveChanges();
-                            }
-                            else
-                            {
-                                throw new Exception($"Erro ao atualizar pedido no sistema. Não encontrado: {codMarketplace}");
-                            }
+                            wPedido.DESC_SITUACAO_MARKETPLACE = ordem.status.type;
+                            db.Entry(wPedido).State = EntityState.Modified;
+                            db.SaveChanges();
                         }
                         else
                         {
-                            Error body = new Error();
-                            body = await response.Content.ReadAsAsync<Error>();
-
-                            throw new Exception($"Erro ao solicitar pedido {codMarketplace}. Conteúdo: Pedido não encontrado");
+                            throw new Exception($"Erro ao atualizar pedido no sistema. Não encontrado: {codMarketplace}");
                         }
                     }
                     else
@@ -414,12 +417,15 @@ namespace Cemapa.Controllers
                         Error body = new Error();
                         body = await response.Content.ReadAsAsync<Error>();
 
-                        throw new Exception($"Erro no retorno da Skyhub. {codMarketplace}: {response.ReasonPhrase}. Conteúdo: {body.error}");
+                        throw new Exception($"Erro ao solicitar pedido {codMarketplace}. Conteúdo: Pedido não encontrado");
                     }
                 }
                 else
                 {
-                    throw new Exception($"Filial não encontrada: {codFilial}");
+                    Error body = new Error();
+                    body = await response.Content.ReadAsAsync<Error>();
+
+                    throw new Exception($"Erro no retorno da Skyhub. {codMarketplace}: {response.ReasonPhrase}. Conteúdo: {body.error}");
                 }
 
                 return Request.CreateResponse(
@@ -462,53 +468,50 @@ namespace Cemapa.Controllers
 
                 TB_CONFIGURACAO_SKYHUB configuracaoSkyhub = GetConfiguracao(codFilial);
 
-                if (configuracaoSkyhub != null)
+                ConfiguracaoEstaOK(configuracaoSkyhub);
+                
+                HttpClient Http = new HttpClient
                 {
-                    HttpClient Http = new HttpClient
+                    BaseAddress = new Uri("https://api.skyhub.com.br")
+                };
+
+                Http.DefaultRequestHeaders.Accept.Clear();
+                Http.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                Http.DefaultRequestHeaders.Add("X-User-Email", configuracaoSkyhub.DESC_USUARIO_EMAIL);
+                Http.DefaultRequestHeaders.Add("X-Api-Key", configuracaoSkyhub.DESC_TOKEN_INTEGRACAO);
+                Http.DefaultRequestHeaders.Add("X-Accountmanager-Key", configuracaoSkyhub.DESC_TOKEN_ACCOUNT);
+                Http.DefaultRequestHeaders.Add("Accept", "application/json;charset=UTF-8");
+
+                ConfiguracaoEstaOK(configuracaoSkyhub);
+
+                object data = null;
+
+                HttpResponseMessage response = await Http.PostAsJsonAsync($"/orders/{codMarketplace}/delivery", data);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    TB_PEDIDO_CAB wPedido = (from p in db.TB_PEDIDO_CAB
+                                                where (p.COD_PEDIDO_MARKETPLACE == codMarketplace)
+                                                select p).FirstOrDefault();
+                    if (wPedido != null)
                     {
-                        BaseAddress = new Uri("https://api.skyhub.com.br")
-                    };
-
-                    Http.DefaultRequestHeaders.Accept.Clear();
-                    Http.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-                    Http.DefaultRequestHeaders.Add("X-User-Email", configuracaoSkyhub.DESC_USUARIO_EMAIL);
-                    Http.DefaultRequestHeaders.Add("X-Api-Key", configuracaoSkyhub.DESC_TOKEN_INTEGRACAO);
-                    Http.DefaultRequestHeaders.Add("X-Accountmanager-Key", configuracaoSkyhub.DESC_TOKEN_ACCOUNT);
-                    Http.DefaultRequestHeaders.Add("Accept", "application/json;charset=UTF-8");
-
-                    object data = null;
-
-                    HttpResponseMessage response = await Http.PostAsJsonAsync($"/orders/{codMarketplace}/delivery", data);
-
-                    if (response.IsSuccessStatusCode)
-                    {
-                        TB_PEDIDO_CAB wPedido = (from p in db.TB_PEDIDO_CAB
-                                                 where (p.COD_PEDIDO_MARKETPLACE == codMarketplace)
-                                                 select p).FirstOrDefault();
-                        if (wPedido != null)
-                        {
-                            wPedido.DESC_SITUACAO_MARKETPLACE = "DELIVERED";
-                            wPedido.DESC_COMPLEMENTO_OBS2 = "Finalizado pelo vendedor";
-                            db.Entry(wPedido).State = EntityState.Modified;
-                            db.SaveChanges();
-                        }
-                        else
-                        {
-                            throw new Exception($"Erro ao atualizar pedido no sistema. Não encontrado: {codMarketplace}");
-                        }
+                        wPedido.DESC_SITUACAO_MARKETPLACE = "DELIVERED";
+                        wPedido.DESC_COMPLEMENTO_OBS2 = "Finalizado pelo vendedor";
+                        db.Entry(wPedido).State = EntityState.Modified;
+                        db.SaveChanges();
                     }
                     else
                     {
-                        Error body = new Error();
-                        body = await response.Content.ReadAsAsync<Error>();
-
-                        throw new Exception($"Erro ao atualizar pedido para DELIVERED. {codMarketplace}: {response.ReasonPhrase}. Conteúdo: {body.error}");
+                        throw new Exception($"Erro ao atualizar pedido no sistema. Não encontrado: {codMarketplace}");
                     }
                 }
                 else
                 {
-                    throw new Exception($"Filial não encontrada: {codFilial}");
+                    Error body = new Error();
+                    body = await response.Content.ReadAsAsync<Error>();
+
+                    throw new Exception($"Erro ao atualizar pedido para DELIVERED. {codMarketplace}: {response.ReasonPhrase}. Conteúdo: {body.error}");
                 }
 
                 return Request.CreateResponse(
@@ -547,55 +550,52 @@ namespace Cemapa.Controllers
 
                 TB_CONFIGURACAO_SKYHUB configuracaoSkyhub = GetConfiguracao(codFilial);
 
-                if (configuracaoSkyhub != null)
+                ConfiguracaoEstaOK(configuracaoSkyhub);
+                
+                HttpClient Http = new HttpClient
                 {
-                    HttpClient Http = new HttpClient
+                    BaseAddress = new Uri("https://api.skyhub.com.br")
+                };
+
+                Http.DefaultRequestHeaders.Accept.Clear();
+                Http.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                Http.DefaultRequestHeaders.Add("X-User-Email", configuracaoSkyhub.DESC_USUARIO_EMAIL);
+                Http.DefaultRequestHeaders.Add("X-Api-Key", configuracaoSkyhub.DESC_TOKEN_INTEGRACAO);
+                Http.DefaultRequestHeaders.Add("X-Accountmanager-Key", configuracaoSkyhub.DESC_TOKEN_ACCOUNT);
+                Http.DefaultRequestHeaders.Add("Accept", "application/json;charset=UTF-8");
+
+                ConfiguracaoEstaOK(configuracaoSkyhub);
+
+                object data = null;
+                HttpResponseMessage response = await Http.PostAsJsonAsync($"/orders/{codMarketplace}/cancel", data);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    //Atualiza os campos do pedido necessários para cancelado
+
+                    TB_PEDIDO_CAB wPedido = (from p in db.TB_PEDIDO_CAB
+                                                where (p.COD_PEDIDO_MARKETPLACE == codMarketplace)
+                                                select p).FirstOrDefault();
+                    if (wPedido != null)
                     {
-                        BaseAddress = new Uri("https://api.skyhub.com.br")
-                    };
-
-                    Http.DefaultRequestHeaders.Accept.Clear();
-                    Http.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-                    Http.DefaultRequestHeaders.Add("X-User-Email", configuracaoSkyhub.DESC_USUARIO_EMAIL);
-                    Http.DefaultRequestHeaders.Add("X-Api-Key", configuracaoSkyhub.DESC_TOKEN_INTEGRACAO);
-                    Http.DefaultRequestHeaders.Add("X-Accountmanager-Key", configuracaoSkyhub.DESC_TOKEN_ACCOUNT);
-                    Http.DefaultRequestHeaders.Add("Accept", "application/json;charset=UTF-8");
-                    
-                    object data = null;
-                    HttpResponseMessage response = await Http.PostAsJsonAsync($"/orders/{codMarketplace}/cancel", data);
-
-                    if (response.IsSuccessStatusCode)
-                    {
-                        //Atualiza os campos do pedido necessários para cancelado
-
-                        TB_PEDIDO_CAB wPedido = (from p in db.TB_PEDIDO_CAB
-                                                 where (p.COD_PEDIDO_MARKETPLACE == codMarketplace)
-                                                 select p).FirstOrDefault();
-                        if (wPedido != null)
-                        {
-                            wPedido.IND_SITUACAO = "2";
-                            wPedido.DESC_SITUACAO_MARKETPLACE = "CANCELED";
-                            wPedido.DESC_COMPLEMENTO_OBS2 = "Cancelado pelo vendedor";
-                            db.Entry(wPedido).State = EntityState.Modified;
-                            db.SaveChanges();
-                        }
-                        else
-                        {
-                            throw new Exception($"Erro ao atualizar pedido no sistema. Não encontrado: {codMarketplace}");
-                        }
+                        wPedido.IND_SITUACAO = "2";
+                        wPedido.DESC_SITUACAO_MARKETPLACE = "CANCELED";
+                        wPedido.DESC_COMPLEMENTO_OBS2 = "Cancelado pelo vendedor";
+                        db.Entry(wPedido).State = EntityState.Modified;
+                        db.SaveChanges();
                     }
                     else
                     {
-                        Error body = new Error();
-                        body = await response.Content.ReadAsAsync<Error>();
-
-                        throw new Exception($"Erro ao atualizar pedido para CANCELED. {codMarketplace}: {response.ReasonPhrase}. Conteúdo: {body.error}");
+                        throw new Exception($"Erro ao atualizar pedido no sistema. Não encontrado: {codMarketplace}");
                     }
                 }
                 else
                 {
-                    throw new Exception($"Filial não encontrada: {codFilial}");
+                    Error body = new Error();
+                    body = await response.Content.ReadAsAsync<Error>();
+
+                    throw new Exception($"Erro ao atualizar pedido para CANCELED. {codMarketplace}: {response.ReasonPhrase}. Conteúdo: {body.error}");
                 }
 
                 return Request.CreateResponse(
@@ -643,68 +643,65 @@ namespace Cemapa.Controllers
 
                 TB_CONFIGURACAO_SKYHUB configuracaoSkyhub = GetConfiguracao(codFilial);
 
-                if (configuracaoSkyhub != null)
+                ConfiguracaoEstaOK(configuracaoSkyhub);
+                
+                HttpClient Http = new HttpClient
                 {
-                    HttpClient Http = new HttpClient
+                    BaseAddress = new Uri("https://api.skyhub.com.br")
+                };
+
+                Http.DefaultRequestHeaders.Accept.Clear();
+                Http.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                Http.DefaultRequestHeaders.Add("X-User-Email", configuracaoSkyhub.DESC_USUARIO_EMAIL);
+                Http.DefaultRequestHeaders.Add("X-Api-Key", configuracaoSkyhub.DESC_TOKEN_INTEGRACAO);
+                Http.DefaultRequestHeaders.Add("X-Accountmanager-Key", configuracaoSkyhub.DESC_TOKEN_ACCOUNT);
+                Http.DefaultRequestHeaders.Add("Accept", "application/json;charset=UTF-8");
+
+                ConfiguracaoEstaOK(configuracaoSkyhub);
+
+                //Informações da transportadora optado pelo vendedor.
+
+                Shipment envio = new Shipment()
+                {
+                    code = codMarketplace,
+                    track = new Track()
                     {
-                        BaseAddress = new Uri("https://api.skyhub.com.br")
-                    };
+                        code = "",
+                        carrier = "",
+                        method = "",
+                        url = ""
+                    }
+                };
 
-                    Http.DefaultRequestHeaders.Accept.Clear();
-                    Http.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                //Adiciona a key shipment à requisição, padrão da API
 
-                    Http.DefaultRequestHeaders.Add("X-User-Email", configuracaoSkyhub.DESC_USUARIO_EMAIL);
-                    Http.DefaultRequestHeaders.Add("X-Api-Key", configuracaoSkyhub.DESC_TOKEN_INTEGRACAO);
-                    Http.DefaultRequestHeaders.Add("X-Accountmanager-Key", configuracaoSkyhub.DESC_TOKEN_ACCOUNT);
-                    Http.DefaultRequestHeaders.Add("Accept", "application/json;charset=UTF-8");
+                Dictionary<string, Shipment> data = new Dictionary<string, Shipment> { { "shipment", envio } };
                     
-                    //Informações da transportadora optado pelo vendedor.
+                HttpResponseMessage response = await Http.PostAsJsonAsync($"/orders/{codMarketplace}/shipments", data);
 
-                    Shipment envio = new Shipment()
+                if (response.IsSuccessStatusCode)
+                {
+                    TB_PEDIDO_CAB wPedido = (from p in db.TB_PEDIDO_CAB
+                                                where (p.COD_PEDIDO_MARKETPLACE == codMarketplace)
+                                                select p).FirstOrDefault();
+                    if (wPedido != null)
                     {
-                        code = codMarketplace,
-                        track = new Track()
-                        {
-                            code = "",
-                            carrier = "",
-                            method = "",
-                            url = ""
-                        }
-                    };
-
-                    //Adiciona a key shipment à requisição, padrão da API
-
-                    Dictionary<string, Shipment> data = new Dictionary<string, Shipment> { { "shipment", envio } };
-                    
-                    HttpResponseMessage response = await Http.PostAsJsonAsync($"/orders/{codMarketplace}/shipments", data);
-
-                    if (response.IsSuccessStatusCode)
-                    {
-                        TB_PEDIDO_CAB wPedido = (from p in db.TB_PEDIDO_CAB
-                                                 where (p.COD_PEDIDO_MARKETPLACE == codMarketplace)
-                                                 select p).FirstOrDefault();
-                        if (wPedido != null)
-                        {
-                            wPedido.DESC_SITUACAO_MARKETPLACE = "SHIPPED";
-                            db.Entry(wPedido).State = EntityState.Modified;
-                            db.SaveChanges();
-                        }
-                        else
-                        {
-                            throw new Exception($"Erro ao atualizar pedido no sistema. Não encontrado: {codMarketplace}");
-                        }
+                        wPedido.DESC_SITUACAO_MARKETPLACE = "SHIPPED";
+                        db.Entry(wPedido).State = EntityState.Modified;
+                        db.SaveChanges();
                     }
                     else
                     {
-                        Error body = new Error();
-                        body = await response.Content.ReadAsAsync<Error>();
-
-                        throw new Exception($"Erro no retorno da Skyhub. {codMarketplace}: {response.ReasonPhrase}. Conteúdo: {body.error}");
+                        throw new Exception($"Erro ao atualizar pedido no sistema. Não encontrado: {codMarketplace}");
                     }
                 }
                 else
                 {
-                    throw new Exception($"Filial não encontrada: {codFilial}");
+                    Error body = new Error();
+                    body = await response.Content.ReadAsAsync<Error>();
+
+                    throw new Exception($"Erro no retorno da Skyhub. {codMarketplace}: {response.ReasonPhrase}. Conteúdo: {body.error}");
                 }
 
                 return Request.CreateResponse(
@@ -744,39 +741,36 @@ namespace Cemapa.Controllers
 
                 TB_CONFIGURACAO_SKYHUB configuracaoSkyhub = GetConfiguracao(codFilial);
 
-                if (configuracaoSkyhub != null)
+                ConfiguracaoEstaOK(configuracaoSkyhub);
+                
+                HttpClient Http = new HttpClient
                 {
-                    HttpClient Http = new HttpClient
-                    {
-                        BaseAddress = new Uri("https://api.skyhub.com.br")
-                    };
+                    BaseAddress = new Uri("https://api.skyhub.com.br")
+                };
 
-                    Http.DefaultRequestHeaders.Accept.Clear();
-                    Http.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                Http.DefaultRequestHeaders.Accept.Clear();
+                Http.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                    Http.DefaultRequestHeaders.Add("X-User-Email", configuracaoSkyhub.DESC_USUARIO_EMAIL);
-                    Http.DefaultRequestHeaders.Add("X-Api-Key", configuracaoSkyhub.DESC_TOKEN_INTEGRACAO);
-                    Http.DefaultRequestHeaders.Add("X-Accountmanager-Key", configuracaoSkyhub.DESC_TOKEN_ACCOUNT);
-                    Http.DefaultRequestHeaders.Add("Accept", "application/json;charset=UTF-8");
+                Http.DefaultRequestHeaders.Add("X-User-Email", configuracaoSkyhub.DESC_USUARIO_EMAIL);
+                Http.DefaultRequestHeaders.Add("X-Api-Key", configuracaoSkyhub.DESC_TOKEN_INTEGRACAO);
+                Http.DefaultRequestHeaders.Add("X-Accountmanager-Key", configuracaoSkyhub.DESC_TOKEN_ACCOUNT);
+                Http.DefaultRequestHeaders.Add("Accept", "application/json;charset=UTF-8");
 
-                    HttpResponseMessage response = await Http.GetAsync($"/orders/{codMarketplace}");
+                ConfiguracaoEstaOK(configuracaoSkyhub);
 
-                    if (!response.IsSuccessStatusCode)
-                    {
-                        Error body = new Error();
-                        body = await response.Content.ReadAsAsync<Error>();
+                HttpResponseMessage response = await Http.GetAsync($"/orders/{codMarketplace}");
 
-                        throw new Exception($"Erro ao buscar pedido na skyhub. {codMarketplace}: {response.ReasonPhrase}. Conteúdo: {body.error}");
-                    }
-                    else
-                    {
-                        ordem = new Order();
-                        ordem = await response.Content.ReadAsAsync<Order>();
-                    }
+                if (!response.IsSuccessStatusCode)
+                {
+                    Error body = new Error();
+                    body = await response.Content.ReadAsAsync<Error>();
+
+                    throw new Exception($"Erro ao buscar pedido na skyhub. {codMarketplace}: {response.ReasonPhrase}. Conteúdo: {body.error}");
                 }
                 else
                 {
-                    throw new Exception($"Filial não encontrada: {codFilial}");
+                    ordem = new Order();
+                    ordem = await response.Content.ReadAsAsync<Order>();
                 }
 
                 return Request.CreateResponse(
@@ -818,64 +812,61 @@ namespace Cemapa.Controllers
                 //Podendo confundir as contas às quais os pedidos são sincronizados
 
                 TB_CONFIGURACAO_SKYHUB configuracaoSkyhub = GetConfiguracao(codFilial);
-                    
-                if (configuracaoSkyhub != null)
+
+                ConfiguracaoEstaOK(configuracaoSkyhub);
+
+                HttpClient Http = new HttpClient
                 {
-                    HttpClient Http = new HttpClient
-                    {
-                        BaseAddress = new Uri("https://api.skyhub.com.br")
-                    };
+                    BaseAddress = new Uri("https://api.skyhub.com.br")
+                };
 
-                    Http.DefaultRequestHeaders.Accept.Clear();
-                    Http.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                Http.DefaultRequestHeaders.Accept.Clear();
+                Http.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                    Http.DefaultRequestHeaders.Add("X-User-Email", configuracaoSkyhub.DESC_USUARIO_EMAIL);
-                    Http.DefaultRequestHeaders.Add("X-Api-Key", configuracaoSkyhub.DESC_TOKEN_INTEGRACAO);
-                    Http.DefaultRequestHeaders.Add("X-Accountmanager-Key", configuracaoSkyhub.DESC_TOKEN_ACCOUNT);
-                    Http.DefaultRequestHeaders.Add("Accept", "application/json;charset=UTF-8");
+                Http.DefaultRequestHeaders.Add("X-User-Email", configuracaoSkyhub.DESC_USUARIO_EMAIL);
+                Http.DefaultRequestHeaders.Add("X-Api-Key", configuracaoSkyhub.DESC_TOKEN_INTEGRACAO);
+                Http.DefaultRequestHeaders.Add("X-Accountmanager-Key", configuracaoSkyhub.DESC_TOKEN_ACCOUNT);
+                Http.DefaultRequestHeaders.Add("Accept", "application/json;charset=UTF-8");
 
-                    //Atribui a chave de acesso da nota fiscal à chamada
+                ConfiguracaoEstaOK(configuracaoSkyhub);
 
-                    Invoice fatura = new Invoice()
-                    {
-                        key = chaveNFE
-                    };
+                //Atribui a chave de acesso da nota fiscal à chamada
 
-                    //Adiciona a key invoice à chamada, padrão da API
+                Invoice fatura = new Invoice()
+                {
+                    key = chaveNFE
+                };
 
-                    Dictionary<string, Invoice> data = new Dictionary<string, Invoice> { { "invoice", fatura } };
+                //Adiciona a key invoice à chamada, padrão da API
 
-                    HttpResponseMessage response = await Http.PostAsJsonAsync($"/orders/{codMarketplace}/invoice", data);
+                Dictionary<string, Invoice> data = new Dictionary<string, Invoice> { { "invoice", fatura } };
+
+                HttpResponseMessage response = await Http.PostAsJsonAsync($"/orders/{codMarketplace}/invoice", data);
                         
-                    if (response.IsSuccessStatusCode)
-                    {
-                        //Se houve uma resposta de sucesso, atualiza o campo DESC_SITUACAO_SKYHUB na tabela TB_PEDIDO_CAB
+                if (response.IsSuccessStatusCode)
+                {
+                    //Se houve uma resposta de sucesso, atualiza o campo DESC_SITUACAO_SKYHUB na tabela TB_PEDIDO_CAB
 
-                        TB_PEDIDO_CAB wPedido = (from p in db.TB_PEDIDO_CAB
-                                                 where (p.COD_PEDIDO_MARKETPLACE == codMarketplace)
-                                                 select p).FirstOrDefault();
-                        if (wPedido != null)
-                        {
-                            wPedido.DESC_SITUACAO_MARKETPLACE = "INVOICED";
-                            db.Entry(wPedido).State = EntityState.Modified;
-                            db.SaveChanges();
-                        }
-                        else
-                        {
-                            throw new Exception($"Erro ao atualizar pedido no sistema. Não encontrado: {codMarketplace}");
-                        }
+                    TB_PEDIDO_CAB wPedido = (from p in db.TB_PEDIDO_CAB
+                                                where (p.COD_PEDIDO_MARKETPLACE == codMarketplace)
+                                                select p).FirstOrDefault();
+                    if (wPedido != null)
+                    {
+                        wPedido.DESC_SITUACAO_MARKETPLACE = "INVOICED";
+                        db.Entry(wPedido).State = EntityState.Modified;
+                        db.SaveChanges();
                     }
                     else
                     {
-                        Error body = new Error();
-                        body = await response.Content.ReadAsAsync<Error>();
-
-                        throw new Exception($"Erro no retorno da Skyhub. {codMarketplace}: {response.ReasonPhrase}. Conteúdo: {body.error}");
+                        throw new Exception($"Erro ao atualizar pedido no sistema. Não encontrado: {codMarketplace}");
                     }
                 }
                 else
                 {
-                    throw new Exception($"Filial não encontrada: {codFilial}");
+                    Error body = new Error();
+                    body = await response.Content.ReadAsAsync<Error>();
+
+                    throw new Exception($"Erro no retorno da Skyhub. {codMarketplace}: {response.ReasonPhrase}. Conteúdo: {body.error}");
                 }
                 
                 return Request.CreateResponse(
@@ -918,6 +909,7 @@ namespace Cemapa.Controllers
 
                         Http.DefaultRequestHeaders.Accept.Clear();
                         Http.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                        Http.Timeout = TimeSpan.FromSeconds(10);
 
                         Http.DefaultRequestHeaders.Add("X-User-Email", configuracaoSkyhub.DESC_USUARIO_EMAIL);
                         Http.DefaultRequestHeaders.Add("X-Api-Key", configuracaoSkyhub.DESC_TOKEN_INTEGRACAO);
@@ -1018,17 +1010,17 @@ namespace Cemapa.Controllers
 
                                                     db.Entry(wPedidoCab).State = EntityState.Added;
                                                     db.SaveChanges();
-
-                                                    //Quando um pedido novo for baixado para o sistema, envia um e-mail para os seguintes destinatários:
                                                     
                                                     try
                                                     {
-                                                        List<string> eDestinatarios = new List<string>
+                                                        //Quando um pedido novo for baixado para o sistema, envia um e-mail para os destinatários cadastrados.
+
+                                                        List<string> eDestinatarios = new List<string>();
+
+                                                        foreach(TB_EMAIL_NOTIFICACAO email in configuracaoSkyhub.TB_EMAIL_NOTIFICACAO)
                                                         {
-                                                            "gyan0012@hotmail.com",
-                                                            "marcos@cemapa.com",
-                                                            "cemapa@cemapa.com"
-                                                        };
+                                                            eDestinatarios.Add(email.DESC_EMAIL);
+                                                        }
 
                                                         EnviaEmail(eDestinatarios, "Novo pedido aprovado.", $"Um novo pedido foi aprovado pelo marketplace. Código: {ordem.code}");
                                                     }
@@ -1172,7 +1164,13 @@ namespace Cemapa.Controllers
                             }
                             else
                             {
-                                ControlaExcecoes.Add($"Erro ao realizar chamada GET. Filial: {configuracaoSkyhub.COD_FILIAL}", response.ReasonPhrase); //Remover a leitura do content
+                                //O serviço de chamadas fica em horários aleatórios recebendo o seguinte erro,
+                                //nem o pessoal do suporte da skyhub soube dizer o motivo, então vamos ignorar esse erro.
+
+                                if(response.ReasonPhrase != "Internal Server Error")
+                                {
+                                    ControlaExcecoes.Add($"Erro ao realizar chamada GET. Filial: {configuracaoSkyhub.COD_FILIAL}", response.ReasonPhrase);
+                                }
                                 continue;
                             }
                         }
@@ -1680,6 +1678,8 @@ namespace Cemapa.Controllers
 
         private void ConfiguracaoEstaOK(TB_CONFIGURACAO_SKYHUB configuracaoSkyhub)
         {
+            if (configuracaoSkyhub == null)
+                throw new Exception($"Configuração skyhub não encontrada para filial informada");
             if (configuracaoSkyhub.COD_CLASS_CADASTRO < 0)
                 throw new Exception($"Configuração skyhub: classe de cadastro inválido, filial: {configuracaoSkyhub.COD_FILIAL}");
             if (configuracaoSkyhub.COD_DEPARTAMENTO < 0)

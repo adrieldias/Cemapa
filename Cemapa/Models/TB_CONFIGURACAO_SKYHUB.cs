@@ -14,6 +14,12 @@ namespace Cemapa.Models
     
     public partial class TB_CONFIGURACAO_SKYHUB
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public TB_CONFIGURACAO_SKYHUB()
+        {
+            this.TB_EMAIL_NOTIFICACAO = new HashSet<TB_EMAIL_NOTIFICACAO>();
+        }
+    
         public string IND_ATIVO { get; set; }
         public string DESC_USUARIO_EMAIL { get; set; }
         public string DESC_TOKEN_INTEGRACAO { get; set; }
@@ -39,5 +45,7 @@ namespace Cemapa.Models
         public virtual TB_DEPARTAMENTO TB_DEPARTAMENTO { get; set; }
         public virtual TB_LOTE_TIPO TB_LOTE_TIPO { get; set; }
         public virtual TB_VENDEDOR TB_VENDEDOR { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TB_EMAIL_NOTIFICACAO> TB_EMAIL_NOTIFICACAO { get; set; }
     }
 }

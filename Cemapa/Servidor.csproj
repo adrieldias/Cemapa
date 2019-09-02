@@ -219,6 +219,9 @@
     <Compile Include="Models\TB_EMAIL.cs">
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TB_EMAIL_NOTIFICACAO.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TB_ENERGIA_TENSAO.cs">
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>

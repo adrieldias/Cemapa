@@ -154,6 +154,8 @@
         <AssociationConnector Association="Model.FK_CONF_SKYXDEPARTAMENTO" />
         <AssociationConnector Association="Model.FK_CONF_SKYXLOTE_TIPO" />
         <AssociationConnector Association="Model.FK_CONF_SKYXVENDEDOR" />
+        <EntityTypeShape EntityType="Model.TB_EMAIL_NOTIFICACAO" Width="1.5" PointX="4.5" PointY="12.125" IsExpanded="false" />
+        <AssociationConnector Association="Model.FK_EMAIL_NOTXCONF_SKYHUB" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

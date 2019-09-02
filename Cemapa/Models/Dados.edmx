@@ -442,6 +442,14 @@ warning 6002: The table/view 'SISTEMA.TB_EMAIL' does not have a primary key defi
           <Property Name="QTD_COTA" Type="number" Precision="5" Scale="0" />
           <Property Name="IND_SSL" Type="char" MaxLength="1" />
         </EntityType>
+        <EntityType Name="TB_EMAIL_NOTIFICACAO">
+          <Key>
+            <PropertyRef Name="COD_EMAIL_NOTIFICACAO" />
+          </Key>
+          <Property Name="COD_EMAIL_NOTIFICACAO" Type="number" Precision="6" Scale="0" Nullable="false" />
+          <Property Name="COD_CONFIGURACAO_SKYHUB" Type="number" Precision="6" Scale="0" Nullable="false" />
+          <Property Name="DESC_EMAIL" Type="varchar2" MaxLength="150" />
+        </EntityType>
         <EntityType Name="TB_ENERGIA_TENSAO">
           <Key>
             <PropertyRef Name="COD_ENERGIA_TENSAO" />
@@ -1904,6 +1912,18 @@ warning 6002: The table/view 'SISTEMA.TB_EMAIL' does not have a primary key defi
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_EMAIL_NOTXCONF_SKYHUB">
+          <End Role="TB_CONFIGURACAO_SKYHUB" Type="Self.TB_CONFIGURACAO_SKYHUB" Multiplicity="1" />
+          <End Role="TB_EMAIL_NOTIFICACAO" Type="Self.TB_EMAIL_NOTIFICACAO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_CONFIGURACAO_SKYHUB">
+              <PropertyRef Name="COD_CONFIGURACAO_SKYHUB" />
+            </Principal>
+            <Dependent Role="TB_EMAIL_NOTIFICACAO">
+              <PropertyRef Name="COD_CONFIGURACAO_SKYHUB" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ESTOQUEXFILIAL">
           <End Role="TB_FILIAL" Type="Self.TB_FILIAL" Multiplicity="1" />
           <End Role="TB_ESTOQUE" Type="Self.TB_ESTOQUE" Multiplicity="*" />
@@ -2693,6 +2713,7 @@ warning 6002: The table/view 'SISTEMA.TB_EMAIL' does not have a primary key defi
           <EntitySet Name="TB_CST_PIS" EntityType="Self.TB_CST_PIS" Schema="SISTEMA" store:Type="Tables" />
           <EntitySet Name="TB_CULTURA" EntityType="Self.TB_CULTURA" Schema="SISTEMA" store:Type="Tables" />
           <EntitySet Name="TB_DEPARTAMENTO" EntityType="Self.TB_DEPARTAMENTO" Schema="SISTEMA" store:Type="Tables" />
+          <EntitySet Name="TB_EMAIL_NOTIFICACAO" EntityType="Self.TB_EMAIL_NOTIFICACAO" Schema="SISTEMA" store:Type="Tables" />
           <EntitySet Name="TB_ENERGIA_TENSAO" EntityType="Self.TB_ENERGIA_TENSAO" Schema="SISTEMA" store:Type="Tables" />
           <EntitySet Name="TB_ESTADO" EntityType="Self.TB_ESTADO" Schema="SISTEMA" store:Type="Tables" />
           <EntitySet Name="TB_ESTADO_CIVIL" EntityType="Self.TB_ESTADO_CIVIL" Schema="SISTEMA" store:Type="Tables" />
@@ -2854,6 +2875,10 @@ FROM "SISTEMA"."TB_EMAIL" "TB_EMAIL"</DefiningQuery>
           <AssociationSet Name="FK_CONTA_CORRENTEXFILIAL" Association="Self.FK_CONTA_CORRENTEXFILIAL">
             <End Role="TB_FILIAL" EntitySet="TB_FILIAL" />
             <End Role="TB_CONTA_CORRENTE" EntitySet="TB_CONTA_CORRENTE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EMAIL_NOTXCONF_SKYHUB" Association="Self.FK_EMAIL_NOTXCONF_SKYHUB">
+            <End Role="TB_CONFIGURACAO_SKYHUB" EntitySet="TB_CONFIGURACAO_SKYHUB" />
+            <End Role="TB_EMAIL_NOTIFICACAO" EntitySet="TB_EMAIL_NOTIFICACAO" />
           </AssociationSet>
           <AssociationSet Name="FK_ESTOQUEXFILIAL" Association="Self.FK_ESTOQUEXFILIAL">
             <End Role="TB_FILIAL" EntitySet="TB_FILIAL" />
@@ -3528,6 +3553,11 @@ FROM "SISTEMA"."TB_EMAIL" "TB_EMAIL"</DefiningQuery>
           <AssociationSet Name="FK_CONF_SKYXVENDEDOR" Association="Model.FK_CONF_SKYXVENDEDOR">
             <End Role="TB_VENDEDOR" EntitySet="TB_VENDEDOR" />
             <End Role="TB_CONFIGURACAO_SKYHUB" EntitySet="TB_CONFIGURACAO_SKYHUB" />
+          </AssociationSet>
+          <EntitySet Name="TB_EMAIL_NOTIFICACAO" EntityType="Model.TB_EMAIL_NOTIFICACAO" />
+          <AssociationSet Name="FK_EMAIL_NOTXCONF_SKYHUB" Association="Model.FK_EMAIL_NOTXCONF_SKYHUB">
+            <End Role="TB_CONFIGURACAO_SKYHUB" EntitySet="TB_CONFIGURACAO_SKYHUB" />
+            <End Role="TB_EMAIL_NOTIFICACAO" EntitySet="TB_EMAIL_NOTIFICACAO" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="TB_CADASTRO_ENDERECOS">
@@ -6214,6 +6244,7 @@ FROM "SISTEMA"."TB_EMAIL" "TB_EMAIL"</DefiningQuery>
           <NavigationProperty Name="TB_LOTE_TIPO" Relationship="Model.FK_CONF_SKYXLOTE_TIPO" FromRole="TB_CONFIGURACAO_SKYHUB" ToRole="TB_LOTE_TIPO" />
           <Property Name="COD_VENDEDOR" Type="Int32" />
           <NavigationProperty Name="TB_VENDEDOR" Relationship="Model.FK_CONF_SKYXVENDEDOR" FromRole="TB_CONFIGURACAO_SKYHUB" ToRole="TB_VENDEDOR" />
+          <NavigationProperty Name="TB_EMAIL_NOTIFICACAO" Relationship="Model.FK_EMAIL_NOTXCONF_SKYHUB" FromRole="TB_CONFIGURACAO_SKYHUB" ToRole="TB_EMAIL_NOTIFICACAO" />
         </EntityType>
         <Association Name="FK_CONF_SKYXFILIAL">
           <End Type="Model.TB_FILIAL" Role="TB_FILIAL" Multiplicity="1" />
@@ -6374,6 +6405,27 @@ FROM "SISTEMA"."TB_EMAIL" "TB_EMAIL"</DefiningQuery>
             </Principal>
             <Dependent Role="TB_CONFIGURACAO_SKYHUB">
               <PropertyRef Name="COD_VENDEDOR" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="TB_EMAIL_NOTIFICACAO">
+          <Key>
+            <PropertyRef Name="COD_EMAIL_NOTIFICACAO" />
+          </Key>
+          <Property Name="COD_EMAIL_NOTIFICACAO" Type="Int32" Nullable="false" />
+          <Property Name="COD_CONFIGURACAO_SKYHUB" Type="Int32" Nullable="false" />
+          <Property Name="DESC_EMAIL" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TB_CONFIGURACAO_SKYHUB" Relationship="Model.FK_EMAIL_NOTXCONF_SKYHUB" FromRole="TB_EMAIL_NOTIFICACAO" ToRole="TB_CONFIGURACAO_SKYHUB" />
+        </EntityType>
+        <Association Name="FK_EMAIL_NOTXCONF_SKYHUB">
+          <End Type="Model.TB_CONFIGURACAO_SKYHUB" Role="TB_CONFIGURACAO_SKYHUB" Multiplicity="1" />
+          <End Type="Model.TB_EMAIL_NOTIFICACAO" Role="TB_EMAIL_NOTIFICACAO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_CONFIGURACAO_SKYHUB">
+              <PropertyRef Name="COD_CONFIGURACAO_SKYHUB" />
+            </Principal>
+            <Dependent Role="TB_EMAIL_NOTIFICACAO">
+              <PropertyRef Name="COD_CONFIGURACAO_SKYHUB" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -8011,6 +8063,15 @@ FROM "SISTEMA"."TB_EMAIL" "TB_EMAIL"</DefiningQuery>
                 <ScalarProperty Name="DESC_SMTP" ColumnName="DESC_SMTP" />
                 <ScalarProperty Name="DESC_SENHA" ColumnName="DESC_SENHA" />
                 <ScalarProperty Name="DESC_EMAIL" ColumnName="DESC_EMAIL" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TB_EMAIL_NOTIFICACAO">
+            <EntityTypeMapping TypeName="Model.TB_EMAIL_NOTIFICACAO">
+              <MappingFragment StoreEntitySet="TB_EMAIL_NOTIFICACAO">
+                <ScalarProperty Name="DESC_EMAIL" ColumnName="DESC_EMAIL" />
+                <ScalarProperty Name="COD_CONFIGURACAO_SKYHUB" ColumnName="COD_CONFIGURACAO_SKYHUB" />
+                <ScalarProperty Name="COD_EMAIL_NOTIFICACAO" ColumnName="COD_EMAIL_NOTIFICACAO" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
