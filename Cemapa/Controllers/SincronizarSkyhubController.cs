@@ -18,7 +18,7 @@ namespace Cemapa.Controllers
     public class SincronizarSkyhubController : ApiController
     {
         private Entities db = new Entities();
-
+        
         [HttpGet]
         public async Task<HttpResponseMessage> AtualizarStatusConexao(int codFilial, int codProduto = 0)
         {
@@ -250,7 +250,7 @@ namespace Cemapa.Controllers
 
                         if (!wAchouPlp)
                         {
-                            //Caso não encontre a PLP com o código do pedido solicitado, então é necessário
+                            //Caso não encontre a PLP com o código do pedido solicitado, então é ne  cessário
                             //realizar o agrupamento, para depois novamente busca-la.
 
                             List<string> codigos = new List<string> { codMarketplace };
@@ -1207,7 +1207,6 @@ namespace Cemapa.Controllers
                     HttpStatusCode.InternalServerError,
                     $"Não foi possível começar a sincronização. {ResolucaoExcecoes.ErroAprofundado(except)}"
                 );
-                
             }
         }
 
@@ -1938,16 +1937,7 @@ namespace Cemapa.Controllers
         {
             try
             {
-                //TB_EMAIL wConfigEmail = (from e in db.TB_EMAIL where (e.DESC_EMAIL == "sistema@cemapa.com") select e).FirstOrDefault();
-
-                TB_EMAIL wConfigEmail = new TB_EMAIL
-                {
-                    DESC_EMAIL = "sistema@cemapa.com",
-                    DESC_SENHA = "C3mapaNFe",
-                    NUM_PORTA_SMTP = 587,
-                    DESC_SMTP = "smtp.cemapa.com",
-                    IND_SSL = "N"
-                };
+                TB_EMAIL wConfigEmail = (from e in db.TB_EMAIL where e.COD_EMAIL == 1 select e).FirstOrDefault();
 
                 if (wConfigEmail != null)
                 {

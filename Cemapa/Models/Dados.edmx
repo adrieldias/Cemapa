@@ -418,16 +418,8 @@
           <Property Name="DESC_DEPARTAMENTO" Type="varchar2" MaxLength="30" Nullable="false" />
           <Property Name="IND_FLUXO_CAIXA" Type="varchar2" MaxLength="3" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'SISTEMA.TB_EMAIL' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="TB_EMAIL">
           <Key>
-            <PropertyRef Name="DESC_EMAIL" />
-            <PropertyRef Name="DESC_SENHA" />
-            <PropertyRef Name="DESC_SMTP" />
-            <PropertyRef Name="NUM_PORTA_SMTP" />
-            <PropertyRef Name="DESC_POP3" />
-            <PropertyRef Name="NUM_PORTA_POP3" />
             <PropertyRef Name="COD_EMAIL" />
           </Key>
           <Property Name="DESC_EMAIL" Type="varchar2" MaxLength="40" Nullable="false" />
@@ -2713,6 +2705,7 @@ warning 6002: The table/view 'SISTEMA.TB_EMAIL' does not have a primary key defi
           <EntitySet Name="TB_CST_PIS" EntityType="Self.TB_CST_PIS" Schema="SISTEMA" store:Type="Tables" />
           <EntitySet Name="TB_CULTURA" EntityType="Self.TB_CULTURA" Schema="SISTEMA" store:Type="Tables" />
           <EntitySet Name="TB_DEPARTAMENTO" EntityType="Self.TB_DEPARTAMENTO" Schema="SISTEMA" store:Type="Tables" />
+          <EntitySet Name="TB_EMAIL" EntityType="Self.TB_EMAIL" Schema="SISTEMA" store:Type="Tables" />
           <EntitySet Name="TB_EMAIL_NOTIFICACAO" EntityType="Self.TB_EMAIL_NOTIFICACAO" Schema="SISTEMA" store:Type="Tables" />
           <EntitySet Name="TB_ENERGIA_TENSAO" EntityType="Self.TB_ENERGIA_TENSAO" Schema="SISTEMA" store:Type="Tables" />
           <EntitySet Name="TB_ESTADO" EntityType="Self.TB_ESTADO" Schema="SISTEMA" store:Type="Tables" />
@@ -2757,21 +2750,6 @@ warning 6002: The table/view 'SISTEMA.TB_EMAIL' does not have a primary key defi
           <EntitySet Name="TB_TRIBUTACAO" EntityType="Self.TB_TRIBUTACAO" Schema="SISTEMA" store:Type="Tables" />
           <EntitySet Name="TB_USUARIO" EntityType="Self.TB_USUARIO" Schema="SISTEMA" store:Type="Tables" />
           <EntitySet Name="TB_VENDEDOR" EntityType="Self.TB_VENDEDOR" Schema="SISTEMA" store:Type="Tables" />
-          <EntitySet Name="TB_EMAIL" EntityType="Self.TB_EMAIL" store:Type="Tables" store:Schema="SISTEMA">
-            <DefiningQuery>SELECT 
-"TB_EMAIL"."DESC_EMAIL" AS "DESC_EMAIL", 
-"TB_EMAIL"."DESC_SENHA" AS "DESC_SENHA", 
-"TB_EMAIL"."DESC_SMTP" AS "DESC_SMTP", 
-"TB_EMAIL"."NUM_PORTA_SMTP" AS "NUM_PORTA_SMTP", 
-"TB_EMAIL"."DESC_POP3" AS "DESC_POP3", 
-"TB_EMAIL"."NUM_PORTA_POP3" AS "NUM_PORTA_POP3", 
-"TB_EMAIL"."COD_EMAIL" AS "COD_EMAIL", 
-"TB_EMAIL"."DESC_MENSAGEM" AS "DESC_MENSAGEM", 
-"TB_EMAIL"."DESC_HOME_PAGE" AS "DESC_HOME_PAGE", 
-"TB_EMAIL"."QTD_COTA" AS "QTD_COTA", 
-"TB_EMAIL"."IND_SSL" AS "IND_SSL"
-FROM "SISTEMA"."TB_EMAIL" "TB_EMAIL"</DefiningQuery>
-          </EntitySet>
           <AssociationSet Name="FK_BANCO_AGENCIAXESTADO" Association="Self.FK_BANCO_AGENCIAXESTADO">
             <End Role="TB_ESTADO" EntitySet="TB_ESTADO" />
             <End Role="TB_BANCO_AGENCIA" EntitySet="TB_BANCO_AGENCIA" />
@@ -3525,7 +3503,6 @@ FROM "SISTEMA"."TB_EMAIL" "TB_EMAIL"</DefiningQuery>
             <End Role="TB_CLASSE" EntitySet="TB_CLASSE" />
             <End Role="TB_PRODUTO" EntitySet="TB_PRODUTO" />
           </AssociationSet>
-          <EntitySet Name="TB_EMAIL" EntityType="Model.TB_EMAIL" />
           <AssociationSet Name="FK_CONF_SKYXCLASS_CADASTRO" Association="Model.FK_CONF_SKYXCLASS_CADASTRO">
             <End Role="TB_CLASS_CADASTRO" EntitySet="TB_CLASS_CADASTRO" />
             <End Role="TB_CONFIGURACAO_SKYHUB" EntitySet="TB_CONFIGURACAO_SKYHUB" />
@@ -3559,6 +3536,7 @@ FROM "SISTEMA"."TB_EMAIL" "TB_EMAIL"</DefiningQuery>
             <End Role="TB_CONFIGURACAO_SKYHUB" EntitySet="TB_CONFIGURACAO_SKYHUB" />
             <End Role="TB_EMAIL_NOTIFICACAO" EntitySet="TB_EMAIL_NOTIFICACAO" />
           </AssociationSet>
+          <EntitySet Name="TB_EMAIL" EntityType="Model.TB_EMAIL" />
           </EntityContainer>
         <EntityType Name="TB_CADASTRO_ENDERECOS">
           <Key>
@@ -6302,28 +6280,6 @@ FROM "SISTEMA"."TB_EMAIL" "TB_EMAIL"</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="TB_EMAIL">
-          <Key>
-            <PropertyRef Name="DESC_EMAIL" />
-            <PropertyRef Name="DESC_SENHA" />
-            <PropertyRef Name="DESC_SMTP" />
-            <PropertyRef Name="NUM_PORTA_SMTP" />
-            <PropertyRef Name="DESC_POP3" />
-            <PropertyRef Name="NUM_PORTA_POP3" />
-            <PropertyRef Name="COD_EMAIL" />
-          </Key>
-          <Property Name="DESC_EMAIL" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
-          <Property Name="DESC_SENHA" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="DESC_SMTP" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
-          <Property Name="NUM_PORTA_SMTP" Type="Int32" Nullable="false" />
-          <Property Name="DESC_POP3" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
-          <Property Name="NUM_PORTA_POP3" Type="Int32" Nullable="false" />
-          <Property Name="COD_EMAIL" Type="Int32" Nullable="false" />
-          <Property Name="DESC_MENSAGEM" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="DESC_HOME_PAGE" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
-          <Property Name="QTD_COTA" Type="Int16" />
-          <Property Name="IND_SSL" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-        </EntityType>
         <Association Name="FK_CONF_SKYXCLASS_CADASTRO">
           <End Type="Model.TB_CLASS_CADASTRO" Role="TB_CLASS_CADASTRO" Multiplicity="0..1" />
           <End Type="Model.TB_CONFIGURACAO_SKYHUB" Role="TB_CONFIGURACAO_SKYHUB" Multiplicity="*" />
@@ -6429,6 +6385,21 @@ FROM "SISTEMA"."TB_EMAIL" "TB_EMAIL"</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="TB_EMAIL">
+          <Key>
+            <PropertyRef Name="COD_EMAIL" />
+          </Key>
+          <Property Name="DESC_EMAIL" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_SENHA" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_SMTP" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="NUM_PORTA_SMTP" Type="Int32" Nullable="false" />
+          <Property Name="DESC_POP3" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="NUM_PORTA_POP3" Type="Int32" Nullable="false" />
+          <Property Name="COD_EMAIL" Type="Int32" Nullable="false" />
+          <Property Name="DESC_HOME_PAGE" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="QTD_COTA" Type="Int16" />
+          <Property Name="IND_SSL" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -8049,13 +8020,21 @@ FROM "SISTEMA"."TB_EMAIL" "TB_EMAIL"</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="TB_EMAIL_NOTIFICACAO">
+            <EntityTypeMapping TypeName="Model.TB_EMAIL_NOTIFICACAO">
+              <MappingFragment StoreEntitySet="TB_EMAIL_NOTIFICACAO">
+                <ScalarProperty Name="DESC_EMAIL" ColumnName="DESC_EMAIL" />
+                <ScalarProperty Name="COD_CONFIGURACAO_SKYHUB" ColumnName="COD_CONFIGURACAO_SKYHUB" />
+                <ScalarProperty Name="COD_EMAIL_NOTIFICACAO" ColumnName="COD_EMAIL_NOTIFICACAO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="TB_EMAIL">
             <EntityTypeMapping TypeName="Model.TB_EMAIL">
               <MappingFragment StoreEntitySet="TB_EMAIL">
                 <ScalarProperty Name="IND_SSL" ColumnName="IND_SSL" />
                 <ScalarProperty Name="QTD_COTA" ColumnName="QTD_COTA" />
                 <ScalarProperty Name="DESC_HOME_PAGE" ColumnName="DESC_HOME_PAGE" />
-                <ScalarProperty Name="DESC_MENSAGEM" ColumnName="DESC_MENSAGEM" />
                 <ScalarProperty Name="COD_EMAIL" ColumnName="COD_EMAIL" />
                 <ScalarProperty Name="NUM_PORTA_POP3" ColumnName="NUM_PORTA_POP3" />
                 <ScalarProperty Name="DESC_POP3" ColumnName="DESC_POP3" />
@@ -8063,15 +8042,6 @@ FROM "SISTEMA"."TB_EMAIL" "TB_EMAIL"</DefiningQuery>
                 <ScalarProperty Name="DESC_SMTP" ColumnName="DESC_SMTP" />
                 <ScalarProperty Name="DESC_SENHA" ColumnName="DESC_SENHA" />
                 <ScalarProperty Name="DESC_EMAIL" ColumnName="DESC_EMAIL" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TB_EMAIL_NOTIFICACAO">
-            <EntityTypeMapping TypeName="Model.TB_EMAIL_NOTIFICACAO">
-              <MappingFragment StoreEntitySet="TB_EMAIL_NOTIFICACAO">
-                <ScalarProperty Name="DESC_EMAIL" ColumnName="DESC_EMAIL" />
-                <ScalarProperty Name="COD_CONFIGURACAO_SKYHUB" ColumnName="COD_CONFIGURACAO_SKYHUB" />
-                <ScalarProperty Name="COD_EMAIL_NOTIFICACAO" ColumnName="COD_EMAIL_NOTIFICACAO" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -146,7 +146,6 @@
         <AssociationConnector Association="Model.FK_CONF_SKYXOPERACAO" />
         <EntityTypeShape EntityType="Model.TB_CLASSE" Width="1.5" PointX="4.125" PointY="7.125" IsExpanded="false" />
         <AssociationConnector Association="Model.FK_PRODUTOXCLASSE" />
-        <EntityTypeShape EntityType="Model.TB_EMAIL" Width="1.5" PointX="0.5" PointY="11.25" IsExpanded="false" />
         <AssociationConnector Association="Model.FK_CONF_SKYXCLASS_CADASTRO" />
         <AssociationConnector Association="Model.FK_CONF_SKYXRAMOF" />
         <AssociationConnector Association="Model.FK_CONF_SKYXRAMOJ" />
@@ -156,6 +155,7 @@
         <AssociationConnector Association="Model.FK_CONF_SKYXVENDEDOR" />
         <EntityTypeShape EntityType="Model.TB_EMAIL_NOTIFICACAO" Width="1.5" PointX="4.5" PointY="12.125" IsExpanded="false" />
         <AssociationConnector Association="Model.FK_EMAIL_NOTXCONF_SKYHUB" />
+        <EntityTypeShape EntityType="Model.TB_EMAIL" Width="1.5" PointX="2.375" PointY="12.125" IsExpanded="false" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

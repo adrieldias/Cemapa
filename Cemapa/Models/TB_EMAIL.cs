@@ -21,7 +21,6 @@ namespace Cemapa.Models
         public string DESC_POP3 { get; set; }
         public int NUM_PORTA_POP3 { get; set; }
         public int COD_EMAIL { get; set; }
-        public string DESC_MENSAGEM { get; set; }
         public string DESC_HOME_PAGE { get; set; }
         public Nullable<short> QTD_COTA { get; set; }
         public string IND_SSL { get; set; }

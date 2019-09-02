@@ -84,7 +84,7 @@ namespace Cemapa.Models
         public virtual DbSet<TB_PEDIDO_CAB> TB_PEDIDO_CAB { get; set; }
         public virtual DbSet<TB_CONFIGURACAO_SKYHUB> TB_CONFIGURACAO_SKYHUB { get; set; }
         public virtual DbSet<TB_CLASSE> TB_CLASSE { get; set; }
-        public virtual DbSet<TB_EMAIL> TB_EMAIL { get; set; }
         public virtual DbSet<TB_EMAIL_NOTIFICACAO> TB_EMAIL_NOTIFICACAO { get; set; }
+        public virtual DbSet<TB_EMAIL> TB_EMAIL { get; set; }
     }
 }
