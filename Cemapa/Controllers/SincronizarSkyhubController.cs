@@ -10,8 +10,6 @@ using System.Web.Http;
 using Cemapa.Models;
 using System.Net.Mail;
 using System.Text.RegularExpressions;
-using System.IO;
-using Newtonsoft.Json;
 
 namespace Cemapa.Controllers
 {
@@ -25,7 +23,7 @@ namespace Cemapa.Controllers
             try
             {
                 //Começa a busca pela sincronização do status de conexão.
-                //O status de conexão é o status de um produto, que esta na skyhub e mostra se ele está ou não conectado com a b2w.
+                //O status de conexão é o status de um produto que esta na skyhub e mostra se ele está ou não conectado com a b2w.
                 //Esse status é importante para quem usa o sistema ter uma idéia dos produtos que estão ok e os que precisam de atenção.
 
                 int wTotalAlterados = 0;
@@ -909,7 +907,7 @@ namespace Cemapa.Controllers
 
                         Http.DefaultRequestHeaders.Accept.Clear();
                         Http.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                        Http.Timeout = TimeSpan.FromSeconds(10);
+                        Http.Timeout = TimeSpan.FromSeconds(30);
 
                         Http.DefaultRequestHeaders.Add("X-User-Email", configuracaoSkyhub.DESC_USUARIO_EMAIL);
                         Http.DefaultRequestHeaders.Add("X-Api-Key", configuracaoSkyhub.DESC_TOKEN_INTEGRACAO);
@@ -986,7 +984,8 @@ namespace Cemapa.Controllers
                                                         COD_PEDIDO_MARKETPLACE = ordem.code,
                                                         DESC_COMPLEMENTO_OBS = "Pedido do marketplace: " + ordem.code,
                                                         DESC_SITUACAO_MARKETPLACE = "APPROVED",
-                                                        PERC_COMISSAO = 0
+                                                        PERC_COMISSAO = 0,
+                                                        VAL_FRETE_MARKETPLACE = Convert.ToDecimal(ordem.shipping_cost)
                                                     };
 
                                                     foreach (Item item in ordem.items)
@@ -1164,10 +1163,12 @@ namespace Cemapa.Controllers
                             }
                             else
                             {
-                                //O serviço de chamadas fica em horários aleatórios recebendo o seguinte erro,
-                                //nem o pessoal do suporte da skyhub soube dizer o motivo, então vamos ignorar esse erro.
+                                //O serviço de chamadas fica em horários aleatórios recebendo os seguintes erros,
+                                //nem o pessoal do suporte da skyhub soube dizer o motivo, então vamos ignorar esses erros.
 
-                                if(response.ReasonPhrase != "Internal Server Error")
+                                if((response.ReasonPhrase != "Internal Server Error") &&
+                                    (response.ReasonPhrase != "Bad Request") &&
+                                    (response.ReasonPhrase != "A task was canceled."))
                                 {
                                     ControlaExcecoes.Add($"Erro ao realizar chamada GET. Filial: {configuracaoSkyhub.COD_FILIAL}", response.ReasonPhrase);
                                 }
@@ -1273,6 +1274,7 @@ namespace Cemapa.Controllers
                                             Http.DefaultRequestHeaders.Add("X-Api-Key", configuracaoSkyhub.DESC_TOKEN_INTEGRACAO);
                                             Http.DefaultRequestHeaders.Add("X-Accountmanager-Key", configuracaoSkyhub.DESC_TOKEN_ACCOUNT);
                                             Http.DefaultRequestHeaders.Add("Accept", "application/json;charset=UTF-8");
+                                            Http.Timeout = TimeSpan.FromSeconds(30);
 
                                             //Instancia o produto da Classe ProdutoSkyhub, criada conforme a estrutura especificada no manual da API.
 
@@ -1718,14 +1720,14 @@ namespace Cemapa.Controllers
             {
                 //Pré-processa os dados, formatando-os para nosso sistema.
 
-                ordem.shipping_address.region = ordem.shipping_address.region.ToUpper();
-                ordem.customer.name = ordem.customer.name.ToUpper();
-                ordem.customer.gender = ordem.customer.gender == "male" ? "M" : "F";
-                ordem.shipping_address.neighborhood = ordem.shipping_address.neighborhood.ToUpper();
-                ordem.shipping_address.street = ordem.shipping_address.street.ToUpper();
-                ordem.shipping_address.complement = ordem.shipping_address.complement?.ToUpper();
-                ordem.shipping_address.postcode = String.Format(@"{0:00000\-000}", Convert.ToInt64(ordem.shipping_address.postcode));
-                ordem.shipping_address.city = ordem.shipping_address.city.ToUpper();
+                ordem.shipping_address.region =         ordem.shipping_address.region.ToUpper();
+                ordem.customer.name =                   ordem.customer.name.ToUpper();
+                ordem.customer.gender =                 ordem.customer.gender == "male" ? "M" : "F";
+                ordem.shipping_address.neighborhood =   ordem.shipping_address.neighborhood.ToUpper();
+                ordem.shipping_address.street =         ordem.shipping_address.street.ToUpper();
+                ordem.shipping_address.complement =     ordem.shipping_address.complement?.ToUpper();
+                ordem.shipping_address.postcode =       String.Format(@"{0:00000\-000}", Convert.ToInt64(ordem.shipping_address.postcode));
+                ordem.shipping_address.city =           ordem.shipping_address.city.ToUpper();
 
                 int qtCpfCnpj = Regex.Replace(ordem.customer.vat_number, "[^0-9]", "").Length;
                 string indCgc = "F";
@@ -1831,24 +1833,6 @@ namespace Cemapa.Controllers
             }
         }
 
-        private int GetLoteTipo(Item item)
-        {
-            long wCodigo = Convert.ToInt64(item.id);
-
-            TB_ESTOQUE wEstoque = (from e in db.TB_ESTOQUE
-                                   where (e.COD_PRODUTO == wCodigo)
-                                   select e).FirstOrDefault();
-
-            if (wEstoque == null)
-            {
-                return -1;
-            }
-            else
-            {
-                return wEstoque.COD_LOTE_TIPO;
-            }
-        }
-
         private TB_PRODUTO SelecionaProduto(Item item)
         {
             try
@@ -1863,8 +1847,8 @@ namespace Cemapa.Controllers
                                        select p).FirstOrDefault();
                 if(wProduto == null)
                 {
-                    //Com as informações do item, pré-processa os dados, para salvar um novo produto no sistema.
-                    //Este produto será trazido apenas para cadastro do pedido, este produto necessita de atenção.
+                    //Com as informações do item, pré-processa os dados para salvar um novo produto no sistema.
+                    //Este produto será trazido apenas para cadastro do pedido, ele necessita de atenção.
                     //Esse caso ocorreu devido a um produto que existe na skyhub mas foi apagado do sistema, dessa forma,
                     //quando baixar um pedido, este produto precisa ser criado.
 

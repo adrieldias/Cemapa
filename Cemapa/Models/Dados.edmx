@@ -1004,6 +1004,8 @@
           <Property Name="COD_CONTABIL_NOTA_SPED_CONTRIB" Type="varchar2" MaxLength="15" />
           <Property Name="COD_CONTABIL_SUBST_DEB" Type="varchar2" MaxLength="15" />
           <Property Name="COD_CONTABIL_SUBST_CRED" Type="varchar2" MaxLength="15" />
+          <Property Name="COD_CONTABIL_FCCIA_DEB" Type="varchar2" MaxLength="15" />
+          <Property Name="COD_CONTABIL_FCCIA_CRED" Type="varchar2" MaxLength="15" />
         </EntityType>
         <EntityType Name="TB_PAIS">
           <Key>
@@ -1088,6 +1090,7 @@
           <Property Name="IND_SINC_MAX_ROTEIRIZADOR" Type="char" MaxLength="1" />
           <Property Name="COD_PEDIDO_MARKETPLACE" Type="varchar2" MaxLength="60" />
           <Property Name="DESC_SITUACAO_MARKETPLACE" Type="varchar2" MaxLength="30" />
+          <Property Name="VAL_FRETE_MARKETPLACE" Type="number" Precision="6" Scale="2" />
         </EntityType>
         <EntityType Name="TB_PEDIDO_ITEM">
           <Key>
@@ -5820,6 +5823,8 @@
           <NavigationProperty Name="TB_HISTORICO_CONTABIL" Relationship="Model.FK_OPERACAOXHIST_CONTABIL" FromRole="TB_OPERACAO" ToRole="TB_HISTORICO_CONTABIL" />
           <NavigationProperty Name="TB_PEDIDO_CAB" Relationship="Model.FK_PEDIDO_CABXOPERACAO" FromRole="TB_OPERACAO" ToRole="TB_PEDIDO_CAB" />
           <NavigationProperty Name="TB_CONFIGURACAO_SKYHUB" Relationship="Model.FK_CONF_SKYXOPERACAO" FromRole="TB_OPERACAO" ToRole="TB_CONFIGURACAO_SKYHUB" />
+          <Property Name="COD_CONTABIL_FCCIA_DEB" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="COD_CONTABIL_FCCIA_CRED" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_OPERACAOXVCCREDPISCOFINS">
           <End Type="Model.TB_BC_CREDITO_PISCOFINS" Role="TB_BC_CREDITO_PISCOFINS" Multiplicity="0..1" />
@@ -6037,6 +6042,7 @@
           <NavigationProperty Name="TB_VENDEDOR" Relationship="Model.FK_PEDIDO_CABXVENDEDOR" FromRole="TB_PEDIDO_CAB" ToRole="TB_VENDEDOR" />
           <NavigationProperty Name="TB_PEDIDO_ITEM" Relationship="Model.FK_PEDIDOITEMXPEDIDO" FromRole="TB_PEDIDO_CAB" ToRole="TB_PEDIDO_ITEM" />
           <NavigationProperty Name="TB_PRODUTO" Relationship="Model.FK_PEDIDOXPRODUTO" FromRole="TB_PEDIDO_CAB" ToRole="TB_PRODUTO" />
+          <Property Name="VAL_FRETE_MARKETPLACE" Type="Decimal" Precision="6" Scale="2" />
         </EntityType>
         <Association Name="FK_PEDIDOXBCOAGENCIA">
           <End Type="Model.TB_BANCO_AGENCIA" Role="TB_BANCO_AGENCIA" Multiplicity="0..1" />
@@ -7720,6 +7726,8 @@
           <EntitySetMapping Name="TB_OPERACAO">
             <EntityTypeMapping TypeName="Model.TB_OPERACAO">
               <MappingFragment StoreEntitySet="TB_OPERACAO">
+                <ScalarProperty Name="COD_CONTABIL_FCCIA_CRED" ColumnName="COD_CONTABIL_FCCIA_CRED" />
+                <ScalarProperty Name="COD_CONTABIL_FCCIA_DEB" ColumnName="COD_CONTABIL_FCCIA_DEB" />
                 <ScalarProperty Name="COD_CONTABIL_SUBST_CRED" ColumnName="COD_CONTABIL_SUBST_CRED" />
                 <ScalarProperty Name="COD_CONTABIL_SUBST_DEB" ColumnName="COD_CONTABIL_SUBST_DEB" />
                 <ScalarProperty Name="COD_CONTABIL_NOTA_SPED_CONTRIB" ColumnName="COD_CONTABIL_NOTA_SPED_CONTRIB" />
@@ -7906,6 +7914,7 @@
           <EntitySetMapping Name="TB_PEDIDO_CAB">
             <EntityTypeMapping TypeName="Model.TB_PEDIDO_CAB">
               <MappingFragment StoreEntitySet="TB_PEDIDO_CAB">
+                <ScalarProperty Name="VAL_FRETE_MARKETPLACE" ColumnName="VAL_FRETE_MARKETPLACE" />
                 <ScalarProperty Name="DESC_SITUACAO_MARKETPLACE" ColumnName="DESC_SITUACAO_MARKETPLACE" />
                 <ScalarProperty Name="COD_PEDIDO_MARKETPLACE" ColumnName="COD_PEDIDO_MARKETPLACE" />
                 <ScalarProperty Name="IND_SINC_MAX_ROTEIRIZADOR" ColumnName="IND_SINC_MAX_ROTEIRIZADOR" />

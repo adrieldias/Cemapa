@@ -90,6 +90,7 @@ namespace Cemapa.Models
         public string IND_SINC_MAX_ROTEIRIZADOR { get; set; }
         public string COD_PEDIDO_MARKETPLACE { get; set; }
         public string DESC_SITUACAO_MARKETPLACE { get; set; }
+        public Nullable<decimal> VAL_FRETE_MARKETPLACE { get; set; }
     
         public virtual TB_BANCO_AGENCIA TB_BANCO_AGENCIA { get; set; }
         public virtual TB_CADASTRO TB_CADASTRO { get; set; }

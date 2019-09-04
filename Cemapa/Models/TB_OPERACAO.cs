@@ -160,6 +160,8 @@ namespace Cemapa.Models
         public string COD_CONTABIL_NOTA_SPED_CONTRIB { get; set; }
         public string COD_CONTABIL_SUBST_DEB { get; set; }
         public string COD_CONTABIL_SUBST_CRED { get; set; }
+        public string COD_CONTABIL_FCCIA_DEB { get; set; }
+        public string COD_CONTABIL_FCCIA_CRED { get; set; }
     
         public virtual TB_BC_CREDITO_PISCOFINS TB_BC_CREDITO_PISCOFINS { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
