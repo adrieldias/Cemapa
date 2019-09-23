@@ -28,7 +28,7 @@ namespace Cemapa.Controllers
 
                 int wTotalAlterados = 0;
 
-                ControlaExcecoes.Limpa();
+                ControladorExcecoes.Limpa();
 
                 //Busca todas as configurações ativas para se conectar com a API.
 
@@ -98,7 +98,7 @@ namespace Cemapa.Controllers
                         }
                         catch (Exception except)
                         {
-                            ControlaExcecoes.Add($"Filial: {configuracaoSkyhub.COD_FILIAL}", ResolucaoExcecoes.ErroAprofundado(except));
+                            ControladorExcecoes.Adiciona(except);
                         }
                     }
                     else
@@ -145,7 +145,7 @@ namespace Cemapa.Controllers
                             }
                             catch (Exception except)
                             {
-                                ControlaExcecoes.Add($"Filial: {configuracaoSkyhub.COD_FILIAL}, Produto: {wProdutoAtualizar.COD_PRODUTO}", ResolucaoExcecoes.ErroAprofundado(except));
+                                ControladorExcecoes.Adiciona(except, new List<string> { $"Filial: {configuracaoSkyhub.COD_FILIAL}", $"Produto: {wProdutoAtualizar.COD_PRODUTO}" });
                             }
                         }
                     }
@@ -154,7 +154,7 @@ namespace Cemapa.Controllers
                 //Biblioteca ControlaExcecoes armazenou todos os erros ocorridos, caso não ocorra nenhum erro,
                 //então o método SemExcecoes retornará verdadeiro.
 
-                if (ControlaExcecoes.SemExcecoes())
+                if (ControladorExcecoes.SemExcecoes())
                 {
                     return Request.CreateResponse(
                         HttpStatusCode.OK,
@@ -166,17 +166,18 @@ namespace Cemapa.Controllers
                     return Request.CreateResponse(
                         HttpStatusCode.InternalServerError,
                         $"Nem todos os status de conexão foram atualizados. Atualizados: {wTotalAlterados}. " +
-                        $"{string.Join(", ", ControlaExcecoes.Excecoes)}"
+                        $"{ControladorExcecoes.Printa()}"
                     );
                 }
             }
             catch (Exception except)
             {
+                ControladorExcecoes.Adiciona(except);
+
                 return Request.CreateResponse(
                     HttpStatusCode.InternalServerError,
-                    $"Não foi possível começar a atualização. {ResolucaoExcecoes.ErroAprofundado(except)}"
+                    $"Não foi possível começar a atualização. {ControladorExcecoes.Printa()}"
                 );
-
             }
         }
         
@@ -338,9 +339,11 @@ namespace Cemapa.Controllers
             }
             catch (Exception except)
             {
+                ControladorExcecoes.Adiciona(except);
+
                 return Request.CreateResponse(
                     HttpStatusCode.InternalServerError,
-                    $"Erro: {ResolucaoExcecoes.ErroAprofundado(except)}"
+                    $"Não foi possível começar a atualização. {ControladorExcecoes.Printa()}"
                 );
             }
         }
@@ -433,9 +436,11 @@ namespace Cemapa.Controllers
             }
             catch (Exception except)
             {
+                ControladorExcecoes.Adiciona(except);
+
                 return Request.CreateResponse(
                     HttpStatusCode.InternalServerError,
-                    $"Erro: {ResolucaoExcecoes.ErroAprofundado(except)}"
+                    $"Não foi possível começar a atualização. {ControladorExcecoes.Printa()}"
                 );
             }
         }
@@ -519,9 +524,11 @@ namespace Cemapa.Controllers
             }
             catch (Exception except)
             {
+                ControladorExcecoes.Adiciona(except);
+
                 return Request.CreateResponse(
                     HttpStatusCode.InternalServerError,
-                    $"Erro: {ResolucaoExcecoes.ErroAprofundado(except)}"
+                    $"Não foi possível começar a atualização. {ControladorExcecoes.Printa()}"
                 );
             }
         }
@@ -603,9 +610,11 @@ namespace Cemapa.Controllers
             }
             catch (Exception except)
             {
+                ControladorExcecoes.Adiciona(except);
+
                 return Request.CreateResponse(
                     HttpStatusCode.InternalServerError,
-                    $"Erro: {ResolucaoExcecoes.ErroAprofundado(except)}"
+                    $"Não foi possível começar a atualização. {ControladorExcecoes.Printa()}"
                 );
             }
         }
@@ -709,9 +718,11 @@ namespace Cemapa.Controllers
             }
             catch (Exception except)
             {
+                ControladorExcecoes.Adiciona(except);
+
                 return Request.CreateResponse(
                     HttpStatusCode.InternalServerError,
-                    $"Erro: {ResolucaoExcecoes.ErroAprofundado(except)}"
+                    $"Não foi possível começar a atualização. {ControladorExcecoes.Printa()}"
                 );
             }
         }
@@ -778,9 +789,11 @@ namespace Cemapa.Controllers
             }
             catch (Exception except)
             {
+                ControladorExcecoes.Adiciona(except);
+
                 return Request.CreateResponse(
                     HttpStatusCode.InternalServerError,
-                    $"Erro: {ResolucaoExcecoes.ErroAprofundado(except)}"
+                    $"Não foi possível começar a atualização. {ControladorExcecoes.Printa()}"
                 );
             }
         }
@@ -874,9 +887,11 @@ namespace Cemapa.Controllers
             }
             catch (Exception except)
             {
+                ControladorExcecoes.Adiciona(except);
+
                 return Request.CreateResponse(
                     HttpStatusCode.InternalServerError,
-                    $"Erro: {ResolucaoExcecoes.ErroAprofundado(except)}"
+                    $"Não foi possível começar a atualização. {ControladorExcecoes.Printa()}"
                 );
             }
         }
@@ -890,7 +905,7 @@ namespace Cemapa.Controllers
                 int wTotalCriados = 0;
                 int wTotalAlterados = 0;
 
-                ControlaExcecoes.Limpa();
+                ControladorExcecoes.Limpa();
 
                 List<TB_CONFIGURACAO_SKYHUB> configuracoesSkyhub = GetConfiguracoes();
 
@@ -1025,7 +1040,7 @@ namespace Cemapa.Controllers
                                                     }
                                                     catch (Exception except)
                                                     {
-                                                        ControlaExcecoes.Add($"Não conseguiu enviar um ou mais e-mails. Filial: {configuracaoSkyhub.COD_FILIAL}", ResolucaoExcecoes.ErroAprofundado(except));
+                                                        ControladorExcecoes.Adiciona(except, new List<string> { $"Filial: {configuracaoSkyhub.COD_FILIAL}" });
                                                     }
 
                                                     wTotalCriados++;
@@ -1157,28 +1172,20 @@ namespace Cemapa.Controllers
                                 }
                                 catch (Exception except)
                                 {
-                                    ControlaExcecoes.Add($"Erro ao sincronizar. Filial: {configuracaoSkyhub.COD_FILIAL}", ResolucaoExcecoes.ErroAprofundado(except));
+                                    ControladorExcecoes.Adiciona(except, new List<string> { $"Filial: {configuracaoSkyhub.COD_FILIAL}" });
                                     continue;
                                 }
                             }
                             else
                             {
-                                //O serviço de chamadas fica em horários aleatórios recebendo os seguintes erros,
-                                //nem o pessoal do suporte da skyhub soube dizer o motivo, então vamos ignorar esses erros.
-
-                                if((response.ReasonPhrase != "Internal Server Error") &&
-                                    (response.ReasonPhrase != "Bad Request") &&
-                                    (response.ReasonPhrase != "A task was canceled."))
-                                {
-                                    ControlaExcecoes.Add($"Erro ao realizar chamada GET. Filial: {configuracaoSkyhub.COD_FILIAL}", response.ReasonPhrase);
-                                }
+                                ControladorExcecoes.Adiciona(new Exception("Erro ao realizar chamada GET"), new List<string> { $"Filial: {configuracaoSkyhub.COD_FILIAL}", response.ReasonPhrase });
                                 continue;
                             }
                         }
                     }
                     catch (Exception except)
                     {
-                        ControlaExcecoes.Add($"Erro ao sincronizar. Filial: {configuracaoSkyhub.COD_FILIAL}", ResolucaoExcecoes.ErroAprofundado(except));
+                        ControladorExcecoes.Adiciona(except, new List<string> { $"Filial: {configuracaoSkyhub.COD_FILIAL}" });
                         continue;
                     }
                 }
@@ -1186,7 +1193,7 @@ namespace Cemapa.Controllers
                 //Biblioteca ControlaExcecoes armazenou todos os erros ocorridos, caso não ocorra nenhum erro,
                 //então o método SemExcecoes retornará verdadeiro.
 
-                if (ControlaExcecoes.SemExcecoes())
+                if (ControladorExcecoes.SemExcecoes())
                 {
                     return Request.CreateResponse(
                         HttpStatusCode.OK,
@@ -1198,15 +1205,17 @@ namespace Cemapa.Controllers
                     return Request.CreateResponse(
                         HttpStatusCode.InternalServerError,
                         $"Nem todos os pedidos foram sincronizados. Criados: {wTotalCriados}, Cancelados: {wTotalCancelados}, Alterados: {wTotalAlterados}. " +
-                        $"{string.Join(", ", ControlaExcecoes.Excecoes)}"
+                        $"{ControladorExcecoes.Printa()}"
                     );
                 }
             }
             catch (Exception except)
             {
+                ControladorExcecoes.Adiciona(except);
+
                 return Request.CreateResponse(
                     HttpStatusCode.InternalServerError,
-                    $"Não foi possível começar a sincronização. {ResolucaoExcecoes.ErroAprofundado(except)}"
+                    $"Não foi possível começar a sincronização. {ControladorExcecoes.Printa()}"
                 );
             }
         }
@@ -1222,12 +1231,12 @@ namespace Cemapa.Controllers
 
                 bool saveRegistro = true;
 
-                ControlaExcecoes.Limpa();
+                ControladorExcecoes.Limpa();
 
                 //Busca sincronizações de produtos pendentes (campo IND_SINCRONIZADO esteja igual a "N") na tabela TB_SINCRONIZACAO_SKYHUB.
 
                 List<TB_SINCRONIZACAO_SKYHUB> sincronizacoesSkyhub = GetSincronizacoes();
-
+                
                 foreach (var sincronizacaoSkyhub in sincronizacoesSkyhub)
                 {
                     try
@@ -1481,7 +1490,7 @@ namespace Cemapa.Controllers
                                         }
                                         catch (Exception except)
                                         {
-                                            ControlaExcecoes.Add($"Erro ao sincronizar. Filial: {configuracaoSkyhub.COD_FILIAL}", $"produto: {produtoSkyhub.COD_PRODUTO}", ResolucaoExcecoes.ErroAprofundado(except));
+                                            ControladorExcecoes.Adiciona(except, new List<string> { $"Filial: {configuracaoSkyhub.COD_FILIAL}", $"Produto: {produtoSkyhub.COD_PRODUTO}" });
                                             saveRegistro = false;
                                             continue;
                                         }
@@ -1529,9 +1538,7 @@ namespace Cemapa.Controllers
                             }
                             catch (Exception except)
                             {
-                                ControlaExcecoes.Add($"Erro ao sincronizar. Filial: {configuracaoSkyhub.COD_FILIAL}, " +
-                                                     $"Sincronização: {sincronizacaoSkyhub.COD_SINCRONIZACAO_SKYHUB}",
-                                                     ResolucaoExcecoes.ErroAprofundado(except));
+                                ControladorExcecoes.Adiciona(except, new List<string> { $"Filial: {configuracaoSkyhub.COD_FILIAL}", $"Sincronização: {sincronizacaoSkyhub.COD_SINCRONIZACAO_SKYHUB}" });
                                 saveRegistro = false;
                                 continue;
                             }
@@ -1553,7 +1560,7 @@ namespace Cemapa.Controllers
                     }
                     catch (Exception except)
                     {
-                        ControlaExcecoes.Add($"Erro ao sincronizar. Sincronização: {sincronizacaoSkyhub.COD_SINCRONIZACAO_SKYHUB}", ResolucaoExcecoes.ErroAprofundado(except));
+                        ControladorExcecoes.Adiciona(except, new List<string> { $"Sincronização: {sincronizacaoSkyhub.COD_SINCRONIZACAO_SKYHUB}" });
                         continue;
                     }
                 }
@@ -1561,7 +1568,7 @@ namespace Cemapa.Controllers
                 //Biblioteca ControlaExcecoes armazenou todos os erros ocorridos, caso não ocorra nenhum erro,
                 //então o método SemExcecoes retornará verdadeiro.
 
-                if (ControlaExcecoes.SemExcecoes())
+                if (ControladorExcecoes.SemExcecoes())
                 {
                     return Request.CreateResponse(
                         HttpStatusCode.OK,
@@ -1572,16 +1579,18 @@ namespace Cemapa.Controllers
                 {
                     return Request.CreateResponse(
                         HttpStatusCode.InternalServerError,
-                        $"Nem todos os produtos foram sincronizados. Criados: {totalCriados}, Atualizados: {totalAtualizados}, Removidos: {totalDeletados}. " +
-                        $"{string.Join(", ", ControlaExcecoes.Excecoes)}"
+                        $"Nem todos os pedidos foram sincronizados. Criados: {totalCriados}, Atualizados: {totalAtualizados}, Removidos: {totalDeletados}. " +
+                        $"{ControladorExcecoes.Printa()}"
                     );
                 }
             }
             catch (Exception except)
             {
+                ControladorExcecoes.Adiciona(except);
+
                 return Request.CreateResponse(
                     HttpStatusCode.InternalServerError,
-                    $"Não foi possível começar a sincronização. {ResolucaoExcecoes.ErroAprofundado(except)}"
+                    $"Não foi possível começar a sincronização. {ControladorExcecoes.Printa()}"
                 );
             }
         }
