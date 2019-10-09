@@ -934,7 +934,7 @@ namespace Cemapa.Controllers
                         //Busca por um pedido na fila
                         //A fila é usada para consumir pedidos em ordem. Após consumir um pedido, é necessário em até 5 minutos,
                         //deleta-lo da fila para que a API entenda que este pedido foi salvo com sucesso no sistema.
-
+                        
                         bool wContinua = true;
 
                         while (wContinua)
@@ -968,10 +968,7 @@ namespace Cemapa.Controllers
 
                                                     TB_CADASTRO wCadastro = SelecionaComprador(
                                                         ordem,
-                                                        Convert.ToInt32(configuracaoSkyhub.COD_RAMO_FISICA),
-                                                        Convert.ToInt32(configuracaoSkyhub.COD_RAMO_JURIDICA),
-                                                        Convert.ToInt32(configuracaoSkyhub.COD_CLASS_CADASTRO),
-                                                        Convert.ToInt32(configuracaoSkyhub.COD_TIPO_CADASTRO)
+                                                        configuracaoSkyhub
                                                     );
 
                                                     TB_SEQUENCIA wSequencia = SelecionaSequencia(
@@ -1178,7 +1175,13 @@ namespace Cemapa.Controllers
                             }
                             else
                             {
-                                ControladorExcecoes.Adiciona(new Exception("Erro ao realizar chamada GET"), new List<string> { $"Filial: {configuracaoSkyhub.COD_FILIAL}", response.ReasonPhrase });
+                                ControladorExcecoes.Adiciona(
+                                    new Exception("Erro ao realizar chamada GET"),
+                                    new List<string> {
+                                        $"Filial: {configuracaoSkyhub.COD_FILIAL}",
+                                        response.ReasonPhrase
+                                    }
+                                );
                                 continue;
                             }
                         }
@@ -1720,7 +1723,7 @@ namespace Cemapa.Controllers
             return wPedido;
         }
 
-        private TB_CADASTRO SelecionaComprador(Order ordem, int codRamoFisica, int codRamoJuridica, int codClassificacaoCad, int codTipoCad)
+        private TB_CADASTRO SelecionaComprador(Order ordem, TB_CONFIGURACAO_SKYHUB configuracao)
         {
             //Método irá trazer comprador já cadastrado ou caso não exista, cadastra.
             //Recebe os dados da ordem vindo da skyhub.
@@ -1788,7 +1791,7 @@ namespace Cemapa.Controllers
                     {
                         COD_CADASTRO = wCodigoCadastro,
                         NOME = ordem.customer.name,
-                        COD_TIPO_CADASTRO = codTipoCad,
+                        COD_TIPO_CADASTRO = Convert.ToInt32(configuracao.COD_TIPO_CADASTRO),
                         NUM_CGC_CPF = ordem.customer.vat_number,
                         DESC_E_MAIL = ordem.customer.email,
                         DT_NASCIMENTO = Convert.ToDateTime(ordem.customer.date_of_birth),
@@ -1796,21 +1799,31 @@ namespace Cemapa.Controllers
                         DESC_CELULAR = ordem.shipping_address.secondary_phone,
                         DESC_TELEFONE = ordem.shipping_address.phone,
                         DESC_ENDERECO = $"{ordem.shipping_address.street.ToUpper()}, {ordem.shipping_address.number}",
+                        DESC_ENDERECO_COBRANCA = $"{ordem.shipping_address.street.ToUpper()}, {ordem.shipping_address.number}",
                         DESC_COMPLEMENTO = ordem.shipping_address.complement,
                         DESC_BAIRRO = ordem.shipping_address.neighborhood,
+                        DESC_BAIRRO_COBRANCA = ordem.shipping_address.neighborhood,
                         COD_ESTADO = ordem.shipping_address.region,
+                        DESC_ESTADO_COBRANCA = ordem.shipping_address.region,
                         IND_SEXO_CATEGORIA = ordem.customer.gender,
                         IND_FISICA_JURIDICA = indCgc,
                         COD_CIDADE = wCidade.COD_CIDADE,
                         DESC_CIDADE = ordem.shipping_address.city,
                         DESC_CEP = ordem.shipping_address.postcode,
-                        COD_RAMO = indCgc == "J" ? codRamoJuridica : codRamoFisica,
-                        COD_CLASS_CADASTRO = codClassificacaoCad,
+                        DESC_CEP_COBRANCA = ordem.shipping_address.postcode,
+                        COD_RAMO = indCgc == "J" ? configuracao.COD_RAMO_JURIDICA : configuracao.COD_RAMO_FISICA,
+                        COD_CLASS_CADASTRO = configuracao.COD_CLASS_CADASTRO,
                         IND_LIBERA_VENDA = "NAO",
                         IND_LIBERA_BLOQUETO = "NAO",
+                        IND_PIS_COFINS_RETIDO = "NAO",
+                        IND_ATACADO_VAREJO = "V",
                         NUM_INSCRICAO = "",
+                        COD_FILIAL = configuracao.COD_FILIAL,
+                        COD_REGIAO = configuracao.COD_REGIAO,
                         COD_USUARIO = 1,
-                        COD_PAIS = 1
+                        COD_PAIS = 1,
+                        IND_REGIME_TRIBUTARIO = 3,
+                        IND_ISS_RETIDO = 2
                     };
 
                     db.Entry(wCadastro).State = EntityState.Added;

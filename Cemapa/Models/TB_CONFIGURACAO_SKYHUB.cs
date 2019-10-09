@@ -35,15 +35,17 @@ namespace Cemapa.Models
         public Nullable<int> COD_LOTE_TIPO { get; set; }
         public string IND_TIPO_PAGAMENTO { get; set; }
         public Nullable<int> COD_VENDEDOR { get; set; }
+        public Nullable<int> COD_REGIAO { get; set; }
     
-        public virtual TB_FILIAL TB_FILIAL { get; set; }
-        public virtual TB_OPERACAO TB_OPERACAO { get; set; }
         public virtual TB_CLASS_CADASTRO TB_CLASS_CADASTRO { get; set; }
+        public virtual TB_DEPARTAMENTO TB_DEPARTAMENTO { get; set; }
+        public virtual TB_FILIAL TB_FILIAL { get; set; }
+        public virtual TB_LOTE_TIPO TB_LOTE_TIPO { get; set; }
+        public virtual TB_OPERACAO TB_OPERACAO { get; set; }
         public virtual TB_RAMO TB_RAMO { get; set; }
         public virtual TB_RAMO TB_RAMO1 { get; set; }
+        public virtual TB_REGIAO TB_REGIAO { get; set; }
         public virtual TB_TIPO_CADASTRO TB_TIPO_CADASTRO { get; set; }
-        public virtual TB_DEPARTAMENTO TB_DEPARTAMENTO { get; set; }
-        public virtual TB_LOTE_TIPO TB_LOTE_TIPO { get; set; }
         public virtual TB_VENDEDOR TB_VENDEDOR { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TB_EMAIL_NOTIFICACAO> TB_EMAIL_NOTIFICACAO { get; set; }

@@ -77,17 +77,20 @@ namespace Cemapa.Models
                     }
                     else
                     {
-                        ExcecaoContextual exContx = new ExcecaoContextual
+                        if (!Filtros.Any(x => Referencias.Any(y => y == x)))
                         {
-                            Excecao = except
-                        };
+                            ExcecaoContextual exContx = new ExcecaoContextual
+                            {
+                                Excecao = except
+                            };
 
-                        foreach (string Referencia in Referencias)
-                        {
-                            exContx.ChavesContextuais.Add(Referencia);
+                            foreach (string Referencia in Referencias)
+                            {
+                                exContx.ChavesContextuais.Add(Referencia);
+                            }
+
+                            Excecoes.Add(exContx);
                         }
-
-                        Excecoes.Add(exContx);
                     }
                 }
             }
@@ -100,13 +103,9 @@ namespace Cemapa.Models
         public static bool SemExcecoes()
         {
             if (Excecoes.Count > 0)
-            {
                 return false;
-            }
             else
-            {
                 return true;
-            }
         }
 
         public static void Limpa()

@@ -80,11 +80,11 @@ namespace Cemapa.Models
         public virtual DbSet<TB_HISTORICO> TB_HISTORICO { get; set; }
         public virtual DbSet<TB_BC_CREDITO_PISCOFINS> TB_BC_CREDITO_PISCOFINS { get; set; }
         public virtual DbSet<TB_OPERACAO> TB_OPERACAO { get; set; }
-        public virtual DbSet<TB_PEDIDO_ITEM> TB_PEDIDO_ITEM { get; set; }
         public virtual DbSet<TB_PEDIDO_CAB> TB_PEDIDO_CAB { get; set; }
-        public virtual DbSet<TB_CONFIGURACAO_SKYHUB> TB_CONFIGURACAO_SKYHUB { get; set; }
         public virtual DbSet<TB_CLASSE> TB_CLASSE { get; set; }
         public virtual DbSet<TB_EMAIL_NOTIFICACAO> TB_EMAIL_NOTIFICACAO { get; set; }
         public virtual DbSet<TB_EMAIL> TB_EMAIL { get; set; }
+        public virtual DbSet<TB_CONFIGURACAO_SKYHUB> TB_CONFIGURACAO_SKYHUB { get; set; }
+        public virtual DbSet<TB_PEDIDO_ITEM> TB_PEDIDO_ITEM { get; set; }
     }
 }

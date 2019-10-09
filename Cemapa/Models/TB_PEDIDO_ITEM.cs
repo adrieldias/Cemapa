@@ -25,7 +25,7 @@ namespace Cemapa.Models
         public decimal PERC_DESCONTO { get; set; }
         public Nullable<int> COD_LOTE_TIPO { get; set; }
         public Nullable<decimal> PERC_COMISSAO { get; set; }
-        public Nullable<int> COD_PRODUTO_AUX { get; set; }
+        public Nullable<long> COD_PRODUTO_AUX { get; set; }
         public Nullable<decimal> QT_EMBALAGEM { get; set; }
         public Nullable<decimal> QT_QUANTIDADE_AUX { get; set; }
         public Nullable<decimal> VAL_DESCONTO { get; set; }
@@ -52,8 +52,9 @@ namespace Cemapa.Models
         public string IND_SINC_MAX_ROTEIRIZADOR { get; set; }
     
         public virtual TB_MARCA TB_MARCA { get; set; }
-        public virtual TB_PRODUTO TB_PRODUTO { get; set; }
-        public virtual TB_TABELA_PRECO_CAB TB_TABELA_PRECO_CAB { get; set; }
         public virtual TB_PEDIDO_CAB TB_PEDIDO_CAB { get; set; }
+        public virtual TB_PRODUTO TB_PRODUTO { get; set; }
+        public virtual TB_PRODUTO TB_PRODUTO1 { get; set; }
+        public virtual TB_TABELA_PRECO_CAB TB_TABELA_PRECO_CAB { get; set; }
     }
 }

@@ -103,8 +103,8 @@ namespace Cemapa.Models
         public virtual TB_OPERACAO TB_OPERACAO { get; set; }
         public virtual TB_PRAZO_VENCIMENTO TB_PRAZO_VENCIMENTO { get; set; }
         public virtual TB_VENDEDOR TB_VENDEDOR { get; set; }
+        public virtual TB_PRODUTO TB_PRODUTO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TB_PEDIDO_ITEM> TB_PEDIDO_ITEM { get; set; }
-        public virtual TB_PRODUTO TB_PRODUTO { get; set; }
     }
 }

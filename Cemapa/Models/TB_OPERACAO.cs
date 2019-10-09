@@ -76,7 +76,6 @@ namespace Cemapa.Models
         public string COD_CONTABIL_CONTRATO_DEB { get; set; }
         public string COD_CONTABIL_CONTRATO_CRED { get; set; }
         public string IND_BONIFICACAO { get; set; }
-        public string IND_BONIFICAÇAO { get; set; }
         public string COD_CONT_VAL_NOTA_CRED_AVISTA { get; set; }
         public Nullable<int> COD_MENSAGEM { get; set; }
         public Nullable<int> COD_TRIBUTACAO { get; set; }
