@@ -4991,10 +4991,10 @@
           <Property Name="COD_PRODUTO_SKYHUB_PAI" Type="Int32" />
           <NavigationProperty Name="TB_PRODUTO" Relationship="Model.FK_PROD_SKYXPRODUTO" FromRole="TB_PRODUTO_SKYHUB" ToRole="TB_PRODUTO" />
           <Property Name="DESC_CATEGORIA" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="DESC_LINK_IMAGEM_1" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="DESC_LINK_IMAGEM_2" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="DESC_LINK_IMAGEM_3" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="DESC_LINK_IMAGEM_4" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_LINK_IMAGEM_1" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_LINK_IMAGEM_2" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_LINK_IMAGEM_3" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_LINK_IMAGEM_4" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="ESP_ALIMENTACAO" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="ESP_APARELHOSCOMPATIVEIS" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="ESP_CONTEUDODAEMBALAGEM" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />

@@ -5,15 +5,19 @@ using System.Linq;
 using System.Web;
 
 namespace Cemapa.Models
-{
-    //Classe que armazena exceções em uma lista para depois escreve-las todas de uma vez.
-    //Utilizado para armazenar diversos erros e retorna-los ao fim da execução.
+{    
+    // Um erro contextual, armazena a exceção ocorrida e também chaves que estavam
+    // atribuidas em determinado contexto, ajudando assim a decifrar a causa do erro.
 
     internal class ExcecaoContextual
     {
         public Exception Excecao { get; set; }
         public List<string> ChavesContextuais = new List<string>();
     }
+
+    // Classe controladora de exceções, armazenada exceções em uma lista para
+    // depois escreve-las todas de uma vez.
+    // Utilizado para armazenar diversos erros e retorna-los ao fim da execução.
 
     public static class ControladorExcecoes
     {
