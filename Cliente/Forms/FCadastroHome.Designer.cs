@@ -36,8 +36,8 @@
             // 
             // lbNome
             // 
-            this.lbNome.Size = new System.Drawing.Size(79, 19);
-            this.lbNome.Text = "CADASTRO";
+            this.lbNome.Size = new System.Drawing.Size(65, 19);
+            this.lbNome.Text = "Cadastro";
             // 
             // btAlterar
             // 
@@ -67,20 +67,27 @@
             // 
             this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(1, 151);
+            this.dataGridView1.EnableHeadersVisualStyles = false;
+            this.dataGridView1.Location = new System.Drawing.Point(1, 106);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            this.dataGridView1.Size = new System.Drawing.Size(829, 263);
+            this.dataGridView1.Size = new System.Drawing.Size(829, 308);
             this.dataGridView1.TabIndex = 7;
             // 
             // busca1
             // 
-            this.busca1.Location = new System.Drawing.Point(25, 106);
+            this.busca1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.busca1.BackColor = System.Drawing.Color.LightGray;
+            this.busca1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.busca1.Location = new System.Drawing.Point(512, 62);
             this.busca1.Name = "busca1";
-            this.busca1.Size = new System.Drawing.Size(691, 34);
+            this.busca1.Size = new System.Drawing.Size(306, 34);
             this.busca1.TabIndex = 8;
             this.busca1.TextBoxTextChanged += new System.EventHandler(this.busca1_TextBoxTextChanged);
             // 

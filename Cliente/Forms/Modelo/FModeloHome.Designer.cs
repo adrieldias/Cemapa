@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FModeloHome));
             this.pCabecalho = new System.Windows.Forms.Panel();
             this.btMinimize = new System.Windows.Forms.Button();
             this.btCloseForm = new System.Windows.Forms.Button();
@@ -92,13 +93,13 @@
             // lbNome
             // 
             this.lbNome.AutoSize = true;
-            this.lbNome.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbNome.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbNome.ForeColor = System.Drawing.Color.White;
             this.lbNome.Location = new System.Drawing.Point(12, 18);
             this.lbNome.Name = "lbNome";
-            this.lbNome.Size = new System.Drawing.Size(168, 19);
+            this.lbNome.Size = new System.Drawing.Size(140, 19);
             this.lbNome.TabIndex = 0;
-            this.lbNome.Text = "NOME DO FORMULÁRIO";
+            this.lbNome.Text = "Nome do Formulário";
             // 
             // btNovo
             // 
@@ -106,14 +107,18 @@
             this.btNovo.BackColor = System.Drawing.Color.LightGray;
             this.btNovo.FlatAppearance.BorderColor = System.Drawing.Color.Gainsboro;
             this.btNovo.FlatAppearance.BorderSize = 0;
-            this.btNovo.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btNovo.Location = new System.Drawing.Point(0, 58);
+            this.btNovo.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btNovo.ForeColor = System.Drawing.Color.SteelBlue;
+            this.btNovo.Image = ((System.Drawing.Image)(resources.GetObject("btNovo.Image")));
+            this.btNovo.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btNovo.Location = new System.Drawing.Point(8, 58);
             this.btNovo.Name = "btNovo";
             this.btNovo.Padding = new System.Windows.Forms.Padding(0, 5, 0, 5);
-            this.btNovo.Size = new System.Drawing.Size(86, 42);
+            this.btNovo.Size = new System.Drawing.Size(74, 42);
             this.btNovo.TabIndex = 3;
-            this.btNovo.Text = "NOVO";
-            this.btNovo.UseVisualStyleBackColor = true;
+            this.btNovo.Text = "Novo";
+            this.btNovo.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btNovo.UseVisualStyleBackColor = false;
             // 
             // btAlterar
             // 
@@ -121,14 +126,18 @@
             this.btAlterar.BackColor = System.Drawing.Color.LightGray;
             this.btAlterar.FlatAppearance.BorderColor = System.Drawing.Color.Gainsboro;
             this.btAlterar.FlatAppearance.BorderSize = 0;
-            this.btAlterar.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btAlterar.Location = new System.Drawing.Point(92, 58);
+            this.btAlterar.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btAlterar.ForeColor = System.Drawing.Color.SteelBlue;
+            this.btAlterar.Image = ((System.Drawing.Image)(resources.GetObject("btAlterar.Image")));
+            this.btAlterar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btAlterar.Location = new System.Drawing.Point(88, 58);
             this.btAlterar.Name = "btAlterar";
             this.btAlterar.Padding = new System.Windows.Forms.Padding(0, 5, 0, 5);
-            this.btAlterar.Size = new System.Drawing.Size(86, 42);
+            this.btAlterar.Size = new System.Drawing.Size(84, 42);
             this.btAlterar.TabIndex = 4;
-            this.btAlterar.Text = "ALTERAR";
-            this.btAlterar.UseVisualStyleBackColor = true;
+            this.btAlterar.Text = "Alterar";
+            this.btAlterar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btAlterar.UseVisualStyleBackColor = false;
             // 
             // btExcluir
             // 
@@ -136,14 +145,18 @@
             this.btExcluir.BackColor = System.Drawing.Color.LightGray;
             this.btExcluir.FlatAppearance.BorderColor = System.Drawing.Color.Gainsboro;
             this.btExcluir.FlatAppearance.BorderSize = 0;
-            this.btExcluir.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btExcluir.Location = new System.Drawing.Point(276, 58);
+            this.btExcluir.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btExcluir.ForeColor = System.Drawing.Color.SteelBlue;
+            this.btExcluir.Image = ((System.Drawing.Image)(resources.GetObject("btExcluir.Image")));
+            this.btExcluir.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btExcluir.Location = new System.Drawing.Point(289, 58);
             this.btExcluir.Name = "btExcluir";
             this.btExcluir.Padding = new System.Windows.Forms.Padding(0, 5, 0, 5);
             this.btExcluir.Size = new System.Drawing.Size(86, 42);
             this.btExcluir.TabIndex = 5;
-            this.btExcluir.Text = "EXCLUIR";
-            this.btExcluir.UseVisualStyleBackColor = true;
+            this.btExcluir.Text = "Excluir";
+            this.btExcluir.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btExcluir.UseVisualStyleBackColor = false;
             // 
             // btVisualizar
             // 
@@ -151,14 +164,18 @@
             this.btVisualizar.BackColor = System.Drawing.Color.LightGray;
             this.btVisualizar.FlatAppearance.BorderColor = System.Drawing.Color.Gainsboro;
             this.btVisualizar.FlatAppearance.BorderSize = 0;
-            this.btVisualizar.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btVisualizar.Location = new System.Drawing.Point(184, 58);
+            this.btVisualizar.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btVisualizar.ForeColor = System.Drawing.Color.SteelBlue;
+            this.btVisualizar.Image = ((System.Drawing.Image)(resources.GetObject("btVisualizar.Image")));
+            this.btVisualizar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btVisualizar.Location = new System.Drawing.Point(178, 58);
             this.btVisualizar.Name = "btVisualizar";
             this.btVisualizar.Padding = new System.Windows.Forms.Padding(0, 5, 0, 5);
-            this.btVisualizar.Size = new System.Drawing.Size(86, 42);
+            this.btVisualizar.Size = new System.Drawing.Size(105, 42);
             this.btVisualizar.TabIndex = 6;
-            this.btVisualizar.Text = "VISUALIZAR";
-            this.btVisualizar.UseVisualStyleBackColor = true;
+            this.btVisualizar.Text = "Visualizar";
+            this.btVisualizar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btVisualizar.UseVisualStyleBackColor = false;
             // 
             // FModeloHome
             // 

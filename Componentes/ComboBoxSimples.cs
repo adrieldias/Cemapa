@@ -87,7 +87,7 @@ namespace Componentes
         public string Label
         {   
             get => this.lbNome.Text;
-            set => this.lbNome.Text = value.ToUpper();
+            set => this.lbNome.Text = value;
         }
 
         [Description("BindingSource"), Category("Cemapa")]

@@ -44,20 +44,26 @@
             // 
             // pCabecalho
             // 
-            this.pCabecalho.Size = new System.Drawing.Size(853, 52);            
+            this.pCabecalho.Size = new System.Drawing.Size(853, 52);
             // 
             // btCancelar
             // 
             this.btCancelar.FlatAppearance.BorderColor = System.Drawing.Color.Gainsboro;
             this.btCancelar.FlatAppearance.BorderSize = 0;
+            this.btCancelar.Location = new System.Drawing.Point(134, 56);
             this.btCancelar.Click += new System.EventHandler(this.btCancelar_Click);
             // 
             // btSalvar
             // 
             this.btSalvar.FlatAppearance.BorderColor = System.Drawing.Color.Gainsboro;
             this.btSalvar.FlatAppearance.BorderSize = 0;
+            this.btSalvar.Size = new System.Drawing.Size(122, 42);
             this.btSalvar.Text = "CONFIRMAR";
             this.btSalvar.Click += new System.EventHandler(this.btSalvar_Click);
+            // 
+            // btFechar
+            // 
+            this.btFechar.Location = new System.Drawing.Point(236, 56);
             // 
             // panel1
             // 
@@ -128,9 +134,10 @@
             this.cbsPais.BindingSource = null;
             this.tableLayoutPanel2.SetColumnSpan(this.cbsPais, 3);
             this.cbsPais.DisplayMember = "";
-            this.cbsPais.Label = "PAÍS";
+            this.cbsPais.Label = "País";
             this.cbsPais.Location = new System.Drawing.Point(258, 103);
             this.cbsPais.Name = "cbsPais";
+            this.cbsPais.SelectedIndex = -1;
             this.cbsPais.SelectedText = null;
             this.cbsPais.SelectedValue = null;
             this.cbsPais.Size = new System.Drawing.Size(249, 44);
@@ -144,7 +151,7 @@
             this.tbsEndereco.AutoSize = true;
             this.tableLayoutPanel2.SetColumnSpan(this.tbsEndereco, 5);
             this.tbsEndereco.Font = new System.Drawing.Font("Calibri Light", 12F);
-            this.tbsEndereco.Label = "ENDEREÇO (INFORMAR NÚMERO APÓS VÍRGULA)";
+            this.tbsEndereco.Label = "Endereço (Informar Número Após Vírgula)";
             this.tbsEndereco.Location = new System.Drawing.Point(3, 3);
             this.tbsEndereco.Name = "tbsEndereco";
             this.tbsEndereco.PasswordChar = '\0';
@@ -158,7 +165,7 @@
             this.tbsComplemento.AutoSize = true;
             this.tableLayoutPanel2.SetColumnSpan(this.tbsComplemento, 5);
             this.tbsComplemento.Font = new System.Drawing.Font("Calibri Light", 12F);
-            this.tbsComplemento.Label = "COMPLEMENTO";
+            this.tbsComplemento.Label = "Complemento";
             this.tbsComplemento.Location = new System.Drawing.Point(428, 3);
             this.tbsComplemento.Name = "tbsComplemento";
             this.tbsComplemento.PasswordChar = '\0';
@@ -173,9 +180,10 @@
             this.cbsEstado.BindingSource = null;
             this.tableLayoutPanel2.SetColumnSpan(this.cbsEstado, 3);
             this.cbsEstado.DisplayMember = "";
-            this.cbsEstado.Label = "ESTADO";
+            this.cbsEstado.Label = "Estado";
             this.cbsEstado.Location = new System.Drawing.Point(3, 53);
             this.cbsEstado.Name = "cbsEstado";
+            this.cbsEstado.SelectedIndex = -1;
             this.cbsEstado.SelectedText = "DESC_ESTADO";
             this.cbsEstado.SelectedValue = "COD_ESTADO";
             this.cbsEstado.Size = new System.Drawing.Size(249, 44);
@@ -190,9 +198,10 @@
             this.cbsCidade.BindingSource = null;
             this.tableLayoutPanel2.SetColumnSpan(this.cbsCidade, 4);
             this.cbsCidade.DisplayMember = "";
-            this.cbsCidade.Label = "CIDADE";
+            this.cbsCidade.Label = "Cidade";
             this.cbsCidade.Location = new System.Drawing.Point(258, 53);
             this.cbsCidade.Name = "cbsCidade";
+            this.cbsCidade.SelectedIndex = -1;
             this.cbsCidade.SelectedText = null;
             this.cbsCidade.SelectedValue = null;
             this.cbsCidade.Size = new System.Drawing.Size(334, 44);
@@ -206,7 +215,7 @@
             this.tbsBairro.AutoSize = true;
             this.tableLayoutPanel2.SetColumnSpan(this.tbsBairro, 3);
             this.tbsBairro.Font = new System.Drawing.Font("Calibri Light", 12F);
-            this.tbsBairro.Label = "BAIRRO";
+            this.tbsBairro.Label = "Bairro";
             this.tbsBairro.Location = new System.Drawing.Point(598, 53);
             this.tbsBairro.Name = "tbsBairro";
             this.tbsBairro.PasswordChar = '\0';
@@ -222,9 +231,10 @@
             this.Name = "FEnderecoCad";
             this.Text = "FEnderecoCadcs";
             this.Load += new System.EventHandler(this.FEnderecoCad_Load);
+            this.Controls.SetChildIndex(this.btFechar, 0);
             this.Controls.SetChildIndex(this.pCabecalho, 0);
             this.Controls.SetChildIndex(this.btSalvar, 0);
-            this.Controls.SetChildIndex(this.btCancelar, 0);            
+            this.Controls.SetChildIndex(this.btCancelar, 0);
             this.Controls.SetChildIndex(this.panel1, 0);
             this.pCabecalho.ResumeLayout(false);
             this.pCabecalho.PerformLayout();

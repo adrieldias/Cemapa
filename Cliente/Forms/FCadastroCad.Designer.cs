@@ -49,6 +49,7 @@
             this.tbsDtSeprocado = new Componentes.TextBoxSimples();
             this.cbsRegimeTributario = new Componentes.ComboBoxSimples();
             this.cbsConsumidorFinal = new Componentes.ComboBoxSimples();
+            this.cbsOperadora = new Componentes.ComboBoxSimples();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.btExcluirEndereco = new System.Windows.Forms.Button();
             this.btAlterarEndereco = new System.Windows.Forms.Button();
@@ -71,6 +72,9 @@
             this.tbsPercParticCapitalTotal = new Componentes.TextBoxSimples();
             this.tbsPercParticCapitalVolante = new Componentes.TextBoxSimples();
             this.tbsFuncao = new Componentes.TextBoxSimples();
+            this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.cbsRegiao = new Componentes.ComboBoxSimples();
             this.pCabecalho.SuspendLayout();
             this.slickBlueTabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -82,24 +86,29 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvPropriedades)).BeginInit();
             this.tabPage3.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
+            this.tabPage5.SuspendLayout();
+            this.tableLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // pCabecalho
             // 
             this.pCabecalho.Size = new System.Drawing.Size(900, 52);
             // 
+            // lbNome
+            // 
+            this.lbNome.Size = new System.Drawing.Size(160, 19);
+            this.lbNome.Text = "Formulário de Cadastro";
+            // 
             // btCancelar
             // 
             this.btCancelar.FlatAppearance.BorderColor = System.Drawing.Color.Gainsboro;
             this.btCancelar.FlatAppearance.BorderSize = 0;
-            this.btCancelar.Location = new System.Drawing.Point(89, 56);
             this.btCancelar.Click += new System.EventHandler(this.btCancelar_Click);
             // 
             // btSalvar
             // 
             this.btSalvar.FlatAppearance.BorderColor = System.Drawing.Color.Gainsboro;
             this.btSalvar.FlatAppearance.BorderSize = 0;
-            this.btSalvar.Location = new System.Drawing.Point(1, 56);
             this.btSalvar.Click += new System.EventHandler(this.btSalvar_Click);
             // 
             // slickBlueTabControl1
@@ -112,6 +121,7 @@
             this.slickBlueTabControl1.Controls.Add(this.tabPage4);
             this.slickBlueTabControl1.Controls.Add(this.tabPage1);
             this.slickBlueTabControl1.Controls.Add(this.tabPage3);
+            this.slickBlueTabControl1.Controls.Add(this.tabPage5);
             this.slickBlueTabControl1.Font = new System.Drawing.Font("Calibri Light", 10F);
             this.slickBlueTabControl1.ItemSize = new System.Drawing.Size(40, 130);
             this.slickBlueTabControl1.Location = new System.Drawing.Point(0, 103);
@@ -164,6 +174,7 @@
             this.tableLayoutPanel1.Controls.Add(this.tbsDtSeprocado, 5, 4);
             this.tableLayoutPanel1.Controls.Add(this.cbsRegimeTributario, 7, 4);
             this.tableLayoutPanel1.Controls.Add(this.cbsConsumidorFinal, 0, 6);
+            this.tableLayoutPanel1.Controls.Add(this.cbsOperadora, 2, 6);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -200,7 +211,7 @@
             this.tbsCodigo.AutoSize = true;
             this.tableLayoutPanel1.SetColumnSpan(this.tbsCodigo, 2);
             this.tbsCodigo.Font = new System.Drawing.Font("Calibri Light", 12F);
-            this.tbsCodigo.Label = "CÓDIGO";
+            this.tbsCodigo.Label = "Código";
             this.tbsCodigo.Location = new System.Drawing.Point(4, 23);
             this.tbsCodigo.Margin = new System.Windows.Forms.Padding(4, 6, 4, 2);
             this.tbsCodigo.Name = "tbsCodigo";
@@ -216,7 +227,7 @@
             this.cbsTipoCadastro.BindingSource = null;
             this.tableLayoutPanel1.SetColumnSpan(this.cbsTipoCadastro, 5);
             this.cbsTipoCadastro.DisplayMember = "";
-            this.cbsTipoCadastro.Label = "TIPO";
+            this.cbsTipoCadastro.Label = "Tipo";
             this.cbsTipoCadastro.Location = new System.Drawing.Point(3, 73);
             this.cbsTipoCadastro.Name = "cbsTipoCadastro";
             this.cbsTipoCadastro.SelectedIndex = -1;
@@ -232,7 +243,7 @@
             this.tbsNome.AutoSize = true;
             this.tableLayoutPanel1.SetColumnSpan(this.tbsNome, 5);
             this.tbsNome.Font = new System.Drawing.Font("Calibri Light", 12F);
-            this.tbsNome.Label = "NOME";
+            this.tbsNome.Label = "Nome";
             this.tbsNome.Location = new System.Drawing.Point(4, 124);
             this.tbsNome.Margin = new System.Windows.Forms.Padding(4);
             this.tbsNome.Name = "tbsNome";
@@ -248,7 +259,7 @@
             this.cbsFisicaJuridica.BindingSource = null;
             this.tableLayoutPanel1.SetColumnSpan(this.cbsFisicaJuridica, 5);
             this.cbsFisicaJuridica.DisplayMember = "";
-            this.cbsFisicaJuridica.Label = "PESSOA FÍSICA/JURÍDICA";
+            this.cbsFisicaJuridica.Label = "Pessoa Física/Jurídica";
             this.cbsFisicaJuridica.Location = new System.Drawing.Point(378, 73);
             this.cbsFisicaJuridica.Name = "cbsFisicaJuridica";
             this.cbsFisicaJuridica.SelectedIndex = -1;
@@ -264,7 +275,7 @@
             this.tbsNomeFantasia.AutoSize = true;
             this.tableLayoutPanel1.SetColumnSpan(this.tbsNomeFantasia, 5);
             this.tbsNomeFantasia.Font = new System.Drawing.Font("Calibri Light", 12F);
-            this.tbsNomeFantasia.Label = "NOME FANTASIA";
+            this.tbsNomeFantasia.Label = "Nome Fantasia";
             this.tbsNomeFantasia.Location = new System.Drawing.Point(379, 124);
             this.tbsNomeFantasia.Margin = new System.Windows.Forms.Padding(4);
             this.tbsNomeFantasia.Name = "tbsNomeFantasia";
@@ -278,7 +289,7 @@
             this.tbsTelefone.AutoSize = true;
             this.tableLayoutPanel1.SetColumnSpan(this.tbsTelefone, 2);
             this.tbsTelefone.Font = new System.Drawing.Font("Calibri Light", 12F);
-            this.tbsTelefone.Label = "TELEFONE";
+            this.tbsTelefone.Label = "Telefone";
             this.tbsTelefone.Location = new System.Drawing.Point(4, 174);
             this.tbsTelefone.Margin = new System.Windows.Forms.Padding(4);
             this.tbsTelefone.Name = "tbsTelefone";
@@ -292,7 +303,7 @@
             this.tbsCelular.AutoSize = true;
             this.tableLayoutPanel1.SetColumnSpan(this.tbsCelular, 2);
             this.tbsCelular.Font = new System.Drawing.Font("Calibri Light", 12F);
-            this.tbsCelular.Label = "CELULAR";
+            this.tbsCelular.Label = "Celular";
             this.tbsCelular.Location = new System.Drawing.Point(154, 174);
             this.tbsCelular.Margin = new System.Windows.Forms.Padding(4);
             this.tbsCelular.Name = "tbsCelular";
@@ -308,7 +319,7 @@
             this.cbsClassificacao.BindingSource = null;
             this.tableLayoutPanel1.SetColumnSpan(this.cbsClassificacao, 2);
             this.cbsClassificacao.DisplayMember = "";
-            this.cbsClassificacao.Label = "CLASSIFICAÇÃO";
+            this.cbsClassificacao.Label = "Classificação";
             this.cbsClassificacao.Location = new System.Drawing.Point(228, 223);
             this.cbsClassificacao.Name = "cbsClassificacao";
             this.cbsClassificacao.SelectedIndex = -1;
@@ -324,7 +335,7 @@
             this.tbsEmailXML.AutoSize = true;
             this.tableLayoutPanel1.SetColumnSpan(this.tbsEmailXML, 3);
             this.tbsEmailXML.Font = new System.Drawing.Font("Calibri Light", 12F);
-            this.tbsEmailXML.Label = "E-MAIL PARA XML";
+            this.tbsEmailXML.Label = "E-Mail para XML";
             this.tbsEmailXML.Location = new System.Drawing.Point(4, 224);
             this.tbsEmailXML.Margin = new System.Windows.Forms.Padding(4);
             this.tbsEmailXML.Name = "tbsEmailXML";
@@ -339,7 +350,7 @@
             this.tbsTelComercial.AutoSize = true;
             this.tableLayoutPanel1.SetColumnSpan(this.tbsTelComercial, 2);
             this.tbsTelComercial.Font = new System.Drawing.Font("Calibri Light", 12F);
-            this.tbsTelComercial.Label = "TELEFONE COMERCIAL";
+            this.tbsTelComercial.Label = "Telefone Comercial";
             this.tbsTelComercial.Location = new System.Drawing.Point(303, 173);
             this.tbsTelComercial.Name = "tbsTelComercial";
             this.tbsTelComercial.PasswordChar = '\0';
@@ -352,7 +363,7 @@
             this.tbsEmailContato.AutoSize = true;
             this.tableLayoutPanel1.SetColumnSpan(this.tbsEmailContato, 4);
             this.tbsEmailContato.Font = new System.Drawing.Font("Calibri Light", 12F);
-            this.tbsEmailContato.Label = "E-MAIL PARA CONTATO";
+            this.tbsEmailContato.Label = "E-Mail para Contato";
             this.tbsEmailContato.Location = new System.Drawing.Point(454, 174);
             this.tbsEmailContato.Margin = new System.Windows.Forms.Padding(4);
             this.tbsEmailContato.Name = "tbsEmailContato";
@@ -367,7 +378,7 @@
             this.cbsFilial.BindingSource = null;
             this.tableLayoutPanel1.SetColumnSpan(this.cbsFilial, 5);
             this.cbsFilial.DisplayMember = "";
-            this.cbsFilial.Label = "FILIAL";
+            this.cbsFilial.Label = "Filial";
             this.cbsFilial.Location = new System.Drawing.Point(3, 273);
             this.cbsFilial.Name = "cbsFilial";
             this.cbsFilial.SelectedIndex = -1;
@@ -385,7 +396,7 @@
             this.cbsVendedor.BindingSource = null;
             this.tableLayoutPanel1.SetColumnSpan(this.cbsVendedor, 5);
             this.cbsVendedor.DisplayMember = "";
-            this.cbsVendedor.Label = "VENDEDOR";
+            this.cbsVendedor.Label = "Vendedor";
             this.cbsVendedor.Location = new System.Drawing.Point(378, 273);
             this.cbsVendedor.Name = "cbsVendedor";
             this.cbsVendedor.SelectedIndex = -1;
@@ -401,7 +412,7 @@
             this.tbsDtSeprocado.AutoSize = true;
             this.tableLayoutPanel1.SetColumnSpan(this.tbsDtSeprocado, 2);
             this.tbsDtSeprocado.Font = new System.Drawing.Font("Calibri Light", 12F);
-            this.tbsDtSeprocado.Label = "DATA SEPROCADO";
+            this.tbsDtSeprocado.Label = "Data Seprocado";
             this.tbsDtSeprocado.Location = new System.Drawing.Point(378, 223);
             this.tbsDtSeprocado.Name = "tbsDtSeprocado";
             this.tbsDtSeprocado.PasswordChar = '\0';
@@ -415,7 +426,7 @@
             this.cbsRegimeTributario.BindingSource = null;
             this.tableLayoutPanel1.SetColumnSpan(this.cbsRegimeTributario, 3);
             this.cbsRegimeTributario.DisplayMember = "";
-            this.cbsRegimeTributario.Label = "REGIME TRIBUTÁRIO";
+            this.cbsRegimeTributario.Label = "Regime Tributário";
             this.cbsRegimeTributario.Location = new System.Drawing.Point(528, 223);
             this.cbsRegimeTributario.Name = "cbsRegimeTributario";
             this.cbsRegimeTributario.SelectedIndex = -1;
@@ -432,7 +443,7 @@
             this.cbsConsumidorFinal.BindingSource = null;
             this.tableLayoutPanel1.SetColumnSpan(this.cbsConsumidorFinal, 2);
             this.cbsConsumidorFinal.DisplayMember = "";
-            this.cbsConsumidorFinal.Label = "CONSUMIDOR FINAL";
+            this.cbsConsumidorFinal.Label = "Consumidor Final";
             this.cbsConsumidorFinal.Location = new System.Drawing.Point(3, 323);
             this.cbsConsumidorFinal.Name = "cbsConsumidorFinal";
             this.cbsConsumidorFinal.SelectedIndex = -1;
@@ -441,6 +452,24 @@
             this.cbsConsumidorFinal.Size = new System.Drawing.Size(144, 44);
             this.cbsConsumidorFinal.TabIndex = 46;
             this.cbsConsumidorFinal.ValueMember = "";
+            // 
+            // cbsOperadora
+            // 
+            this.cbsOperadora.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbsOperadora.AutoSize = true;
+            this.cbsOperadora.BindingSource = null;
+            this.tableLayoutPanel1.SetColumnSpan(this.cbsOperadora, 2);
+            this.cbsOperadora.DisplayMember = "";
+            this.cbsOperadora.Label = "Operadora de Celular";
+            this.cbsOperadora.Location = new System.Drawing.Point(153, 323);
+            this.cbsOperadora.Name = "cbsOperadora";
+            this.cbsOperadora.SelectedIndex = -1;
+            this.cbsOperadora.SelectedText = null;
+            this.cbsOperadora.SelectedValue = null;
+            this.cbsOperadora.Size = new System.Drawing.Size(144, 44);
+            this.cbsOperadora.TabIndex = 47;
+            this.cbsOperadora.ValueMember = "";
             // 
             // tabPage4
             // 
@@ -607,7 +636,7 @@
             this.tbsEmpresa.AutoSize = true;
             this.tableLayoutPanel4.SetColumnSpan(this.tbsEmpresa, 5);
             this.tbsEmpresa.Font = new System.Drawing.Font("Calibri Light", 12F);
-            this.tbsEmpresa.Label = "EMPRESA";
+            this.tbsEmpresa.Label = "Empresa";
             this.tbsEmpresa.Location = new System.Drawing.Point(3, 3);
             this.tbsEmpresa.Name = "tbsEmpresa";
             this.tbsEmpresa.PasswordChar = '\0';
@@ -621,7 +650,7 @@
             this.tbsCrc.AutoSize = true;
             this.tableLayoutPanel4.SetColumnSpan(this.tbsCrc, 3);
             this.tbsCrc.Font = new System.Drawing.Font("Calibri Light", 12F);
-            this.tbsCrc.Label = "CRC CONTABILISTA";
+            this.tbsCrc.Label = "CRC Contabilista";
             this.tbsCrc.Location = new System.Drawing.Point(3, 53);
             this.tbsCrc.Name = "tbsCrc";
             this.tbsCrc.PasswordChar = '\0';
@@ -635,7 +664,7 @@
             this.tbsSequencial.AutoSize = true;
             this.tableLayoutPanel4.SetColumnSpan(this.tbsSequencial, 4);
             this.tbsSequencial.Font = new System.Drawing.Font("Calibri Light", 12F);
-            this.tbsSequencial.Label = "SEQUENCIAL UF/ANO/NÚMERO";
+            this.tbsSequencial.Label = "Sequencial UF/Ano/Número";
             this.tbsSequencial.Location = new System.Drawing.Point(228, 53);
             this.tbsSequencial.Name = "tbsSequencial";
             this.tbsSequencial.PasswordChar = '\0';
@@ -649,7 +678,7 @@
             this.tbsValidadeCrc.AutoSize = true;
             this.tableLayoutPanel4.SetColumnSpan(this.tbsValidadeCrc, 3);
             this.tbsValidadeCrc.Font = new System.Drawing.Font("Calibri Light", 12F);
-            this.tbsValidadeCrc.Label = "VALIDADE CRC";
+            this.tbsValidadeCrc.Label = "Validade CRC";
             this.tbsValidadeCrc.Location = new System.Drawing.Point(528, 53);
             this.tbsValidadeCrc.Name = "tbsValidadeCrc";
             this.tbsValidadeCrc.PasswordChar = '\0';
@@ -666,7 +695,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(219, 17);
             this.label1.TabIndex = 6;
-            this.label1.Text = "INFORMAÇÕES PARA SPED ECF";
+            this.label1.Text = "Informações para SPED ECF";
             // 
             // tbsDtFimSociedade
             // 
@@ -675,7 +704,7 @@
             this.tbsDtFimSociedade.AutoSize = true;
             this.tableLayoutPanel4.SetColumnSpan(this.tbsDtFimSociedade, 3);
             this.tbsDtFimSociedade.Font = new System.Drawing.Font("Calibri Light", 12F);
-            this.tbsDtFimSociedade.Label = "DATA FIM SOCIEDADE";
+            this.tbsDtFimSociedade.Label = "Data Fim Sociedade";
             this.tbsDtFimSociedade.Location = new System.Drawing.Point(3, 133);
             this.tbsDtFimSociedade.Name = "tbsDtFimSociedade";
             this.tbsDtFimSociedade.PasswordChar = '\0';
@@ -690,7 +719,7 @@
             this.cbsQualificacaoSocio.BindingSource = null;
             this.tableLayoutPanel4.SetColumnSpan(this.cbsQualificacaoSocio, 7);
             this.cbsQualificacaoSocio.DisplayMember = "";
-            this.cbsQualificacaoSocio.Label = "QUALIFICAÇAO DO SÓCIO OU TITULAR";
+            this.cbsQualificacaoSocio.Label = "Qualificação do Sócio ou Titular";
             this.cbsQualificacaoSocio.Location = new System.Drawing.Point(228, 133);
             this.cbsQualificacaoSocio.Name = "cbsQualificacaoSocio";
             this.cbsQualificacaoSocio.SelectedIndex = -1;
@@ -707,7 +736,7 @@
             this.tbsPercParticCapitalTotal.AutoSize = true;
             this.tableLayoutPanel4.SetColumnSpan(this.tbsPercParticCapitalTotal, 3);
             this.tbsPercParticCapitalTotal.Font = new System.Drawing.Font("Calibri Light", 12F);
-            this.tbsPercParticCapitalTotal.Label = "% PARTICIPAÇÃO CAPITAL TOTAL";
+            this.tbsPercParticCapitalTotal.Label = "% Participação Capital Total";
             this.tbsPercParticCapitalTotal.Location = new System.Drawing.Point(3, 183);
             this.tbsPercParticCapitalTotal.Name = "tbsPercParticCapitalTotal";
             this.tbsPercParticCapitalTotal.PasswordChar = '\0';
@@ -721,7 +750,7 @@
             this.tbsPercParticCapitalVolante.AutoSize = true;
             this.tableLayoutPanel4.SetColumnSpan(this.tbsPercParticCapitalVolante, 3);
             this.tbsPercParticCapitalVolante.Font = new System.Drawing.Font("Calibri Light", 12F);
-            this.tbsPercParticCapitalVolante.Label = "% PARTICIPAÇÃO CAPITAL VOLANTE";
+            this.tbsPercParticCapitalVolante.Label = "% Participação Capital Volante";
             this.tbsPercParticCapitalVolante.Location = new System.Drawing.Point(228, 183);
             this.tbsPercParticCapitalVolante.Name = "tbsPercParticCapitalVolante";
             this.tbsPercParticCapitalVolante.PasswordChar = '\0';
@@ -735,12 +764,69 @@
             this.tbsFuncao.AutoSize = true;
             this.tableLayoutPanel4.SetColumnSpan(this.tbsFuncao, 5);
             this.tbsFuncao.Font = new System.Drawing.Font("Calibri Light", 12F);
-            this.tbsFuncao.Label = "FUNÇÃO";
+            this.tbsFuncao.Label = "Função";
             this.tbsFuncao.Location = new System.Drawing.Point(378, 3);
             this.tbsFuncao.Name = "tbsFuncao";
             this.tbsFuncao.PasswordChar = '\0';
             this.tbsFuncao.Size = new System.Drawing.Size(375, 44);
             this.tbsFuncao.TabIndex = 1;
+            // 
+            // tabPage5
+            // 
+            this.tabPage5.Controls.Add(this.tableLayoutPanel2);
+            this.tabPage5.Location = new System.Drawing.Point(134, 4);
+            this.tabPage5.Name = "tabPage5";
+            this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage5.Size = new System.Drawing.Size(762, 465);
+            this.tabPage5.TabIndex = 4;
+            this.tabPage5.Text = "Mais Configurações";
+            this.tabPage5.UseVisualStyleBackColor = true;
+            // 
+            // tableLayoutPanel2
+            // 
+            this.tableLayoutPanel2.ColumnCount = 10;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.tableLayoutPanel2.Controls.Add(this.cbsRegiao, 0, 0);
+            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 7;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(756, 459);
+            this.tableLayoutPanel2.TabIndex = 0;
+            // 
+            // cbsRegiao
+            // 
+            this.cbsRegiao.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbsRegiao.AutoSize = true;
+            this.cbsRegiao.BindingSource = null;
+            this.tableLayoutPanel2.SetColumnSpan(this.cbsRegiao, 3);
+            this.cbsRegiao.DisplayMember = "";
+            this.cbsRegiao.Label = "Região";
+            this.cbsRegiao.Location = new System.Drawing.Point(3, 3);
+            this.cbsRegiao.Name = "cbsRegiao";
+            this.cbsRegiao.SelectedIndex = -1;
+            this.cbsRegiao.SelectedText = null;
+            this.cbsRegiao.SelectedValue = null;
+            this.cbsRegiao.Size = new System.Drawing.Size(219, 44);
+            this.cbsRegiao.TabIndex = 0;
+            this.cbsRegiao.ValueMember = "";
             // 
             // FCadastroCad
             // 
@@ -770,6 +856,9 @@
             this.tabPage3.ResumeLayout(false);
             this.tableLayoutPanel4.ResumeLayout(false);
             this.tableLayoutPanel4.PerformLayout();
+            this.tabPage5.ResumeLayout(false);
+            this.tableLayoutPanel2.ResumeLayout(false);
+            this.tableLayoutPanel2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -819,5 +908,9 @@
         private Componentes.TextBoxSimples tbsDtSeprocado;
         private Componentes.ComboBoxSimples cbsRegimeTributario;
         private Componentes.ComboBoxSimples cbsConsumidorFinal;
+        private Componentes.ComboBoxSimples cbsOperadora;
+        private System.Windows.Forms.TabPage tabPage5;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+        private Componentes.ComboBoxSimples cbsRegiao;
     }
 }

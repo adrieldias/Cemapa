@@ -68,7 +68,7 @@ namespace Cliente.Forms
             CadastroBindingSource.DataSource = (await busca1.ListarTodos(string.Format("{0}{1}", ConfigurationManager.AppSettings["UriCadastro"], "GetPersonalizado"), definition));
 
 
-            busca1.Focus();
+            //busca1.Focus();
         }
 
 

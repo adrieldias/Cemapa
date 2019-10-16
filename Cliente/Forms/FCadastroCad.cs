@@ -36,6 +36,8 @@ namespace Cliente.Forms
         public BindingSource RegimeTributarioBindingSource { get; set; }
         public BindingSource fisicaJuridicaBindingSource { get; set; }
         public BindingSource ConsumidorFinalBindingSource { get; set; }
+        public BindingSource OperadoraBindingSource { get; set; }
+        public BindingSource RegiaoBindingSource { get; set; }
 
         #endregion
 
@@ -278,6 +280,52 @@ namespace Cliente.Forms
                 cbsFilial.SelectedIndex = -1;
             }
 
+            //cbsOperadora
+            List<Generico> ListaOperadora = new List<Generico>();            
+            ListaOperadora.Add(new Generico() { Codigo = "", Descricao = "" });
+            ListaOperadora.Add(new Generico() { Codigo = "Tim", Descricao = "TIM" });
+            ListaOperadora.Add(new Generico() { Codigo = "Claro", Descricao = "CLARO" });
+            ListaOperadora.Add(new Generico() { Codigo = "Oi", Descricao = "OI" });
+            ListaOperadora.Add(new Generico() { Codigo = "Vivo", Descricao = "VIVO" });
+            ListaOperadora.Add(new Generico() { Codigo = "Embratel", Descricao = "EMBRATEL" });
+            ListaOperadora.Add(new Generico() { Codigo = "Sercomtel", Descricao = "SERCOMTEL" });
+            ListaOperadora.Add(new Generico() { Codigo = "Nextel", Descricao = "NEXTEL"});
+            OperadoraBindingSource = new BindingSource();
+            OperadoraBindingSource.DataSource = ListaOperadora;
+            cbsOperadora.BindingSource = OperadoraBindingSource;
+            cbsOperadora.DisplayMember = "Descricao";
+            if ((CadastroBindingSource.Current as TB_CADASTRO).DESC_OPERADORA_CELULAR != null)
+            {
+                var objOperadora = OperadoraBindingSource.List.OfType<Generico>().First(p => p.Codigo == ((TB_CADASTRO)CadastroBindingSource.Current).DESC_OPERADORA_CELULAR);
+                var pos = OperadoraBindingSource.IndexOf(objOperadora);
+                OperadoraBindingSource.Position = pos;
+                objOperadora = null;
+                pos = 0;
+            }
+
+            //cbsRegiao            
+            if (RegiaoBindingSource == null)
+                RegiaoBindingSource = new BindingSource();
+            RegiaoBindingSource.DataSource = JsonConvert.DeserializeAnonymousType((await RunAsyncGet(
+                ConfigurationManager.AppSettings["UriRegiao"]
+                )), new List<TB_REGIAO>());
+            TB_REGIAO regiao = new TB_REGIAO();
+            regiao.COD_REGIAO = 0;
+            regiao.DESC_REGIAO = string.Empty;
+            RegiaoBindingSource.Insert(0, regiao);
+            cbsRegiao.BindingSource = RegiaoBindingSource;
+            cbsRegiao.DisplayMember = "DESC_REGIAO";
+            if ((CadastroBindingSource.Current as TB_CADASTRO).COD_REGIAO != null)
+            {
+                var objRegiao = RegiaoBindingSource.List.OfType<TB_REGIAO>().First(c => c.COD_REGIAO == ((TB_CADASTRO)CadastroBindingSource.Current).COD_REGIAO);
+                var pos = RegiaoBindingSource.IndexOf(objRegiao);
+                RegiaoBindingSource.Position = pos;
+                objRegiao = null;
+                pos = 0;
+            }
+            else
+                cbsRegiao.SelectedIndex = -1;
+
             //dgvPropriedades
             if (PropriedadeBindingSource == null)
                 PropriedadeBindingSource = new BindingSource();            
@@ -374,8 +422,7 @@ namespace Cliente.Forms
         public FCadastroCad(string layout) : base(layout)
         {
             InitializeComponent();
-            this.Personaliza();
-            this.lbNome.Text = "FORMULÁRIO DE CADASTRO";
+            this.Personaliza();            
         }
 
         private async void Salvar()
@@ -403,11 +450,14 @@ namespace Cliente.Forms
             else
                 (CadastroBindingSource.Current as TB_CADASTRO).COD_CLASS_CADASTRO
                     = (ClassCadastroBindingSource.Current as TB_CLASS_CADASTRO).COD_CLASS_CADASTRO;
-
             (CadastroBindingSource.Current as TB_CADASTRO).IND_REGIME_TRIBUTARIO
                 = (RegimeTributarioBindingSource.Current as RegimeTributario).IND_REGIME_TRIBUTARIO;
             (CadastroBindingSource.Current as TB_CADASTRO).IND_CONSUMIDOR_FINAL
                 = (ConsumidorFinalBindingSource.Current as ConsumidorFinal).IND_CONSUMIDOR_FINAL;
+            (CadastroBindingSource.Current as TB_CADASTRO).DESC_OPERADORA_CELULAR
+                = (OperadoraBindingSource.Current as Generico).Codigo;
+            (CadastroBindingSource.Current as TB_CADASTRO).COD_REGIAO
+                = (RegiaoBindingSource.Current as TB_REGIAO).COD_REGIAO;
 
             CadastroBindingSource.EndEdit();
             MessageBox.Show(

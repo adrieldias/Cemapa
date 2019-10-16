@@ -53,6 +53,7 @@
             this.comboBox1.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.comboBox1.Font = new System.Drawing.Font("Calibri Light", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comboBox1.ForeColor = System.Drawing.Color.DimGray;
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Location = new System.Drawing.Point(3, 4);
             this.comboBox1.Margin = new System.Windows.Forms.Padding(0);
@@ -67,12 +68,12 @@
             // 
             this.lbNome.AutoSize = true;
             this.lbNome.Font = new System.Drawing.Font("Calibri Light", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbNome.ForeColor = System.Drawing.Color.SteelBlue;
-            this.lbNome.Location = new System.Drawing.Point(9, 0);
+            this.lbNome.ForeColor = System.Drawing.Color.Gray;
+            this.lbNome.Location = new System.Drawing.Point(9, -1);
             this.lbNome.Name = "lbNome";
-            this.lbNome.Size = new System.Drawing.Size(97, 14);
+            this.lbNome.Size = new System.Drawing.Size(89, 14);
             this.lbNome.TabIndex = 2;
-            this.lbNome.Text = "NOME DO CAMPO";
+            this.lbNome.Text = "Nome do Campo";
             // 
             // ComboBoxSimples
             // 

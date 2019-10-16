@@ -120,13 +120,14 @@ namespace Componentes
         }
         private void txtBusca_Enter(object sender, EventArgs e)
         {
-            txtBusca.SelectAll();
+            //txtBusca.SelectAll();
+            txtBusca.Clear();            
         }
 
         private void txtBusca_Leave(object sender, EventArgs e)
         {
-            if (txtBusca.Text.Trim() == "")
-                txtBusca.Text = "DIGITE PARA PROCURAR";
+            if (txtBusca.Text.Trim() == "")            
+                txtBusca.Text = "DIGITE PARA PROCURAR";            
         }
 
         private void txtBusca_TextChanged(object sender, EventArgs e)
