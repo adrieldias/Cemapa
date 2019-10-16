@@ -18,6 +18,7 @@ namespace Cemapa.Models
         public TB_LOTE_TIPO()
         {
             this.TB_ESTOQUE = new HashSet<TB_ESTOQUE>();
+            this.TB_CONFIGURACAO_SKYHUB = new HashSet<TB_CONFIGURACAO_SKYHUB>();
         }
     
         public int COD_LOTE_TIPO { get; set; }
@@ -45,5 +46,7 @@ namespace Cemapa.Models
         public virtual TB_PRODUTO TB_PRODUTO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TB_ESTOQUE> TB_ESTOQUE { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TB_CONFIGURACAO_SKYHUB> TB_CONFIGURACAO_SKYHUB { get; set; }
     }
 }

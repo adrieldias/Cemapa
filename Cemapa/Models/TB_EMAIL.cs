@@ -12,13 +12,17 @@ namespace Cemapa.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class TB_PRODUTO_IMAGEM_SKYHUB
+    public partial class TB_EMAIL
     {
-        public string DESC_IMAGEM { get; set; }
-        public string IND_ATIVO { get; set; }
-        public int COD_PRODUTO_IMAGEM_SKYHUB { get; set; }
-        public int COD_PRODUTO_SKYHUB { get; set; }
-    
-        public virtual TB_PRODUTO_SKYHUB TB_PRODUTO_SKYHUB { get; set; }
+        public string DESC_EMAIL { get; set; }
+        public string DESC_SENHA { get; set; }
+        public string DESC_SMTP { get; set; }
+        public int NUM_PORTA_SMTP { get; set; }
+        public string DESC_POP3 { get; set; }
+        public int NUM_PORTA_POP3 { get; set; }
+        public int COD_EMAIL { get; set; }
+        public string DESC_HOME_PAGE { get; set; }
+        public Nullable<short> QTD_COTA { get; set; }
+        public string IND_SSL { get; set; }
     }
 }

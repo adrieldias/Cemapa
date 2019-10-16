@@ -76,7 +76,6 @@ namespace Cemapa.Models
         public string COD_CONTABIL_CONTRATO_DEB { get; set; }
         public string COD_CONTABIL_CONTRATO_CRED { get; set; }
         public string IND_BONIFICACAO { get; set; }
-        public string IND_BONIFICAÇAO { get; set; }
         public string COD_CONT_VAL_NOTA_CRED_AVISTA { get; set; }
         public Nullable<int> COD_MENSAGEM { get; set; }
         public Nullable<int> COD_TRIBUTACAO { get; set; }
@@ -160,6 +159,8 @@ namespace Cemapa.Models
         public string COD_CONTABIL_NOTA_SPED_CONTRIB { get; set; }
         public string COD_CONTABIL_SUBST_DEB { get; set; }
         public string COD_CONTABIL_SUBST_CRED { get; set; }
+        public string COD_CONTABIL_FCCIA_DEB { get; set; }
+        public string COD_CONTABIL_FCCIA_CRED { get; set; }
     
         public virtual TB_BC_CREDITO_PISCOFINS TB_BC_CREDITO_PISCOFINS { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

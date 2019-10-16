@@ -90,6 +90,7 @@ namespace Cemapa.Models
         public string IND_SINC_MAX_ROTEIRIZADOR { get; set; }
         public string COD_PEDIDO_MARKETPLACE { get; set; }
         public string DESC_SITUACAO_MARKETPLACE { get; set; }
+        public Nullable<decimal> VAL_FRETE_MARKETPLACE { get; set; }
     
         public virtual TB_BANCO_AGENCIA TB_BANCO_AGENCIA { get; set; }
         public virtual TB_CADASTRO TB_CADASTRO { get; set; }
@@ -102,8 +103,8 @@ namespace Cemapa.Models
         public virtual TB_OPERACAO TB_OPERACAO { get; set; }
         public virtual TB_PRAZO_VENCIMENTO TB_PRAZO_VENCIMENTO { get; set; }
         public virtual TB_VENDEDOR TB_VENDEDOR { get; set; }
+        public virtual TB_PRODUTO TB_PRODUTO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TB_PEDIDO_ITEM> TB_PEDIDO_ITEM { get; set; }
-        public virtual TB_PRODUTO TB_PRODUTO { get; set; }
     }
 }
