@@ -108,7 +108,7 @@ namespace Cemapa.Controllers
                     if (db.TB_CADASTRO.Any(c => c.COD_CADASTRO == id))
                     {                        
                         cadastro.DT_ALTERACAO = System.DateTime.Now;
-                        db.Entry(cadastro).State = EntityState.Modified;
+                        db.Entry(cadastro).State = EntityState.Modified;                        
                     }
                     else
                     {   
@@ -117,6 +117,7 @@ namespace Cemapa.Controllers
                         cadastro.DT_CADASTRO = System.DateTime.Now;
                         db.Entry(cadastro).State = EntityState.Added;
                     }
+                    // Os models atrelados ao cadastro, por exemplo, endereço, propriedade, ainda não estão sendo salvos.
                     db.SaveChanges();
                     return new System.Web.Mvc.JsonResult()
                     {

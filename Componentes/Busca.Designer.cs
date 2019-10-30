@@ -30,8 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Busca));
             this.txtBusca = new System.Windows.Forms.TextBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.btPesquisa = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // txtBusca
@@ -52,18 +51,18 @@
             this.txtBusca.Enter += new System.EventHandler(this.txtBusca_Enter);
             this.txtBusca.Leave += new System.EventHandler(this.txtBusca_Leave);
             // 
-            // pictureBox1
+            // btPesquisa
             // 
-            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBox1.BackColor = System.Drawing.Color.SteelBlue;
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(657, 0);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(32, 32);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.pictureBox1.TabIndex = 1;
-            this.pictureBox1.TabStop = false;
+            this.btPesquisa.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.btPesquisa.BackColor = System.Drawing.Color.SteelBlue;
+            this.btPesquisa.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btPesquisa.Image = ((System.Drawing.Image)(resources.GetObject("btPesquisa.Image")));
+            this.btPesquisa.Location = new System.Drawing.Point(657, -1);
+            this.btPesquisa.Name = "btPesquisa";
+            this.btPesquisa.Size = new System.Drawing.Size(32, 34);
+            this.btPesquisa.TabIndex = 2;
+            this.btPesquisa.UseVisualStyleBackColor = false;
+            this.btPesquisa.Click += new System.EventHandler(this.btPesquisa_Click);
             // 
             // Busca
             // 
@@ -71,11 +70,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.LightGray;
             this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.btPesquisa);
             this.Controls.Add(this.txtBusca);
             this.Name = "Busca";
             this.Size = new System.Drawing.Size(689, 32);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -84,6 +82,6 @@
         #endregion
 
         private System.Windows.Forms.TextBox txtBusca;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Button btPesquisa;
     }
 }

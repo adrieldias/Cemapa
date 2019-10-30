@@ -38,6 +38,9 @@ namespace Cliente.Forms
         public BindingSource ConsumidorFinalBindingSource { get; set; }
         public BindingSource OperadoraBindingSource { get; set; }
         public BindingSource RegiaoBindingSource { get; set; }
+        public BindingSource MotivoBindingSource { get; set; }
+        public BindingSource GarantiaBindingSource { get; set; }
+        public BindingSource QualificacaoBindingSource { get; set; }
 
         #endregion
 
@@ -75,6 +78,14 @@ namespace Cliente.Forms
             tbsEmailContato.DataBindings.Add("Text", CadastroBindingSource.Current, "DESC_E_MAIL1");
             tbsEmpresa.DataBindings.Add("Text", CadastroBindingSource.Current, "DESC_EMPRESA");
             tbsFuncao.DataBindings.Add("Text", CadastroBindingSource.Current, "DESC_FUNCAO");
+            tbsTelefoneEmpresa.DataBindings.Add("Text", CadastroBindingSource.Current, "DESC_FONE_EMPRESA");
+            tbsGarantiasOutras.DataBindings.Add("Text", CadastroBindingSource.Current, "DESC_GARANTIAS_OUTRAS");
+            tbsPessoaAutorizada1.DataBindings.Add("Text", CadastroBindingSource.Current, "NOME_AUTORIZADO1");
+            tbsPessoaAutorizada2.DataBindings.Add("Text", CadastroBindingSource.Current, "NOME_AUTORIZADO2");
+            tbsPessoaAutorizada3.DataBindings.Add("Text", CadastroBindingSource.Current, "NOME_AUTORIZADO3");
+            tbsCpfAutorizado1.DataBindings.Add("Text", CadastroBindingSource.Current, "DESC_CPF_AUTORIZADO1");
+            tbsCpfAutorizado2.DataBindings.Add("Text", CadastroBindingSource.Current, "DESC_CPF_AUTORIZADO2");
+            tbsCpfAutorizado3.DataBindings.Add("Text", CadastroBindingSource.Current, "DESC_CPF_AUTORIZADO3");
             tbsTelComercial.DataBindings.Add("Text", CadastroBindingSource.Current, "DESC_TELEFONE_COMERCIAL");
             tbsCrc.DataBindings.Add("Text", CadastroBindingSource.Current, "DESC_CRC");
             tbsSequencial.DataBindings.Add("Text", CadastroBindingSource.Current, "NUM_SEQ_CRC");
@@ -83,6 +94,9 @@ namespace Cliente.Forms
             tbsPercParticCapitalTotal.DataBindings.Add("Text", CadastroBindingSource.Current, "PERC_CAP_TOT");
             tbsPercParticCapitalVolante.DataBindings.Add("Text", CadastroBindingSource.Current, "PERC_CAP_VOT");
             tbsDtSeprocado.DataBindings.Add("Text", CadastroBindingSource.Current, "DT_SEPROCADO");
+            tbsDtCancelamento.DataBindings.Add("Text", CadastroBindingSource.Current, "DT_CANCELAMENTO");
+            tbsObsCancelamento.DataBindings.Add("Text", CadastroBindingSource.Current, "DESC_OBS");
+
             
 
             //cbsTipoCadastro
@@ -123,6 +137,64 @@ namespace Cliente.Forms
                 var pos = fisicaJuridicaBindingSource.IndexOf(objFJ);
                 fisicaJuridicaBindingSource.Position = pos;
                 objFJ = null;
+                pos = 0;
+            }
+
+            //cbsGarantias
+            List<Generico> ListaGarantias = new List<Generico>();
+            ListaGarantias.Add(new Generico() { Codigo = "", Descricao = "" });
+            ListaGarantias.Add(new Generico() { Codigo = "1", Descricao = "CPR" });
+            ListaGarantias.Add(new Generico() { Codigo = "2", Descricao = "DUPLICATA" });
+            ListaGarantias.Add(new Generico() { Codigo = "3", Descricao = "OUTRAS" });
+            if (GarantiaBindingSource == null)
+            {
+                GarantiaBindingSource = new BindingSource();
+                GarantiaBindingSource.DataSource = ListaGarantias;
+            }
+            cbsGarantias.BindingSource = GarantiaBindingSource;
+            cbsGarantias.DisplayMember = "Descricao";
+            if ((CadastroBindingSource.Current as TB_CADASTRO).DESC_GARANTIAS != null)
+            {
+                var obj = GarantiaBindingSource.List.OfType<POCO.Generico>().First(p => p.Descricao == ((TB_CADASTRO)CadastroBindingSource.Current).DESC_GARANTIAS);
+                var pos = GarantiaBindingSource.IndexOf(obj);
+                GarantiaBindingSource.Position = pos;
+                obj = null;
+                pos = 0;
+            }
+
+            //cbsQualificacao
+            List<Generico> ListaQualificacao = new List<Generico>();
+            ListaQualificacao.Add(new Generico() { Codigo = "", Descricao = "" });
+            ListaQualificacao.Add(new Generico() { Codigo = "203", Descricao = "DIRETOR" });
+            ListaQualificacao.Add(new Generico() { Codigo = "204", Descricao = "CONSELHEIRO DE ADMINISTRAÇÃO" });
+            ListaQualificacao.Add(new Generico() { Codigo = "205", Descricao = "ADMINISTRADOR" });
+            ListaQualificacao.Add(new Generico() { Codigo = "206", Descricao = "ADMINISTRADOR DE GRUPO" });
+            ListaQualificacao.Add(new Generico() { Codigo = "207", Descricao = "ADMINISTRADOR DE SOCIEDADE FILIADA" });
+            ListaQualificacao.Add(new Generico() { Codigo = "220", Descricao = "ADMINISTRADOR JUDICIAL - PESSOA FÍSICA" });
+            ListaQualificacao.Add(new Generico() { Codigo = "222", Descricao = "ADMINISTRADOR JUDICIAL - PESSOA JURÍDICA - PROFISSIONAL RESPONSÁVEL" });
+            ListaQualificacao.Add(new Generico() { Codigo = "223", Descricao = "ADMINISTRADOR JUDICIAL/GESTOR" });
+            ListaQualificacao.Add(new Generico() { Codigo = "226", Descricao = "GESTOR JUDICIAL" });
+            ListaQualificacao.Add(new Generico() { Codigo = "309", Descricao = "PROCURADOR" });
+            ListaQualificacao.Add(new Generico() { Codigo = "312", Descricao = "INVENTARIANTE" });
+            ListaQualificacao.Add(new Generico() { Codigo = "313", Descricao = "LIQUIDANTE" });
+            ListaQualificacao.Add(new Generico() { Codigo = "315", Descricao = "INTERVENTOR" });
+            ListaQualificacao.Add(new Generico() { Codigo = "801", Descricao = "EMPRESÁRIO" });
+            ListaQualificacao.Add(new Generico() { Codigo = "900", Descricao = "CONTADOR" });
+            ListaQualificacao.Add(new Generico() { Codigo = "999", Descricao = "OUTROS" });
+
+            if (QualificacaoBindingSource == null)
+            {
+                QualificacaoBindingSource = new BindingSource();
+                QualificacaoBindingSource.DataSource = ListaQualificacao;
+            }
+            cbsQualificacao.BindingSource = QualificacaoBindingSource;
+            cbsQualificacao.DisplayMember = "Descricao";
+            if ((CadastroBindingSource.Current as TB_CADASTRO).DESC_QUALIFICACAO != null)
+            {
+                var obj = QualificacaoBindingSource.List.OfType<POCO.Generico>().First(p => p.Descricao == ((TB_CADASTRO)CadastroBindingSource.Current).DESC_GARANTIAS);
+                var pos = QualificacaoBindingSource.IndexOf(obj);
+                QualificacaoBindingSource.Position = pos;
+                obj = null;
                 pos = 0;
             }
 
@@ -326,6 +398,52 @@ namespace Cliente.Forms
             else
                 cbsRegiao.SelectedIndex = -1;
 
+            //cbsMotivo
+            if (MotivoBindingSource == null)
+                MotivoBindingSource = new BindingSource();
+            MotivoBindingSource.DataSource = JsonConvert.DeserializeAnonymousType((await RunAsyncGet(
+                string.Format("{0}/{1}", ConfigurationManager.AppSettings["UriMotivo"], "GetPersonalizado")
+                )), new List<TB_MOTIVO>());
+            TB_MOTIVO motivo = new TB_MOTIVO();
+            motivo.COD_MOTIVO = 0;
+            motivo.DESC_MOTIVO = string.Empty;
+            MotivoBindingSource.Insert(0, motivo);
+            cbsMotivoCancelamento.BindingSource = MotivoBindingSource;
+            cbsMotivoCancelamento.DisplayMember = "DESC_MOTIVO";
+            if ((CadastroBindingSource.Current as TB_CADASTRO).COD_MOTIVO != null)
+            {
+                var objMotivo = MotivoBindingSource.List.OfType<TB_MOTIVO>().First(m => m.COD_MOTIVO == ((TB_MOTIVO)CadastroBindingSource.Current).COD_MOTIVO);
+                var pos = MotivoBindingSource.IndexOf(objMotivo);
+                MotivoBindingSource.Position = pos;
+                objMotivo = null;
+                pos = 0;
+            }
+            else
+                cbsMotivoCancelamento.SelectedIndex = -1;
+
+            //cbsPais
+            if (PaisBindingSource == null)
+                PaisBindingSource = new BindingSource();
+            PaisBindingSource.DataSource = JsonConvert.DeserializeAnonymousType((await RunAsyncGet(
+                string.Format("{0}/{1}", ConfigurationManager.AppSettings["UriPais"], "Get")
+                )), new List<TB_PAIS>());
+            TB_PAIS pais = new TB_PAIS();
+            pais.COD_PAIS = 0;
+            pais.DESC_PAIS = string.Empty;
+            PaisBindingSource.Insert(0, pais);
+            cbsPais.BindingSource = PaisBindingSource;
+            cbsPais.DisplayMember = "DESC_PAIS";
+            if ((CadastroBindingSource.Current as TB_CADASTRO).COD_PAIS != null)
+            {
+                var objPais = PaisBindingSource.List.OfType<TB_PAIS>().First(m => m.COD_PAIS == ((TB_CADASTRO)CadastroBindingSource.Current).COD_PAIS);
+                var pos = PaisBindingSource.IndexOf(objPais);
+                PaisBindingSource.Position = pos;
+                objPais = null;
+                pos = 0;
+            }
+            else
+                cbsPais.SelectedIndex = -1;
+
             //dgvPropriedades
             if (PropriedadeBindingSource == null)
                 PropriedadeBindingSource = new BindingSource();            
@@ -450,6 +568,26 @@ namespace Cliente.Forms
             else
                 (CadastroBindingSource.Current as TB_CADASTRO).COD_CLASS_CADASTRO
                     = (ClassCadastroBindingSource.Current as TB_CLASS_CADASTRO).COD_CLASS_CADASTRO;
+            if ((MotivoBindingSource.Current as TB_MOTIVO).COD_MOTIVO == 0)
+                (CadastroBindingSource.Current as TB_CADASTRO).COD_MOTIVO = null;
+            else
+                (CadastroBindingSource.Current as TB_CADASTRO).COD_MOTIVO 
+                    = (MotivoBindingSource.Current as TB_MOTIVO).COD_MOTIVO;
+            if((GarantiaBindingSource.Current as Generico).Descricao == string.Empty)
+                (CadastroBindingSource.Current as TB_CADASTRO).DESC_GARANTIAS = null;
+            else
+                (CadastroBindingSource.Current as TB_CADASTRO).DESC_GARANTIAS
+                    = (GarantiaBindingSource.Current as Generico).Descricao;
+            if ((QualificacaoBindingSource.Current as Generico).Descricao == string.Empty)
+                (CadastroBindingSource.Current as TB_CADASTRO).DESC_QUALIFICACAO = null;
+            else
+                (CadastroBindingSource.Current as TB_CADASTRO).DESC_QUALIFICACAO
+                    = (QualificacaoBindingSource.Current as Generico).Descricao;
+            if ((PaisBindingSource.Current as TB_PAIS).DESC_PAIS == string.Empty)
+                (CadastroBindingSource.Current as TB_CADASTRO).COD_PAIS = null;
+            else
+                (CadastroBindingSource.Current as TB_CADASTRO).COD_PAIS
+                    = (PaisBindingSource.Current as TB_PAIS).COD_PAIS;
             (CadastroBindingSource.Current as TB_CADASTRO).IND_REGIME_TRIBUTARIO
                 = (RegimeTributarioBindingSource.Current as RegimeTributario).IND_REGIME_TRIBUTARIO;
             (CadastroBindingSource.Current as TB_CADASTRO).IND_CONSUMIDOR_FINAL
@@ -475,11 +613,7 @@ namespace Cliente.Forms
         private void btCancelar_Click(object sender, EventArgs e)
         {   
             CadastroBindingSource.CancelEdit();
-        }       
-
-        private void cbsFisicaJuridica_SelectedValueChanged(object sender, EventArgs e)
-        {            
-        }
+        }         
 
         private void cbsFisicaJuridica_KeyUp(object sender, KeyEventArgs e)
         {
@@ -494,14 +628,11 @@ namespace Cliente.Forms
             //MessageBox.Show(cbsFisicaJuridica.SelectedValue + " " + cbsFisicaJuridica.SelectedText);
         }
 
-        private void cbsFisicaJuridica_ComboBoxDropDownClosed(object sender, EventArgs e)
-        {
-            MessageBox.Show(cbsFisicaJuridica.SelectedValue + " " + cbsFisicaJuridica.SelectedText);
-        }
+        
 
         private void FCadastroCad_Load(object sender, EventArgs e)
         {  
-            BuscaDados();
+            BuscaDados();           
         }
 
         private void btAlterarProriedade_Click(object sender, EventArgs e)
@@ -538,7 +669,16 @@ namespace Cliente.Forms
             f.EnderecoBindingSource = EnderecoBindingSource;
             f.Show();
         }
-        
+
+        private void cbsFisicaJuridica_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void cbsGarantias_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            tbsGarantiasOutras.Enabled = (cbsGarantias.Text == "OUTRAS");
+        }
     }
 
 }

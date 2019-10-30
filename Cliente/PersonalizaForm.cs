@@ -152,9 +152,12 @@ namespace Cliente
             dataGridView.DataBindingComplete += PersonalizaForm_DataBindingComplete;
             dataGridView.CellFormatting += DataGridView_CellFormatting;
             dataGridView.Font = new Font(FONTE, TAMANHO_FONTE);
+            dataGridView.DefaultCellStyle.ForeColor = Color.DimGray;
+            dataGridView.ColumnHeadersDefaultCellStyle.ForeColor = Color.DimGray;
+            dataGridView.ColumnHeadersDefaultCellStyle.BackColor = Color.White;
             dataGridView.ReadOnly = true;
             dataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridView.BackgroundColor = Color.White;
+            dataGridView.BackgroundColor = Color.White;            
 
             dataGridView.AdvancedCellBorderStyle.Left = DataGridViewAdvancedCellBorderStyle.None;
             dataGridView.AdvancedCellBorderStyle.Right = DataGridViewAdvancedCellBorderStyle.None;

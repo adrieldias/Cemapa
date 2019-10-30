@@ -36,7 +36,7 @@
             // 
             // lbNome
             // 
-            this.lbNome.Size = new System.Drawing.Size(65, 19);
+            this.lbNome.Size = new System.Drawing.Size(67, 19);
             this.lbNome.Text = "Cadastro";
             // 
             // btAlterar
@@ -89,7 +89,8 @@
             this.busca1.Name = "busca1";
             this.busca1.Size = new System.Drawing.Size(306, 34);
             this.busca1.TabIndex = 8;
-            this.busca1.TextBoxTextChanged += new System.EventHandler(this.busca1_TextBoxTextChanged);
+            this.busca1.TextBoxKeyDown += new System.Windows.Forms.KeyEventHandler(this.busca1_TextBoxKeyDown);
+            this.busca1.ButtonClick += new System.EventHandler(this.busca1_ButtonClick);
             // 
             // FCadastroHome
             // 

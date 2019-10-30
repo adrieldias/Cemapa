@@ -39,6 +39,28 @@ namespace Componentes
             set => this.textBox1.PasswordChar = value;
         }
 
+        public new bool Enabled
+        {
+            get => this.textBox1.Enabled;
+            set
+            {
+                this.textBox1.Enabled = value;
+                if (value)
+                {
+                    this.lbNome.Font = new Font(this.lbNome.Font.FontFamily, this.lbNome.Font.Size, FontStyle.Regular);
+                }
+                else
+                {
+                    
+                    this.lbNome.Font = new Font(this.lbNome.Font.FontFamily, this.lbNome.Font.Size, FontStyle.Strikeout);
+                    this.textBox1.BackColor = Color.White;
+                    this.textBox1.Clear();
+                }
+                
+                
+            }
+        }
+
         #endregion
 
         public TextBoxSimples()
