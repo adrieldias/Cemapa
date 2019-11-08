@@ -23,6 +23,17 @@ namespace Cliente.Forms
         public BindingSource CidadeBindingSource { get; set; }
         public BindingSource TipoPropriedadeBindingSource { get; set; }
         public BindingSource TipoImovelBindingSource { get; set; }
+        public BindingSource CadastroBindingSource { get; set; }
+        dynamic definitionCadastro = new
+        {
+            Data = new[] {
+                    new {
+                        CODIGO = 0,                        
+                        NOME = string.Empty                        
+                    }
+                }
+        };
+
         #endregion
 
         #region DataBindings
@@ -37,8 +48,29 @@ namespace Cliente.Forms
             tbsCri.DataBindings.Add("Text", PropriedadeBindingSource.Current, "DESC_CRI");
             tbsMatriculaPropriedade.DataBindings.Add("Text", PropriedadeBindingSource.Current, "NUM_MATRICULA");
             tbsValorPropriedade.DataBindings.Add("Text", PropriedadeBindingSource.Current, "VAL_PROPRIEDADE");
-            textBoxSimples1.DataBindings.Add("Text", PropriedadeBindingSource.Current, "Teste");
-
+            tbsLatitude.DataBindings.Add("Text", PropriedadeBindingSource.Current, "DESC_LATITUDE");
+            tbsLongitude.DataBindings.Add("Text", PropriedadeBindingSource.Current, "DESC_LONGITUDE");
+            tbsObservacao.DataBindings.Add("Text", PropriedadeBindingSource.Current, "DESC_OBSERVACAO");
+            tbsVencContrato.DataBindings.Add("Text", PropriedadeBindingSource.Current, "DT_VENC_CONTRATO");
+            tbsDtVencHipoteca.DataBindings.Add("Text", PropriedadeBindingSource.Current, "DT_VENC_HIPOTECA");
+            tbsDtVencHipoteca2.DataBindings.Add("Text", PropriedadeBindingSource.Current, "DT_VENC_HIPOTECA2");
+            tbsDtVencHipoteca3.DataBindings.Add("Text", PropriedadeBindingSource.Current, "DT_VENC_HIPOTECA3");
+            tbsDtVencHipoteca4.DataBindings.Add("Text", PropriedadeBindingSource.Current, "DT_VENC_HIPOTECA4");
+            tbsDtVencHipoteca5.DataBindings.Add("Text", PropriedadeBindingSource.Current, "DT_VENC_HIPOTECA5");
+            tbsDtVencHipoteca6.DataBindings.Add("Text", PropriedadeBindingSource.Current, "DT_VENC_HIPOTECA6");
+            tbsDescFavorecidoHipoteca.DataBindings.Add("Text", PropriedadeBindingSource.Current, "DESC_FAVORECIDO_HIPOTECA");
+            tbsDescFavorecidoHipoteca2.DataBindings.Add("Text", PropriedadeBindingSource.Current, "DESC_FAVORECIDO_HIPOTECA2");
+            tbsDescFavorecidoHipoteca3.DataBindings.Add("Text", PropriedadeBindingSource.Current, "DESC_FAVORECIDO_HIPOTECA3");
+            tbsDescFavorecidoHipoteca4.DataBindings.Add("Text", PropriedadeBindingSource.Current, "DESC_FAVORECIDO_HIPOTECA4");
+            tbsDescFavorecidoHipoteca5.DataBindings.Add("Text", PropriedadeBindingSource.Current, "DESC_FAVORECIDO_HIPOTECA5");
+            tbsDescFavorecidoHipoteca6.DataBindings.Add("Text", PropriedadeBindingSource.Current, "DESC_FAVORECIDO_HIPOTECA6");
+            tbsValHipoteca.DataBindings.Add("Text", PropriedadeBindingSource.Current, "VAL_HIPOTECA");
+            tbsValHipoteca2.DataBindings.Add("Text", PropriedadeBindingSource.Current, "VAL_HIPOTECA2");
+            tbsValHipoteca3.DataBindings.Add("Text", PropriedadeBindingSource.Current, "VAL_HIPOTECA3");
+            tbsValHipoteca4.DataBindings.Add("Text", PropriedadeBindingSource.Current, "VAL_HIPOTECA4");
+            tbsValHipoteca5.DataBindings.Add("Text", PropriedadeBindingSource.Current, "VAL_HIPOTECA5");
+            tbsValHipoteca6.DataBindings.Add("Text", PropriedadeBindingSource.Current, "VAL_HIPOTECA6");
+            
             // cbsCidade
             if (CidadeBindingSource == null)
                 CidadeBindingSource = new BindingSource();
@@ -59,6 +91,11 @@ namespace Cliente.Forms
             if(TipoImovelBindingSource == null)
                 TipoImovelBindingSource = new BindingSource();
             cbsPropriedadePropria.BindingSource = TipoImovelBindingSource;
+
+            //cbsCadastroProprietario
+            if (CadastroBindingSource == null)
+                CadastroBindingSource = new BindingSource();
+            cbsCadastroProprietario.BindingSource = CadastroBindingSource;
         }
         #endregion
 
@@ -108,6 +145,21 @@ namespace Cliente.Forms
             }
             cbsTipoPropriedade.DisplayMember = "DESC_TIPO_PROPRIEDADE";
             cbsTipoPropriedade.ValueMember = "COD_TIPO_PROPRIEDADE";
+
+            //CadastroBindingSource.DataSource =
+            //    JsonConvert.DeserializeAnonymousType((
+            //        await RunAsyncGet(string.Format("{0}/{1}", ConfigurationManager.AppSettings["UriCadastro"], "GetPersonalizado"))), definitionCadastro);
+            //if (((TB_PROPRIEDADE)PropriedadeBindingSource.Current).COD_CADASTRO_PROPRIETARIO != null)
+            //{
+            //    var obj = CadastroBindingSource.List.OfType<TB_CADASTRO>()
+            //        .First(c => c.COD_CADASTRO == ((TB_PROPRIEDADE)PropriedadeBindingSource.Current).COD_CADASTRO_PROPRIETARIO);
+            //    var pos = CadastroBindingSource.IndexOf(obj);
+            //    CadastroBindingSource.Position = pos;
+            //    obj = null;
+            //    pos = 0;
+            //}
+            //cbsCadastroProprietario.DisplayMember = "NOME";
+            //cbsCadastroProprietario.ValueMember = "CODIGO";
 
             List<String> ListaPropria = new List<string>() {"SIM", "NAO"};            
             TipoImovelBindingSource.DataSource = ListaPropria;            
@@ -170,12 +222,14 @@ namespace Cliente.Forms
             // Busca as alterações feitas nos DataBindings            
             ((TB_PROPRIEDADE)PropriedadeBindingSource.Current).COD_CIDADE =
                 ((TB_CIDADE)CidadeBindingSource.Current).COD_CIDADE;
-            if(((TB_PROPRIEDADE)PropriedadeBindingSource.Current).COD_TIPO_PROPRIEDADE != null)
+            if (TipoPropriedadeBindingSource.Count > 0)
                 ((TB_PROPRIEDADE)PropriedadeBindingSource.Current).COD_TIPO_PROPRIEDADE =
                     ((TB_TIPO_PROPRIEDADE)TipoPropriedadeBindingSource.Current).COD_TIPO_PROPRIEDADE;
-            if(((TB_PROPRIEDADE)PropriedadeBindingSource.Current).IND_TIPO_IMOVEL != null)
-                ((TB_PROPRIEDADE)PropriedadeBindingSource.Current).IND_TIPO_IMOVEL =
-                    TipoImovelBindingSource.Current.ToString();
+            ((TB_PROPRIEDADE)PropriedadeBindingSource.Current).IND_TIPO_IMOVEL =
+                TipoImovelBindingSource.Current.ToString();
+            if (((TB_CADASTRO)CadastroBindingSource.Current).COD_CADASTRO > 0)
+                ((TB_PROPRIEDADE)PropriedadeBindingSource.Current).COD_CADASTRO_PROPRIETARIO =
+                    ((TB_CADASTRO)CadastroBindingSource.Current).COD_CADASTRO;
             PropriedadeBindingSource.EndEdit();
         }
 
@@ -189,5 +243,32 @@ namespace Cliente.Forms
 
         }
 
+        private async void cbsCadastroProprietario_ComboBoxKeyDown(object sender, KeyEventArgs e)
+        {
+            if(cbsCadastroProprietario.SelectedIndex == -1 && e.KeyCode == Keys.Enter)
+            {
+                var cad = new TB_CADASTRO();
+                if (!string.IsNullOrEmpty(cbsCadastroProprietario.Text))
+                {
+                    cad.NOME = cbsCadastroProprietario.Text;                    
+                    CadastroBindingSource.DataSource =
+                            JsonConvert.DeserializeAnonymousType((await RunAsyncPost(
+                    string.Format("{0}/{1}", ConfigurationManager.AppSettings["UriCadastro"], "Get"), cad)
+                ), new List<TB_CADASTRO>());
+                    if (((TB_PROPRIEDADE)PropriedadeBindingSource.Current).COD_CADASTRO_PROPRIETARIO != null)
+                    {
+                        var obj = CadastroBindingSource.List.OfType<TB_CADASTRO>()
+                            .First(c => c.COD_CADASTRO == ((TB_PROPRIEDADE)PropriedadeBindingSource.Current).COD_CADASTRO_PROPRIETARIO);
+                        var pos = CadastroBindingSource.IndexOf(obj);
+                        CadastroBindingSource.Position = pos;
+                        obj = null;
+                        pos = 0;
+                    }
+                    cbsCadastroProprietario.DisplayMember = "NOME";
+                    cbsCadastroProprietario.ValueMember = "COD_CADASTRO";
+                    cbsCadastroProprietario.DroppedDown = true;
+                }
+            }
+        }
     }
 }

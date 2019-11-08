@@ -41,6 +41,7 @@ namespace Cliente.Forms
         public BindingSource MotivoBindingSource { get; set; }
         public BindingSource GarantiaBindingSource { get; set; }
         public BindingSource QualificacaoBindingSource { get; set; }
+        public BindingSource AvalistaBindingSource { get; set; }
 
         #endregion
 
@@ -96,8 +97,15 @@ namespace Cliente.Forms
             tbsDtSeprocado.DataBindings.Add("Text", CadastroBindingSource.Current, "DT_SEPROCADO");
             tbsDtCancelamento.DataBindings.Add("Text", CadastroBindingSource.Current, "DT_CANCELAMENTO");
             tbsObsCancelamento.DataBindings.Add("Text", CadastroBindingSource.Current, "DESC_OBS");
-
-            
+            tbsRefComercial1.DataBindings.Add("Text", CadastroBindingSource.Current, "DESC_REF_COMERCIAL1");
+            tbsRefComercial2.DataBindings.Add("Text", CadastroBindingSource.Current, "DESC_REF_COMERCIAL2");
+            tbsRefBanco1.DataBindings.Add("Text", CadastroBindingSource.Current, "DESC_REF_BANCO1");
+            tbsRefBanco2.DataBindings.Add("Text", CadastroBindingSource.Current, "DESC_REF_BANCO2");
+            tbsRefParenteNome.DataBindings.Add("Text", CadastroBindingSource.Current, "DESC_REF_PARENTE_NOME");
+            tbsRefParenteEnderceo.DataBindings.Add("Text", CadastroBindingSource.Current, "DESC_REF_PARENTE_ENDERECO");
+            tbsRefParenteCidade.DataBindings.Add("Text", CadastroBindingSource.Current, "DESC_REF_PARENTE_CIDADE");
+            tbsRefTelefoneParente.DataBindings.Add("Text", CadastroBindingSource.Current, "DESC_REF_PARENTE_TELEFONE");
+            tbsRefOutras.DataBindings.Add("Text", CadastroBindingSource.Current, "DESC_REF_OUTRAS");
 
             //cbsTipoCadastro
             if (TipoCadastroBindingSource == null)
@@ -444,6 +452,11 @@ namespace Cliente.Forms
             else
                 cbsPais.SelectedIndex = -1;
 
+            //cbsAvalista
+            if (AvalistaBindingSource == null)
+                AvalistaBindingSource = new BindingSource();
+            cbsAvalista.BindingSource = AvalistaBindingSource;
+
             //dgvPropriedades
             if (PropriedadeBindingSource == null)
                 PropriedadeBindingSource = new BindingSource();            
@@ -488,7 +501,7 @@ namespace Cliente.Forms
                 }
                 else
                     ((DataGridViewColumn)col).Visible = false;
-            }
+            }            
 
             //dgvEndereco
             if (EnderecoBindingSource == null)
@@ -678,6 +691,34 @@ namespace Cliente.Forms
         private void cbsGarantias_SelectedIndexChanged(object sender, EventArgs e)
         {
             tbsGarantiasOutras.Enabled = (cbsGarantias.Text == "OUTRAS");
+        }
+
+        private async void cbsAvalista_ComboBoxKeyDown(object sender, KeyEventArgs e)
+        {
+            if (cbsAvalista.SelectedIndex == -1 && e.KeyCode == Keys.Enter)
+            {
+                var cad = new TB_CADASTRO();
+                if (!string.IsNullOrEmpty(cbsAvalista.Text))
+                {
+                    cad.NOME = cbsAvalista.Text;
+                    AvalistaBindingSource.DataSource =
+                            JsonConvert.DeserializeAnonymousType((await RunAsyncPost(
+                    string.Format("{0}/{1}", ConfigurationManager.AppSettings["UriCadastro"], "Get"), cad)
+                ), new List<TB_CADASTRO>());
+                    if (((TB_CADASTRO)CadastroBindingSource.Current).COD_AVALISTA != null)
+                    {
+                        var obj = AvalistaBindingSource.List.OfType<TB_CADASTRO>()
+                            .First(c => c.COD_CADASTRO == ((TB_CADASTRO)CadastroBindingSource.Current).COD_AVALISTA);
+                        var pos = AvalistaBindingSource.IndexOf(obj);
+                        AvalistaBindingSource.Position = pos;
+                        obj = null;
+                        pos = 0;
+                    }
+                    cbsAvalista.DisplayMember = "NOME";
+                    cbsAvalista.ValueMember = "COD_CADASTRO";
+                    cbsAvalista.DroppedDown = true;
+                }
+            }
         }
     }
 

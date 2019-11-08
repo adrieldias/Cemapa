@@ -88,12 +88,27 @@
             this.tbsSequencial = new Componentes.TextBoxSimples();
             this.tbsValidadeCrc = new Componentes.TextBoxSimples();
             this.cbsQualificacao = new Componentes.ComboBoxSimples();
+            this.cbsPais = new Componentes.ComboBoxSimples();
+            this.tabPage8 = new System.Windows.Forms.TabPage();
+            this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
+            this.cbsAvalista = new Componentes.ComboBoxSimples();
+            this.label3 = new System.Windows.Forms.Label();
+            this.tbsRefComercial1 = new Componentes.TextBoxSimples();
+            this.tbsRefComercial2 = new Componentes.TextBoxSimples();
+            this.label4 = new System.Windows.Forms.Label();
+            this.tbsRefBanco1 = new Componentes.TextBoxSimples();
+            this.tbsRefBanco2 = new Componentes.TextBoxSimples();
+            this.label5 = new System.Windows.Forms.Label();
+            this.tbsRefParenteNome = new Componentes.TextBoxSimples();
+            this.tbsRefParenteEnderceo = new Componentes.TextBoxSimples();
             this.tabPage6 = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.tbsDtCancelamento = new Componentes.TextBoxSimples();
             this.tbsObsCancelamento = new Componentes.TextBoxSimples();
             this.cbsMotivoCancelamento = new Componentes.ComboBoxSimples();
-            this.cbsPais = new Componentes.ComboBoxSimples();
+            this.tbsRefParenteCidade = new Componentes.TextBoxSimples();
+            this.tbsRefTelefoneParente = new Componentes.TextBoxSimples();
+            this.tbsRefOutras = new Componentes.TextBoxSimples();
             this.pCabecalho.SuspendLayout();
             this.slickBlueTabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -109,6 +124,8 @@
             this.tableLayoutPanel4.SuspendLayout();
             this.tabPage7.SuspendLayout();
             this.tableLayoutPanel5.SuspendLayout();
+            this.tabPage8.SuspendLayout();
+            this.tableLayoutPanel6.SuspendLayout();
             this.tabPage6.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.SuspendLayout();
@@ -146,6 +163,7 @@
             this.slickBlueTabControl1.Controls.Add(this.tabPage1);
             this.slickBlueTabControl1.Controls.Add(this.tabPage3);
             this.slickBlueTabControl1.Controls.Add(this.tabPage7);
+            this.slickBlueTabControl1.Controls.Add(this.tabPage8);
             this.slickBlueTabControl1.Controls.Add(this.tabPage6);
             this.slickBlueTabControl1.Font = new System.Drawing.Font("Calibri Light", 10F);
             this.slickBlueTabControl1.ItemSize = new System.Drawing.Size(40, 130);
@@ -239,6 +257,7 @@
             this.cbsTipoCadastro.BindingSource = null;
             this.tableLayoutPanel1.SetColumnSpan(this.cbsTipoCadastro, 5);
             this.cbsTipoCadastro.DisplayMember = "";
+            this.cbsTipoCadastro.DroppedDown = false;
             this.cbsTipoCadastro.Label = "Tipo";
             this.cbsTipoCadastro.Location = new System.Drawing.Point(3, 73);
             this.cbsTipoCadastro.Name = "cbsTipoCadastro";
@@ -271,6 +290,7 @@
             this.cbsFisicaJuridica.BindingSource = null;
             this.tableLayoutPanel1.SetColumnSpan(this.cbsFisicaJuridica, 5);
             this.cbsFisicaJuridica.DisplayMember = "";
+            this.cbsFisicaJuridica.DroppedDown = false;
             this.cbsFisicaJuridica.Label = "Pessoa Física/Jurídica";
             this.cbsFisicaJuridica.Location = new System.Drawing.Point(378, 73);
             this.cbsFisicaJuridica.Name = "cbsFisicaJuridica";
@@ -332,6 +352,7 @@
             this.cbsClassificacao.BindingSource = null;
             this.tableLayoutPanel1.SetColumnSpan(this.cbsClassificacao, 2);
             this.cbsClassificacao.DisplayMember = "";
+            this.cbsClassificacao.DroppedDown = false;
             this.cbsClassificacao.Label = "Classificação";
             this.cbsClassificacao.Location = new System.Drawing.Point(228, 223);
             this.cbsClassificacao.Name = "cbsClassificacao";
@@ -391,6 +412,7 @@
             this.cbsFilial.BindingSource = null;
             this.tableLayoutPanel1.SetColumnSpan(this.cbsFilial, 5);
             this.cbsFilial.DisplayMember = "";
+            this.cbsFilial.DroppedDown = false;
             this.cbsFilial.Label = "Filial";
             this.cbsFilial.Location = new System.Drawing.Point(3, 273);
             this.cbsFilial.Name = "cbsFilial";
@@ -409,6 +431,7 @@
             this.cbsVendedor.BindingSource = null;
             this.tableLayoutPanel1.SetColumnSpan(this.cbsVendedor, 5);
             this.cbsVendedor.DisplayMember = "";
+            this.cbsVendedor.DroppedDown = false;
             this.cbsVendedor.Label = "Vendedor";
             this.cbsVendedor.Location = new System.Drawing.Point(378, 273);
             this.cbsVendedor.Name = "cbsVendedor";
@@ -439,6 +462,7 @@
             this.cbsRegimeTributario.BindingSource = null;
             this.tableLayoutPanel1.SetColumnSpan(this.cbsRegimeTributario, 3);
             this.cbsRegimeTributario.DisplayMember = "";
+            this.cbsRegimeTributario.DroppedDown = false;
             this.cbsRegimeTributario.Label = "Regime Tributário";
             this.cbsRegimeTributario.Location = new System.Drawing.Point(528, 223);
             this.cbsRegimeTributario.Name = "cbsRegimeTributario";
@@ -456,6 +480,7 @@
             this.cbsConsumidorFinal.BindingSource = null;
             this.tableLayoutPanel1.SetColumnSpan(this.cbsConsumidorFinal, 2);
             this.cbsConsumidorFinal.DisplayMember = "";
+            this.cbsConsumidorFinal.DroppedDown = false;
             this.cbsConsumidorFinal.Label = "Consumidor Final";
             this.cbsConsumidorFinal.Location = new System.Drawing.Point(3, 323);
             this.cbsConsumidorFinal.Name = "cbsConsumidorFinal";
@@ -474,6 +499,7 @@
             this.cbsOperadora.BindingSource = null;
             this.tableLayoutPanel1.SetColumnSpan(this.cbsOperadora, 2);
             this.cbsOperadora.DisplayMember = "";
+            this.cbsOperadora.DroppedDown = false;
             this.cbsOperadora.Label = "Operadora de Celular";
             this.cbsOperadora.Location = new System.Drawing.Point(153, 323);
             this.cbsOperadora.Name = "cbsOperadora";
@@ -600,6 +626,7 @@
             this.cbsRegiao.BindingSource = null;
             this.tableLayoutPanel2.SetColumnSpan(this.cbsRegiao, 3);
             this.cbsRegiao.DisplayMember = "";
+            this.cbsRegiao.DroppedDown = false;
             this.cbsRegiao.Label = "Região";
             this.cbsRegiao.Location = new System.Drawing.Point(3, 3);
             this.cbsRegiao.Name = "cbsRegiao";
@@ -822,6 +849,7 @@
             this.cbsGarantias.BindingSource = null;
             this.tableLayoutPanel4.SetColumnSpan(this.cbsGarantias, 3);
             this.cbsGarantias.DisplayMember = "Descricao";
+            this.cbsGarantias.DroppedDown = false;
             this.cbsGarantias.Label = "Garantias";
             this.cbsGarantias.Location = new System.Drawing.Point(153, 53);
             this.cbsGarantias.Name = "cbsGarantias";
@@ -970,6 +998,7 @@
             this.cbsQualificacaoSocio.BindingSource = null;
             this.tableLayoutPanel5.SetColumnSpan(this.cbsQualificacaoSocio, 7);
             this.cbsQualificacaoSocio.DisplayMember = "";
+            this.cbsQualificacaoSocio.DroppedDown = false;
             this.cbsQualificacaoSocio.Label = "Qualificação do Sócio ou Titular";
             this.cbsQualificacaoSocio.Location = new System.Drawing.Point(228, 133);
             this.cbsQualificacaoSocio.Name = "cbsQualificacaoSocio";
@@ -1058,6 +1087,7 @@
             this.cbsQualificacao.BindingSource = null;
             this.tableLayoutPanel5.SetColumnSpan(this.cbsQualificacao, 10);
             this.cbsQualificacao.DisplayMember = "";
+            this.cbsQualificacao.DroppedDown = false;
             this.cbsQualificacao.Label = "Qualificação";
             this.cbsQualificacao.Location = new System.Drawing.Point(3, 53);
             this.cbsQualificacao.Name = "cbsQualificacao";
@@ -1067,6 +1097,218 @@
             this.cbsQualificacao.Size = new System.Drawing.Size(750, 44);
             this.cbsQualificacao.TabIndex = 14;
             this.cbsQualificacao.ValueMember = "";
+            // 
+            // cbsPais
+            // 
+            this.cbsPais.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbsPais.AutoSize = true;
+            this.cbsPais.BindingSource = null;
+            this.tableLayoutPanel5.SetColumnSpan(this.cbsPais, 4);
+            this.cbsPais.DisplayMember = "";
+            this.cbsPais.DroppedDown = false;
+            this.cbsPais.Label = "País";
+            this.cbsPais.Location = new System.Drawing.Point(453, 183);
+            this.cbsPais.Name = "cbsPais";
+            this.cbsPais.SelectedIndex = -1;
+            this.cbsPais.SelectedText = null;
+            this.cbsPais.SelectedValue = null;
+            this.cbsPais.Size = new System.Drawing.Size(300, 44);
+            this.cbsPais.TabIndex = 15;
+            this.cbsPais.ValueMember = "";
+            // 
+            // tabPage8
+            // 
+            this.tabPage8.Controls.Add(this.tableLayoutPanel6);
+            this.tabPage8.Location = new System.Drawing.Point(134, 4);
+            this.tabPage8.Name = "tabPage8";
+            this.tabPage8.Size = new System.Drawing.Size(762, 465);
+            this.tabPage8.TabIndex = 7;
+            this.tabPage8.Text = "Referências";
+            this.tabPage8.UseVisualStyleBackColor = true;
+            // 
+            // tableLayoutPanel6
+            // 
+            this.tableLayoutPanel6.ColumnCount = 10;
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.tableLayoutPanel6.Controls.Add(this.cbsAvalista, 0, 0);
+            this.tableLayoutPanel6.Controls.Add(this.label3, 0, 1);
+            this.tableLayoutPanel6.Controls.Add(this.tbsRefComercial1, 0, 2);
+            this.tableLayoutPanel6.Controls.Add(this.tbsRefComercial2, 5, 2);
+            this.tableLayoutPanel6.Controls.Add(this.label4, 0, 3);
+            this.tableLayoutPanel6.Controls.Add(this.tbsRefBanco1, 0, 4);
+            this.tableLayoutPanel6.Controls.Add(this.tbsRefBanco2, 5, 4);
+            this.tableLayoutPanel6.Controls.Add(this.label5, 0, 5);
+            this.tableLayoutPanel6.Controls.Add(this.tbsRefParenteNome, 0, 6);
+            this.tableLayoutPanel6.Controls.Add(this.tbsRefParenteEnderceo, 5, 6);
+            this.tableLayoutPanel6.Controls.Add(this.tbsRefParenteCidade, 0, 7);
+            this.tableLayoutPanel6.Controls.Add(this.tbsRefTelefoneParente, 5, 7);
+            this.tableLayoutPanel6.Controls.Add(this.tbsRefOutras, 0, 8);
+            this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel6.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel6.Name = "tableLayoutPanel6";
+            this.tableLayoutPanel6.RowCount = 10;
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel6.Size = new System.Drawing.Size(762, 465);
+            this.tableLayoutPanel6.TabIndex = 0;
+            // 
+            // cbsAvalista
+            // 
+            this.cbsAvalista.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbsAvalista.AutoSize = true;
+            this.cbsAvalista.BindingSource = null;
+            this.tableLayoutPanel6.SetColumnSpan(this.cbsAvalista, 5);
+            this.cbsAvalista.DisplayMember = "";
+            this.cbsAvalista.DroppedDown = false;
+            this.cbsAvalista.Label = "Avalista";
+            this.cbsAvalista.Location = new System.Drawing.Point(3, 3);
+            this.cbsAvalista.Name = "cbsAvalista";
+            this.cbsAvalista.SelectedIndex = -1;
+            this.cbsAvalista.SelectedText = null;
+            this.cbsAvalista.SelectedValue = null;
+            this.cbsAvalista.Size = new System.Drawing.Size(374, 44);
+            this.cbsAvalista.TabIndex = 0;
+            this.cbsAvalista.ValueMember = "";
+            this.cbsAvalista.ComboBoxKeyDown += new System.Windows.Forms.KeyEventHandler(this.cbsAvalista_ComboBoxKeyDown);
+            // 
+            // label3
+            // 
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label3.AutoSize = true;
+            this.tableLayoutPanel6.SetColumnSpan(this.label3, 2);
+            this.label3.ForeColor = System.Drawing.Color.SteelBlue;
+            this.label3.Location = new System.Drawing.Point(3, 56);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(146, 17);
+            this.label3.TabIndex = 10;
+            this.label3.Text = "Comercial";
+            // 
+            // tbsRefComercial1
+            // 
+            this.tbsRefComercial1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbsRefComercial1.AutoSize = true;
+            this.tableLayoutPanel6.SetColumnSpan(this.tbsRefComercial1, 5);
+            this.tbsRefComercial1.Font = new System.Drawing.Font("Calibri Light", 12F);
+            this.tbsRefComercial1.Label = "Referência 1";
+            this.tbsRefComercial1.Location = new System.Drawing.Point(3, 83);
+            this.tbsRefComercial1.Name = "tbsRefComercial1";
+            this.tbsRefComercial1.PasswordChar = '\0';
+            this.tbsRefComercial1.Size = new System.Drawing.Size(374, 44);
+            this.tbsRefComercial1.TabIndex = 11;
+            // 
+            // tbsRefComercial2
+            // 
+            this.tbsRefComercial2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbsRefComercial2.AutoSize = true;
+            this.tableLayoutPanel6.SetColumnSpan(this.tbsRefComercial2, 5);
+            this.tbsRefComercial2.Font = new System.Drawing.Font("Calibri Light", 12F);
+            this.tbsRefComercial2.Label = "Referência 2";
+            this.tbsRefComercial2.Location = new System.Drawing.Point(383, 83);
+            this.tbsRefComercial2.Name = "tbsRefComercial2";
+            this.tbsRefComercial2.PasswordChar = '\0';
+            this.tbsRefComercial2.Size = new System.Drawing.Size(376, 44);
+            this.tbsRefComercial2.TabIndex = 12;
+            // 
+            // label4
+            // 
+            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label4.AutoSize = true;
+            this.tableLayoutPanel6.SetColumnSpan(this.label4, 2);
+            this.label4.ForeColor = System.Drawing.Color.SteelBlue;
+            this.label4.Location = new System.Drawing.Point(3, 136);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(146, 17);
+            this.label4.TabIndex = 13;
+            this.label4.Text = "Banco";
+            // 
+            // tbsRefBanco1
+            // 
+            this.tbsRefBanco1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbsRefBanco1.AutoSize = true;
+            this.tableLayoutPanel6.SetColumnSpan(this.tbsRefBanco1, 5);
+            this.tbsRefBanco1.Font = new System.Drawing.Font("Calibri Light", 12F);
+            this.tbsRefBanco1.Label = "Banco 1";
+            this.tbsRefBanco1.Location = new System.Drawing.Point(3, 163);
+            this.tbsRefBanco1.Name = "tbsRefBanco1";
+            this.tbsRefBanco1.PasswordChar = '\0';
+            this.tbsRefBanco1.Size = new System.Drawing.Size(374, 44);
+            this.tbsRefBanco1.TabIndex = 14;
+            // 
+            // tbsRefBanco2
+            // 
+            this.tbsRefBanco2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbsRefBanco2.AutoSize = true;
+            this.tableLayoutPanel6.SetColumnSpan(this.tbsRefBanco2, 5);
+            this.tbsRefBanco2.Font = new System.Drawing.Font("Calibri Light", 12F);
+            this.tbsRefBanco2.Label = "Banco 2";
+            this.tbsRefBanco2.Location = new System.Drawing.Point(383, 163);
+            this.tbsRefBanco2.Name = "tbsRefBanco2";
+            this.tbsRefBanco2.PasswordChar = '\0';
+            this.tbsRefBanco2.Size = new System.Drawing.Size(376, 44);
+            this.tbsRefBanco2.TabIndex = 15;
+            // 
+            // label5
+            // 
+            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label5.AutoSize = true;
+            this.tableLayoutPanel6.SetColumnSpan(this.label5, 2);
+            this.label5.ForeColor = System.Drawing.Color.SteelBlue;
+            this.label5.Location = new System.Drawing.Point(3, 216);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(146, 17);
+            this.label5.TabIndex = 16;
+            this.label5.Text = "Parente";
+            // 
+            // tbsRefParenteNome
+            // 
+            this.tbsRefParenteNome.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbsRefParenteNome.AutoSize = true;
+            this.tableLayoutPanel6.SetColumnSpan(this.tbsRefParenteNome, 5);
+            this.tbsRefParenteNome.Font = new System.Drawing.Font("Calibri Light", 12F);
+            this.tbsRefParenteNome.Label = "Nome";
+            this.tbsRefParenteNome.Location = new System.Drawing.Point(3, 243);
+            this.tbsRefParenteNome.Name = "tbsRefParenteNome";
+            this.tbsRefParenteNome.PasswordChar = '\0';
+            this.tbsRefParenteNome.Size = new System.Drawing.Size(374, 44);
+            this.tbsRefParenteNome.TabIndex = 17;
+            // 
+            // tbsRefParenteEnderceo
+            // 
+            this.tbsRefParenteEnderceo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbsRefParenteEnderceo.AutoSize = true;
+            this.tableLayoutPanel6.SetColumnSpan(this.tbsRefParenteEnderceo, 5);
+            this.tbsRefParenteEnderceo.Font = new System.Drawing.Font("Calibri Light", 12F);
+            this.tbsRefParenteEnderceo.Label = "Endereço";
+            this.tbsRefParenteEnderceo.Location = new System.Drawing.Point(383, 243);
+            this.tbsRefParenteEnderceo.Name = "tbsRefParenteEnderceo";
+            this.tbsRefParenteEnderceo.PasswordChar = '\0';
+            this.tbsRefParenteEnderceo.Size = new System.Drawing.Size(376, 44);
+            this.tbsRefParenteEnderceo.TabIndex = 18;
             // 
             // tabPage6
             // 
@@ -1148,6 +1390,7 @@
             this.cbsMotivoCancelamento.BindingSource = null;
             this.tableLayoutPanel3.SetColumnSpan(this.cbsMotivoCancelamento, 8);
             this.cbsMotivoCancelamento.DisplayMember = "";
+            this.cbsMotivoCancelamento.DroppedDown = false;
             this.cbsMotivoCancelamento.Label = "Motivo";
             this.cbsMotivoCancelamento.Location = new System.Drawing.Point(153, 3);
             this.cbsMotivoCancelamento.Name = "cbsMotivoCancelamento";
@@ -1158,23 +1401,47 @@
             this.cbsMotivoCancelamento.TabIndex = 3;
             this.cbsMotivoCancelamento.ValueMember = "";
             // 
-            // cbsPais
+            // tbsRefParenteCidade
             // 
-            this.cbsPais.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.tbsRefParenteCidade.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.cbsPais.AutoSize = true;
-            this.cbsPais.BindingSource = null;
-            this.tableLayoutPanel5.SetColumnSpan(this.cbsPais, 4);
-            this.cbsPais.DisplayMember = "";
-            this.cbsPais.Label = "País";
-            this.cbsPais.Location = new System.Drawing.Point(453, 183);
-            this.cbsPais.Name = "cbsPais";
-            this.cbsPais.SelectedIndex = -1;
-            this.cbsPais.SelectedText = null;
-            this.cbsPais.SelectedValue = null;
-            this.cbsPais.Size = new System.Drawing.Size(300, 44);
-            this.cbsPais.TabIndex = 15;
-            this.cbsPais.ValueMember = "";
+            this.tbsRefParenteCidade.AutoSize = true;
+            this.tableLayoutPanel6.SetColumnSpan(this.tbsRefParenteCidade, 5);
+            this.tbsRefParenteCidade.Font = new System.Drawing.Font("Calibri Light", 12F);
+            this.tbsRefParenteCidade.Label = "Cidade";
+            this.tbsRefParenteCidade.Location = new System.Drawing.Point(3, 293);
+            this.tbsRefParenteCidade.Name = "tbsRefParenteCidade";
+            this.tbsRefParenteCidade.PasswordChar = '\0';
+            this.tbsRefParenteCidade.Size = new System.Drawing.Size(374, 44);
+            this.tbsRefParenteCidade.TabIndex = 19;
+            // 
+            // tbsRefTelefoneParente
+            // 
+            this.tbsRefTelefoneParente.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbsRefTelefoneParente.AutoSize = true;
+            this.tableLayoutPanel6.SetColumnSpan(this.tbsRefTelefoneParente, 5);
+            this.tbsRefTelefoneParente.Font = new System.Drawing.Font("Calibri Light", 12F);
+            this.tbsRefTelefoneParente.Label = "Telefone";
+            this.tbsRefTelefoneParente.Location = new System.Drawing.Point(383, 293);
+            this.tbsRefTelefoneParente.Name = "tbsRefTelefoneParente";
+            this.tbsRefTelefoneParente.PasswordChar = '\0';
+            this.tbsRefTelefoneParente.Size = new System.Drawing.Size(376, 44);
+            this.tbsRefTelefoneParente.TabIndex = 20;
+            // 
+            // tbsRefOutras
+            // 
+            this.tbsRefOutras.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbsRefOutras.AutoSize = true;
+            this.tableLayoutPanel6.SetColumnSpan(this.tbsRefOutras, 10);
+            this.tbsRefOutras.Font = new System.Drawing.Font("Calibri Light", 12F);
+            this.tbsRefOutras.Label = "Outras Referências";
+            this.tbsRefOutras.Location = new System.Drawing.Point(3, 343);
+            this.tbsRefOutras.Name = "tbsRefOutras";
+            this.tbsRefOutras.PasswordChar = '\0';
+            this.tbsRefOutras.Size = new System.Drawing.Size(756, 44);
+            this.tbsRefOutras.TabIndex = 21;
             // 
             // FCadastroCad
             // 
@@ -1211,6 +1478,9 @@
             this.tabPage7.ResumeLayout(false);
             this.tableLayoutPanel5.ResumeLayout(false);
             this.tableLayoutPanel5.PerformLayout();
+            this.tabPage8.ResumeLayout(false);
+            this.tableLayoutPanel6.ResumeLayout(false);
+            this.tableLayoutPanel6.PerformLayout();
             this.tabPage6.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);
             this.tableLayoutPanel3.PerformLayout();
@@ -1286,5 +1556,20 @@
         private System.Windows.Forms.Label label2;
         private Componentes.ComboBoxSimples cbsQualificacao;
         private Componentes.ComboBoxSimples cbsPais;
+        private System.Windows.Forms.TabPage tabPage8;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel6;
+        private Componentes.ComboBoxSimples cbsAvalista;
+        private System.Windows.Forms.Label label3;
+        private Componentes.TextBoxSimples tbsRefComercial1;
+        private Componentes.TextBoxSimples tbsRefComercial2;
+        private System.Windows.Forms.Label label4;
+        private Componentes.TextBoxSimples tbsRefBanco1;
+        private Componentes.TextBoxSimples tbsRefBanco2;
+        private System.Windows.Forms.Label label5;
+        private Componentes.TextBoxSimples tbsRefParenteNome;
+        private Componentes.TextBoxSimples tbsRefParenteEnderceo;
+        private Componentes.TextBoxSimples tbsRefParenteCidade;
+        private Componentes.TextBoxSimples tbsRefTelefoneParente;
+        private Componentes.TextBoxSimples tbsRefOutras;
     }
 }

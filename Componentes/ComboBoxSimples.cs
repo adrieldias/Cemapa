@@ -7,7 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using Newtonsoft.Json;
+using System.Net.Http;
 
 namespace Componentes
 {
@@ -16,6 +17,7 @@ namespace Componentes
         #region Eventos
         
         public event EventHandler SelectedIndexChanged;
+        public event KeyEventHandler ComboBoxKeyDown;
 
         private void HandleSelectedIndexChanged(object sender, EventArgs e)
         {
@@ -28,6 +30,20 @@ namespace Componentes
             if (handler != null)
             {                
                 this.SelectedText = comboBox1.Text;
+                handler(this, e);
+            }
+        }
+
+        private void HandleComboBoxKeyDown(object sender, KeyEventArgs e)
+        {
+            this.OnComboBoxKeyDown(e);
+        }
+
+        protected virtual void OnComboBoxKeyDown(KeyEventArgs e)
+        {
+            KeyEventHandler handler = this.ComboBoxKeyDown;
+            if (handler != null)
+            {
                 handler(this, e);
             }
         }
@@ -86,6 +102,13 @@ namespace Componentes
             set => this.comboBox1.SelectedIndex = value;
         }
 
+        [Description("DroppedDown"), Category("Cemapa")]
+        public bool DroppedDown
+        {
+            get => this.comboBox1.DroppedDown;
+            set => this.comboBox1.DroppedDown = value;
+        }
+
         public new bool Enabled
         {
             get => this.comboBox1.Enabled;
@@ -115,31 +138,7 @@ namespace Componentes
         {
             InitializeComponent();
             comboBox1.SelectedIndexChanged += this.HandleSelectedIndexChanged;
-        }
-
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        {
-            //ControlPaint.DrawBorder(e.Graphics, this.panel1.ClientRectangle, Color.SteelBlue, ButtonBorderStyle.Solid);
-
-            //var borderColor = Color.SteelBlue;
-            //var borderStyle = ButtonBorderStyle.Solid;
-            //var borderWidth = 0;
-
-            //ControlPaint.DrawBorder(
-            //                    e.Graphics,
-            //                    this.panel1.ClientRectangle,
-            //                    borderColor,
-            //                    borderWidth,
-            //                    borderStyle,
-            //                    borderColor,
-            //                    borderWidth,
-            //                    borderStyle,
-            //                    borderColor,
-            //                    borderWidth,
-            //                    borderStyle,
-            //                    borderColor,
-            //                    borderWidth,
-            //                    borderStyle);
+            comboBox1.KeyDown += this.HandleComboBoxKeyDown;
         }
 
         private void comboBox1_KeyUp(object sender, KeyEventArgs e)

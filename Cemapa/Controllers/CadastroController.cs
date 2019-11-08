@@ -49,6 +49,18 @@ namespace Cemapa.Controllers
                 JsonRequestBehavior = System.Web.Mvc.JsonRequestBehavior.AllowGet
             };
         }
+
+        [HttpPost]
+        public IList<TB_CADASTRO> Get([FromBody] TB_CADASTRO cadastro)
+        {
+            db.Configuration.LazyLoadingEnabled = false;
+            var query = from c in db.TB_CADASTRO
+                        where c.NOME.StartsWith(cadastro.NOME)
+                        orderby c.DT_CADASTRO descending
+                        select c;
+            return query.ToList();                        
+        }
+
         //[Route("API/Cadastro/GetPersonalizado")]
         [HttpPost]
         public System.Web.Mvc.JsonResult GetPersonalizado([FromBody] TB_CADASTRO cadastro)
