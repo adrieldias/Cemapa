@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Dynamic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -9,8 +8,8 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using Cemapa.Models;
 using Cemapa.Models.MercadoLivre;
-using HttpParamsUtility;
 using Newtonsoft.Json;
+using HttpParamsUtility;
 
 using Attribute = Cemapa.Models.MercadoLivre.Attribute;
 
