@@ -51,6 +51,7 @@
             this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textBox1.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.textBox1.Font = new System.Drawing.Font("Calibri Light", 12F);
+            this.textBox1.ForeColor = System.Drawing.Color.DimGray;
             this.textBox1.Location = new System.Drawing.Point(3, 8);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(388, 20);
@@ -60,12 +61,12 @@
             // 
             this.lbNome.AutoSize = true;
             this.lbNome.Font = new System.Drawing.Font("Calibri Light", 9F);
-            this.lbNome.ForeColor = System.Drawing.Color.SteelBlue;
-            this.lbNome.Location = new System.Drawing.Point(9, 0);
+            this.lbNome.ForeColor = System.Drawing.Color.Gray;
+            this.lbNome.Location = new System.Drawing.Point(9, -1);
             this.lbNome.Name = "lbNome";
-            this.lbNome.Size = new System.Drawing.Size(97, 14);
+            this.lbNome.Size = new System.Drawing.Size(89, 14);
             this.lbNome.TabIndex = 1;
-            this.lbNome.Text = "NOME DO CAMPO";
+            this.lbNome.Text = "Nome do Campo";
             // 
             // TextBoxSimples
             // 

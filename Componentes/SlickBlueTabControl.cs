@@ -79,7 +79,7 @@ public class SlickBlueTabControl : TabControl
                 float x = tabRect.Width / 2 - 55;
                 float y = tabRect.Y + tabRect.Height / 2 - 6;          
                 System.Drawing.StringFormat drawFormat = new System.Drawing.StringFormat();
-                g.DrawString(drawString.ToUpper(), drawFont, drawBrush, x, y, drawFormat);
+                g.DrawString(drawString, drawFont, drawBrush, x, y, drawFormat);
                 drawFont.Dispose();
                 drawBrush.Dispose();
         }

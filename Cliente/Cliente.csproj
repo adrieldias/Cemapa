@@ -39,6 +39,8 @@
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="PropertyChanged, Version=2.6.1.0, Culture=neutral, PublicKeyToken=ee3ee20bcf148ddd, processorArchitecture=MSIL">
       <HintPath>..\packages\PropertyChanged.Fody.2.6.1\lib\net452\PropertyChanged.dll</HintPath>
     </Reference>
@@ -51,6 +53,7 @@
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -60,6 +63,7 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Forms\FCadastroCad.cs">
@@ -107,6 +111,7 @@
     </Compile>
     <Compile Include="POCO\ConsumidorFinal.cs" />
     <Compile Include="POCO\FisicaJuridica.cs" />
+    <Compile Include="POCO\Generico.cs" />
     <Compile Include="POCO\RegimeTributario.cs" />
     <Compile Include="POCO\TB_CADASTRO.cs" />
     <Compile Include="POCO\TB_CADASTRO_ENDERECOS.cs" />
@@ -114,10 +119,12 @@
     <Compile Include="POCO\TB_CLASS_CADASTRO.cs" />
     <Compile Include="POCO\TB_ESTADO.cs" />
     <Compile Include="POCO\TB_FILIAL.cs" />
+    <Compile Include="POCO\TB_MOTIVO.cs" />
     <Compile Include="POCO\TB_PAIS.cs" />
     <Compile Include="POCO\TB_PRODUTO.cs" />
     <Compile Include="POCO\TB_PROPRIEDADE.cs" />
     <Compile Include="POCO\TB_QUALIFICACAO_SOCIO.cs" />
+    <Compile Include="POCO\TB_REGIAO.cs" />
     <Compile Include="POCO\TB_TIPO_CADASTRO.cs" />
     <Compile Include="POCO\TB_TIPO_PROPRIEDADE.cs" />
     <Compile Include="POCO\TB_VENDEDOR.cs" />
@@ -183,7 +190,9 @@
       <Name>Componentes</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Img\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Fody.4.2.1\build\Fody.targets" Condition="Exists('..\packages\Fody.4.2.1\build\Fody.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

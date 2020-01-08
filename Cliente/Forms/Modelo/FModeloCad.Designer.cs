@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FModeloCad));
             this.pCabecalho = new System.Windows.Forms.Panel();
             this.btMinimize = new System.Windows.Forms.Button();
             this.btCloseForm = new System.Windows.Forms.Button();
@@ -90,13 +91,13 @@
             // lbNome
             // 
             this.lbNome.AutoSize = true;
-            this.lbNome.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbNome.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbNome.ForeColor = System.Drawing.Color.White;
             this.lbNome.Location = new System.Drawing.Point(12, 18);
             this.lbNome.Name = "lbNome";
-            this.lbNome.Size = new System.Drawing.Size(168, 19);
+            this.lbNome.Size = new System.Drawing.Size(140, 19);
             this.lbNome.TabIndex = 0;
-            this.lbNome.Text = "NOME DO FORMULÁRIO";
+            this.lbNome.Text = "Nome do Formulário";
             // 
             // btCancelar
             // 
@@ -105,14 +106,18 @@
             this.btCancelar.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btCancelar.FlatAppearance.BorderColor = System.Drawing.Color.Gainsboro;
             this.btCancelar.FlatAppearance.BorderSize = 0;
-            this.btCancelar.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btCancelar.Location = new System.Drawing.Point(88, 56);
+            this.btCancelar.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btCancelar.ForeColor = System.Drawing.Color.SteelBlue;
+            this.btCancelar.Image = ((System.Drawing.Image)(resources.GetObject("btCancelar.Image")));
+            this.btCancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btCancelar.Location = new System.Drawing.Point(95, 56);
             this.btCancelar.Margin = new System.Windows.Forms.Padding(1);
             this.btCancelar.Name = "btCancelar";
             this.btCancelar.Padding = new System.Windows.Forms.Padding(0, 5, 0, 5);
-            this.btCancelar.Size = new System.Drawing.Size(86, 42);
+            this.btCancelar.Size = new System.Drawing.Size(100, 42);
             this.btCancelar.TabIndex = 9;
-            this.btCancelar.Text = "CANCELAR";
+            this.btCancelar.Text = "Cancelar";
+            this.btCancelar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btCancelar.UseVisualStyleBackColor = true;
             this.btCancelar.Click += new System.EventHandler(this.btCancelar_Click);
             // 
@@ -123,24 +128,36 @@
             this.btSalvar.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btSalvar.FlatAppearance.BorderColor = System.Drawing.Color.Gainsboro;
             this.btSalvar.FlatAppearance.BorderSize = 0;
-            this.btSalvar.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btSalvar.Location = new System.Drawing.Point(0, 56);
+            this.btSalvar.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btSalvar.ForeColor = System.Drawing.Color.SteelBlue;
+            this.btSalvar.Image = ((System.Drawing.Image)(resources.GetObject("btSalvar.Image")));
+            this.btSalvar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btSalvar.Location = new System.Drawing.Point(10, 56);
             this.btSalvar.Margin = new System.Windows.Forms.Padding(1);
             this.btSalvar.Name = "btSalvar";
             this.btSalvar.Padding = new System.Windows.Forms.Padding(0, 5, 0, 5);
-            this.btSalvar.Size = new System.Drawing.Size(86, 42);
+            this.btSalvar.Size = new System.Drawing.Size(83, 42);
             this.btSalvar.TabIndex = 8;
-            this.btSalvar.Text = "SALVAR";
+            this.btSalvar.Text = "Salvar";
+            this.btSalvar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btSalvar.UseVisualStyleBackColor = true;
             this.btSalvar.Click += new System.EventHandler(this.btSalvar_Click);
             // 
             // btFechar
             // 
-            this.btFechar.Location = new System.Drawing.Point(178, 56);
+            this.btFechar.AutoSize = true;
+            this.btFechar.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btFechar.ForeColor = System.Drawing.Color.SteelBlue;
+            this.btFechar.Image = ((System.Drawing.Image)(resources.GetObject("btFechar.Image")));
+            this.btFechar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btFechar.Location = new System.Drawing.Point(197, 56);
+            this.btFechar.Margin = new System.Windows.Forms.Padding(1);
             this.btFechar.Name = "btFechar";
+            this.btFechar.Padding = new System.Windows.Forms.Padding(0, 5, 0, 5);
             this.btFechar.Size = new System.Drawing.Size(86, 42);
             this.btFechar.TabIndex = 10;
-            this.btFechar.Text = "FECHAR";
+            this.btFechar.Text = "Fechar";
+            this.btFechar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btFechar.UseVisualStyleBackColor = true;
             this.btFechar.Click += new System.EventHandler(this.btFechar_Click);
             // 
@@ -175,6 +192,6 @@
         private System.Windows.Forms.Button btMinimize;
         protected System.Windows.Forms.Button btCancelar;
         protected System.Windows.Forms.Button btSalvar;
-        private System.Windows.Forms.Button btFechar;
+        protected System.Windows.Forms.Button btFechar;
     }
 }

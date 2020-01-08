@@ -98,9 +98,12 @@ namespace Cliente
         #region TextBox
         private void PersonalizaTextBox(TextBox textBox)
         {
-            textBox.CharacterCasing = CharacterCasing.Upper;
-            textBox.Font = new Font(FONTE, TAMANHO_FONTE);            
-            textBox.Refresh();            
+            if (textBox.Tag != null && textBox.Tag.ToString() != "search")            
+            {
+                textBox.CharacterCasing = CharacterCasing.Upper;
+                textBox.Font = new Font(FONTE, TAMANHO_FONTE);
+                textBox.Refresh();
+            }
         }
         #endregion
 
@@ -142,15 +145,19 @@ namespace Cliente
         #region GridView
         private void PersonalizaGridView(DataGridView dataGridView)
         {
+            dataGridView.EnableHeadersVisualStyles = false;
             dataGridView.AllowUserToAddRows = true;
             dataGridView.BorderStyle = BorderStyle.None;
             dataGridView.CellValueChanged += PersonalizaForm_CellValueChanged;
             dataGridView.DataBindingComplete += PersonalizaForm_DataBindingComplete;
             dataGridView.CellFormatting += DataGridView_CellFormatting;
             dataGridView.Font = new Font(FONTE, TAMANHO_FONTE);
+            dataGridView.DefaultCellStyle.ForeColor = Color.DimGray;
+            dataGridView.ColumnHeadersDefaultCellStyle.ForeColor = Color.DimGray;
+            dataGridView.ColumnHeadersDefaultCellStyle.BackColor = Color.White;
             dataGridView.ReadOnly = true;
             dataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridView.BackgroundColor = Color.White;
+            dataGridView.BackgroundColor = Color.White;            
 
             dataGridView.AdvancedCellBorderStyle.Left = DataGridViewAdvancedCellBorderStyle.None;
             dataGridView.AdvancedCellBorderStyle.Right = DataGridViewAdvancedCellBorderStyle.None;
@@ -204,28 +211,19 @@ namespace Cliente
         #region Label
         private void PersonalizaLabel(Label label)
         {  
-            if (label.Name.Equals("lbNome"))
+            
+            if (!label.Name.Equals("lbNome"))
             {
-
-            }
-            else
-            {   
                 if ((label.Parent as Control).GetType().ToString().Equals("TableLayoutPanel"))
                 {
                     label.Margin = new Padding(0, 0, 3, 0);
                     label.Dock = DockStyle.Bottom;
                 }
             }
-            
-            if((label.Parent as Control).GetType().ToString() != "Componentes.TextBoxSimples"
-                && (label.Parent as Control).GetType().ToString() != "Componentes.ComboBoxSimples")
-                    label.Font = new Font(FONTE, TAMANHO_FONTE);
-            label.TextChanged += Label_TextChanged;
-        }
 
-        private void Label_TextChanged(object sender, EventArgs e)
-        {
-            (sender as Label).Text = (sender as Label).Text.ToUpper();            
+            if ((label.Parent as Control).GetType().ToString() != "Componentes.TextBoxSimples"
+                && (label.Parent as Control).GetType().ToString() != "Componentes.ComboBoxSimples")
+                label.Font = new Font(FONTE, TAMANHO_FONTE);            
         }
         #endregion
 
@@ -234,25 +232,25 @@ namespace Cliente
         {
             if (button.Name.Equals("btMinimize") || button.Name.Equals("btCloseForm"))
                 return;
-            if (button.Text.ToUpper().Contains("EXCLUI")
-                || button.Text.ToUpper().Contains("CANCEL")
-                || button.Text.ToUpper().Contains("DELET")
-                || button.Text.ToUpper().Contains("ABORT"))
-            {                
-                button.BackColor = Color.LightGray;
-                button.ForeColor = Color.Tomato;                
-            }
-            else
-            {                
-                button.BackColor = Color.LightGray;
-                button.ForeColor = Color.SteelBlue;                
-            }
+            //if (button.Text.ToUpper().Contains("EXCLUI")
+            //    || button.Text.ToUpper().Contains("CANCEL")
+            //    || button.Text.ToUpper().Contains("DELET")
+            //    || button.Text.ToUpper().Contains("ABORT"))
+            //{                
+            //    button.BackColor = Color.LightGray;
+            //    button.ForeColor = Color.Tomato;                
+            //}
+            //else
+            //{                
+            //    button.BackColor = Color.LightGray;
+            //    button.ForeColor = Color.SteelBlue;                
+            //}
             
             button.FlatStyle = FlatStyle.Flat;            
             button.FlatAppearance.BorderSize = 0;            
             
             button.Font = new Font(FONTE, 10);
-            button.Text = button.Text.ToUpper();
+            //button.Text = button.Text.ToUpper();
 
             // Modifica o comportamento dos botões conforme o layout de tela
             if((LayoutTela != null) && LayoutTela.Equals("VISUALIZAR"))

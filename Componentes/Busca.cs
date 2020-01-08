@@ -16,17 +16,47 @@ namespace Componentes
     {
         #region Eventos
         public event EventHandler TextBoxTextChanged;
-        
+        public event KeyEventHandler TextBoxKeyDown;
+        public event EventHandler ButtonClick;
+
 
         private void HandleTextBoxTextChanged(object sender, EventArgs e)
         {
             this.OnTextBoxTextChanged(EventArgs.Empty);
         }      
 
+        private void HandleTextBoxKeyDown(object sender, KeyEventArgs e)
+        {
+            this.OnTextBoxKeyDown(e);
+        }
+
+        private void HandleButtonClick(object sender, EventArgs e)
+        {
+            this.OnButtonClick(EventArgs.Empty);
+        }
+        
         protected virtual void OnTextBoxTextChanged(EventArgs e)
         {
             EventHandler handler = this.TextBoxTextChanged;
             if (handler != null)
+            {
+                handler(this, e);
+            }
+        }
+
+        protected virtual void OnTextBoxKeyDown(KeyEventArgs e)
+        {            
+            KeyEventHandler handler = this.TextBoxKeyDown;
+            if (handler != null)
+            {                    
+                handler(this, e);
+            }            
+        }
+
+        protected virtual void OnButtonClick(EventArgs e)
+        {
+            EventHandler handler = this.ButtonClick;
+            if(handler != null)
             {
                 handler(this, e);
             }
@@ -39,12 +69,14 @@ namespace Componentes
         {
             get => txtBusca.Text;
             set => txtBusca.Text = value;
-        }
+        }        
         #endregion
         public Busca()
         {
             InitializeComponent();
             txtBusca.TextChanged += this.HandleTextBoxTextChanged;
+            txtBusca.KeyDown += this.HandleTextBoxKeyDown;
+            btPesquisa.Click += this.HandleButtonClick;
         }
         public async Task<object> Buscar(string uri, dynamic definition, object param)
         {
@@ -120,16 +152,29 @@ namespace Componentes
         }
         private void txtBusca_Enter(object sender, EventArgs e)
         {
-            txtBusca.SelectAll();
+            if (txtBusca.Text == "DIGITE PARA PROCURAR")
+                txtBusca.Clear();
+            else
+                txtBusca.SelectAll();                        
         }
 
         private void txtBusca_Leave(object sender, EventArgs e)
         {
-            if (txtBusca.Text.Trim() == "")
-                txtBusca.Text = "DIGITE PARA PROCURAR";
+            if (txtBusca.Text.Trim() == "")            
+                txtBusca.Text = "DIGITE PARA PROCURAR";            
+        }
+
+        public bool parametroInformado()
+        {
+            return !((txtBusca.Text == "DIGITE PARA PROCURAR") || (string.IsNullOrEmpty(txtBusca.Text)));
         }
 
         private void txtBusca_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btPesquisa_Click(object sender, EventArgs e)
         {
 
         }

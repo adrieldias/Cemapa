@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.pDesabilitado = new System.Windows.Forms.Panel();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.lbNome = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
@@ -38,13 +39,22 @@
             // 
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.pDesabilitado);
             this.panel1.Controls.Add(this.comboBox1);
             this.panel1.ForeColor = System.Drawing.SystemColors.ControlText;
             this.panel1.Location = new System.Drawing.Point(2, 8);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(396, 36);
             this.panel1.TabIndex = 0;
-            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
+            // 
+            // pDesabilitado
+            // 
+            this.pDesabilitado.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pDesabilitado.BackColor = System.Drawing.Color.White;
+            this.pDesabilitado.Location = new System.Drawing.Point(388, -5);
+            this.pDesabilitado.Name = "pDesabilitado";
+            this.pDesabilitado.Size = new System.Drawing.Size(5, 5);
+            this.pDesabilitado.TabIndex = 4;
             // 
             // comboBox1
             // 
@@ -53,6 +63,7 @@
             this.comboBox1.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.comboBox1.Font = new System.Drawing.Font("Calibri Light", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comboBox1.ForeColor = System.Drawing.Color.DimGray;
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Location = new System.Drawing.Point(3, 4);
             this.comboBox1.Margin = new System.Windows.Forms.Padding(0);
@@ -67,12 +78,12 @@
             // 
             this.lbNome.AutoSize = true;
             this.lbNome.Font = new System.Drawing.Font("Calibri Light", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbNome.ForeColor = System.Drawing.Color.SteelBlue;
-            this.lbNome.Location = new System.Drawing.Point(9, 0);
+            this.lbNome.ForeColor = System.Drawing.Color.Gray;
+            this.lbNome.Location = new System.Drawing.Point(9, -1);
             this.lbNome.Name = "lbNome";
-            this.lbNome.Size = new System.Drawing.Size(97, 14);
+            this.lbNome.Size = new System.Drawing.Size(89, 14);
             this.lbNome.TabIndex = 2;
-            this.lbNome.Text = "NOME DO CAMPO";
+            this.lbNome.Text = "Nome do Campo";
             // 
             // ComboBoxSimples
             // 
@@ -94,5 +105,6 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label lbNome;
         private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.Panel pDesabilitado;
     }
 }

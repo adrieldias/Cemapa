@@ -49,6 +49,18 @@ namespace Cemapa.Controllers
                 JsonRequestBehavior = System.Web.Mvc.JsonRequestBehavior.AllowGet
             };
         }
+
+        [HttpPost]
+        public IList<TB_CADASTRO> Get([FromBody] TB_CADASTRO cadastro)
+        {
+            db.Configuration.LazyLoadingEnabled = false;
+            var query = from c in db.TB_CADASTRO
+                        where c.NOME.StartsWith(cadastro.NOME)
+                        orderby c.DT_CADASTRO descending
+                        select c;
+            return query.ToList();                        
+        }
+
         //[Route("API/Cadastro/GetPersonalizado")]
         [HttpPost]
         public System.Web.Mvc.JsonResult GetPersonalizado([FromBody] TB_CADASTRO cadastro)
@@ -108,7 +120,7 @@ namespace Cemapa.Controllers
                     if (db.TB_CADASTRO.Any(c => c.COD_CADASTRO == id))
                     {                        
                         cadastro.DT_ALTERACAO = System.DateTime.Now;
-                        db.Entry(cadastro).State = EntityState.Modified;
+                        db.Entry(cadastro).State = EntityState.Modified;                        
                     }
                     else
                     {   
@@ -117,6 +129,7 @@ namespace Cemapa.Controllers
                         cadastro.DT_CADASTRO = System.DateTime.Now;
                         db.Entry(cadastro).State = EntityState.Added;
                     }
+                    // Os models atrelados ao cadastro, por exemplo, endereço, propriedade, ainda não estão sendo salvos.
                     db.SaveChanges();
                     return new System.Web.Mvc.JsonResult()
                     {
