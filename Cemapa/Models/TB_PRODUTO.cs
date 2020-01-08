@@ -138,6 +138,7 @@ namespace Cemapa.Models
         public string IND_NIR_SYNC_SITE { get; set; }
         public string IND_SINC_MAX_ROTEIRIZADOR { get; set; }
         public Nullable<decimal> PERC_COMISSAO_PRODUCAO { get; set; }
+        public Nullable<int> COD_MATERIA_PRIMA { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TB_LOTE_TIPO> TB_LOTE_TIPO { get; set; }

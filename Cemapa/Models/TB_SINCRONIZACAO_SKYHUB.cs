@@ -20,6 +20,8 @@ namespace Cemapa.Models
         public Nullable<System.DateTime> DT_REGISTRO { get; set; }
         public Nullable<System.DateTime> DT_SINCRONIZACAO { get; set; }
         public int COD_SINCRONIZACAO_SKYHUB { get; set; }
+        public string IND_SINCRONIZADO_ML { get; set; }
+        public Nullable<System.DateTime> DT_SINCRONIZACAO_ML { get; set; }
     
         public virtual TB_PRODUTO TB_PRODUTO { get; set; }
     }
