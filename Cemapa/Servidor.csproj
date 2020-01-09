@@ -137,6 +137,7 @@
     <Compile Include="Controllers\EstadoController.cs" />
     <Compile Include="Controllers\FilialController.cs" />
     <Compile Include="Controllers\MotivoController.cs" />
+    <Compile Include="Controllers\OperacaoController.cs" />
     <Compile Include="Controllers\PaisController.cs" />
     <Compile Include="Controllers\ProdutoController.cs" />
     <Compile Include="Controllers\PropriedadeController.cs" />

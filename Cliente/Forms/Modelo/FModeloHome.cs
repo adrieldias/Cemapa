@@ -12,6 +12,7 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Net.Http;
 using System.Web.Script.Serialization;
+using System.Configuration;
 
 namespace Cliente.Forms.Modelo
 {
@@ -25,6 +26,9 @@ namespace Cliente.Forms.Modelo
 
         public virtual object Dados { get; set; }
         private Hashtable LinhaSelecionada = new Hashtable();
+
+        public static string Endereco { get; set; }
+        public static string Porta { get; set; }
 
         [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
         private static extern IntPtr CreateRoundRectRgn(
@@ -42,8 +46,8 @@ namespace Cliente.Forms.Modelo
         public static async Task<string> RunAsyncGet(string uri, int codigo)
         {
             using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri(uri + codigo);
+            {   
+                client.BaseAddress = new Uri(string.Format("{0}:{1}/{2}", Endereco, Porta, uri) + codigo);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
@@ -68,8 +72,8 @@ namespace Cliente.Forms.Modelo
         public static async Task<string> RunAsyncGet(string uri, string valor)
         {
             using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri(uri);
+            {   
+                client.BaseAddress = new Uri(string.Format("{0}:{1}/{2}", Endereco, Porta, uri));
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
@@ -95,8 +99,8 @@ namespace Cliente.Forms.Modelo
         public static async Task<string> RunAsyncGet(string uri)
         {
             using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri(uri);
+            {   
+                client.BaseAddress = new Uri(string.Format("{0}:{1}/{2}", Endereco, Porta, uri));
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
@@ -121,8 +125,8 @@ namespace Cliente.Forms.Modelo
         public static async Task<string> RunAsyncPost(string uri, int codigo)
         {
             using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri(uri);
+            {   
+                client.BaseAddress = new Uri(string.Format("{0}:{1}/{2}", Endereco, Porta, uri));
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
@@ -157,6 +161,8 @@ namespace Cliente.Forms.Modelo
             this.FormBorderStyle = FormBorderStyle.None;
             this.DoubleBuffered = true;
             this.SetStyle(ControlStyles.ResizeRedraw, true);
+            Endereco = ConfigurationManager.AppSettings["Endereco"];
+            Porta = ConfigurationManager.AppSettings["Porta"];
         }
 
         public void btMinimize_Click(object sender, EventArgs e)

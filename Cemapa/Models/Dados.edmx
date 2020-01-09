@@ -168,7 +168,6 @@
           <Property Name="DESC_PLACA" Type="varchar2" MaxLength="8" />
           <Property Name="PERC_DESCONTO" Type="number" Precision="5" Scale="2" />
           <Property Name="IND_LIBERA_BLOQUETO" Type="char" MaxLength="3" />
-          <Property Name="DT_CONSULTA_SINTREGA" Type="date" />
           <Property Name="DT_CONSULTA_SINTEGRA" Type="date" />
           <Property Name="DESC_PROFISSAO_CONJUGE" Type="varchar2" MaxLength="30" />
           <Property Name="DT_NASCIMENTO_CONJUGE" Type="date" />
@@ -190,7 +189,6 @@
           <Property Name="DESC_CPF_AUTORIZADO1" Type="varchar2" MaxLength="11" />
           <Property Name="DESC_CPF_AUTORIZADO2" Type="varchar2" MaxLength="11" />
           <Property Name="DESC_CPF_AUTORIZADO3" Type="varchar2" MaxLength="11" />
-          <Property Name="DESC_OUTRAS_GRANTIAS" Type="varchar2" MaxLength="20" />
           <Property Name="DESC_GARANTIAS_OUTRAS" Type="varchar2" MaxLength="20" />
           <Property Name="NUM_DIA_VISITA" Type="number" Precision="1" Scale="0" />
           <Property Name="DESC_FREQUENCIA_VISITA" Type="char" MaxLength="1" />
@@ -265,6 +263,8 @@
           <Property Name="DESC_DISTRITO" Type="varchar2" MaxLength="15" />
           <Property Name="DESC_E_MAIL_COMERCIAL" Type="varchar2" MaxLength="70" />
           <Property Name="DESC_E_MAIL_FINANCEIRO" Type="varchar2" MaxLength="70" />
+          <Property Name="IND_TIPO_ENDERECO" Type="varchar2" MaxLength="30" />
+          <Property Name="DESC_COMPLEMENTO" Type="varchar2" MaxLength="40" />
         </EntityType>
         <EntityType Name="TB_CENTRO_CUSTO">
           <Key>
@@ -344,6 +344,9 @@
           <Property Name="IND_TIPO_PAGAMENTO" Type="varchar2" MaxLength="12" />
           <Property Name="COD_VENDEDOR" Type="number" Precision="6" Scale="0" />
           <Property Name="COD_REGIAO" Type="number" Precision="6" Scale="0" />
+          <Property Name="DESC_ML_CLIENT_SECRET" Type="varchar2" MaxLength="32" />
+          <Property Name="IND_ML_ATIVO" Type="char" MaxLength="1" />
+          <Property Name="DESC_ML_CLIENT_ID" Type="varchar2" MaxLength="16" />
         </EntityType>
         <EntityType Name="TB_CONTA_CORRENTE">
           <Key>
@@ -1291,6 +1294,7 @@
           <Property Name="COD_BENEF_FISCAL_IMUNIDADE" Type="varchar2" MaxLength="10" />
           <Property Name="COD_BENEF_FISCAL_SUSPENSAO" Type="varchar2" MaxLength="10" />
           <Property Name="COD_BENEF_FISCAL_DIFERIMENTO" Type="varchar2" MaxLength="10" />
+          <Property Name="COD_MATERIA_PRIMA" Type="number" Precision="6" Scale="0" />
         </EntityType>
         <EntityType Name="TB_PRODUTO_SKYHUB">
           <Key>
@@ -1447,6 +1451,8 @@
           <Property Name="DT_REGISTRO" Type="date" />
           <Property Name="DT_SINCRONIZACAO" Type="date" />
           <Property Name="COD_SINCRONIZACAO_SKYHUB" Type="number" Precision="6" Scale="0" Nullable="false" />
+          <Property Name="IND_SINCRONIZADO_ML" Type="char" MaxLength="1" />
+          <Property Name="DT_SINCRONIZACAO_ML" Type="date" />
         </EntityType>
         <EntityType Name="TB_TABELA_PRECO_CAB">
           <Key>
@@ -3609,6 +3615,8 @@
           <Property Name="DESC_E_MAIL_COMERCIAL" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
           <Property Name="DESC_E_MAIL_FINANCEIRO" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="TB_CADASTRO" Relationship="Model.FK_CADASTRO_ENDERECOSXCADASTRO" FromRole="TB_CADASTRO_ENDERECOS" ToRole="TB_CADASTRO" />
+          <Property Name="IND_TIPO_ENDERECO" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_COMPLEMENTO" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="TB_CLASS_CADASTRO">
           <Key>
@@ -4634,6 +4642,7 @@
           <NavigationProperty Name="TB_CLASSE" Relationship="Model.FK_PRODUTOXCLASSE" FromRole="TB_PRODUTO" ToRole="TB_CLASSE" />
           <NavigationProperty Name="TB_PEDIDO_ITEM" Relationship="Model.FK_PEDIDO_ITEMXPRODUTO" FromRole="TB_PRODUTO" ToRole="TB_PEDIDO_ITEM" />
           <NavigationProperty Name="TB_PEDIDO_ITEM1" Relationship="Model.FK_PEDIDO_ITEMXPRODUTO1" FromRole="TB_PRODUTO" ToRole="TB_PEDIDO_ITEM" />
+          <Property Name="COD_MATERIA_PRIMA" Type="Int32" />
         </EntityType>
         <Association Name="FK_CADASTRO_ENDERECOSXCADASTRO">
           <End Type="Model.TB_CADASTRO" Role="TB_CADASTRO" Multiplicity="1">
@@ -5153,6 +5162,8 @@
           <Property Name="DT_SINCRONIZACAO" Type="DateTime" />
           <Property Name="COD_SINCRONIZACAO_SKYHUB" Type="Int32" Nullable="false" />
           <NavigationProperty Name="TB_PRODUTO" Relationship="Model.FK_SINC_SKYXPRODUTO" FromRole="TB_SINCRONIZACAO_SKYHUB" ToRole="TB_PRODUTO" />
+          <Property Name="IND_SINCRONIZADO_ML" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="DT_SINCRONIZACAO_ML" Type="DateTime" />
         </EntityType>
         <Association Name="FK_SINC_SKYXPRODUTO">
           <End Type="Model.TB_PRODUTO" Role="TB_PRODUTO" Multiplicity="1" />
@@ -5732,8 +5743,8 @@
           </Key>
           <Property Name="COD_OPERACAO" Type="Int32" Nullable="false" />
           <Property Name="DESC_OPERACAO" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="NUM_NATUREZA_EST" Type="Byte" />
-          <Property Name="NUM_NATUREZA_INT" Type="Byte" />
+          <Property Name="NUM_NATUREZA_EST" Type="Int16" />
+          <Property Name="NUM_NATUREZA_INT" Type="Int16" />
           <Property Name="IND_ESTOQUE" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="IND_CUSTO" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="IND_VENDAS" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
@@ -5749,7 +5760,7 @@
           <Property Name="IND_FIXAR_OUTRAS_EMP" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="IND_FUNRURAL" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="DESC_RESUMO" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="NUM_LIVROS" Type="Byte" />
+          <Property Name="NUM_LIVROS" Type="Int16" />
           <Property Name="COD_HISTORICO_CAIXA" Type="Int32" />
           <Property Name="IND_DUPLICATA" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="IND_BLOQUETO" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
@@ -5875,6 +5886,7 @@
           <Property Name="COD_CONTABIL_FCCIA_DEB" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="COD_CONTABIL_FCCIA_CRED" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="TB_CONFIGURACAO_SKYHUB" Relationship="Model.FK_CONF_SKYXOPERACAO" FromRole="TB_OPERACAO" ToRole="TB_CONFIGURACAO_SKYHUB" />
+          <Property Name="COD_BENEF_FISCAL" Type="String" Nullable="false" />
         </EntityType>
         <Association Name="FK_OPERACAOXVCCREDPISCOFINS">
           <End Type="Model.TB_BC_CREDITO_PISCOFINS" Role="TB_BC_CREDITO_PISCOFINS" Multiplicity="0..1" />
@@ -6244,6 +6256,9 @@
           <NavigationProperty Name="TB_TIPO_CADASTRO" Relationship="Model.FK_CONF_SKYXTIPO_CADASTRO" FromRole="TB_CONFIGURACAO_SKYHUB" ToRole="TB_TIPO_CADASTRO" />
           <NavigationProperty Name="TB_VENDEDOR" Relationship="Model.FK_CONF_SKYXVENDEDOR" FromRole="TB_CONFIGURACAO_SKYHUB" ToRole="TB_VENDEDOR" />
           <NavigationProperty Name="TB_EMAIL_NOTIFICACAO" Relationship="Model.FK_EMAIL_NOTXCONF_SKYHUB" FromRole="TB_CONFIGURACAO_SKYHUB" ToRole="TB_EMAIL_NOTIFICACAO" />
+          <Property Name="DESC_ML_CLIENT_SECRET" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="IND_ML_ATIVO" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="DESC_ML_CLIENT_ID" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_CONF_SKYXCLASS_CADASTRO">
           <End Type="Model.TB_CLASS_CADASTRO" Role="TB_CLASS_CADASTRO" Multiplicity="0..1" />
@@ -6492,6 +6507,8 @@
           <EntitySetMapping Name="TB_CADASTRO_ENDERECOS">
             <EntityTypeMapping TypeName="Model.TB_CADASTRO_ENDERECOS">
               <MappingFragment StoreEntitySet="TB_CADASTRO_ENDERECOS">
+                <ScalarProperty Name="DESC_COMPLEMENTO" ColumnName="DESC_COMPLEMENTO" />
+                <ScalarProperty Name="IND_TIPO_ENDERECO" ColumnName="IND_TIPO_ENDERECO" />
                 <ScalarProperty Name="DESC_E_MAIL_FINANCEIRO" ColumnName="DESC_E_MAIL_FINANCEIRO" />
                 <ScalarProperty Name="DESC_E_MAIL_COMERCIAL" ColumnName="DESC_E_MAIL_COMERCIAL" />
                 <ScalarProperty Name="DESC_DISTRITO" ColumnName="DESC_DISTRITO" />
@@ -7108,6 +7125,7 @@
           <EntitySetMapping Name="TB_PRODUTO">
             <EntityTypeMapping TypeName="Model.TB_PRODUTO">
               <MappingFragment StoreEntitySet="TB_PRODUTO">
+                <ScalarProperty Name="COD_MATERIA_PRIMA" ColumnName="COD_MATERIA_PRIMA" />
                 <ScalarProperty Name="PERC_COMISSAO_PRODUCAO" ColumnName="PERC_COMISSAO_PRODUCAO" />
                 <ScalarProperty Name="IND_SINC_MAX_ROTEIRIZADOR" ColumnName="IND_SINC_MAX_ROTEIRIZADOR" />
                 <ScalarProperty Name="IND_NIR_SYNC_SITE" ColumnName="IND_NIR_SYNC_SITE" />
@@ -7431,6 +7449,8 @@
           <EntitySetMapping Name="TB_SINCRONIZACAO_SKYHUB">
             <EntityTypeMapping TypeName="Model.TB_SINCRONIZACAO_SKYHUB">
               <MappingFragment StoreEntitySet="TB_SINCRONIZACAO_SKYHUB">
+                <ScalarProperty Name="DT_SINCRONIZACAO_ML" ColumnName="DT_SINCRONIZACAO_ML" />
+                <ScalarProperty Name="IND_SINCRONIZADO_ML" ColumnName="IND_SINCRONIZADO_ML" />
                 <ScalarProperty Name="COD_SINCRONIZACAO_SKYHUB" ColumnName="COD_SINCRONIZACAO_SKYHUB" />
                 <ScalarProperty Name="DT_SINCRONIZACAO" ColumnName="DT_SINCRONIZACAO" />
                 <ScalarProperty Name="DT_REGISTRO" ColumnName="DT_REGISTRO" />
@@ -7793,6 +7813,7 @@
           <EntitySetMapping Name="TB_OPERACAO">
             <EntityTypeMapping TypeName="Model.TB_OPERACAO">
               <MappingFragment StoreEntitySet="TB_OPERACAO">
+                <ScalarProperty Name="COD_BENEF_FISCAL" ColumnName="COD_BENEF_FISCAL" />
                 <ScalarProperty Name="COD_CONTABIL_FCCIA_CRED" ColumnName="COD_CONTABIL_FCCIA_CRED" />
                 <ScalarProperty Name="COD_CONTABIL_FCCIA_DEB" ColumnName="COD_CONTABIL_FCCIA_DEB" />
                 <ScalarProperty Name="COD_CONTABIL_SUBST_CRED" ColumnName="COD_CONTABIL_SUBST_CRED" />
@@ -8070,6 +8091,9 @@
           <EntitySetMapping Name="TB_CONFIGURACAO_SKYHUB">
             <EntityTypeMapping TypeName="Model.TB_CONFIGURACAO_SKYHUB">
               <MappingFragment StoreEntitySet="TB_CONFIGURACAO_SKYHUB">
+                <ScalarProperty Name="DESC_ML_CLIENT_ID" ColumnName="DESC_ML_CLIENT_ID" />
+                <ScalarProperty Name="IND_ML_ATIVO" ColumnName="IND_ML_ATIVO" />
+                <ScalarProperty Name="DESC_ML_CLIENT_SECRET" ColumnName="DESC_ML_CLIENT_SECRET" />
                 <ScalarProperty Name="COD_REGIAO" ColumnName="COD_REGIAO" />
                 <ScalarProperty Name="COD_VENDEDOR" ColumnName="COD_VENDEDOR" />
                 <ScalarProperty Name="IND_TIPO_PAGAMENTO" ColumnName="IND_TIPO_PAGAMENTO" />

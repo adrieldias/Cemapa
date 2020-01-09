@@ -36,6 +36,9 @@ namespace Cemapa.Models
         public string IND_TIPO_PAGAMENTO { get; set; }
         public Nullable<int> COD_VENDEDOR { get; set; }
         public Nullable<int> COD_REGIAO { get; set; }
+        public string DESC_ML_CLIENT_SECRET { get; set; }
+        public string IND_ML_ATIVO { get; set; }
+        public string DESC_ML_CLIENT_ID { get; set; }
     
         public virtual TB_CLASS_CADASTRO TB_CLASS_CADASTRO { get; set; }
         public virtual TB_DEPARTAMENTO TB_DEPARTAMENTO { get; set; }
