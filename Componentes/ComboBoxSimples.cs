@@ -7,62 +7,46 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using Newtonsoft.Json;
+using System.Net.Http;
 
 namespace Componentes
 {
     public partial class ComboBoxSimples : UserControl
     {
         #region Eventos
+        
+        public event EventHandler SelectedIndexChanged;
+        public event KeyEventHandler ComboBoxKeyDown;
 
-        public event EventHandler ComboBoxDropDown;
-        public event EventHandler ComboBoxDropDownClosed;
-        public event EventHandler SelectedValueChanged;
-
-        private void HandleComboBoxDropDown(object sender, EventArgs e)
+        private void HandleSelectedIndexChanged(object sender, EventArgs e)
         {
-            this.OnComboboxDropDown(EventArgs.Empty);
+            this.OnSelectedIndexChanged(EventArgs.Empty);
         }
 
-        private void HandleComboBoxDropDownClosed(object sender, EventArgs e)
+        public virtual void OnSelectedIndexChanged(EventArgs e)
         {
-            this.OnComboboxDropDownClosed(EventArgs.Empty);
-        }
-
-        private void HandleSelectedValueChanged(object sender, EventArgs e)
-        {
-            this.OnSelectedValueChanged(EventArgs.Empty);
-        }        
-               
-        protected virtual void OnComboboxDropDown(EventArgs e)
-        {
-            EventHandler handler = this.ComboBoxDropDown;
-            if(handler != null)
-            {
+            EventHandler handler = this.SelectedIndexChanged;
+            if (handler != null)
+            {                
+                this.SelectedText = comboBox1.Text;
                 handler(this, e);
             }
         }
 
-        protected virtual void OnComboboxDropDownClosed(EventArgs e)
+        private void HandleComboBoxKeyDown(object sender, KeyEventArgs e)
         {
-            EventHandler handler = this.ComboBoxDropDownClosed;            
+            this.OnComboBoxKeyDown(e);
+        }
+
+        protected virtual void OnComboBoxKeyDown(KeyEventArgs e)
+        {
+            KeyEventHandler handler = this.ComboBoxKeyDown;
             if (handler != null)
             {
                 handler(this, e);
             }
         }
-
-        protected virtual void OnSelectedValueChanged(EventArgs e)
-        {
-            EventHandler handler = this.SelectedValueChanged;
-            if (handler != null)
-            {
-                if (comboBox1.SelectedValue != null)
-                    this.SelectedValue = comboBox1.SelectedValue.ToString();
-                this.SelectedText = comboBox1.SelectedText;
-                handler(this, e);
-            }
-        }        
 
         #endregion
 
@@ -80,14 +64,14 @@ namespace Componentes
 
         public new string Text
         {
-            get => this.comboBox1.Text;            
+            get => comboBox1.Text;            
         }
 
         [Description("Label do ComboBox"), Category("Cemapa")]
         public string Label
         {   
             get => this.lbNome.Text;
-            set => this.lbNome.Text = value.ToUpper();
+            set => this.lbNome.Text = value;
         }
 
         [Description("BindingSource"), Category("Cemapa")]
@@ -118,40 +102,43 @@ namespace Componentes
             set => this.comboBox1.SelectedIndex = value;
         }
 
+        [Description("DroppedDown"), Category("Cemapa")]
+        public bool DroppedDown
+        {
+            get => this.comboBox1.DroppedDown;
+            set => this.comboBox1.DroppedDown = value;
+        }
+
+        public new bool Enabled
+        {
+            get => this.comboBox1.Enabled;
+            set
+            {
+                this.comboBox1.Enabled = value;
+                if (value)
+                {
+                    this.lbNome.Font = new Font(this.lbNome.Font.FontFamily, this.lbNome.Font.Size, FontStyle.Regular);                    
+                    pDesabilitado.Dock = DockStyle.None;
+                    pDesabilitado.SendToBack();
+                }
+                else
+                {   
+                    this.lbNome.Font = new Font(this.lbNome.Font.FontFamily, this.lbNome.Font.Size, FontStyle.Strikeout);
+                    comboBox1.SelectedIndex = -1;
+                    pDesabilitado.Dock = DockStyle.Fill;
+                    pDesabilitado.BringToFront();
+
+                }
+            }
+        }
+
         #endregion
 
         public ComboBoxSimples()
         {
             InitializeComponent();
-            comboBox1.DropDown += this.HandleComboBoxDropDown;
-            comboBox1.DropDownClosed += this.HandleComboBoxDropDownClosed;
-            comboBox1.SelectedValueChanged += this.HandleSelectedValueChanged;           
-
-        }
-
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        {
-            //ControlPaint.DrawBorder(e.Graphics, this.panel1.ClientRectangle, Color.SteelBlue, ButtonBorderStyle.Solid);
-
-            //var borderColor = Color.SteelBlue;
-            //var borderStyle = ButtonBorderStyle.Solid;
-            //var borderWidth = 0;
-
-            //ControlPaint.DrawBorder(
-            //                    e.Graphics,
-            //                    this.panel1.ClientRectangle,
-            //                    borderColor,
-            //                    borderWidth,
-            //                    borderStyle,
-            //                    borderColor,
-            //                    borderWidth,
-            //                    borderStyle,
-            //                    borderColor,
-            //                    borderWidth,
-            //                    borderStyle,
-            //                    borderColor,
-            //                    borderWidth,
-            //                    borderStyle);
+            comboBox1.SelectedIndexChanged += this.HandleSelectedIndexChanged;
+            comboBox1.KeyDown += this.HandleComboBoxKeyDown;
         }
 
         private void comboBox1_KeyUp(object sender, KeyEventArgs e)
@@ -169,7 +156,7 @@ namespace Componentes
         {   
             if (comboBox1.SelectedValue != null)
                 this.SelectedValue = comboBox1.SelectedValue.ToString();
-            this.SelectedText = comboBox1.SelectedText;
+            this.SelectedText = comboBox1.SelectedText;            
         }
 
         private void comboBox1_KeyPress(object sender, KeyPressEventArgs e)

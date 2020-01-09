@@ -12,14 +12,14 @@ namespace Cemapa.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class TB_PRODUTO_ESP_SKYHUB
+    public partial class TB_TABELA_PRECO_ITEM
     {
-        public int COD_PRODUTO_ESP_SKYHUB { get; set; }
-        public int COD_PRODUTO_SKYHUB { get; set; }
-        public string DESC_ESPECIFICACAO { get; set; }
-        public string VAL_ESPECIFICACAO { get; set; }
-        public string IND_ATIVO { get; set; }
+        public int COD_TABELA_PRECO_ITEM { get; set; }
+        public int COD_TABELA_PRECO_CAB { get; set; }
+        public long COD_PRODUTO { get; set; }
+        public decimal VAL_PRECO { get; set; }
     
-        public virtual TB_PRODUTO_SKYHUB TB_PRODUTO_SKYHUB { get; set; }
+        public virtual TB_PRODUTO TB_PRODUTO { get; set; }
+        public virtual TB_TABELA_PRECO_CAB TB_TABELA_PRECO_CAB { get; set; }
     }
 }

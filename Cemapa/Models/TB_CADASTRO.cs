@@ -18,6 +18,9 @@ namespace Cemapa.Models
         public TB_CADASTRO()
         {
             this.TB_CADASTRO_ENDERECOS = new HashSet<TB_CADASTRO_ENDERECOS>();
+            this.TB_FILIAL = new HashSet<TB_FILIAL>();
+            this.TB_FILIAL1 = new HashSet<TB_FILIAL>();
+            this.TB_LOTE_TIPO = new HashSet<TB_LOTE_TIPO>();
             this.TB_PROPRIEDADE = new HashSet<TB_PROPRIEDADE>();
             this.TB_PEDIDO_CAB = new HashSet<TB_PEDIDO_CAB>();
             this.TB_PEDIDO_CAB1 = new HashSet<TB_PEDIDO_CAB>();
@@ -116,7 +119,6 @@ namespace Cemapa.Models
         public string DESC_PLACA { get; set; }
         public Nullable<decimal> PERC_DESCONTO { get; set; }
         public string IND_LIBERA_BLOQUETO { get; set; }
-        public Nullable<System.DateTime> DT_CONSULTA_SINTREGA { get; set; }
         public Nullable<System.DateTime> DT_CONSULTA_SINTEGRA { get; set; }
         public string DESC_PROFISSAO_CONJUGE { get; set; }
         public Nullable<System.DateTime> DT_NASCIMENTO_CONJUGE { get; set; }
@@ -138,9 +140,8 @@ namespace Cemapa.Models
         public string DESC_CPF_AUTORIZADO1 { get; set; }
         public string DESC_CPF_AUTORIZADO2 { get; set; }
         public string DESC_CPF_AUTORIZADO3 { get; set; }
-        public string DESC_OUTRAS_GRANTIAS { get; set; }
         public string DESC_GARANTIAS_OUTRAS { get; set; }
-        public Nullable<bool> NUM_DIA_VISITA { get; set; }
+        public Nullable<short> NUM_DIA_VISITA { get; set; }
         public string DESC_FREQUENCIA_VISITA { get; set; }
         public Nullable<short> NUM_HORA_VISITA { get; set; }
         public Nullable<byte> NUM_DIA_VENCTO { get; set; }
@@ -155,6 +156,8 @@ namespace Cemapa.Models
         public string DESC_QUALIFICACAO { get; set; }
         public Nullable<decimal> PERC_ESPECIAL_PECA { get; set; }
         public Nullable<decimal> PERC_ESPECIAL_SERVICO { get; set; }
+        public string DESC_E_MAIL_CONJUGE { get; set; }
+        public string DESC_TELEFONE_CONJUGE { get; set; }
         public Nullable<System.DateTime> DT_ALTERACAO { get; set; }
         public string IND_ATACADO_VAREJO { get; set; }
         public Nullable<System.DateTime> DT_ULT_ALTERACAO { get; set; }
@@ -164,11 +167,11 @@ namespace Cemapa.Models
         public string COD_UF_VEICULO { get; set; }
         public string DESC_DISTRITO { get; set; }
         public Nullable<int> COD_AVALISTA { get; set; }
-        public Nullable<bool> IND_ISS_RETIDO { get; set; }
+        public Nullable<short> IND_ISS_RETIDO { get; set; }
         public Nullable<decimal> PERC_BASE_SUBSTITUICAO { get; set; }
         public Nullable<decimal> PERC_ALIQ_SUBSTITUICAO { get; set; }
         public string DESC_LEI_SUBSTITUICAO { get; set; }
-        public Nullable<bool> IND_REGIME_TRIBUTARIO { get; set; }
+        public Nullable<short> IND_REGIME_TRIBUTARIO { get; set; }
         public Nullable<decimal> PERC_DESCONTO2 { get; set; }
         public Nullable<decimal> PERC_DEDUCAO_NFSE { get; set; }
         public string COD_QUALIFICACAO_SOCIO { get; set; }
@@ -186,7 +189,7 @@ namespace Cemapa.Models
         public string NUM_SEQ_CRC { get; set; }
         public Nullable<System.DateTime> DT_CRC { get; set; }
         public Nullable<decimal> PERC_ROYALTIES { get; set; }
-        public bool IND_TIPO_PROPRIETARIO { get; set; }
+        public short IND_TIPO_PROPRIETARIO { get; set; }
         public string DESC_RNTRC { get; set; }
         public string DESC_TAF { get; set; }
         public string DESC_NRO_REG_ESTADUAL { get; set; }
@@ -195,20 +198,29 @@ namespace Cemapa.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TB_CADASTRO_ENDERECOS> TB_CADASTRO_ENDERECOS { get; set; }
+        public virtual TB_CIDADE TB_CIDADE { get; set; }
         public virtual TB_CLASS_CADASTRO TB_CLASS_CADASTRO { get; set; }
         public virtual TB_ESTADO TB_ESTADO { get; set; }
         public virtual TB_ESTADO_CIVIL TB_ESTADO_CIVIL { get; set; }
         public virtual TB_ESTADO TB_ESTADO1 { get; set; }
-        public virtual TB_MOTIVO TB_MOTIVO { get; set; }
-        public virtual TB_PAIS TB_PAIS { get; set; }
-        public virtual TB_QUALIFICACAO_SOCIO TB_QUALIFICACAO_SOCIO { get; set; }
+        public virtual TB_REGIAO TB_REGIAO { get; set; }
         public virtual TB_TIPO_CADASTRO TB_TIPO_CADASTRO { get; set; }
         public virtual TB_USUARIO TB_USUARIO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TB_FILIAL> TB_FILIAL { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TB_FILIAL> TB_FILIAL1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TB_LOTE_TIPO> TB_LOTE_TIPO { get; set; }
+        public virtual TB_MOTIVO TB_MOTIVO { get; set; }
+        public virtual TB_PAIS TB_PAIS { get; set; }
+        public virtual TB_QUALIFICACAO_SOCIO TB_QUALIFICACAO_SOCIO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TB_PROPRIEDADE> TB_PROPRIEDADE { get; set; }
-        public virtual TB_CIDADE TB_CIDADE { get; set; }
-        public virtual TB_REGIAO TB_REGIAO { get; set; }
+        public virtual TB_RAMO TB_RAMO { get; set; }
+        public virtual TB_TABELA_PRECO_CAB TB_TABELA_PRECO_CAB { get; set; }
         public virtual TB_VENDEDOR TB_VENDEDOR { get; set; }
+        public virtual TB_OPERACAO TB_OPERACAO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TB_PEDIDO_CAB> TB_PEDIDO_CAB { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

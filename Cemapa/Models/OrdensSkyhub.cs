@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Cemapa.Models
+namespace Cemapa.Models.Skyhub
 {
     public class OrdensSkyhub
     {
@@ -135,6 +135,7 @@ namespace Cemapa.Models
         public string name { get; set; }
         public string gender { get; set; }
         public string email { get; set; }
+        public string state_registration { get; set; }
         public string date_of_birth { get; set; }
     }
 

@@ -12,12 +12,12 @@ namespace Cemapa.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class TB_PRODUTO_CATEGORIA_SKYHUB
+    public partial class TB_EMAIL_NOTIFICACAO
     {
-        public int COD_PRODUTO_CATEGORIA_SKYHUB { get; set; }
-        public int COD_PRODUTO_SKYHUB { get; set; }
-        public string DESC_CATEGORIA { get; set; }
+        public int COD_EMAIL_NOTIFICACAO { get; set; }
+        public int COD_CONFIGURACAO_SKYHUB { get; set; }
+        public string DESC_EMAIL { get; set; }
     
-        public virtual TB_PRODUTO_SKYHUB TB_PRODUTO_SKYHUB { get; set; }
+        public virtual TB_CONFIGURACAO_SKYHUB TB_CONFIGURACAO_SKYHUB { get; set; }
     }
 }

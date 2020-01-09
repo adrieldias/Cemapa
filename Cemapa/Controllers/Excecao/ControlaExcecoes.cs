@@ -5,67 +5,135 @@ using System.Linq;
 using System.Web;
 
 namespace Cemapa.Models
-{
-    //Classe que armazena diversas strings em uma lista para depois escreve-las todas de uma vez.
-    //Utilizado para armazenar diversos erros e retorna-los ao fim da execução.
+{    
+    // Um erro contextual, armazena a exceção ocorrida e também chaves que estavam
+    // atribuidas em determinado contexto, ajudando assim a decifrar a causa do erro.
 
-    public static class ControlaExcecoes
+    internal class ExcecaoContextual
     {
-        public static List<string> Excecoes;
+        public Exception Excecao { get; set; }
+        public List<string> ChavesContextuais = new List<string>();
+    }
 
-        static ControlaExcecoes()
+    // Classe controladora de exceções, armazenada exceções em uma lista para
+    // depois escreve-las todas de uma vez.
+    // Utilizado para armazenar diversos erros e retorna-los ao fim da execução.
+
+    public static class ControladorExcecoes
+    {
+        private static List<ExcecaoContextual> Excecoes = new List<ExcecaoContextual>();
+        private static List<string> Filtros;
+
+        static ControladorExcecoes()
         {
-            Excecoes = new List<string>();
+            Filtros = new List<string>
+            {
+                "Internal Server Error",
+                "Bad Request",
+                "A task was canceled.",
+                "Gateway Time-out",
+                "Too Many Requests"
+            };
         }
 
-        public static void Add(string excecao1, string excecao2 = "", string excecao3 = "")
+        public static string Printa()
         {
-            if ((excecao2 != "") && (excecao3 != ""))
+            try
             {
+                if (!SemExcecoes())
+                {
+                    List<string> erros = new List<string>();
+                    int index = 1;
 
-                Excecoes.Add($"{excecao1}, {excecao2}, {excecao3}");
+                    foreach (ExcecaoContextual exContext in Excecoes)
+                    {
+                        if (exContext.ChavesContextuais.Count > 0)
+                        {
+                            erros.Add($"({index})[{exContext.Excecao.Message}, {string.Join(", ", exContext.ChavesContextuais)}]");
+                        }
+                        else
+                        {
+                            erros.Add($"({index})[{exContext.Excecao.Message}]");
+                        }
+                        index++;
+                    }
+
+                    return string.Join(";", erros);
+                }
+                else
+                {
+                    return null;
+                }
             }
-            else if (excecao2 != "")
+            catch (Exception ex)
             {
-                Excecoes.Add($"{excecao1}, {excecao2}");
+                throw new Exception(ex.Message);
             }
-            else
+        }
+
+        public static void Adiciona(Exception except, List<string> Referencias = null)
+        {
+            try
             {
-                Excecoes.Add($"{excecao1}");
+                except = ExcecaoInterna(except);
+
+                if (!Filtros.Exists(e => except.Message == e))
+                {
+                    if (Referencias == null)
+                    {
+                        Excecoes.Add(
+                            new ExcecaoContextual
+                            {
+                                Excecao = except
+                            }
+                        );
+                    }
+                    else
+                    {
+                        if (!Filtros.Any(x => Referencias.Any(y => y == x)))
+                        {
+                            ExcecaoContextual exContx = new ExcecaoContextual
+                            {
+                                Excecao = except
+                            };
+
+                            foreach (string Referencia in Referencias)
+                            {
+                                exContx.ChavesContextuais.Add(Referencia);
+                            }
+
+                            Excecoes.Add(exContx);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
         }
 
         public static bool SemExcecoes()
         {
             if (Excecoes.Count > 0)
-            {
                 return false;
-            }
             else
-            {
                 return true;
-            }
         }
 
         public static void Limpa()
         {
             Excecoes.Clear();
         }
-    }
-    
-    //Muitas vezes a exceção armazena a mensagem pedindo para consultar a InnerException, que também é uma Exception.
-    //A classe a seguir é responsável por percorrer a Exception e encontrar uma mensagem de erro melhor.
 
-    public static class ResolucaoExcecoes
-    {
-        public static string ErroAprofundado(Exception except)
+        private static Exception ExcecaoInterna(Exception except)
         {
-            while (except.Message == "An error occurred while updating the entries. See the inner exception for details.")
+            while (except.InnerException != null)
             {
                 except = except.InnerException;
             }
 
-            return except.Message;
+            return except;
         }
     }
 }

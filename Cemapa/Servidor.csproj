@@ -43,14 +43,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DotNetZip, Version=1.13.3.0, Culture=neutral, PublicKeyToken=6583c7c814667745, processorArchitecture=MSIL">
-      <HintPath>..\packages\DotNetZip.1.13.3\lib\net40\DotNetZip.dll</HintPath>
-    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="HttpParamsUtility, Version=2.0.10.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\HttpParamsUtility.2.0.10\lib\netstandard2.0\HttpParamsUtility.dll</HintPath>
+    </Reference>
+    <Reference Include="MercadoLibreSdk, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MercadoLibreSdk.2.0.0\lib\netstandard2.0\MercadoLibreSdk.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
@@ -69,6 +72,9 @@
       <HintPath>..\packages\Oracle.ManagedDataAccess.EntityFramework.18.3.0\lib\net45\Oracle.ManagedDataAccess.EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
@@ -82,6 +88,12 @@
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.6\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.7\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.7\lib\net45\System.Web.Http.WebHost.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Mvc, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.6\lib\net45\System.Web.Mvc.dll</HintPath>
@@ -107,17 +119,6 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="System.Net.Http.Formatting">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.4\lib\net45\System.Net.Http.Formatting.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Http">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.4\lib\net45\System.Web.Http.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Http.WebHost">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.4\lib\net45\System.Web.Http.WebHost.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Global.asax" />
     <Content Include="Models\Dados.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -140,15 +141,17 @@
     <Compile Include="Controllers\CidadeController.cs" />
     <Compile Include="Controllers\ClassCadastroController.cs" />
     <Compile Include="Controllers\EstadoController.cs" />
+    <Compile Include="Controllers\FilialController.cs" />
+    <Compile Include="Controllers\MotivoController.cs" />
     <Compile Include="Controllers\PaisController.cs" />
     <Compile Include="Controllers\ProdutoController.cs" />
     <Compile Include="Controllers\PropriedadeController.cs" />
     <Compile Include="Controllers\QualificacaoSocioController.cs" />
+    <Compile Include="Controllers\RegiaoController.cs" />
+    <Compile Include="Controllers\SincronizarMLivreController.cs" />
     <Compile Include="Controllers\SincronizarSkyhubController.cs" />
     <Compile Include="Controllers\TipoCadastroController.cs" />
     <Compile Include="Controllers\TipoPropriedadeController.cs" />
-    <Compile Include="Controllers\UtilsServidor\CompressionHelper.cs" />
-    <Compile Include="Controllers\UtilsServidor\DeflateCompressionAttribute.cs" />
     <Compile Include="Controllers\VendedorController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -171,11 +174,21 @@
     </Compile>
     <Compile Include="Models\OrdensSkyhub.cs" />
     <Compile Include="Models\PLPsSkyhub.cs" />
+    <Compile Include="Models\ProdutosMLivre.cs" />
     <Compile Include="Models\ProdutosSkyhub.cs" />
+    <Compile Include="Models\TB_BANCO_AGENCIA.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_BC_CREDITO_PISCOFINS.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TB_CADASTRO.cs">
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TB_CADASTRO_ENDERECOS.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_CENTRO_CUSTO.cs">
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TB_CIDADE.cs">
@@ -184,10 +197,40 @@
     <Compile Include="Models\TB_CLASSE.cs">
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TB_CLASSE_CONSUMO.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TB_CLASS_CADASTRO.cs">
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TB_CONFIGURACAO_SKYHUB.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_CONTA_CORRENTE.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_CRITERIO_ESCRIT.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_CST_COFINS.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_CST_PIS.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_CULTURA.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_DEPARTAMENTO.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_EMAIL.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_EMAIL_NOTIFICACAO.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_ENERGIA_TENSAO.cs">
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TB_ESTADO.cs">
@@ -199,7 +242,55 @@
     <Compile Include="Models\TB_ESTOQUE.cs">
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TB_FILIAL.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_FORMA_TRIBUTACAO.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_GENERO_PRODUTO.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_GRUPO_CUSTOS.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_HISTORICO.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_HISTORICO_CONTABIL.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_INCIDENCIA_TRIBUTARIA.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_INCIDENCIA_TRIBUTARIA_PREV.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_IND_APROPRIACAO_CREDITO.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_LISTA_SERVICO.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_LOTE_TIPO.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_MARCA.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_MENSAGEM.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TB_MOTIVO.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_NATUREZA_JURIDICA.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_NF_ELETRONICA_CONFIG.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_OPERACAO.cs">
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TB_PAIS.cs">
@@ -211,16 +302,10 @@
     <Compile Include="Models\TB_PEDIDO_ITEM.cs">
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TB_PRAZO_VENCIMENTO.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TB_PRODUTO.cs">
-      <DependentUpon>Dados.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TB_PRODUTO_CATEGORIA_SKYHUB.cs">
-      <DependentUpon>Dados.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TB_PRODUTO_ESP_SKYHUB.cs">
-      <DependentUpon>Dados.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TB_PRODUTO_IMAGEM_SKYHUB.cs">
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TB_PRODUTO_SKYHUB.cs">
@@ -232,16 +317,34 @@
     <Compile Include="Models\TB_QUALIFICACAO_SOCIO.cs">
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TB_RAMO.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TB_REGIAO.cs">
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TB_SEQUENCIA.cs">
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TB_SERIE.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_SERIE_MODELO.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TB_SINCRONIZACAO_SKYHUB.cs">
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TB_TABELA_PRECO_CAB.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_TABELA_PRECO_ITEM.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TB_TIPO_CADASTRO.cs">
+      <DependentUpon>Dados.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_TIPO_CONTRIBUICAO.cs">
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TB_TIPO_PROPRIEDADE.cs">
@@ -256,6 +359,7 @@
     <Compile Include="Models\TB_VENDEDOR.cs">
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\UsuarioMLivre.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -267,11 +371,8 @@
       <DependentUpon>Dados.edmx</DependentUpon>
     </Content>
     <None Include="packages.config" />
-    <None Include="Properties\PublishProfiles\CustomProfile.pubxml">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\Localhost.pubxml" />
+    <None Include="Properties\PublishProfiles\Servidor.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -281,6 +382,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Controllers\UtilsServidor\" />
+    <Folder Include="Views\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

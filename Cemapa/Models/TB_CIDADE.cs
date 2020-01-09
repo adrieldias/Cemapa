@@ -17,6 +17,7 @@ namespace Cemapa.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public TB_CIDADE()
         {
+            this.TB_FILIAL = new HashSet<TB_FILIAL>();
             this.TB_CADASTRO = new HashSet<TB_CADASTRO>();
             this.TB_PROPRIEDADE = new HashSet<TB_PROPRIEDADE>();
         }
@@ -31,8 +32,10 @@ namespace Cemapa.Models
         public string IND_SINC_MAX_ROTEIRIZADOR { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TB_CADASTRO> TB_CADASTRO { get; set; }
+        public virtual ICollection<TB_FILIAL> TB_FILIAL { get; set; }
         public virtual TB_ESTADO TB_ESTADO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TB_CADASTRO> TB_CADASTRO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TB_PROPRIEDADE> TB_PROPRIEDADE { get; set; }
     }

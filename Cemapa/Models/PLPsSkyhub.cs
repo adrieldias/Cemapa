@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Cemapa.Models
+namespace Cemapa.Models.Skyhub
 {
     public class PLPs
     {

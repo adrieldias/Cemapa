@@ -25,33 +25,66 @@ namespace Cemapa.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<TB_TIPO_CADASTRO> TB_TIPO_CADASTRO { get; set; }
-        public virtual DbSet<TB_CLASS_CADASTRO> TB_CLASS_CADASTRO { get; set; }
-        public virtual DbSet<TB_ESTADO> TB_ESTADO { get; set; }
-        public virtual DbSet<TB_ESTADO_CIVIL> TB_ESTADO_CIVIL { get; set; }
-        public virtual DbSet<TB_MOTIVO> TB_MOTIVO { get; set; }
-        public virtual DbSet<TB_PAIS> TB_PAIS { get; set; }
-        public virtual DbSet<TB_USUARIO> TB_USUARIO { get; set; }
-        public virtual DbSet<TB_TIPO_PROPRIEDADE> TB_TIPO_PROPRIEDADE { get; set; }
-        public virtual DbSet<TB_PROPRIEDADE> TB_PROPRIEDADE { get; set; }
-        public virtual DbSet<TB_QUALIFICACAO_SOCIO> TB_QUALIFICACAO_SOCIO { get; set; }
         public virtual DbSet<TB_CADASTRO_ENDERECOS> TB_CADASTRO_ENDERECOS { get; set; }
-        public virtual DbSet<TB_CLASSE> TB_CLASSE { get; set; }
-        public virtual DbSet<TB_TRIBUTACAO> TB_TRIBUTACAO { get; set; }
-        public virtual DbSet<TB_ESTOQUE> TB_ESTOQUE { get; set; }
-        public virtual DbSet<TB_CADASTRO> TB_CADASTRO { get; set; }
-        public virtual DbSet<TB_PRODUTO> TB_PRODUTO { get; set; }
+        public virtual DbSet<TB_CLASS_CADASTRO> TB_CLASS_CADASTRO { get; set; }
         public virtual DbSet<TB_CIDADE> TB_CIDADE { get; set; }
         public virtual DbSet<TB_REGIAO> TB_REGIAO { get; set; }
-        public virtual DbSet<TB_VENDEDOR> TB_VENDEDOR { get; set; }
-        public virtual DbSet<TB_CONFIGURACAO_SKYHUB> TB_CONFIGURACAO_SKYHUB { get; set; }
-        public virtual DbSet<TB_PRODUTO_CATEGORIA_SKYHUB> TB_PRODUTO_CATEGORIA_SKYHUB { get; set; }
-        public virtual DbSet<TB_PRODUTO_ESP_SKYHUB> TB_PRODUTO_ESP_SKYHUB { get; set; }
-        public virtual DbSet<TB_PRODUTO_IMAGEM_SKYHUB> TB_PRODUTO_IMAGEM_SKYHUB { get; set; }
-        public virtual DbSet<TB_PRODUTO_SKYHUB> TB_PRODUTO_SKYHUB { get; set; }
-        public virtual DbSet<TB_SINCRONIZACAO_SKYHUB> TB_SINCRONIZACAO_SKYHUB { get; set; }
         public virtual DbSet<TB_SEQUENCIA> TB_SEQUENCIA { get; set; }
+        public virtual DbSet<TB_TIPO_CADASTRO> TB_TIPO_CADASTRO { get; set; }
+        public virtual DbSet<TB_USUARIO> TB_USUARIO { get; set; }
+        public virtual DbSet<TB_FILIAL> TB_FILIAL { get; set; }
+        public virtual DbSet<TB_IND_APROPRIACAO_CREDITO> TB_IND_APROPRIACAO_CREDITO { get; set; }
+        public virtual DbSet<TB_CLASSE_CONSUMO> TB_CLASSE_CONSUMO { get; set; }
+        public virtual DbSet<TB_CRITERIO_ESCRIT> TB_CRITERIO_ESCRIT { get; set; }
+        public virtual DbSet<TB_FORMA_TRIBUTACAO> TB_FORMA_TRIBUTACAO { get; set; }
+        public virtual DbSet<TB_INCIDENCIA_TRIBUTARIA> TB_INCIDENCIA_TRIBUTARIA { get; set; }
+        public virtual DbSet<TB_INCIDENCIA_TRIBUTARIA_PREV> TB_INCIDENCIA_TRIBUTARIA_PREV { get; set; }
+        public virtual DbSet<TB_NATUREZA_JURIDICA> TB_NATUREZA_JURIDICA { get; set; }
+        public virtual DbSet<TB_ENERGIA_TENSAO> TB_ENERGIA_TENSAO { get; set; }
+        public virtual DbSet<TB_NF_ELETRONICA_CONFIG> TB_NF_ELETRONICA_CONFIG { get; set; }
+        public virtual DbSet<TB_TIPO_CONTRIBUICAO> TB_TIPO_CONTRIBUICAO { get; set; }
+        public virtual DbSet<TB_ESTADO> TB_ESTADO { get; set; }
+        public virtual DbSet<TB_SERIE_MODELO> TB_SERIE_MODELO { get; set; }
+        public virtual DbSet<TB_SERIE> TB_SERIE { get; set; }
+        public virtual DbSet<TB_ESTADO_CIVIL> TB_ESTADO_CIVIL { get; set; }
+        public virtual DbSet<TB_CADASTRO> TB_CADASTRO { get; set; }
+        public virtual DbSet<TB_PRODUTO> TB_PRODUTO { get; set; }
+        public virtual DbSet<TB_LOTE_TIPO> TB_LOTE_TIPO { get; set; }
+        public virtual DbSet<TB_ESTOQUE> TB_ESTOQUE { get; set; }
+        public virtual DbSet<TB_MOTIVO> TB_MOTIVO { get; set; }
+        public virtual DbSet<TB_PAIS> TB_PAIS { get; set; }
+        public virtual DbSet<TB_TIPO_PROPRIEDADE> TB_TIPO_PROPRIEDADE { get; set; }
+        public virtual DbSet<TB_TRIBUTACAO> TB_TRIBUTACAO { get; set; }
+        public virtual DbSet<TB_PRODUTO_SKYHUB> TB_PRODUTO_SKYHUB { get; set; }
+        public virtual DbSet<TB_QUALIFICACAO_SOCIO> TB_QUALIFICACAO_SOCIO { get; set; }
+        public virtual DbSet<TB_PROPRIEDADE> TB_PROPRIEDADE { get; set; }
+        public virtual DbSet<TB_SINCRONIZACAO_SKYHUB> TB_SINCRONIZACAO_SKYHUB { get; set; }
+        public virtual DbSet<TB_RAMO> TB_RAMO { get; set; }
+        public virtual DbSet<TB_CULTURA> TB_CULTURA { get; set; }
+        public virtual DbSet<TB_DEPARTAMENTO> TB_DEPARTAMENTO { get; set; }
+        public virtual DbSet<TB_MARCA> TB_MARCA { get; set; }
+        public virtual DbSet<TB_MENSAGEM> TB_MENSAGEM { get; set; }
+        public virtual DbSet<TB_GENERO_PRODUTO> TB_GENERO_PRODUTO { get; set; }
+        public virtual DbSet<TB_LISTA_SERVICO> TB_LISTA_SERVICO { get; set; }
+        public virtual DbSet<TB_CST_COFINS> TB_CST_COFINS { get; set; }
+        public virtual DbSet<TB_CST_PIS> TB_CST_PIS { get; set; }
+        public virtual DbSet<TB_TABELA_PRECO_CAB> TB_TABELA_PRECO_CAB { get; set; }
+        public virtual DbSet<TB_TABELA_PRECO_ITEM> TB_TABELA_PRECO_ITEM { get; set; }
+        public virtual DbSet<TB_PRAZO_VENCIMENTO> TB_PRAZO_VENCIMENTO { get; set; }
+        public virtual DbSet<TB_BANCO_AGENCIA> TB_BANCO_AGENCIA { get; set; }
+        public virtual DbSet<TB_CONTA_CORRENTE> TB_CONTA_CORRENTE { get; set; }
+        public virtual DbSet<TB_VENDEDOR> TB_VENDEDOR { get; set; }
+        public virtual DbSet<TB_HISTORICO_CONTABIL> TB_HISTORICO_CONTABIL { get; set; }
+        public virtual DbSet<TB_CENTRO_CUSTO> TB_CENTRO_CUSTO { get; set; }
+        public virtual DbSet<TB_GRUPO_CUSTOS> TB_GRUPO_CUSTOS { get; set; }
+        public virtual DbSet<TB_HISTORICO> TB_HISTORICO { get; set; }
+        public virtual DbSet<TB_BC_CREDITO_PISCOFINS> TB_BC_CREDITO_PISCOFINS { get; set; }
+        public virtual DbSet<TB_OPERACAO> TB_OPERACAO { get; set; }
         public virtual DbSet<TB_PEDIDO_CAB> TB_PEDIDO_CAB { get; set; }
+        public virtual DbSet<TB_CLASSE> TB_CLASSE { get; set; }
+        public virtual DbSet<TB_EMAIL_NOTIFICACAO> TB_EMAIL_NOTIFICACAO { get; set; }
+        public virtual DbSet<TB_EMAIL> TB_EMAIL { get; set; }
+        public virtual DbSet<TB_CONFIGURACAO_SKYHUB> TB_CONFIGURACAO_SKYHUB { get; set; }
         public virtual DbSet<TB_PEDIDO_ITEM> TB_PEDIDO_ITEM { get; set; }
     }
 }

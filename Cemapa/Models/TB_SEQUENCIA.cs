@@ -17,5 +17,7 @@ namespace Cemapa.Models
         public string NOME_SEQUENCIA { get; set; }
         public int COD_FILIAL { get; set; }
         public int VAL_SEQUENCIA { get; set; }
+    
+        public virtual TB_FILIAL TB_FILIAL { get; set; }
     }
 }

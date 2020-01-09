@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -48,6 +49,18 @@ namespace Cemapa.Controllers
                 JsonRequestBehavior = System.Web.Mvc.JsonRequestBehavior.AllowGet
             };
         }
+
+        [HttpPost]
+        public IList<TB_CADASTRO> Get([FromBody] TB_CADASTRO cadastro)
+        {
+            db.Configuration.LazyLoadingEnabled = false;
+            var query = from c in db.TB_CADASTRO
+                        where c.NOME.StartsWith(cadastro.NOME)
+                        orderby c.DT_CADASTRO descending
+                        select c;
+            return query.ToList();                        
+        }
+
         //[Route("API/Cadastro/GetPersonalizado")]
         [HttpPost]
         public System.Web.Mvc.JsonResult GetPersonalizado([FromBody] TB_CADASTRO cadastro)
@@ -99,26 +112,56 @@ namespace Cemapa.Controllers
         public System.Web.Mvc.JsonResult Save([FromBody] TB_CADASTRO cadastro)
         {
             db.Configuration.LazyLoadingEnabled = false;
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                var id = cadastro.COD_CADASTRO;
-                if(db.TB_CADASTRO.Any(c => c.COD_CADASTRO == id))
+                try
                 {
-                    //db.TB_CADASTRO.Attach(cadastro);
-                    db.Entry(cadastro).State = EntityState.Modified;
+                    var id = cadastro.COD_CADASTRO;
+                    if (db.TB_CADASTRO.Any(c => c.COD_CADASTRO == id))
+                    {                        
+                        cadastro.DT_ALTERACAO = System.DateTime.Now;
+                        db.Entry(cadastro).State = EntityState.Modified;                        
+                    }
+                    else
+                    {   
+                        cadastro.COD_CADASTRO = db.Database.SqlQuery<int>("SELECT SQCADASTRO.nextval FROM dual").First();
+                        cadastro.IND_SEXO_CATEGORIA = "M";
+                        cadastro.DT_CADASTRO = System.DateTime.Now;
+                        db.Entry(cadastro).State = EntityState.Added;
+                    }
+                    // Os models atrelados ao cadastro, por exemplo, endereço, propriedade, ainda não estão sendo salvos.
+                    db.SaveChanges();
+                    return new System.Web.Mvc.JsonResult()
+                    {
+                        Data = cadastro.COD_CADASTRO,
+                        JsonRequestBehavior = System.Web.Mvc.JsonRequestBehavior.AllowGet
+                    };
                 }
-                else
+                catch(DbEntityValidationException e)
                 {
-                    //db.TB_CADASTRO.Add(cadastro);
-                    db.Entry(cadastro).State = EntityState.Added;
-                }                
-                db.SaveChanges();
-                return new System.Web.Mvc.JsonResult()
-                {
-                    Data = cadastro.COD_CADASTRO,
-                    JsonRequestBehavior = System.Web.Mvc.JsonRequestBehavior.AllowGet
-                };
+                    string erro = string.Empty;
+                    foreach (var eve in e.EntityValidationErrors)
+                    {   
+                        foreach (var ve in eve.ValidationErrors)
+                        {   
+                            erro += string.Format("{0} - {1}", ve.PropertyName, ve.ErrorMessage);
+                        }
+                    }
 
+                    return new System.Web.Mvc.JsonResult()
+                    {
+                        Data = erro,
+                        JsonRequestBehavior = System.Web.Mvc.JsonRequestBehavior.AllowGet
+                    };
+                } 
+                catch(Exception e)
+                {
+                    return new System.Web.Mvc.JsonResult()
+                    {
+                        Data = string.Format("{0} - {1}", e.Message, e.InnerException),
+                        JsonRequestBehavior = System.Web.Mvc.JsonRequestBehavior.AllowGet
+                    };
+                }
             }
             else
             {
@@ -128,9 +171,7 @@ namespace Cemapa.Controllers
                     JsonRequestBehavior = System.Web.Mvc.JsonRequestBehavior.AllowGet
                 };
             }
-            
-            
-        }       
+        }
 
         [HttpPost]
         public System.Web.Mvc.JsonResult Delete(int id)

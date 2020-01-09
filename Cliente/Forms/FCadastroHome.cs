@@ -12,7 +12,7 @@ using System.Net.Http;
 using Newtonsoft.Json;
 
 using Cliente.Forms.Modelo;
-using Cliente.Utils;
+using Cliente.UtilsCliente;
 using System.Reflection;
 using System.Configuration;
 using System.Runtime.InteropServices;
@@ -49,7 +49,7 @@ namespace Cliente.Forms
             if (CadastroBindingSource == null)
                 CadastroBindingSource = new BindingSource();
             CadastroBindingSource.CurrentChanged += new EventHandler(CadastroBindingSource_CurrentChanged);
-            dataGridView1.DataSource = CadastroBindingSource;
+            dataGridView1.DataSource = CadastroBindingSource;            
         }
 
         private void CadastroBindingSource_CurrentChanged(object sender, EventArgs e)
@@ -64,11 +64,9 @@ namespace Cliente.Forms
             //    (await RunAsyncGet(
             //        string.Format("{0}{1}", ConfigurationManager.AppSettings["UriCadastro"], "GetPersonalizado")
             //        )), definition);
-            
+
             CadastroBindingSource.DataSource = (await busca1.ListarTodos(string.Format("{0}{1}", ConfigurationManager.AppSettings["UriCadastro"], "GetPersonalizado"), definition));
-
-
-            busca1.Focus();
+            //busca1.Focus();
         }
 
 
@@ -113,19 +111,29 @@ namespace Cliente.Forms
                     FDialogBox.Message(FDialogBox.Erro, "Erro", retorno.Data, FDialogBox.TamGrande);
                 
             }
+        }        
+
+        private void busca1_TextBoxKeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode == Keys.Enter)            
+                busca1_ButtonClick(this, e);
+            
         }
 
-        private async void busca1_TextBoxTextChanged(object sender, EventArgs e)
+        private async void busca1_ButtonClick(object sender, EventArgs e)
         {
-            if (busca1.Text != "DIGITE PARA PROCURAR")
+            if (busca1.parametroInformado())
             {
                 Cliente.POCO.TB_CADASTRO c = new POCO.TB_CADASTRO();
                 c.NOME = busca1.Text;
-                CadastroBindingSource.DataSource = (await busca1.Buscar(string.Format("{0}{1}", ConfigurationManager.AppSettings["UriCadastro"], 
+                CadastroBindingSource.DataSource = (await busca1.Buscar(string.Format("{0}{1}", ConfigurationManager.AppSettings["UriCadastro"],
                     "GetPersonalizado"), definition, c));
             }
+            else
+            {
+                CadastroBindingSource.DataSource = (await busca1.ListarTodos(string.Format("{0}{1}", ConfigurationManager.AppSettings["UriCadastro"],
+                    "GetPersonalizado"), definition));
+            }
         }
-
-   
     }
 }

@@ -17,9 +17,10 @@ namespace Cemapa.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public TB_ESTADO()
         {
+            this.TB_CIDADE = new HashSet<TB_CIDADE>();
             this.TB_CADASTRO = new HashSet<TB_CADASTRO>();
             this.TB_CADASTRO1 = new HashSet<TB_CADASTRO>();
-            this.TB_CIDADE = new HashSet<TB_CIDADE>();
+            this.TB_BANCO_AGENCIA = new HashSet<TB_BANCO_AGENCIA>();
             this.TB_VENDEDOR = new HashSet<TB_VENDEDOR>();
         }
     
@@ -41,11 +42,13 @@ namespace Cemapa.Models
         public Nullable<decimal> PERC_ALIQUOTA_DIFERENCIAL { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TB_CIDADE> TB_CIDADE { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TB_CADASTRO> TB_CADASTRO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TB_CADASTRO> TB_CADASTRO1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TB_CIDADE> TB_CIDADE { get; set; }
+        public virtual ICollection<TB_BANCO_AGENCIA> TB_BANCO_AGENCIA { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TB_VENDEDOR> TB_VENDEDOR { get; set; }
     }

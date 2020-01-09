@@ -37,7 +37,7 @@ namespace Cemapa.Models
         public string DESC_COMPLEMENTO_OBS2 { get; set; }
         public Nullable<System.DateTime> DT_VENCIMENTO { get; set; }
         public string IND_TIPO_PAGAMENTO { get; set; }
-        public Nullable<int> COD_PRODUTO { get; set; }
+        public Nullable<long> COD_PRODUTO { get; set; }
         public Nullable<decimal> QT_QUANTIDADE { get; set; }
         public Nullable<int> COD_USUARIO { get; set; }
         public Nullable<byte> NR_DIAS_CHEQUE { get; set; }
@@ -81,21 +81,30 @@ namespace Cemapa.Models
         public Nullable<System.DateTime> DT_USUARIO { get; set; }
         public Nullable<int> COD_PEDIDO_WEB { get; set; }
         public string LOCAL_ULTIMA_ALTERACAO { get; set; }
-        public Nullable<bool> STEP_PEDIDO_WEB { get; set; }
+        public Nullable<short> STEP_PEDIDO_WEB { get; set; }
         public Nullable<int> COD_OBRA { get; set; }
         public string IND_CONSUMIDOR_FINAL { get; set; }
         public Nullable<int> COD_VEICULO { get; set; }
         public string STEP_SINCRONIZACAO { get; set; }
         public Nullable<decimal> VAL_DESPESAS { get; set; }
         public string IND_SINC_MAX_ROTEIRIZADOR { get; set; }
-        public string DESC_SITUACAO_MARKETPLACE { get; set; }
         public string COD_PEDIDO_MARKETPLACE { get; set; }
+        public string DESC_SITUACAO_MARKETPLACE { get; set; }
+        public Nullable<decimal> VAL_FRETE_MARKETPLACE { get; set; }
     
+        public virtual TB_BANCO_AGENCIA TB_BANCO_AGENCIA { get; set; }
         public virtual TB_CADASTRO TB_CADASTRO { get; set; }
         public virtual TB_CADASTRO TB_CADASTRO1 { get; set; }
+        public virtual TB_CONTA_CORRENTE TB_CONTA_CORRENTE { get; set; }
+        public virtual TB_CULTURA TB_CULTURA { get; set; }
+        public virtual TB_DEPARTAMENTO TB_DEPARTAMENTO { get; set; }
+        public virtual TB_FILIAL TB_FILIAL { get; set; }
+        public virtual TB_MENSAGEM TB_MENSAGEM { get; set; }
+        public virtual TB_OPERACAO TB_OPERACAO { get; set; }
+        public virtual TB_PRAZO_VENCIMENTO TB_PRAZO_VENCIMENTO { get; set; }
         public virtual TB_VENDEDOR TB_VENDEDOR { get; set; }
+        public virtual TB_PRODUTO TB_PRODUTO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TB_PEDIDO_ITEM> TB_PEDIDO_ITEM { get; set; }
-        public virtual TB_PRODUTO TB_PRODUTO { get; set; }
     }
 }
