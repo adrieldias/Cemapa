@@ -19,7 +19,6 @@ namespace Cemapa.Controllers
     {
         private OAuth Autenticacao = new OAuth();
         private readonly Entities db = new Entities();
-        private readonly HttpClient Http = new HttpClient();
         private readonly Uri MlivreUri = new Uri("https://api.mercadolibre.com");
         
         [HttpGet]
@@ -27,15 +26,17 @@ namespace Cemapa.Controllers
         {
             try
             {
-
                 int totalAtualizados = 0;
                 int totalCriados = 0;
                 int totalDeletados = 0;
                 bool saveRegistro = true;
 
+                HttpClient Http = new HttpClient
+                {
+                    BaseAddress = MlivreUri
+                };
+
                 HttpResponseMessage response;
-                
-                Http.BaseAddress = MlivreUri;
 
                 ControladorExcecoes.Limpa();
 
@@ -90,7 +91,6 @@ namespace Cemapa.Controllers
                                             
                                             Http.DefaultRequestHeaders.Accept.Clear();
                                             Http.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                                            Http.Timeout = TimeSpan.FromSeconds(30);
 
                                             switch (sincronizacaoSkyhub.TIPO_ACAO)
                                             {
@@ -109,6 +109,12 @@ namespace Cemapa.Controllers
                                                         };
 
                                                         produtoML.status = produtoSkyhub.DESC_STATUS == "disabled" ? "paused" : "active";
+
+
+                                                        if (produtoML.available_quantity == 0)
+                                                        {
+                                                            produtoML.status = "paused";
+                                                        }
 
                                                         produtoML.AddImagesCustom(new Picture(produtoSkyhub.DESC_LINK_IMAGEM_1));
                                                         produtoML.AddImagesCustom(new Picture(produtoSkyhub.DESC_LINK_IMAGEM_2));
@@ -130,32 +136,25 @@ namespace Cemapa.Controllers
                                                         {
                                                             //Se o produto não for localizado no Mercado livre, então atualiza a sincronização
                                                             //para POST, para então criar o produto.
+                                                            
+                                                            Search search = await response.Content.ReadAsAsync<Search>();
 
-                                                            try
+                                                            if (search.results.Count == 0)
                                                             {
-                                                                Search search = await response.Content.ReadAsAsync<Search>();
-
-                                                                if (search.results.Count == 0)
-                                                                {
-                                                                    sincronizacaoSkyhub.TIPO_ACAO = "POST";
-                                                                    db.SaveChanges();
-                                                                    saveRegistro = false;
-                                                                }
-                                                                else
-                                                                {
-                                                                    response = await Http.PutAsJsonAsync($"/items/{search.results.First()}?access_token={Autenticacao.access_token}", ObjetoJsonFormatado(produtoML));
-
-                                                                    if (!response.IsSuccessStatusCode)
-                                                                    {
-                                                                        throw new HttpListenerException((int)response.StatusCode, $"PUT: {response.ReasonPhrase}. {response.Content.ReadAsStringAsync().Result}");
-                                                                    }
-
-                                                                    totalAtualizados++;
-                                                                }
+                                                                sincronizacaoSkyhub.TIPO_ACAO = "POST";
+                                                                db.SaveChanges();
+                                                                saveRegistro = false;
                                                             }
-                                                            catch (Exception except)
+                                                            else
                                                             {
-                                                                throw new HttpListenerException((int)response.StatusCode, $"Problema ao buscar produto no mercadolivre: {except.Message}");
+                                                                response = await Http.PutAsJsonAsync($"/items/{search.results.First()}?access_token={Autenticacao.access_token}", ObjetoJsonFormatado(produtoML));
+
+                                                                if (!response.IsSuccessStatusCode)
+                                                                {
+                                                                    throw new HttpListenerException((int)response.StatusCode, $"PUT: {response.ReasonPhrase}. {response.Content.ReadAsStringAsync().Result}");
+                                                                }
+
+                                                                totalAtualizados++;
                                                             }
                                                         }
                                                         else
@@ -250,19 +249,46 @@ namespace Cemapa.Controllers
                                                         produtoML.AddAttributesCustom(new Attribute("MODEL", produtoSkyhub.ESP_MODELO));
                                                         produtoML.AddAttributesCustom(new Attribute("VOLTAGE", produtoSkyhub.ESP_VOLTAGEM));
                                                         produtoML.AddAttributesCustom(new Attribute("GTIN", wInfosProduto.DESC_COD_BARRA));
+                                                        
+                                                        //Realiza a busca pelo código sku, que vem do campo seller_custom_field.
+                                                        //Se já existir algum produto com o mesmo sku então ele não cria um novo,
+                                                        //apenas atualiza para PUT.
 
-                                                        //Anuncios com estoque zero não são criados
+                                                        response = await Http.GetAsync($"/users/{Autenticacao.user_id}/items/search?sku={produtoML.seller_custom_field}&access_token={Autenticacao.access_token}");
 
-                                                        if (produtoML.available_quantity > 0)
+                                                        if (response.IsSuccessStatusCode)
                                                         {
-                                                            response = await Http.PostAsJsonAsync($"/items?access_token={Autenticacao.access_token}", ObjetoJsonFormatado(produtoML));
+                                                            //Se o produto não for localizado no Mercado livre, então atualiza a sincronização
+                                                            //para POST, para então criar o produto.
 
-                                                            if (!response.IsSuccessStatusCode)
+                                                            Search search = await response.Content.ReadAsAsync<Search>();
+
+                                                            if (search.results.Count > 0)
                                                             {
-                                                                throw new HttpListenerException((int)response.StatusCode, $"POST: {response.ReasonPhrase}. {response.Content.ReadAsStringAsync().Result}");
+                                                                sincronizacaoSkyhub.TIPO_ACAO = "PUT";
+                                                                db.SaveChanges();
+                                                                saveRegistro = false;
                                                             }
+                                                            else
+                                                            {
+                                                                //Anuncios com estoque zero não são criados
 
-                                                            totalCriados++;
+                                                                if (produtoML.available_quantity > 0)
+                                                                {
+                                                                    response = await Http.PostAsJsonAsync($"/items?access_token={Autenticacao.access_token}", ObjetoJsonFormatado(produtoML));
+
+                                                                    if (!response.IsSuccessStatusCode)
+                                                                    {
+                                                                        throw new HttpListenerException((int)response.StatusCode, $"POST: {response.ReasonPhrase}. {response.Content.ReadAsStringAsync().Result}");
+                                                                    }
+
+                                                                    totalCriados++;
+                                                                }
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            throw new HttpListenerException((int)response.StatusCode, $"Problema ao buscar id do produto no mercadolivre: {response.ReasonPhrase}. {response.Content.ReadAsStringAsync().Result}");
                                                         }
                                                     }
                                                     break;
@@ -447,6 +473,11 @@ namespace Cemapa.Controllers
                 HttpParams parans = new HttpParams().Add("client_id", configuracaoSkyhub.DESC_ML_CLIENT_ID)
                                                     .Add("client_secret", configuracaoSkyhub.DESC_ML_CLIENT_SECRET)
                                                     .Add("grant_type", "client_credentials");
+                
+                HttpClient Http = new HttpClient
+                {
+                    BaseAddress = MlivreUri
+                };
 
                 HttpResponseMessage response = await Http.PostAsync($"/oauth/token?{parans}", null);
 

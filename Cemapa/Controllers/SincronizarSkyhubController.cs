@@ -17,7 +17,6 @@ namespace Cemapa.Controllers
     public class SincronizarSkyhubController : ApiController
     {
         private readonly Entities db = new Entities();
-        private readonly HttpClient Http = new HttpClient();
         private readonly Uri SkyhubUri = new Uri("https://api.skyhub.com.br");
 
         [HttpGet]
@@ -39,7 +38,10 @@ namespace Cemapa.Controllers
 
                 foreach (var configuracaoSkyhub in configuracoesSkyhub)
                 {
-                    Http.BaseAddress = SkyhubUri;
+                    HttpClient Http = new HttpClient
+                    {
+                        BaseAddress = SkyhubUri
+                    };
 
                     //Busca as configurações para se conectar com a API.
 
@@ -222,7 +224,10 @@ namespace Cemapa.Controllers
 
                 //Primeira requisição, faz uma chamada para verificar se uma PLP ja existe.
 
-                Http.BaseAddress = SkyhubUri;
+                HttpClient Http = new HttpClient
+                {
+                    BaseAddress = SkyhubUri
+                };
 
                 Http.DefaultRequestHeaders.Accept.Clear();
                     
@@ -382,7 +387,10 @@ namespace Cemapa.Controllers
 
                 ConfiguracaoEstaOK(configuracaoSkyhub);
 
-                Http.BaseAddress = SkyhubUri;
+                HttpClient Http = new HttpClient
+                {
+                    BaseAddress = SkyhubUri
+                };
 
                 Http.DefaultRequestHeaders.Accept.Clear();
                 Http.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -474,7 +482,10 @@ namespace Cemapa.Controllers
 
                 ConfiguracaoEstaOK(configuracaoSkyhub);
 
-                Http.BaseAddress = SkyhubUri;
+                HttpClient Http = new HttpClient
+                {
+                    BaseAddress = SkyhubUri
+                };
 
                 Http.DefaultRequestHeaders.Accept.Clear();
                 Http.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -557,7 +568,10 @@ namespace Cemapa.Controllers
 
                 ConfiguracaoEstaOK(configuracaoSkyhub);
 
-                Http.BaseAddress = SkyhubUri;
+                HttpClient Http = new HttpClient
+                {
+                    BaseAddress = SkyhubUri
+                };
 
                 Http.DefaultRequestHeaders.Accept.Clear();
                 Http.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -628,7 +642,10 @@ namespace Cemapa.Controllers
 
                 ConfiguracaoEstaOK(configuracaoSkyhub);
 
-                Http.BaseAddress = SkyhubUri;
+                HttpClient Http = new HttpClient
+                {
+                    BaseAddress = SkyhubUri
+                };
 
                 Http.DefaultRequestHeaders.Accept.Clear();
                 Http.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -713,7 +730,10 @@ namespace Cemapa.Controllers
                 {
                     try
                     {
-                        Http.BaseAddress = SkyhubUri;
+                        HttpClient Http = new HttpClient
+                        {
+                            BaseAddress = SkyhubUri
+                        };
 
                         Http.DefaultRequestHeaders.Accept.Clear();
                         Http.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -1064,7 +1084,10 @@ namespace Cemapa.Controllers
 
                                             ProdutoEstaOK(produtoSkyhub);
 
-                                            Http.BaseAddress = SkyhubUri;
+                                            HttpClient Http = new HttpClient
+                                            {
+                                                BaseAddress = SkyhubUri
+                                            };
 
                                             Http.DefaultRequestHeaders.Accept.Clear();
                                             Http.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -1293,7 +1316,10 @@ namespace Cemapa.Controllers
                                     //Caso não tenha sido encontrado nenhum registro da tabela TB_PRODUTO_SKYHUB referente a sincronização atual,
                                     //então o produto deve ser apagado da API também, ignorando o método pedido pela sincronização
 
-                                    Http.BaseAddress = SkyhubUri;
+                                    HttpClient Http = new HttpClient
+                                    {
+                                        BaseAddress = SkyhubUri
+                                    };
 
                                     Http.DefaultRequestHeaders.Accept.Clear();
                                     Http.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
