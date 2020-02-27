@@ -30,7 +30,9 @@ namespace Cemapa.Models
             {
                 "Internal Server Error",
                 "Bad Request",
-                "A task was canceled."
+                "A task was canceled.",
+                "Gateway Time-out",
+                "Too Many Requests"
             };
         }
 
@@ -45,7 +47,14 @@ namespace Cemapa.Models
 
                     foreach (ExcecaoContextual exContext in Excecoes)
                     {
-                        erros.Add($"({index})[{exContext.Excecao.Message}, {string.Join(", ", exContext.ChavesContextuais)}]");
+                        if (exContext.ChavesContextuais.Count > 0)
+                        {
+                            erros.Add($"({index})[{exContext.Excecao.Message}, {string.Join(", ", exContext.ChavesContextuais)}]");
+                        }
+                        else
+                        {
+                            erros.Add($"({index})[{exContext.Excecao.Message}]");
+                        }
                         index++;
                     }
 
@@ -119,15 +128,12 @@ namespace Cemapa.Models
 
         private static Exception ExcecaoInterna(Exception except)
         {
-            Exception wUltimaExcecao = except;
-
             while (except.InnerException != null)
             {
                 except = except.InnerException;
-                wUltimaExcecao = except;
             }
 
-            return wUltimaExcecao;
+            return except;
         }
     }
 }

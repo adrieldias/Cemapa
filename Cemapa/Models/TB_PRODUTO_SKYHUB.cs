@@ -54,6 +54,7 @@ namespace Cemapa.Models
         public string ESP_VOLTAGEM { get; set; }
         public Nullable<decimal> VAL_PESO { get; set; }
         public string DESC_CONEXAO_MARKETPLACE { get; set; }
+        public string COD_CATEGORIA_ML { get; set; }
     
         public virtual TB_PRODUTO TB_PRODUTO { get; set; }
     }

@@ -49,6 +49,12 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="HttpParamsUtility, Version=2.0.10.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\HttpParamsUtility.2.0.10\lib\netstandard2.0\HttpParamsUtility.dll</HintPath>
+    </Reference>
+    <Reference Include="MercadoLibreSdk, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MercadoLibreSdk.2.0.0\lib\netstandard2.0\MercadoLibreSdk.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
@@ -143,6 +149,7 @@
     <Compile Include="Controllers\PropriedadeController.cs" />
     <Compile Include="Controllers\QualificacaoSocioController.cs" />
     <Compile Include="Controllers\RegiaoController.cs" />
+    <Compile Include="Controllers\SincronizarMLivreController.cs" />
     <Compile Include="Controllers\SincronizarSkyhubController.cs" />
     <Compile Include="Controllers\TipoCadastroController.cs" />
     <Compile Include="Controllers\TipoPropriedadeController.cs" />
@@ -168,6 +175,7 @@
     </Compile>
     <Compile Include="Models\OrdensSkyhub.cs" />
     <Compile Include="Models\PLPsSkyhub.cs" />
+    <Compile Include="Models\ProdutosMLivre.cs" />
     <Compile Include="Models\ProdutosSkyhub.cs" />
     <Compile Include="Models\TB_BANCO_AGENCIA.cs">
       <DependentUpon>Dados.tt</DependentUpon>
@@ -352,6 +360,7 @@
     <Compile Include="Models\TB_VENDEDOR.cs">
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\UsuarioMLivre.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
