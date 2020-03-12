@@ -350,6 +350,7 @@
           <Property Name="DESC_ACCESS_TOKEN_ML" Type="varchar2" MaxLength="100" />
           <Property Name="DT_ACCESS_TOKEN_ML" Type="date" />
           <Property Name="DESC_USER_ID_ML" Type="varchar2" MaxLength="15" />
+          <Property Name="DT_ULTIMA_ATUALIZACAO_ML" Type="date" />
         </EntityType>
         <EntityType Name="TB_CONTA_CORRENTE">
           <Key>
@@ -6268,6 +6269,7 @@
           <Property Name="DESC_ACCESS_TOKEN_ML" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="DT_ACCESS_TOKEN_ML" Type="DateTime" />
           <Property Name="DESC_USER_ID_ML" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="DT_ULTIMA_ATUALIZACAO_ML" Type="DateTime" />
         </EntityType>
         <Association Name="FK_CONF_SKYXCLASS_CADASTRO">
           <End Type="Model.TB_CLASS_CADASTRO" Role="TB_CLASS_CADASTRO" Multiplicity="0..1" />
@@ -8101,6 +8103,7 @@
           <EntitySetMapping Name="TB_CONFIGURACAO_SKYHUB">
             <EntityTypeMapping TypeName="Model.TB_CONFIGURACAO_SKYHUB">
               <MappingFragment StoreEntitySet="TB_CONFIGURACAO_SKYHUB">
+                <ScalarProperty Name="DT_ULTIMA_ATUALIZACAO_ML" ColumnName="DT_ULTIMA_ATUALIZACAO_ML" />
                 <ScalarProperty Name="DESC_USER_ID_ML" ColumnName="DESC_USER_ID_ML" />
                 <ScalarProperty Name="DT_ACCESS_TOKEN_ML" ColumnName="DT_ACCESS_TOKEN_ML" />
                 <ScalarProperty Name="DESC_ACCESS_TOKEN_ML" ColumnName="DESC_ACCESS_TOKEN_ML" />

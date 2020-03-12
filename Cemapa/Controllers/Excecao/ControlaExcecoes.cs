@@ -1,18 +1,66 @@
-﻿using Newtonsoft.Json;
+﻿using Cemapa.Controllers.UtilsServidor;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
-using System.Web;
+using System.Text;
 
 namespace Cemapa.Models
 {    
     // Um erro contextual, armazena a exceção ocorrida e também chaves que estavam
     // atribuidas em determinado contexto, ajudando assim a decifrar a causa do erro.
-
+   
     internal class ExcecaoContextual
     {
         public Exception Excecao { get; set; }
+        public Posicao Local { get; set; }
         public List<string> ChavesContextuais = new List<string>();
+
+        public ExcecaoContextual(Exception exception)
+        {
+            try
+            {
+                //Quando criamos uma exceção contextualizada, o construtor recebe a exceção padrão
+                //e colhe alguns dados, como a linha em que foi gerado o erro, e em que arquivo.
+                
+                StackFrame frame = new StackTrace(exception, true).GetFrames().LastOrDefault();
+
+                if (frame != null)
+                {
+                    Local = new Posicao
+                    {
+                        Linha = frame.GetFileLineNumber(),
+                        Coluna = frame.GetFileColumnNumber(),
+                        Codigo = frame.GetFileName().Split(Path.DirectorySeparatorChar).Last()
+                    };
+                }
+                
+                //Busca por exceções internas para adiciona-las às chaves contextuais.
+                //Tais chaves armazenam informações sobre o erro, ajudando na busca pela resolução.
+
+                Exception inner = exception.InnerException;
+
+                while (inner != null)
+                {
+                    ChavesContextuais.Add(inner.Message);
+                    inner = inner.InnerException;
+                }
+
+                Excecao = exception;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+    }
+
+    internal class Posicao
+    {
+        public int Linha { get; set; }
+        public int Coluna { get; set; }
+        public string Codigo { get; set; }
     }
 
     // Classe controladora de exceções, armazenada exceções em uma lista para
@@ -22,18 +70,20 @@ namespace Cemapa.Models
     public static class ControladorExcecoes
     {
         private static List<ExcecaoContextual> Excecoes = new List<ExcecaoContextual>();
-        private static List<string> Filtros;
-
-        static ControladorExcecoes()
+        private static bool PrintsAmigaveis = false;
+        private static List<string> Filtros  = new List<string>
         {
-            Filtros = new List<string>
-            {
-                "Internal Server Error",
-                "Bad Request",
-                "A task was canceled.",
-                "Gateway Time-out",
-                "Too Many Requests"
-            };
+            "Internal Server Error",
+            "A task was canceled",
+            "Gateway Time-out",
+            "Too Many Requests",
+            "The request was aborted: Could not create SSL/TLS secure channel",
+            "The remote name could not be resolved"
+        };
+
+        public static void ErrosPersonalizados(bool pa)
+        {
+            PrintsAmigaveis = pa;
         }
 
         public static string Printa()
@@ -47,18 +97,46 @@ namespace Cemapa.Models
 
                     foreach (ExcecaoContextual exContext in Excecoes)
                     {
-                        if (exContext.ChavesContextuais.Count > 0)
+                        StringBuilder MensagemFinal = new StringBuilder($"({index})");
+
+                        if (PrintsAmigaveis)
                         {
-                            erros.Add($"({index})[{exContext.Excecao.Message}, {string.Join(", ", exContext.ChavesContextuais)}]");
+                            if (exContext.Local != null)
+                            {
+                                MensagemFinal.Append($"{exContext.Local.Codigo}:{exContext.Local.Linha}");
+                                MensagemFinal.Append(", ");
+                            }
+
+                            MensagemFinal.Append($"{exContext.Excecao.Message.Replace(Environment.NewLine, String.Empty).RemoveEnd()}");
+
+                            if (exContext.ChavesContextuais.Count > 0)
+                            {
+                                MensagemFinal.Append(", ");
+                                MensagemFinal.Append($"{string.Join(", ", exContext.ChavesContextuais).Replace(Environment.NewLine, String.Empty).RemoveEnd()}");
+                            }
                         }
                         else
                         {
-                            erros.Add($"({index})[{exContext.Excecao.Message}]");
+                            if (exContext.Local != null)
+                            {
+                                MensagemFinal.Append($"{exContext.Local.Codigo}:({exContext.Local.Linha},{exContext.Local.Linha})");
+                                MensagemFinal.Append(", ");
+                            }
+
+                            MensagemFinal.Append($"{exContext.Excecao.Message}");
+
+                            if (exContext.ChavesContextuais.Count > 0)
+                            {
+                                MensagemFinal.Append(", ");
+                                MensagemFinal.Append($"{string.Join(", ", exContext.ChavesContextuais)}");
+                            }
                         }
+
+                        erros.Add(MensagemFinal.ToString());
                         index++;
                     }
 
-                    return string.Join(";", erros);
+                    return String.Format("[{0}]", string.Join(",", erros));
                 }
                 else
                 {
@@ -71,40 +149,103 @@ namespace Cemapa.Models
             }
         }
 
-        public static void Adiciona(Exception except, List<string> Referencias = null)
+        public static Dictionary<string, List<string>> FormatoJson(string mensagemPai)
         {
             try
             {
-                except = ExcecaoInterna(except);
-
-                if (!Filtros.Exists(e => except.Message == e))
+                if (!SemExcecoes())
                 {
-                    if (Referencias == null)
+                    List<string> erros = new List<string>();
+
+                    foreach (ExcecaoContextual exContext in Excecoes)
                     {
-                        Excecoes.Add(
-                            new ExcecaoContextual
-                            {
-                                Excecao = except
-                            }
-                        );
-                    }
-                    else
-                    {
-                        if (!Filtros.Any(x => Referencias.Any(y => y == x)))
+                        StringBuilder MensagemFinal = new StringBuilder();
+
+                        if (PrintsAmigaveis)
                         {
-                            ExcecaoContextual exContx = new ExcecaoContextual
+                            if (exContext.Local != null)
                             {
-                                Excecao = except
-                            };
-
-                            foreach (string Referencia in Referencias)
-                            {
-                                exContx.ChavesContextuais.Add(Referencia);
+                                MensagemFinal.Append($"{exContext.Local.Codigo}:{exContext.Local.Linha}");
+                                MensagemFinal.Append(", ");
                             }
 
-                            Excecoes.Add(exContx);
+                            MensagemFinal.Append($"{exContext.Excecao.Message.Replace(Environment.NewLine, String.Empty).RemoveEnd()}");
+
+                            if (exContext.ChavesContextuais.Count > 0)
+                            {
+                                MensagemFinal.Append(", ");
+                                MensagemFinal.Append($"{string.Join(", ", exContext.ChavesContextuais).Replace(Environment.NewLine, String.Empty).RemoveEnd()}");
+                            }
+                        }
+                        else
+                        {
+                            if (exContext.Local != null)
+                            {
+                                MensagemFinal.Append($"{exContext.Local.Codigo}:({exContext.Local.Linha},{exContext.Local.Linha})");
+                                MensagemFinal.Append(", ");
+                            }
+
+                            MensagemFinal.Append($"{exContext.Excecao.Message}");
+
+                            if (exContext.ChavesContextuais.Count > 0)
+                            {
+                                MensagemFinal.Append(", ");
+                                MensagemFinal.Append($"{string.Join(", ", exContext.ChavesContextuais)}");
+                            }
+                        }
+
+                        erros.Add(MensagemFinal.ToString());
+                    }
+
+                    return new Dictionary<string, List<string>>()
+                    {
+                        { mensagemPai, erros }
+                    };                    
+                }
+                else
+                {
+                    return new Dictionary<string, List<string>>();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public static void Adiciona(Exception except)
+        {
+            try
+            {
+                if (!Filtros.Exists(filtro => except.Message.Contains(filtro)))
+                {
+                    ExcecaoContextual exContx = new ExcecaoContextual(except);
+                    Excecoes.Add(exContx);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public static void Adiciona(Exception except, List<string> Referencias)
+        {
+            try
+            {
+                if (!Filtros.Exists(filtro => except.Message.Contains(filtro)))
+                {
+                    ExcecaoContextual exContx = new ExcecaoContextual(except);
+
+                    foreach (string referencia in Referencias)
+                    {
+                        if (!Filtros.Exists(filtro => filtro == referencia))
+                        {
+                            exContx.ChavesContextuais.Add(referencia);
                         }
                     }
+
+                    Excecoes.Add(exContx);
                 }
             }
             catch (Exception ex)
@@ -124,16 +265,6 @@ namespace Cemapa.Models
         public static void Limpa()
         {
             Excecoes.Clear();
-        }
-
-        private static Exception ExcecaoInterna(Exception except)
-        {
-            while (except.InnerException != null)
-            {
-                except = except.InnerException;
-            }
-
-            return except;
         }
     }
 }

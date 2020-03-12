@@ -32,6 +32,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>Servidor.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -41,6 +42,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>Servidor.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
@@ -140,8 +142,10 @@
     <Compile Include="Controllers\CadastroEnderecoController.cs" />
     <Compile Include="Controllers\CidadeController.cs" />
     <Compile Include="Controllers\ClassCadastroController.cs" />
+    <Compile Include="Controllers\Email\Envio.cs" />
     <Compile Include="Controllers\EstadoController.cs" />
     <Compile Include="Controllers\FilialController.cs" />
+    <Compile Include="Controllers\Http\Resposta.cs" />
     <Compile Include="Controllers\MotivoController.cs" />
     <Compile Include="Controllers\PaisController.cs" />
     <Compile Include="Controllers\ProdutoController.cs" />
@@ -152,11 +156,13 @@
     <Compile Include="Controllers\SincronizarSkyhubController.cs" />
     <Compile Include="Controllers\TipoCadastroController.cs" />
     <Compile Include="Controllers\TipoPropriedadeController.cs" />
+    <Compile Include="Controllers\UtilsServidor\StringUtils.cs" />
     <Compile Include="Controllers\VendedorController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Controllers\Excecao\ControlaExcecoes.cs" />
+    <Compile Include="Models\CategoriasMLivre.cs" />
     <Compile Include="Models\Dados.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -172,6 +178,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Dados.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\OrdensMLivre.cs" />
     <Compile Include="Models\OrdensSkyhub.cs" />
     <Compile Include="Models\PLPsSkyhub.cs" />
     <Compile Include="Models\ProdutosMLivre.cs" />
@@ -373,6 +380,7 @@
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\Localhost.pubxml" />
     <None Include="Properties\PublishProfiles\Servidor.pubxml" />
+    <Content Include="Servidor.ruleset" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -382,7 +390,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\UtilsServidor\" />
     <Folder Include="Views\" />
   </ItemGroup>
   <ItemGroup>

@@ -42,6 +42,7 @@ namespace Cemapa.Models
         public string DESC_ACCESS_TOKEN_ML { get; set; }
         public Nullable<System.DateTime> DT_ACCESS_TOKEN_ML { get; set; }
         public string DESC_USER_ID_ML { get; set; }
+        public Nullable<System.DateTime> DT_ULTIMA_ATUALIZACAO_ML { get; set; }
     
         public virtual TB_CLASS_CADASTRO TB_CLASS_CADASTRO { get; set; }
         public virtual TB_DEPARTAMENTO TB_DEPARTAMENTO { get; set; }

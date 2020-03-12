@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
-namespace Cemapa.Models.MercadoLivre
+namespace Cemapa.Models.MercadoLivre.Usuario
 {
     public class Identification
     {
@@ -292,13 +290,6 @@ namespace Cemapa.Models.MercadoLivre
         public int total { get; set; }
     }
 
-    public class AvailableFilter
-    {
-        public string id { get; set; }
-        public string name { get; set; }
-        public List<Value> values { get; set; }
-    }
-
     public class Order
     {
         public string id { get; set; }
@@ -311,18 +302,6 @@ namespace Cemapa.Models.MercadoLivre
         public string name { get; set; }
     }
 
-    public class Search
-    {
-        public string seller_id { get; set; }
-        public object query { get; set; }
-        public Paging paging { get; set; }
-        public List<string> results { get; set; }
-        public List<object> filters { get; set; }
-        public List<AvailableFilter> available_filters { get; set; }
-        public List<Order> orders { get; set; }
-        public List<AvailableOrder> available_orders { get; set; }
-    }
-
     public class Items
     {
         public string seller_id { get; set; }
@@ -330,8 +309,15 @@ namespace Cemapa.Models.MercadoLivre
         public Paging paging { get; set; }
         public List<string> results { get; set; }
         public List<object> filters { get; set; }
-        public List<AvailableFilter> available_filters { get; set; }
         public List<Order> orders { get; set; }
         public List<AvailableOrder> available_orders { get; set; }
+    }
+
+    public class Value
+    {
+        public string id { get; set; }
+        public string name { get; set; }
+        public int results { get; set; }
+        public object @struct { get; set; }
     }
 }
