@@ -64,8 +64,11 @@ namespace Cliente.Forms
             //    (await RunAsyncGet(
             //        string.Format("{0}{1}", ConfigurationManager.AppSettings["UriCadastro"], "GetPersonalizado")
             //        )), definition);
-
-            CadastroBindingSource.DataSource = (await busca1.ListarTodos(string.Format("{0}{1}", ConfigurationManager.AppSettings["UriCadastro"], "GetPersonalizado"), definition));
+            var uri = ConfigurationManager.AppSettings["Endereco"]
+                + ":" + ConfigurationManager.AppSettings["Porta"]
+                + "/" + ConfigurationManager.AppSettings["UriCadastro"]
+                + "GetPersonalizado";
+            CadastroBindingSource.DataSource = (await busca1.ListarTodos(uri, definition));
             //busca1.Focus();
         }
 

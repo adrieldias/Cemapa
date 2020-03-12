@@ -101,14 +101,16 @@
             this.label5 = new System.Windows.Forms.Label();
             this.tbsRefParenteNome = new Componentes.TextBoxSimples();
             this.tbsRefParenteEnderceo = new Componentes.TextBoxSimples();
+            this.tbsRefParenteCidade = new Componentes.TextBoxSimples();
+            this.tbsRefTelefoneParente = new Componentes.TextBoxSimples();
+            this.tbsRefOutras = new Componentes.TextBoxSimples();
             this.tabPage6 = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.tbsDtCancelamento = new Componentes.TextBoxSimples();
             this.tbsObsCancelamento = new Componentes.TextBoxSimples();
             this.cbsMotivoCancelamento = new Componentes.ComboBoxSimples();
-            this.tbsRefParenteCidade = new Componentes.TextBoxSimples();
-            this.tbsRefTelefoneParente = new Componentes.TextBoxSimples();
-            this.tbsRefOutras = new Componentes.TextBoxSimples();
+            this.tbsLimite = new Componentes.TextBoxSimples();
+            this.cbsOperacaoVendaCC = new Componentes.ComboBoxSimples();
             this.pCabecalho.SuspendLayout();
             this.slickBlueTabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -604,6 +606,8 @@
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
             this.tableLayoutPanel2.Controls.Add(this.cbsRegiao, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.tbsLimite, 3, 0);
+            this.tableLayoutPanel2.Controls.Add(this.cbsOperacaoVendaCC, 5, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
@@ -1310,6 +1314,48 @@
             this.tbsRefParenteEnderceo.Size = new System.Drawing.Size(376, 44);
             this.tbsRefParenteEnderceo.TabIndex = 18;
             // 
+            // tbsRefParenteCidade
+            // 
+            this.tbsRefParenteCidade.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbsRefParenteCidade.AutoSize = true;
+            this.tableLayoutPanel6.SetColumnSpan(this.tbsRefParenteCidade, 5);
+            this.tbsRefParenteCidade.Font = new System.Drawing.Font("Calibri Light", 12F);
+            this.tbsRefParenteCidade.Label = "Cidade";
+            this.tbsRefParenteCidade.Location = new System.Drawing.Point(3, 293);
+            this.tbsRefParenteCidade.Name = "tbsRefParenteCidade";
+            this.tbsRefParenteCidade.PasswordChar = '\0';
+            this.tbsRefParenteCidade.Size = new System.Drawing.Size(374, 44);
+            this.tbsRefParenteCidade.TabIndex = 19;
+            // 
+            // tbsRefTelefoneParente
+            // 
+            this.tbsRefTelefoneParente.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbsRefTelefoneParente.AutoSize = true;
+            this.tableLayoutPanel6.SetColumnSpan(this.tbsRefTelefoneParente, 5);
+            this.tbsRefTelefoneParente.Font = new System.Drawing.Font("Calibri Light", 12F);
+            this.tbsRefTelefoneParente.Label = "Telefone";
+            this.tbsRefTelefoneParente.Location = new System.Drawing.Point(383, 293);
+            this.tbsRefTelefoneParente.Name = "tbsRefTelefoneParente";
+            this.tbsRefTelefoneParente.PasswordChar = '\0';
+            this.tbsRefTelefoneParente.Size = new System.Drawing.Size(376, 44);
+            this.tbsRefTelefoneParente.TabIndex = 20;
+            // 
+            // tbsRefOutras
+            // 
+            this.tbsRefOutras.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbsRefOutras.AutoSize = true;
+            this.tableLayoutPanel6.SetColumnSpan(this.tbsRefOutras, 10);
+            this.tbsRefOutras.Font = new System.Drawing.Font("Calibri Light", 12F);
+            this.tbsRefOutras.Label = "Outras Referências";
+            this.tbsRefOutras.Location = new System.Drawing.Point(3, 343);
+            this.tbsRefOutras.Name = "tbsRefOutras";
+            this.tbsRefOutras.PasswordChar = '\0';
+            this.tbsRefOutras.Size = new System.Drawing.Size(756, 44);
+            this.tbsRefOutras.TabIndex = 21;
+            // 
             // tabPage6
             // 
             this.tabPage6.Controls.Add(this.tableLayoutPanel3);
@@ -1401,47 +1447,38 @@
             this.cbsMotivoCancelamento.TabIndex = 3;
             this.cbsMotivoCancelamento.ValueMember = "";
             // 
-            // tbsRefParenteCidade
+            // tbsLimite
             // 
-            this.tbsRefParenteCidade.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.tbsLimite.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbsRefParenteCidade.AutoSize = true;
-            this.tableLayoutPanel6.SetColumnSpan(this.tbsRefParenteCidade, 5);
-            this.tbsRefParenteCidade.Font = new System.Drawing.Font("Calibri Light", 12F);
-            this.tbsRefParenteCidade.Label = "Cidade";
-            this.tbsRefParenteCidade.Location = new System.Drawing.Point(3, 293);
-            this.tbsRefParenteCidade.Name = "tbsRefParenteCidade";
-            this.tbsRefParenteCidade.PasswordChar = '\0';
-            this.tbsRefParenteCidade.Size = new System.Drawing.Size(374, 44);
-            this.tbsRefParenteCidade.TabIndex = 19;
+            this.tbsLimite.AutoSize = true;
+            this.tableLayoutPanel2.SetColumnSpan(this.tbsLimite, 2);
+            this.tbsLimite.Font = new System.Drawing.Font("Calibri Light", 12F);
+            this.tbsLimite.Label = "Limite";
+            this.tbsLimite.Location = new System.Drawing.Point(228, 3);
+            this.tbsLimite.Name = "tbsLimite";
+            this.tbsLimite.PasswordChar = '\0';
+            this.tbsLimite.Size = new System.Drawing.Size(144, 44);
+            this.tbsLimite.TabIndex = 1;
             // 
-            // tbsRefTelefoneParente
+            // cbsOperacaoVendaCC
             // 
-            this.tbsRefTelefoneParente.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.cbsOperacaoVendaCC.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbsRefTelefoneParente.AutoSize = true;
-            this.tableLayoutPanel6.SetColumnSpan(this.tbsRefTelefoneParente, 5);
-            this.tbsRefTelefoneParente.Font = new System.Drawing.Font("Calibri Light", 12F);
-            this.tbsRefTelefoneParente.Label = "Telefone";
-            this.tbsRefTelefoneParente.Location = new System.Drawing.Point(383, 293);
-            this.tbsRefTelefoneParente.Name = "tbsRefTelefoneParente";
-            this.tbsRefTelefoneParente.PasswordChar = '\0';
-            this.tbsRefTelefoneParente.Size = new System.Drawing.Size(376, 44);
-            this.tbsRefTelefoneParente.TabIndex = 20;
-            // 
-            // tbsRefOutras
-            // 
-            this.tbsRefOutras.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbsRefOutras.AutoSize = true;
-            this.tableLayoutPanel6.SetColumnSpan(this.tbsRefOutras, 10);
-            this.tbsRefOutras.Font = new System.Drawing.Font("Calibri Light", 12F);
-            this.tbsRefOutras.Label = "Outras Referências";
-            this.tbsRefOutras.Location = new System.Drawing.Point(3, 343);
-            this.tbsRefOutras.Name = "tbsRefOutras";
-            this.tbsRefOutras.PasswordChar = '\0';
-            this.tbsRefOutras.Size = new System.Drawing.Size(756, 44);
-            this.tbsRefOutras.TabIndex = 21;
+            this.cbsOperacaoVendaCC.AutoSize = true;
+            this.cbsOperacaoVendaCC.BindingSource = null;
+            this.tableLayoutPanel2.SetColumnSpan(this.cbsOperacaoVendaCC, 5);
+            this.cbsOperacaoVendaCC.DisplayMember = "";
+            this.cbsOperacaoVendaCC.DroppedDown = false;
+            this.cbsOperacaoVendaCC.Label = "Operação para Vendas de Conta Corrente";
+            this.cbsOperacaoVendaCC.Location = new System.Drawing.Point(378, 3);
+            this.cbsOperacaoVendaCC.Name = "cbsOperacaoVendaCC";
+            this.cbsOperacaoVendaCC.SelectedIndex = -1;
+            this.cbsOperacaoVendaCC.SelectedText = null;
+            this.cbsOperacaoVendaCC.SelectedValue = null;
+            this.cbsOperacaoVendaCC.Size = new System.Drawing.Size(375, 44);
+            this.cbsOperacaoVendaCC.TabIndex = 2;
+            this.cbsOperacaoVendaCC.ValueMember = "";
             // 
             // FCadastroCad
             // 
@@ -1571,5 +1608,7 @@
         private Componentes.TextBoxSimples tbsRefParenteCidade;
         private Componentes.TextBoxSimples tbsRefTelefoneParente;
         private Componentes.TextBoxSimples tbsRefOutras;
+        private Componentes.TextBoxSimples tbsLimite;
+        private Componentes.ComboBoxSimples cbsOperacaoVendaCC;
     }
 }

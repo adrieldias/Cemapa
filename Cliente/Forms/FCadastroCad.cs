@@ -42,6 +42,7 @@ namespace Cliente.Forms
         public BindingSource GarantiaBindingSource { get; set; }
         public BindingSource QualificacaoBindingSource { get; set; }
         public BindingSource AvalistaBindingSource { get; set; }
+        public BindingSource OperacaoVendaCCBindingSource { get; set; }
 
         #endregion
 
@@ -106,6 +107,7 @@ namespace Cliente.Forms
             tbsRefParenteCidade.DataBindings.Add("Text", CadastroBindingSource.Current, "DESC_REF_PARENTE_CIDADE");
             tbsRefTelefoneParente.DataBindings.Add("Text", CadastroBindingSource.Current, "DESC_REF_PARENTE_TELEFONE");
             tbsRefOutras.DataBindings.Add("Text", CadastroBindingSource.Current, "DESC_REF_OUTRAS");
+            tbsLimite.DataBindings.Add("Text", CadastroBindingSource.Current, "VAL_LIMITE");
 
             //cbsTipoCadastro
             if (TipoCadastroBindingSource == null)
@@ -456,6 +458,29 @@ namespace Cliente.Forms
             if (AvalistaBindingSource == null)
                 AvalistaBindingSource = new BindingSource();
             cbsAvalista.BindingSource = AvalistaBindingSource;
+
+            //cbsOperacaoVendaCC                       
+            if (OperacaoVendaCCBindingSource == null)
+                OperacaoVendaCCBindingSource = new BindingSource();
+            OperacaoVendaCCBindingSource.DataSource = JsonConvert.DeserializeAnonymousType((await RunAsyncGet(
+                ConfigurationManager.AppSettings["UriOperacao"]
+                )), new List<TB_OPERACAO>());
+            TB_OPERACAO op = new TB_OPERACAO();
+            op.COD_OPERACAO = 0;
+            op.DESC_OPERACAO = string.Empty;
+            OperacaoVendaCCBindingSource.Insert(0, op);
+            cbsOperacaoVendaCC.BindingSource = OperacaoVendaCCBindingSource;
+            cbsOperacaoVendaCC.DisplayMember = "DESC_OPERACAO";
+            if ((CadastroBindingSource.Current as TB_CADASTRO).COD_OPERACAO_CC != null)
+            {
+                var obj = OperacaoVendaCCBindingSource.List.OfType<TB_OPERACAO>().First(c => c.COD_OPERACAO == ((TB_CADASTRO)CadastroBindingSource.Current).COD_OPERACAO_CC);
+                var pos = OperacaoVendaCCBindingSource.IndexOf(obj);
+                OperacaoVendaCCBindingSource.Position = pos;
+                obj = null;
+                pos = 0;
+            }
+            else
+                cbsOperacaoVendaCC.SelectedIndex = -1;
 
             //dgvPropriedades
             if (PropriedadeBindingSource == null)

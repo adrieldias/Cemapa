@@ -33,6 +33,7 @@ namespace Cliente.Forms
         public BindingSource EstadoBindingSource { get; set; }
         public BindingSource CidadeBindingSource { get; set; }
         public BindingSource PaisBindingSource { get; set; }
+        public BindingSource TipoEnderecoBindingSource { get; set; }
 
         #endregion
 
@@ -41,9 +42,11 @@ namespace Cliente.Forms
         private void ConfiguraComponentes()
         {
             tbsEndereco.DataBindings.Add("Text", EnderecoBindingSource.Current, "DESC_ENDERECO");
-            //tbsComplemento.DataBindings.Add("Text", EnderecoBindingSource.Current, "DESC_COMPLEMENTO");
+            tbsComplemento.DataBindings.Add("Text", EnderecoBindingSource.Current, "DESC_COMPLEMENTO");
             tbsBairro.DataBindings.Add("Text", EnderecoBindingSource.Current, "DESC_BAIRRO");
             tbsCep.DataBindings.Add("Text", EnderecoBindingSource.Current, "DESC_CEP");
+            tbsCaixaPostal.DataBindings.Add("Text", EnderecoBindingSource.Current, "NUM_CAIXA_POSTAL");
+            tbsDistrito.DataBindings.Add("Text", EnderecoBindingSource.Current, "DESC_DISTRITO");
 
             //CbsEstado
             if (EstadoBindingSource == null)
@@ -59,6 +62,11 @@ namespace Cliente.Forms
             if (PaisBindingSource == null)
                 PaisBindingSource = new BindingSource();
             cbsPais.BindingSource = PaisBindingSource;
+
+            //CbsTipoEndereco
+            if (TipoEnderecoBindingSource == null)
+                TipoEnderecoBindingSource = new BindingSource();
+            cbsTipoEndereco.BindingSource = TipoEnderecoBindingSource;
         }
 
         #endregion
@@ -101,6 +109,23 @@ namespace Cliente.Forms
                 );
             cbsPais.DisplayMember = "DESC_PAIS";
             cbsPais.ValueMember = "COD_PAIS";
+
+            //cbsTipoEndereco
+            List<Generico> ListaTipo = new List<Generico>();            
+            ListaTipo.Add(new Generico() { Codigo = "PRINCIPAL", Descricao = "PRINCIPAL" });
+            ListaTipo.Add(new Generico() { Codigo = "ENTREGA", Descricao = "ENTREGA" });
+            ListaTipo.Add(new Generico() { Codigo = "TRABALHO", Descricao = "TRABALHO" });            
+            TipoEnderecoBindingSource.DataSource = ListaTipo;            
+            cbsTipoEndereco.BindingSource = TipoEnderecoBindingSource;
+            cbsTipoEndereco.DisplayMember = "Descricao";
+            if ((EnderecoBindingSource.Current as TB_CADASTRO_ENDERECOS).IND_TIPO_ENDERECO != null)
+            {
+                var obj = TipoEnderecoBindingSource.List.OfType<POCO.Generico>().First(p => p.Descricao == ((TB_CADASTRO_ENDERECOS)EnderecoBindingSource.Current).IND_TIPO_ENDERECO);
+                var pos = TipoEnderecoBindingSource.IndexOf(obj);
+                TipoEnderecoBindingSource.Position = pos;
+                obj = null;
+                pos = 0;
+            }            
         }
 
         private async void BuscaCidades(string estado)
@@ -168,6 +193,8 @@ namespace Cliente.Forms
                 = ((TB_ESTADO)EstadoBindingSource.Current).COD_ESTADO;
             ((TB_PAIS)PaisBindingSource.Current).COD_PAIS
                 = ((TB_PAIS)PaisBindingSource.Current).COD_PAIS;
+            (EnderecoBindingSource.Current as TB_CADASTRO_ENDERECOS).IND_TIPO_ENDERECO
+                = (TipoEnderecoBindingSource.Current as Generico).Codigo;
             EnderecoBindingSource.EndEdit();
         }
     }

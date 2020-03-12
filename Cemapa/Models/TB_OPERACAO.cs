@@ -24,8 +24,8 @@ namespace Cemapa.Models
     
         public int COD_OPERACAO { get; set; }
         public string DESC_OPERACAO { get; set; }
-        public Nullable<byte> NUM_NATUREZA_EST { get; set; }
-        public Nullable<byte> NUM_NATUREZA_INT { get; set; }
+        public Nullable<short> NUM_NATUREZA_EST { get; set; }
+        public Nullable<short> NUM_NATUREZA_INT { get; set; }
         public string IND_ESTOQUE { get; set; }
         public string IND_CUSTO { get; set; }
         public string IND_VENDAS { get; set; }
@@ -41,7 +41,7 @@ namespace Cemapa.Models
         public string IND_FIXAR_OUTRAS_EMP { get; set; }
         public string IND_FUNRURAL { get; set; }
         public string DESC_RESUMO { get; set; }
-        public Nullable<byte> NUM_LIVROS { get; set; }
+        public Nullable<short> NUM_LIVROS { get; set; }
         public Nullable<int> COD_HISTORICO_CAIXA { get; set; }
         public string IND_DUPLICATA { get; set; }
         public string IND_BLOQUETO { get; set; }
@@ -161,7 +161,7 @@ namespace Cemapa.Models
         public string COD_CONTABIL_SUBST_CRED { get; set; }
         public string COD_CONTABIL_FCCIA_DEB { get; set; }
         public string COD_CONTABIL_FCCIA_CRED { get; set; }
-        public Nullable<int> COD_HISTORICO_CAIXA_CHEQUE { get; set; }
+        public string COD_BENEF_FISCAL { get; set; }
     
         public virtual TB_BC_CREDITO_PISCOFINS TB_BC_CREDITO_PISCOFINS { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

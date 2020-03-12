@@ -32,11 +32,14 @@
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.tbsCep = new Componentes.TextBoxSimples();
             this.cbsPais = new Componentes.ComboBoxSimples();
-            this.tbsEndereco = new Componentes.TextBoxSimples();
-            this.tbsComplemento = new Componentes.TextBoxSimples();
             this.cbsEstado = new Componentes.ComboBoxSimples();
             this.cbsCidade = new Componentes.ComboBoxSimples();
             this.tbsBairro = new Componentes.TextBoxSimples();
+            this.tbsEndereco = new Componentes.TextBoxSimples();
+            this.tbsComplemento = new Componentes.TextBoxSimples();
+            this.cbsTipoEndereco = new Componentes.ComboBoxSimples();
+            this.tbsCaixaPostal = new Componentes.TextBoxSimples();
+            this.tbsDistrito = new Componentes.TextBoxSimples();
             this.pCabecalho.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -90,13 +93,16 @@
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.tableLayoutPanel2.Controls.Add(this.tbsCep, 0, 2);
-            this.tableLayoutPanel2.Controls.Add(this.cbsPais, 3, 2);
-            this.tableLayoutPanel2.Controls.Add(this.tbsEndereco, 0, 0);
-            this.tableLayoutPanel2.Controls.Add(this.tbsComplemento, 5, 0);
-            this.tableLayoutPanel2.Controls.Add(this.cbsEstado, 0, 1);
-            this.tableLayoutPanel2.Controls.Add(this.cbsCidade, 3, 1);
-            this.tableLayoutPanel2.Controls.Add(this.tbsBairro, 7, 1);
+            this.tableLayoutPanel2.Controls.Add(this.cbsEstado, 0, 2);
+            this.tableLayoutPanel2.Controls.Add(this.cbsCidade, 3, 2);
+            this.tableLayoutPanel2.Controls.Add(this.tbsBairro, 7, 2);
+            this.tableLayoutPanel2.Controls.Add(this.tbsEndereco, 0, 1);
+            this.tableLayoutPanel2.Controls.Add(this.tbsComplemento, 5, 1);
+            this.tableLayoutPanel2.Controls.Add(this.cbsTipoEndereco, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.cbsPais, 0, 3);
+            this.tableLayoutPanel2.Controls.Add(this.tbsCep, 3, 3);
+            this.tableLayoutPanel2.Controls.Add(this.tbsCaixaPostal, 5, 3);
+            this.tableLayoutPanel2.Controls.Add(this.tbsDistrito, 7, 3);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
@@ -117,13 +123,13 @@
             this.tbsCep.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tbsCep.AutoSize = true;
-            this.tableLayoutPanel2.SetColumnSpan(this.tbsCep, 3);
+            this.tableLayoutPanel2.SetColumnSpan(this.tbsCep, 2);
             this.tbsCep.Font = new System.Drawing.Font("Calibri Light", 12F);
             this.tbsCep.Label = "CEP";
-            this.tbsCep.Location = new System.Drawing.Point(3, 103);
+            this.tbsCep.Location = new System.Drawing.Point(258, 153);
             this.tbsCep.Name = "tbsCep";
             this.tbsCep.PasswordChar = '\0';
-            this.tbsCep.Size = new System.Drawing.Size(249, 44);
+            this.tbsCep.Size = new System.Drawing.Size(164, 44);
             this.tbsCep.TabIndex = 9;
             // 
             // cbsPais
@@ -134,8 +140,9 @@
             this.cbsPais.BindingSource = null;
             this.tableLayoutPanel2.SetColumnSpan(this.cbsPais, 3);
             this.cbsPais.DisplayMember = "";
+            this.cbsPais.DroppedDown = false;
             this.cbsPais.Label = "País";
-            this.cbsPais.Location = new System.Drawing.Point(258, 103);
+            this.cbsPais.Location = new System.Drawing.Point(3, 153);
             this.cbsPais.Name = "cbsPais";
             this.cbsPais.SelectedIndex = -1;
             this.cbsPais.SelectedText = null;
@@ -143,34 +150,6 @@
             this.cbsPais.Size = new System.Drawing.Size(249, 44);
             this.cbsPais.TabIndex = 10;
             this.cbsPais.ValueMember = "";
-            // 
-            // tbsEndereco
-            // 
-            this.tbsEndereco.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbsEndereco.AutoSize = true;
-            this.tableLayoutPanel2.SetColumnSpan(this.tbsEndereco, 5);
-            this.tbsEndereco.Font = new System.Drawing.Font("Calibri Light", 12F);
-            this.tbsEndereco.Label = "Endereço (Informar Número Após Vírgula)";
-            this.tbsEndereco.Location = new System.Drawing.Point(3, 3);
-            this.tbsEndereco.Name = "tbsEndereco";
-            this.tbsEndereco.PasswordChar = '\0';
-            this.tbsEndereco.Size = new System.Drawing.Size(419, 44);
-            this.tbsEndereco.TabIndex = 7;
-            // 
-            // tbsComplemento
-            // 
-            this.tbsComplemento.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbsComplemento.AutoSize = true;
-            this.tableLayoutPanel2.SetColumnSpan(this.tbsComplemento, 5);
-            this.tbsComplemento.Font = new System.Drawing.Font("Calibri Light", 12F);
-            this.tbsComplemento.Label = "Complemento";
-            this.tbsComplemento.Location = new System.Drawing.Point(428, 3);
-            this.tbsComplemento.Name = "tbsComplemento";
-            this.tbsComplemento.PasswordChar = '\0';
-            this.tbsComplemento.Size = new System.Drawing.Size(421, 44);
-            this.tbsComplemento.TabIndex = 8;
             // 
             // cbsEstado
             // 
@@ -180,8 +159,9 @@
             this.cbsEstado.BindingSource = null;
             this.tableLayoutPanel2.SetColumnSpan(this.cbsEstado, 3);
             this.cbsEstado.DisplayMember = "";
+            this.cbsEstado.DroppedDown = false;
             this.cbsEstado.Label = "Estado";
-            this.cbsEstado.Location = new System.Drawing.Point(3, 53);
+            this.cbsEstado.Location = new System.Drawing.Point(3, 103);
             this.cbsEstado.Name = "cbsEstado";
             this.cbsEstado.SelectedIndex = -1;
             this.cbsEstado.SelectedText = "DESC_ESTADO";
@@ -198,8 +178,9 @@
             this.cbsCidade.BindingSource = null;
             this.tableLayoutPanel2.SetColumnSpan(this.cbsCidade, 4);
             this.cbsCidade.DisplayMember = "";
+            this.cbsCidade.DroppedDown = false;
             this.cbsCidade.Label = "Cidade";
-            this.cbsCidade.Location = new System.Drawing.Point(258, 53);
+            this.cbsCidade.Location = new System.Drawing.Point(258, 103);
             this.cbsCidade.Name = "cbsCidade";
             this.cbsCidade.SelectedIndex = -1;
             this.cbsCidade.SelectedText = null;
@@ -216,11 +197,86 @@
             this.tableLayoutPanel2.SetColumnSpan(this.tbsBairro, 3);
             this.tbsBairro.Font = new System.Drawing.Font("Calibri Light", 12F);
             this.tbsBairro.Label = "Bairro";
-            this.tbsBairro.Location = new System.Drawing.Point(598, 53);
+            this.tbsBairro.Location = new System.Drawing.Point(598, 103);
             this.tbsBairro.Name = "tbsBairro";
             this.tbsBairro.PasswordChar = '\0';
             this.tbsBairro.Size = new System.Drawing.Size(251, 44);
             this.tbsBairro.TabIndex = 6;
+            // 
+            // tbsEndereco
+            // 
+            this.tbsEndereco.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbsEndereco.AutoSize = true;
+            this.tableLayoutPanel2.SetColumnSpan(this.tbsEndereco, 5);
+            this.tbsEndereco.Font = new System.Drawing.Font("Calibri Light", 12F);
+            this.tbsEndereco.Label = "Endereço (Informar Número Após Vírgula)";
+            this.tbsEndereco.Location = new System.Drawing.Point(3, 53);
+            this.tbsEndereco.Name = "tbsEndereco";
+            this.tbsEndereco.PasswordChar = '\0';
+            this.tbsEndereco.Size = new System.Drawing.Size(419, 44);
+            this.tbsEndereco.TabIndex = 7;
+            // 
+            // tbsComplemento
+            // 
+            this.tbsComplemento.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbsComplemento.AutoSize = true;
+            this.tableLayoutPanel2.SetColumnSpan(this.tbsComplemento, 5);
+            this.tbsComplemento.Font = new System.Drawing.Font("Calibri Light", 12F);
+            this.tbsComplemento.Label = "Complemento";
+            this.tbsComplemento.Location = new System.Drawing.Point(428, 53);
+            this.tbsComplemento.Name = "tbsComplemento";
+            this.tbsComplemento.PasswordChar = '\0';
+            this.tbsComplemento.Size = new System.Drawing.Size(421, 44);
+            this.tbsComplemento.TabIndex = 8;
+            // 
+            // cbsTipoEndereco
+            // 
+            this.cbsTipoEndereco.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbsTipoEndereco.AutoSize = true;
+            this.cbsTipoEndereco.BindingSource = null;
+            this.tableLayoutPanel2.SetColumnSpan(this.cbsTipoEndereco, 5);
+            this.cbsTipoEndereco.DisplayMember = "";
+            this.cbsTipoEndereco.DroppedDown = false;
+            this.cbsTipoEndereco.Label = "Tipo de Endereço";
+            this.cbsTipoEndereco.Location = new System.Drawing.Point(3, 3);
+            this.cbsTipoEndereco.Name = "cbsTipoEndereco";
+            this.cbsTipoEndereco.SelectedIndex = -1;
+            this.cbsTipoEndereco.SelectedText = null;
+            this.cbsTipoEndereco.SelectedValue = null;
+            this.cbsTipoEndereco.Size = new System.Drawing.Size(419, 44);
+            this.cbsTipoEndereco.TabIndex = 12;
+            this.cbsTipoEndereco.ValueMember = "";
+            // 
+            // tbsCaixaPostal
+            // 
+            this.tbsCaixaPostal.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbsCaixaPostal.AutoSize = true;
+            this.tableLayoutPanel2.SetColumnSpan(this.tbsCaixaPostal, 2);
+            this.tbsCaixaPostal.Font = new System.Drawing.Font("Calibri Light", 12F);
+            this.tbsCaixaPostal.Label = "Caixa Postal";
+            this.tbsCaixaPostal.Location = new System.Drawing.Point(428, 153);
+            this.tbsCaixaPostal.Name = "tbsCaixaPostal";
+            this.tbsCaixaPostal.PasswordChar = '\0';
+            this.tbsCaixaPostal.Size = new System.Drawing.Size(164, 44);
+            this.tbsCaixaPostal.TabIndex = 13;
+            // 
+            // tbsDistrito
+            // 
+            this.tbsDistrito.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbsDistrito.AutoSize = true;
+            this.tableLayoutPanel2.SetColumnSpan(this.tbsDistrito, 3);
+            this.tbsDistrito.Font = new System.Drawing.Font("Calibri Light", 12F);
+            this.tbsDistrito.Label = "Distrito";
+            this.tbsDistrito.Location = new System.Drawing.Point(598, 153);
+            this.tbsDistrito.Name = "tbsDistrito";
+            this.tbsDistrito.PasswordChar = '\0';
+            this.tbsDistrito.Size = new System.Drawing.Size(251, 44);
+            this.tbsDistrito.TabIndex = 14;
             // 
             // FEnderecoCad
             // 
@@ -257,5 +313,8 @@
         private Componentes.ComboBoxSimples cbsEstado;
         private Componentes.ComboBoxSimples cbsCidade;
         private Componentes.TextBoxSimples tbsBairro;
+        private Componentes.ComboBoxSimples cbsTipoEndereco;
+        private Componentes.TextBoxSimples tbsCaixaPostal;
+        private Componentes.TextBoxSimples tbsDistrito;
     }
 }

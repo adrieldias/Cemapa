@@ -347,10 +347,6 @@
           <Property Name="DESC_ML_CLIENT_SECRET" Type="varchar2" MaxLength="32" />
           <Property Name="IND_ML_ATIVO" Type="char" MaxLength="1" />
           <Property Name="DESC_ML_CLIENT_ID" Type="varchar2" MaxLength="16" />
-          <Property Name="DESC_ACCESS_TOKEN_ML" Type="varchar2" MaxLength="100" />
-          <Property Name="DT_ACCESS_TOKEN_ML" Type="date" />
-          <Property Name="DESC_USER_ID_ML" Type="varchar2" MaxLength="15" />
-          <Property Name="DT_ULTIMA_ATUALIZACAO_ML" Type="date" />
         </EntityType>
         <EntityType Name="TB_CONTA_CORRENTE">
           <Key>
@@ -1017,7 +1013,6 @@
           <Property Name="COD_CONTABIL_FCCIA_CRED" Type="varchar2" MaxLength="15" />
           <Property Name="COD_CONTABIL_FCCIA_DEB" Type="varchar2" MaxLength="15" />
           <Property Name="COD_BENEF_FISCAL" Type="varchar2" MaxLength="10" />
-          <Property Name="COD_HISTORICO_CAIXA_CHEQUE" Type="number" Precision="6" Scale="0" />
         </EntityType>
         <EntityType Name="TB_PAIS">
           <Key>
@@ -1345,7 +1340,6 @@
           <Property Name="ESP_VOLTAGEM" Type="varchar2" MaxLength="30" />
           <Property Name="VAL_PESO" Type="number" Precision="6" Scale="2" />
           <Property Name="DESC_CONEXAO_MARKETPLACE" Type="varchar2" MaxLength="10" />
-          <Property Name="COD_CATEGORIA_ML" Type="varchar2" MaxLength="8" />
         </EntityType>
         <EntityType Name="TB_PROPRIEDADE">
           <Key>
@@ -5035,7 +5029,6 @@
           <Property Name="ESP_VOLTAGEM" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="VAL_PESO" Type="Decimal" Precision="6" Scale="2" />
           <Property Name="DESC_CONEXAO_MARKETPLACE" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="COD_CATEGORIA_ML" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_PROD_SKYXPRODUTO">
           <End Type="Model.TB_PRODUTO" Role="TB_PRODUTO" Multiplicity="1" />
@@ -5750,8 +5743,8 @@
           </Key>
           <Property Name="COD_OPERACAO" Type="Int32" Nullable="false" />
           <Property Name="DESC_OPERACAO" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="NUM_NATUREZA_EST" Type="Byte" />
-          <Property Name="NUM_NATUREZA_INT" Type="Byte" />
+          <Property Name="NUM_NATUREZA_EST" Type="Int16" />
+          <Property Name="NUM_NATUREZA_INT" Type="Int16" />
           <Property Name="IND_ESTOQUE" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="IND_CUSTO" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="IND_VENDAS" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
@@ -5767,7 +5760,7 @@
           <Property Name="IND_FIXAR_OUTRAS_EMP" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="IND_FUNRURAL" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="DESC_RESUMO" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="NUM_LIVROS" Type="Byte" />
+          <Property Name="NUM_LIVROS" Type="Int16" />
           <Property Name="COD_HISTORICO_CAIXA" Type="Int32" />
           <Property Name="IND_DUPLICATA" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="IND_BLOQUETO" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
@@ -5893,7 +5886,7 @@
           <Property Name="COD_CONTABIL_FCCIA_DEB" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="COD_CONTABIL_FCCIA_CRED" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="TB_CONFIGURACAO_SKYHUB" Relationship="Model.FK_CONF_SKYXOPERACAO" FromRole="TB_OPERACAO" ToRole="TB_CONFIGURACAO_SKYHUB" />
-          <Property Name="COD_HISTORICO_CAIXA_CHEQUE" Type="Int32" />
+          <Property Name="COD_BENEF_FISCAL" Type="String" Nullable="false" />
         </EntityType>
         <Association Name="FK_OPERACAOXVCCREDPISCOFINS">
           <End Type="Model.TB_BC_CREDITO_PISCOFINS" Role="TB_BC_CREDITO_PISCOFINS" Multiplicity="0..1" />
@@ -6266,10 +6259,6 @@
           <Property Name="DESC_ML_CLIENT_SECRET" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
           <Property Name="IND_ML_ATIVO" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="DESC_ML_CLIENT_ID" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
-          <Property Name="DESC_ACCESS_TOKEN_ML" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="DT_ACCESS_TOKEN_ML" Type="DateTime" />
-          <Property Name="DESC_USER_ID_ML" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="DT_ULTIMA_ATUALIZACAO_ML" Type="DateTime" />
         </EntityType>
         <Association Name="FK_CONF_SKYXCLASS_CADASTRO">
           <End Type="Model.TB_CLASS_CADASTRO" Role="TB_CLASS_CADASTRO" Multiplicity="0..1" />
@@ -7357,7 +7346,6 @@
           <EntitySetMapping Name="TB_PRODUTO_SKYHUB">
             <EntityTypeMapping TypeName="Model.TB_PRODUTO_SKYHUB">
               <MappingFragment StoreEntitySet="TB_PRODUTO_SKYHUB">
-                <ScalarProperty Name="COD_CATEGORIA_ML" ColumnName="COD_CATEGORIA_ML" />
                 <ScalarProperty Name="DESC_CONEXAO_MARKETPLACE" ColumnName="DESC_CONEXAO_MARKETPLACE" />
                 <ScalarProperty Name="VAL_PESO" ColumnName="VAL_PESO" />
                 <ScalarProperty Name="ESP_VOLTAGEM" ColumnName="ESP_VOLTAGEM" />
@@ -7825,7 +7813,7 @@
           <EntitySetMapping Name="TB_OPERACAO">
             <EntityTypeMapping TypeName="Model.TB_OPERACAO">
               <MappingFragment StoreEntitySet="TB_OPERACAO">
-                <ScalarProperty Name="COD_HISTORICO_CAIXA_CHEQUE" ColumnName="COD_HISTORICO_CAIXA_CHEQUE" />
+                <ScalarProperty Name="COD_BENEF_FISCAL" ColumnName="COD_BENEF_FISCAL" />
                 <ScalarProperty Name="COD_CONTABIL_FCCIA_CRED" ColumnName="COD_CONTABIL_FCCIA_CRED" />
                 <ScalarProperty Name="COD_CONTABIL_FCCIA_DEB" ColumnName="COD_CONTABIL_FCCIA_DEB" />
                 <ScalarProperty Name="COD_CONTABIL_SUBST_CRED" ColumnName="COD_CONTABIL_SUBST_CRED" />
@@ -8103,10 +8091,6 @@
           <EntitySetMapping Name="TB_CONFIGURACAO_SKYHUB">
             <EntityTypeMapping TypeName="Model.TB_CONFIGURACAO_SKYHUB">
               <MappingFragment StoreEntitySet="TB_CONFIGURACAO_SKYHUB">
-                <ScalarProperty Name="DT_ULTIMA_ATUALIZACAO_ML" ColumnName="DT_ULTIMA_ATUALIZACAO_ML" />
-                <ScalarProperty Name="DESC_USER_ID_ML" ColumnName="DESC_USER_ID_ML" />
-                <ScalarProperty Name="DT_ACCESS_TOKEN_ML" ColumnName="DT_ACCESS_TOKEN_ML" />
-                <ScalarProperty Name="DESC_ACCESS_TOKEN_ML" ColumnName="DESC_ACCESS_TOKEN_ML" />
                 <ScalarProperty Name="DESC_ML_CLIENT_ID" ColumnName="DESC_ML_CLIENT_ID" />
                 <ScalarProperty Name="IND_ML_ATIVO" ColumnName="IND_ML_ATIVO" />
                 <ScalarProperty Name="DESC_ML_CLIENT_SECRET" ColumnName="DESC_ML_CLIENT_SECRET" />
