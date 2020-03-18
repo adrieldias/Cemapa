@@ -41,6 +41,7 @@ namespace Cemapa.Models
         public string IND_TIPO_RECIBO { get; set; }
         public string IND_REL_CAIXA_BANCO { get; set; }
         public string NUM_PLANO_CONTA_CAIXA { get; set; }
+        public string IND_DRE_POLYANA { get; set; }
     
         public virtual TB_CENTRO_CUSTO TB_CENTRO_CUSTO { get; set; }
         public virtual TB_DEPARTAMENTO TB_DEPARTAMENTO { get; set; }

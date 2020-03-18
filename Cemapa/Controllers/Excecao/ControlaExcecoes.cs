@@ -1,6 +1,7 @@
 ﻿using Cemapa.Controllers.UtilsServidor;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace Cemapa.Models
         public Posicao Local { get; set; }
         public List<string> ChavesContextuais = new List<string>();
 
-        public ExcecaoContextual(Exception exception)
+        public ExcecaoContextual(DbEntityValidationException exception)
         {
             try
             {
@@ -36,6 +37,52 @@ namespace Cemapa.Models
                     };
                 }
                 
+                //Busca por exceções internas para adiciona-las às chaves contextuais.
+                //Tais chaves armazenam informações sobre o erro, ajudando na busca pela resolução.
+
+                Exception inner = exception.InnerException;
+
+                while (inner != null)
+                {
+                    ChavesContextuais.Add(inner.Message);
+                    inner = inner.InnerException;
+                }
+                
+                foreach (DbEntityValidationResult entValidations in exception.EntityValidationErrors)
+                {
+                    foreach (DbValidationError validation in entValidations.ValidationErrors)
+                    {
+                        ChavesContextuais.Add(validation.ErrorMessage);
+                    }
+                }
+
+                Excecao = exception;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public ExcecaoContextual(Exception exception)
+        {
+            try
+            {
+                //Quando criamos uma exceção contextualizada, o construtor recebe a exceção padrão
+                //e colhe alguns dados, como a linha em que foi gerado o erro, e em que arquivo.
+
+                StackFrame frame = new StackTrace(exception, true).GetFrames().LastOrDefault();
+
+                if (frame != null)
+                {
+                    Local = new Posicao
+                    {
+                        Linha = frame.GetFileLineNumber(),
+                        Coluna = frame.GetFileColumnNumber(),
+                        Codigo = frame.GetFileName().Split(Path.DirectorySeparatorChar).Last()
+                    };
+                }
+
                 //Busca por exceções internas para adiciona-las às chaves contextuais.
                 //Tais chaves armazenam informações sobre o erro, ajudando na busca pela resolução.
 
@@ -212,14 +259,28 @@ namespace Cemapa.Models
                 throw new Exception(ex.Message);
             }
         }
-
-        public static void Adiciona(Exception except)
+        
+        public static void Adiciona(DbEntityValidationException except, List<string> Referencias = null)
         {
             try
             {
+                if (Referencias == null)
+                {
+                    Referencias = new List<string>();
+                }
+
                 if (!Filtros.Exists(filtro => except.Message.Contains(filtro)))
                 {
                     ExcecaoContextual exContx = new ExcecaoContextual(except);
+
+                    foreach (string referencia in Referencias)
+                    {
+                        if (!Filtros.Exists(filtro => filtro == referencia))
+                        {
+                            exContx.ChavesContextuais.Add(referencia);
+                        }
+                    }
+
                     Excecoes.Add(exContx);
                 }
             }
@@ -229,10 +290,15 @@ namespace Cemapa.Models
             }
         }
 
-        public static void Adiciona(Exception except, List<string> Referencias)
+        public static void Adiciona(Exception except, List<string> Referencias = null)
         {
             try
             {
+                if (Referencias == null)
+                {
+                    Referencias = new List<string>();
+                }
+
                 if (!Filtros.Exists(filtro => except.Message.Contains(filtro)))
                 {
                     ExcecaoContextual exContx = new ExcecaoContextual(except);

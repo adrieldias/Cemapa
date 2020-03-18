@@ -204,6 +204,7 @@ namespace Cemapa.Models
         public string IND_IMPRIME_REQ_OBRA { get; set; }
         public string IND_SITUACAO { get; set; }
         public string IND_SINC_MAX_ROTEIRIZADOR { get; set; }
+        public string COD_CLASSIFICACAO_CONTRIB_IPI { get; set; }
     
         public virtual TB_CIDADE TB_CIDADE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

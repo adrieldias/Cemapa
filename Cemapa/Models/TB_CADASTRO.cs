@@ -195,6 +195,8 @@ namespace Cemapa.Models
         public string DESC_NRO_REG_ESTADUAL { get; set; }
         public string IND_SINC_MAX_ROTEIRIZADOR { get; set; }
         public Nullable<int> COD_FILIAL { get; set; }
+        public Nullable<System.DateTime> DT_CONSULTA_SINTREGA { get; set; }
+        public string DESC_OUTRAS_GRANTIAS { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TB_CADASTRO_ENDERECOS> TB_CADASTRO_ENDERECOS { get; set; }

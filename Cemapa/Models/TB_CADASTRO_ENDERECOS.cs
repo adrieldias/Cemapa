@@ -27,8 +27,6 @@ namespace Cemapa.Models
         public string DESC_DISTRITO { get; set; }
         public string DESC_E_MAIL_COMERCIAL { get; set; }
         public string DESC_E_MAIL_FINANCEIRO { get; set; }
-        public string IND_TIPO_ENDERECO { get; set; }
-        public string DESC_COMPLEMENTO { get; set; }
     
         public virtual TB_CADASTRO TB_CADASTRO { get; set; }
     }

@@ -5,7 +5,7 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="912c242cfcbe4301bb4c503ca9fbf7eb" Name="Diagram1" ZoomLevel="73">
-        <EntityTypeShape EntityType="Model.TB_CADASTRO_ENDERECOS" Width="1.5" PointX="0.5" PointY="2" IsExpanded="false" />
+        <EntityTypeShape EntityType="Model.TB_CADASTRO_ENDERECOS" Width="1.5" PointX="0.5" PointY="2" IsExpanded="true" />
         <EntityTypeShape EntityType="Model.TB_CLASS_CADASTRO" Width="1.5" PointX="2.75" PointY="0.625" IsExpanded="false" />
         <EntityTypeShape EntityType="Model.TB_CIDADE" Width="1.5" PointX="2.25" PointY="2" IsExpanded="false" />
         <EntityTypeShape EntityType="Model.TB_REGIAO" Width="1.5" PointX="4.5" PointY="0.625" IsExpanded="false" />
@@ -118,7 +118,7 @@
         <AssociationConnector Association="Model.FK_HISTORICOXDEPARTAMENTO" />
         <AssociationConnector Association="Model.FK_HISTORICOXGRUPO_CUSTOS" />
         <EntityTypeShape EntityType="Model.TB_BC_CREDITO_PISCOFINS" Width="1.5" PointX="5.625" PointY="10.375" IsExpanded="false" />
-        <EntityTypeShape EntityType="Model.TB_OPERACAO" Width="1.5" PointX="2.375" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.TB_OPERACAO" Width="1.5" PointX="2.375" PointY="8.5" IsExpanded="false" />
         <AssociationConnector Association="Model.FK_OPERACAOXVCCREDPISCOFINS" />
         <AssociationConnector Association="Model.FK_CADASTROXOPERACAO" />
         <AssociationConnector Association="Model.FK_OPERACAOXHISTORICO" />

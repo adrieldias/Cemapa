@@ -27,6 +27,7 @@ using ItemFromProducts = Cemapa.Models.MercadoLivre.Products.Item;
 using ShippingFromProducts = Cemapa.Models.MercadoLivre.Products.Shipping;
 using AlternativePhoneFromOrder = Cemapa.Models.MercadoLivre.Orders.AlternativePhone;
 using PhoneFromOrder = Cemapa.Models.MercadoLivre.Orders.Phone;
+using System.Data.Entity.Validation;
 
 namespace Cemapa.Controllers
 {
@@ -341,7 +342,11 @@ namespace Cemapa.Controllers
 
                         SearchFromOrders search = await response.Content.ReadAsAsync<SearchFromOrders>();
 
-                        foreach (Result ordem in search.results)
+                        //Esta linha vai filtrar por ordens que tenha produtos com sku cadastrado, que é o que nos interessa.
+
+                        List<Result> results = search.results.FindAll(r => r.order_items.Any(oi => oi.item.seller_custom_field != null));
+
+                        foreach (Result ordem in results)
                         {
                             try
                             {
@@ -431,7 +436,7 @@ namespace Cemapa.Controllers
                                                 }
                                             );
                                         }
-                                        
+
                                         //O seguinte if foi adicionado pois pela manhã, boa parte das vezes, os pedidos eram criados duas vezes
                                         //no sistema. Minha teoria é que, como o servidor é lento ao iniciar, talvez 2 requisições estivessem
                                         //sendo ocorridas no determinado instante, adicionando 2 vezes o mesmo pedido.
@@ -463,12 +468,16 @@ namespace Cemapa.Controllers
                                         db.SaveChanges();
 
                                         wTotalAlterados++;
-                                    }
+                                    }                                 
                                 }
+                            }
+                            catch (DbEntityValidationException except)
+                            {
+                                ControladorExcecoes.Adiciona(except, new List<string> { $"Filial: {configuracaoSkyhub.COD_FILIAL}, Pedido: Mercado Livre-{ordem.id}" });
                             }
                             catch (Exception except)
                             {
-                                ControladorExcecoes.Adiciona(except, new List<string> { $"Filial: {configuracaoSkyhub.COD_FILIAL}, Pedido: Mercado Livre-{ordem.id}"});
+                                ControladorExcecoes.Adiciona(except, new List<string> { $"Filial: {configuracaoSkyhub.COD_FILIAL}, Pedido: Mercado Livre-{ordem.id}" });
                             }
                         }
 
@@ -971,8 +980,8 @@ namespace Cemapa.Controllers
                     DESC_CELULAR = ordem.buyer.alternative_phone.number,
                     DESC_TELEFONE = ordem.buyer.phone.number,
                     DESC_ENDERECO = $"{ordem.shipping.receiver_address.street_name}, {ordem.shipping.receiver_address.street_number}",
-                    DESC_ENDERECO_COBRANCA = $"{ordem.shipping.receiver_address.street_name}, {ordem.shipping.receiver_address.street_number}",
-                    DESC_COMPLEMENTO = ordem.shipping.receiver_address.comment,
+                    DESC_ENDERECO_COBRANCA = ($"{ordem.shipping.receiver_address.street_name}, {ordem.shipping.receiver_address.street_number}").Truncate(40),
+                    DESC_COMPLEMENTO = ordem.shipping.receiver_address.comment.Truncate(40),
                     DESC_BAIRRO = ordem.shipping.receiver_address.neighborhood.name,
                     DESC_BAIRRO_COBRANCA = (ordem.shipping.receiver_address.neighborhood.name).Truncate(12),
                     COD_ESTADO = ordem.shipping.receiver_address.state.id,
@@ -1010,7 +1019,7 @@ namespace Cemapa.Controllers
                 wCadastro.DESC_CELULAR = ordem.buyer.alternative_phone.number;
                 wCadastro.DESC_TELEFONE = ordem.buyer.phone.number;
                 wCadastro.DESC_ENDERECO = $"{ordem.shipping.receiver_address.street_name}, {ordem.shipping.receiver_address.street_number}";
-                wCadastro.DESC_COMPLEMENTO = ordem.shipping.receiver_address.comment;
+                wCadastro.DESC_COMPLEMENTO = ordem.shipping.receiver_address.comment.Truncate(12);
                 wCadastro.DESC_BAIRRO = ordem.shipping.receiver_address.neighborhood.name;
                 wCadastro.COD_ESTADO = ordem.shipping.receiver_address.state.id;
                 wCadastro.COD_CIDADE = wCidade.COD_CIDADE;
@@ -1030,6 +1039,7 @@ namespace Cemapa.Controllers
             //Busca pelo produto no sistema a partir do item de uma compra.
             //Tais valores serão utilizados para adicionar o item ao pedido.
             //Caso o produto não seja encontrado no sistema, então cadastra conforme informações do ML.
+
             long id;
 
             if(String.IsNullOrEmpty(item.item.seller_custom_field))
@@ -1040,8 +1050,7 @@ namespace Cemapa.Controllers
             {
                 id = Convert.ToInt64(item.item.seller_custom_field);
             }
-
-
+            
             TB_PRODUTO wProduto = (from p in db.TB_PRODUTO
                                    where (p.COD_PRODUTO == id)
                                    select p).FirstOrDefault();

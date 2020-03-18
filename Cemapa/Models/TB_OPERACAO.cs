@@ -162,6 +162,7 @@ namespace Cemapa.Models
         public string COD_CONTABIL_FCCIA_DEB { get; set; }
         public string COD_CONTABIL_FCCIA_CRED { get; set; }
         public string COD_BENEF_FISCAL { get; set; }
+        public Nullable<int> COD_HISTORICO_CAIXA_CHEQUE { get; set; }
     
         public virtual TB_BC_CREDITO_PISCOFINS TB_BC_CREDITO_PISCOFINS { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
