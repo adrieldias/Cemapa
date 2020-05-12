@@ -218,7 +218,7 @@ namespace Cemapa.Controllers
                 Http.DefaultRequestHeaders.Add("X-User-Email", configuracaoSkyhub.DESC_USUARIO_EMAIL);
                 Http.DefaultRequestHeaders.Add("X-Api-Key", configuracaoSkyhub.DESC_TOKEN_INTEGRACAO);
                 Http.DefaultRequestHeaders.Add("X-Accountmanager-Key", configuracaoSkyhub.DESC_TOKEN_ACCOUNT);
-                Http.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                Http.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/pdf"));
 
                 HttpResponseMessage response;
 
@@ -665,7 +665,7 @@ namespace Cemapa.Controllers
                                             COD_OPERACAO = Convert.ToInt32(configuracaoSkyhub.COD_OPERACAO),
                                             COD_CADASTRO = wCadastro.COD_CADASTRO,
                                             NUM_PEDIDO = wSequencia.VAL_SEQUENCIA,
-                                            DT_EMISSAO = ordem.updated_at,
+                                            DT_EMISSAO = ordem.placed_at,
                                             IND_SITUACAO = "1",
                                             COD_DEPARTAMENTO = configuracaoSkyhub.COD_DEPARTAMENTO,
                                             IND_TIPO_PAGAMENTO = configuracaoSkyhub.IND_TIPO_PAGAMENTO,
@@ -1384,10 +1384,10 @@ namespace Cemapa.Controllers
                     DESC_CELULAR = ordem.shipping_address.secondary_phone,
                     DESC_TELEFONE = ordem.shipping_address.phone,
                     DESC_ENDERECO = $"{ordem.shipping_address.street.ToUpper()}, {ordem.shipping_address.number}",
-                    DESC_ENDERECO_COBRANCA = $"{ordem.shipping_address.street.ToUpper()}, {ordem.shipping_address.number}",
-                    DESC_COMPLEMENTO = ordem.shipping_address.complement,
+                    DESC_ENDERECO_COBRANCA = ($"{ordem.shipping_address.street.ToUpper()}, {ordem.shipping_address.number}").Truncate(40),
+                    DESC_COMPLEMENTO = ordem.shipping_address.complement.Truncate(40),
                     DESC_BAIRRO = ordem.shipping_address.neighborhood,
-                    DESC_BAIRRO_COBRANCA = ordem.shipping_address.neighborhood.Truncate(20),
+                    DESC_BAIRRO_COBRANCA = ordem.shipping_address.neighborhood.Truncate(12),
                     COD_ESTADO = ordem.shipping_address.region,
                     DESC_ESTADO_COBRANCA = ordem.shipping_address.region,
                     IND_SEXO_CATEGORIA = ordem.customer.gender,
@@ -1423,7 +1423,7 @@ namespace Cemapa.Controllers
                 wCadastro.DESC_CELULAR = ordem.shipping_address.secondary_phone;
                 wCadastro.DESC_TELEFONE = ordem.shipping_address.phone;
                 wCadastro.DESC_ENDERECO = $"{ordem.shipping_address.street.ToUpper()}, {ordem.shipping_address.number}";
-                wCadastro.DESC_COMPLEMENTO = ordem.shipping_address.complement;
+                wCadastro.DESC_COMPLEMENTO = ordem.shipping_address.complement.Truncate(12);
                 wCadastro.DESC_BAIRRO = ordem.shipping_address.neighborhood;
                 wCadastro.COD_ESTADO = ordem.shipping_address.region;
                 wCadastro.COD_CIDADE = wCidade.COD_CIDADE;

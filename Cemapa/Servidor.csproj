@@ -404,7 +404,8 @@
     </Content>
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\Localhost.pubxml" />
-    <None Include="Properties\PublishProfiles\Servidor.pubxml" />
+    <None Include="Properties\PublishProfiles\Nir.pubxml" />
+    <None Include="Properties\PublishProfiles\Osare.pubxml" />
     <Content Include="Servidor.ruleset" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

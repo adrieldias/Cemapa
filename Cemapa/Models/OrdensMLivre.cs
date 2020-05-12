@@ -103,14 +103,14 @@ namespace Cemapa.Models.MercadoLivre.Orders
 
     public class EstimatedDeliveryFinal
     {
-        public DateTime date { get; set; }
-        public int offset { get; set; }
+        public DateTime? date { get; set; }
+        public int? offset { get; set; }
     }
 
     public class EstimatedDeliveryLimit
     {
-        public DateTime date { get; set; }
-        public int offset { get; set; }
+        public DateTime? date { get; set; }
+        public int? offset { get; set; }
     }
 
     public class EstimatedHandlingLimit

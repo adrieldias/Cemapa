@@ -168,7 +168,6 @@
           <Property Name="DESC_PLACA" Type="varchar2" MaxLength="8" />
           <Property Name="PERC_DESCONTO" Type="number" Precision="5" Scale="2" />
           <Property Name="IND_LIBERA_BLOQUETO" Type="char" MaxLength="3" />
-          <Property Name="DT_CONSULTA_SINTREGA" Type="date" />
           <Property Name="DT_CONSULTA_SINTEGRA" Type="date" />
           <Property Name="DESC_PROFISSAO_CONJUGE" Type="varchar2" MaxLength="30" />
           <Property Name="DT_NASCIMENTO_CONJUGE" Type="date" />
@@ -190,7 +189,6 @@
           <Property Name="DESC_CPF_AUTORIZADO1" Type="varchar2" MaxLength="11" />
           <Property Name="DESC_CPF_AUTORIZADO2" Type="varchar2" MaxLength="11" />
           <Property Name="DESC_CPF_AUTORIZADO3" Type="varchar2" MaxLength="11" />
-          <Property Name="DESC_OUTRAS_GRANTIAS" Type="varchar2" MaxLength="20" />
           <Property Name="DESC_GARANTIAS_OUTRAS" Type="varchar2" MaxLength="20" />
           <Property Name="NUM_DIA_VISITA" Type="number" Precision="1" Scale="0" />
           <Property Name="DESC_FREQUENCIA_VISITA" Type="char" MaxLength="1" />
@@ -4501,8 +4499,6 @@ warning 6037: Foreign key constraint 'FK_USUARIOPRAXSERIE' has been omitted from
           <NavigationProperty Name="TB_OPERACAO" Relationship="Model.FK_CADASTROXOPERACAO" FromRole="TB_CADASTRO" ToRole="TB_OPERACAO" />
           <NavigationProperty Name="TB_PEDIDO_CAB" Relationship="Model.FK_PEDIDO_CABXCADASTRO" FromRole="TB_CADASTRO" ToRole="TB_PEDIDO_CAB" />
           <NavigationProperty Name="TB_PEDIDO_CAB1" Relationship="Model.FK_PEDIDOXCADASTROTRANSP" FromRole="TB_CADASTRO" ToRole="TB_PEDIDO_CAB" />
-          <Property Name="DT_CONSULTA_SINTREGA" Type="DateTime" />
-          <Property Name="DESC_OUTRAS_GRANTIAS" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="TB_PRODUTO">
           <Key>
@@ -6947,8 +6943,6 @@ warning 6037: Foreign key constraint 'FK_USUARIOPRAXSERIE' has been omitted from
           <EntitySetMapping Name="TB_CADASTRO">
             <EntityTypeMapping TypeName="Model.TB_CADASTRO">
               <MappingFragment StoreEntitySet="TB_CADASTRO">
-                <ScalarProperty Name="DESC_OUTRAS_GRANTIAS" ColumnName="DESC_OUTRAS_GRANTIAS" />
-                <ScalarProperty Name="DT_CONSULTA_SINTREGA" ColumnName="DT_CONSULTA_SINTREGA" />
                 <ScalarProperty Name="COD_FILIAL" ColumnName="COD_FILIAL" />
                 <ScalarProperty Name="IND_SINC_MAX_ROTEIRIZADOR" ColumnName="IND_SINC_MAX_ROTEIRIZADOR" />
                 <ScalarProperty Name="DESC_NRO_REG_ESTADUAL" ColumnName="DESC_NRO_REG_ESTADUAL" />

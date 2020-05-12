@@ -23,6 +23,7 @@ using SearchFromProducts = Cemapa.Models.MercadoLivre.Products.Search;
 using SearchFromOrders = Cemapa.Models.MercadoLivre.Orders.Search;
 using AvailableFilterProducts = Cemapa.Models.MercadoLivre.Products.AvailableFilter;
 using OrderFromOrders = Cemapa.Models.MercadoLivre.Orders.Order;
+using ShippingFromOrders = Cemapa.Models.MercadoLivre.Orders.Shipping;
 using ItemFromProducts = Cemapa.Models.MercadoLivre.Products.Item;
 using ShippingFromProducts = Cemapa.Models.MercadoLivre.Products.Shipping;
 using AlternativePhoneFromOrder = Cemapa.Models.MercadoLivre.Orders.AlternativePhone;
@@ -83,6 +84,8 @@ namespace Cemapa.Controllers
                 //Também garante que um pedido não irá se misturar com o pedido de outra filial
                 //Podendo confundir as contas às quais os pedidos são sincronizados
 
+                NameValueCollection parametros = HttpUtility.ParseQueryString(string.Empty);
+
                 TB_CONFIGURACAO_SKYHUB configuracaoSkyhub = GetConfiguracao(codFilial);
 
                 ConfiguracaoEstaOK(configuracaoSkyhub);
@@ -96,15 +99,22 @@ namespace Cemapa.Controllers
 
                 Http.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                HttpResponseMessage response = await Http.GetAsync($"/orders/{codMarketplace}?access_token={Autenticacao.access_token}").Result.Status200OrDie();
-                
-                Result ordem = await response.Content.ReadAsAsync<Result>();
+                parametros.Clear();
+                parametros["access_token"] = Autenticacao.access_token;
+
+                HttpResponseMessage response = await Http.GetAsync($"/orders/{codMarketplace}?{parametros.ToString()}").Result.Status200OrDie();
+
+                OrderFromOrders ordem = await response.Content.ReadAsAsync<OrderFromOrders>();
 
                 if (ordem == null)
                 {
                     throw new HttpListenerException((int)response.StatusCode, $"Erro ao buscar pedido no mercado livre({codMarketplace}). {response.Content.ReadAsStringAsync().Result}");
                 }
 
+                response = await Http.GetAsync($"/shipments/{ordem.shipping.id}?{parametros.ToString()}").Result.Status200OrDie();
+
+                ordem.shipping = await response.Content.ReadAsAsync<ShippingFromOrders>();
+                
                 if (ordem.shipping.status != "ready_to_ship")
                 {
                     throw new InvalidOperationException($"Status atual do pedido não permite gerar etiquetas({ordem.shipping.status})");
@@ -181,6 +191,15 @@ namespace Cemapa.Controllers
                 HttpResponseMessage response = await Http.GetAsync($"/orders/{codMarketplace}?{parametros.ToString()}").Result.Status200OrDie();
 
                 Result ordem = await response.Content.ReadAsAsync<Result>();
+
+                if (ordem == null)
+                {
+                    throw new HttpListenerException((int)response.StatusCode, $"Erro ao buscar pedido no mercado livre({codMarketplace}). {response.Content.ReadAsStringAsync().Result}");
+                }
+
+                response = await Http.GetAsync($"/shipments/{ordem.shipping.id}?{parametros.ToString()}").Result.Status200OrDie();
+
+                ordem.shipping = await response.Content.ReadAsAsync<ShippingFromOrders>();
                 
                 codMarketplace = $"Mercado Livre-{codMarketplace}";
 
@@ -370,11 +389,9 @@ namespace Cemapa.Controllers
                                             parametros.Clear();
                                             parametros["access_token"] = Autenticacao.access_token;
 
-                                            response = await Http.GetAsync($"orders/{ordem.id}?{parametros.ToString()}").Result.Status200OrDie();
+                                            response = await Http.GetAsync($"shipments/{ordem.shipping.id}?{parametros.ToString()}").Result.Status200OrDie();
 
-                                            Result novosDadosOrdem = await response.Content.ReadAsAsync<Result>();
-
-                                            ordem.shipping = novosDadosOrdem.shipping;
+                                            ordem.shipping = await response.Content.ReadAsAsync<ShippingFromOrders>();
                                         }
 
                                         //Gera os códigos necessários para gerar um pedido no sistema
@@ -729,7 +746,7 @@ namespace Cemapa.Controllers
                                                                 mode = "me2",
                                                                 free_shipping = false
                                                             };
-
+                                                            
                                                             parametros.Clear();
                                                             parametros["access_token"] = Autenticacao.access_token;
 
@@ -880,7 +897,7 @@ namespace Cemapa.Controllers
         private TB_CADASTRO SelecionaComprador(Result ordem, TB_CONFIGURACAO_SKYHUB configuracao)
         {
             //Pré-processa os dados, formatando-os para nosso sistema.
-
+            
             ordem.shipping.receiver_address.state.id = ordem.shipping.receiver_address.state.id.ToUpper().Replace("BR-", "");
             ordem.shipping.receiver_address.street_name = ordem.shipping.receiver_address.street_name.ToUpper();
             ordem.shipping.receiver_address.comment = ordem.shipping.receiver_address.comment?.ToUpper();
