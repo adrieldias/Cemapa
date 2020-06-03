@@ -14,12 +14,12 @@ namespace Cemapa.Models
     
     public partial class TB_SINCRONIZACAO_SKYHUB
     {
+        public int COD_SINCRONIZACAO_SKYHUB { get; set; }
         public string TIPO_ACAO { get; set; }
         public string IND_SINCRONIZADO { get; set; }
         public long COD_PRODUTO { get; set; }
         public Nullable<System.DateTime> DT_REGISTRO { get; set; }
         public Nullable<System.DateTime> DT_SINCRONIZACAO { get; set; }
-        public int COD_SINCRONIZACAO_SKYHUB { get; set; }
         public string IND_SINCRONIZADO_ML { get; set; }
         public Nullable<System.DateTime> DT_SINCRONIZACAO_ML { get; set; }
     

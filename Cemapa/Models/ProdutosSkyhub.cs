@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace Cemapa.Models.Skyhub
 {
     public class ProdutoSkyhub
     {
-
         public long sku { get; set; }
         public string name { get; set; }
         public string description { get; set; }
@@ -27,7 +24,8 @@ namespace Cemapa.Models.Skyhub
         public List<Specification> specifications = new List<Specification>();
         public List<Variation> variations = new List<Variation>();
         public List<Association> associations { get; set; }
-        
+        public List<Channel> channels = new List<Channel>();
+
         public void AddSpecificationsCustom(string nKey, string nValue)
         {
             if (!String.IsNullOrEmpty(nValue))
@@ -110,5 +108,11 @@ namespace Cemapa.Models.Skyhub
         public int total { get; set; }
         public string next { get; set; }
 
+    }
+
+    public class Channel
+    {
+        public string name { get; set; }
+        public string href { get; set; }
     }
 }

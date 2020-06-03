@@ -51,10 +51,8 @@ namespace Cemapa.Models
         public Nullable<decimal> VAL_DIAMETRO { get; set; }
         public string IND_SINC_MAX_ROTEIRIZADOR { get; set; }
     
-        public virtual TB_MARCA TB_MARCA { get; set; }
         public virtual TB_PEDIDO_CAB TB_PEDIDO_CAB { get; set; }
         public virtual TB_PRODUTO TB_PRODUTO { get; set; }
         public virtual TB_PRODUTO TB_PRODUTO1 { get; set; }
-        public virtual TB_TABELA_PRECO_CAB TB_TABELA_PRECO_CAB { get; set; }
     }
 }

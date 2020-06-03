@@ -14,6 +14,14 @@ namespace Cemapa.Models
     
     public partial class TB_PRODUTO_SKYHUB
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public TB_PRODUTO_SKYHUB()
+        {
+            this.TB_PRODUTO_CATEGORIA_SKYHUB = new HashSet<TB_PRODUTO_CATEGORIA_SKYHUB>();
+        }
+    
+        public int COD_PRODUTO_SKYHUB { get; set; }
+        public long COD_PRODUTO { get; set; }
         public string DESC_PRODUTO { get; set; }
         public string DESC_DESCRICAO { get; set; }
         public string DESC_STATUS { get; set; }
@@ -21,8 +29,6 @@ namespace Cemapa.Models
         public Nullable<decimal> VAL_ALTURA { get; set; }
         public Nullable<decimal> VAL_LARGURA { get; set; }
         public Nullable<decimal> VAL_COMPRIMENTO { get; set; }
-        public int COD_PRODUTO_SKYHUB { get; set; }
-        public long COD_PRODUTO { get; set; }
         public Nullable<int> COD_PRODUTO_SKYHUB_PAI { get; set; }
         public string DESC_CATEGORIA { get; set; }
         public string DESC_LINK_IMAGEM_1 { get; set; }
@@ -55,7 +61,13 @@ namespace Cemapa.Models
         public Nullable<decimal> VAL_PESO { get; set; }
         public string DESC_CONEXAO_MARKETPLACE { get; set; }
         public string COD_CATEGORIA_ML { get; set; }
+        public string URL_SUBMARINO { get; set; }
+        public string URL_SHOPTIME { get; set; }
+        public string URL_AMERICANAS { get; set; }
+        public string URL_MLIVRE { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TB_PRODUTO_CATEGORIA_SKYHUB> TB_PRODUTO_CATEGORIA_SKYHUB { get; set; }
         public virtual TB_PRODUTO TB_PRODUTO { get; set; }
     }
 }

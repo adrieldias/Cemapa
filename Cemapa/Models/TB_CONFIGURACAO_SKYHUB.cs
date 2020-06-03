@@ -20,13 +20,12 @@ namespace Cemapa.Models
             this.TB_EMAIL_NOTIFICACAO = new HashSet<TB_EMAIL_NOTIFICACAO>();
         }
     
+        public int COD_CONFIGURACAO_SKYHUB { get; set; }
         public string IND_ATIVO { get; set; }
         public string DESC_USUARIO_EMAIL { get; set; }
         public string DESC_TOKEN_INTEGRACAO { get; set; }
         public string DESC_TOKEN_ACCOUNT { get; set; }
-        public int COD_CONFIGURACAO_SKYHUB { get; set; }
-        public int COD_FILIAL { get; set; }
-        public int COD_OPERACAO { get; set; }
+        public Nullable<int> COD_OPERACAO { get; set; }
         public Nullable<int> COD_CLASS_CADASTRO { get; set; }
         public Nullable<int> COD_RAMO_FISICA { get; set; }
         public Nullable<int> COD_RAMO_JURIDICA { get; set; }
@@ -35,25 +34,18 @@ namespace Cemapa.Models
         public Nullable<int> COD_LOTE_TIPO { get; set; }
         public string IND_TIPO_PAGAMENTO { get; set; }
         public Nullable<int> COD_VENDEDOR { get; set; }
+        public int COD_FILIAL { get; set; }
         public Nullable<int> COD_REGIAO { get; set; }
+        public string DESC_ML_CLIENT_ID { get; set; }
         public string DESC_ML_CLIENT_SECRET { get; set; }
         public string IND_ML_ATIVO { get; set; }
-        public string DESC_ML_CLIENT_ID { get; set; }
         public string DESC_ACCESS_TOKEN_ML { get; set; }
         public string DESC_USER_ID_ML { get; set; }
         public Nullable<System.DateTime> DT_ACCESS_TOKEN_ML { get; set; }
         public Nullable<System.DateTime> DT_ULTIMA_ATUALIZACAO_ML { get; set; }
+        public string DESC_SKYHUB_TOKEN { get; set; }
+        public Nullable<System.DateTime> DT_TOKEN_SKYHUB { get; set; }
     
-        public virtual TB_CLASS_CADASTRO TB_CLASS_CADASTRO { get; set; }
-        public virtual TB_DEPARTAMENTO TB_DEPARTAMENTO { get; set; }
-        public virtual TB_FILIAL TB_FILIAL { get; set; }
-        public virtual TB_LOTE_TIPO TB_LOTE_TIPO { get; set; }
-        public virtual TB_OPERACAO TB_OPERACAO { get; set; }
-        public virtual TB_RAMO TB_RAMO { get; set; }
-        public virtual TB_RAMO TB_RAMO1 { get; set; }
-        public virtual TB_REGIAO TB_REGIAO { get; set; }
-        public virtual TB_TIPO_CADASTRO TB_TIPO_CADASTRO { get; set; }
-        public virtual TB_VENDEDOR TB_VENDEDOR { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TB_EMAIL_NOTIFICACAO> TB_EMAIL_NOTIFICACAO { get; set; }
     }

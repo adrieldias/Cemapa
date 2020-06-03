@@ -24,8 +24,8 @@ namespace Cemapa.Models
         public string DESC_CLASSE { get; set; }
         public Nullable<decimal> PERC_COMISSAO1 { get; set; }
         public Nullable<decimal> PERC_COMISSAO2 { get; set; }
-        public byte NUM_CLASSE { get; set; }
-        public byte NUM_SUBCLASSE { get; set; }
+        public short NUM_CLASSE { get; set; }
+        public short NUM_SUBCLASSE { get; set; }
         public Nullable<decimal> PERC_CUSTO { get; set; }
         public Nullable<decimal> VAL_CUSTO { get; set; }
         public Nullable<int> COD_RAMO { get; set; }
@@ -34,6 +34,8 @@ namespace Cemapa.Models
         public Nullable<int> COD_MENSAGEM { get; set; }
         public string IND_AREA { get; set; }
         public string IND_SITUACAO { get; set; }
+        public Nullable<decimal> PERC_MARGEM_VAREJO { get; set; }
+        public Nullable<decimal> PERC_MARGEM_ATACADO { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TB_PRODUTO> TB_PRODUTO { get; set; }

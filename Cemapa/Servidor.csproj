@@ -1,4 +1,5 @@
 ﻿<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -46,10 +47,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="HttpParamsUtility, Version=2.0.10.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\HttpParamsUtility.2.0.10\lib\netstandard2.0\HttpParamsUtility.dll</HintPath>
@@ -67,11 +68,11 @@
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="Oracle.ManagedDataAccess, Version=4.122.18.3, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
-      <HintPath>..\packages\Oracle.ManagedDataAccess.18.3.0\lib\net40\Oracle.ManagedDataAccess.dll</HintPath>
+    <Reference Include="Oracle.ManagedDataAccess, Version=4.122.1.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
+      <HintPath>..\packages\Oracle.ManagedDataAccess.12.2.1100\lib\net40\Oracle.ManagedDataAccess.dll</HintPath>
     </Reference>
-    <Reference Include="Oracle.ManagedDataAccess.EntityFramework, Version=6.122.18.3, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
-      <HintPath>..\packages\Oracle.ManagedDataAccess.EntityFramework.18.3.0\lib\net45\Oracle.ManagedDataAccess.EntityFramework.dll</HintPath>
+    <Reference Include="Oracle.ManagedDataAccess.EntityFramework, Version=6.122.1.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
+      <HintPath>..\packages\Oracle.ManagedDataAccess.EntityFramework.12.2.20190115\lib\net45\Oracle.ManagedDataAccess.EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http, Version=4.1.1.3, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Net.Http.4.3.4\lib\net46\System.Net.Http.dll</HintPath>
@@ -162,27 +163,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\CadastroController.cs" />
-    <Compile Include="Controllers\CadastroEnderecoController.cs" />
-    <Compile Include="Controllers\CidadeController.cs" />
-    <Compile Include="Controllers\ClassCadastroController.cs" />
     <Compile Include="Controllers\Email\Envio.cs" />
-    <Compile Include="Controllers\EstadoController.cs" />
-    <Compile Include="Controllers\FilialController.cs" />
     <Compile Include="Controllers\Http\Resposta.cs" />
-    <Compile Include="Controllers\MotivoController.cs" />
-    <Compile Include="Controllers\OperacaoController.cs" />
-    <Compile Include="Controllers\PaisController.cs" />
-    <Compile Include="Controllers\ProdutoController.cs" />
-    <Compile Include="Controllers\PropriedadeController.cs" />
-    <Compile Include="Controllers\QualificacaoSocioController.cs" />
-    <Compile Include="Controllers\RegiaoController.cs" />
     <Compile Include="Controllers\SincronizarMLivreController.cs" />
     <Compile Include="Controllers\SincronizarSkyhubController.cs" />
-    <Compile Include="Controllers\TipoCadastroController.cs" />
-    <Compile Include="Controllers\TipoPropriedadeController.cs" />
     <Compile Include="Controllers\UtilsServidor\StringUtils.cs" />
-    <Compile Include="Controllers\VendedorController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -208,19 +193,7 @@
     <Compile Include="Models\PLPsSkyhub.cs" />
     <Compile Include="Models\ProdutosMLivre.cs" />
     <Compile Include="Models\ProdutosSkyhub.cs" />
-    <Compile Include="Models\TB_BANCO_AGENCIA.cs">
-      <DependentUpon>Dados.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TB_BC_CREDITO_PISCOFINS.cs">
-      <DependentUpon>Dados.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\TB_CADASTRO.cs">
-      <DependentUpon>Dados.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TB_CADASTRO_ENDERECOS.cs">
-      <DependentUpon>Dados.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TB_CENTRO_CUSTO.cs">
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TB_CIDADE.cs">
@@ -229,31 +202,7 @@
     <Compile Include="Models\TB_CLASSE.cs">
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\TB_CLASSE_CONSUMO.cs">
-      <DependentUpon>Dados.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TB_CLASS_CADASTRO.cs">
-      <DependentUpon>Dados.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\TB_CONFIGURACAO_SKYHUB.cs">
-      <DependentUpon>Dados.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TB_CONTA_CORRENTE.cs">
-      <DependentUpon>Dados.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TB_CRITERIO_ESCRIT.cs">
-      <DependentUpon>Dados.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TB_CST_COFINS.cs">
-      <DependentUpon>Dados.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TB_CST_PIS.cs">
-      <DependentUpon>Dados.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TB_CULTURA.cs">
-      <DependentUpon>Dados.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TB_DEPARTAMENTO.cs">
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TB_EMAIL.cs">
@@ -262,70 +211,7 @@
     <Compile Include="Models\TB_EMAIL_NOTIFICACAO.cs">
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\TB_ENERGIA_TENSAO.cs">
-      <DependentUpon>Dados.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TB_ESTADO.cs">
-      <DependentUpon>Dados.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TB_ESTADO_CIVIL.cs">
-      <DependentUpon>Dados.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\TB_ESTOQUE.cs">
-      <DependentUpon>Dados.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TB_FILIAL.cs">
-      <DependentUpon>Dados.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TB_FORMA_TRIBUTACAO.cs">
-      <DependentUpon>Dados.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TB_GENERO_PRODUTO.cs">
-      <DependentUpon>Dados.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TB_GRUPO_CUSTOS.cs">
-      <DependentUpon>Dados.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TB_HISTORICO.cs">
-      <DependentUpon>Dados.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TB_HISTORICO_CONTABIL.cs">
-      <DependentUpon>Dados.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TB_INCIDENCIA_TRIBUTARIA.cs">
-      <DependentUpon>Dados.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TB_INCIDENCIA_TRIBUTARIA_PREV.cs">
-      <DependentUpon>Dados.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TB_IND_APROPRIACAO_CREDITO.cs">
-      <DependentUpon>Dados.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TB_LISTA_SERVICO.cs">
-      <DependentUpon>Dados.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TB_LOTE_TIPO.cs">
-      <DependentUpon>Dados.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TB_MARCA.cs">
-      <DependentUpon>Dados.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TB_MENSAGEM.cs">
-      <DependentUpon>Dados.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TB_MOTIVO.cs">
-      <DependentUpon>Dados.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TB_NATUREZA_JURIDICA.cs">
-      <DependentUpon>Dados.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TB_NF_ELETRONICA_CONFIG.cs">
-      <DependentUpon>Dados.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TB_OPERACAO.cs">
-      <DependentUpon>Dados.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TB_PAIS.cs">
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TB_PEDIDO_CAB.cs">
@@ -334,64 +220,26 @@
     <Compile Include="Models\TB_PEDIDO_ITEM.cs">
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\TB_PRAZO_VENCIMENTO.cs">
+    <Compile Include="Models\TB_PRODUTO.cs">
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\TB_PRODUTO.cs">
+    <Compile Include="Models\TB_PRODUTO_CATEGORIA_SKYHUB.cs">
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TB_PRODUTO_SKYHUB.cs">
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\TB_PROPRIEDADE.cs">
-      <DependentUpon>Dados.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TB_QUALIFICACAO_SOCIO.cs">
-      <DependentUpon>Dados.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TB_RAMO.cs">
-      <DependentUpon>Dados.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TB_REGIAO.cs">
-      <DependentUpon>Dados.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\TB_SEQUENCIA.cs">
-      <DependentUpon>Dados.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TB_SERIE.cs">
-      <DependentUpon>Dados.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TB_SERIE_MODELO.cs">
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TB_SINCRONIZACAO_SKYHUB.cs">
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\TB_TABELA_PRECO_CAB.cs">
-      <DependentUpon>Dados.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TB_TABELA_PRECO_ITEM.cs">
-      <DependentUpon>Dados.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TB_TIPO_CADASTRO.cs">
-      <DependentUpon>Dados.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TB_TIPO_CONTRIBUICAO.cs">
-      <DependentUpon>Dados.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TB_TIPO_PROPRIEDADE.cs">
-      <DependentUpon>Dados.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\TB_TRIBUTACAO.cs">
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\TB_USUARIO.cs">
-      <DependentUpon>Dados.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TB_VENDEDOR.cs">
-      <DependentUpon>Dados.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\UsuarioMLivre.cs" />
+    <Compile Include="Models\UsuarioSkyhub.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -451,7 +299,10 @@
       <ErrorText>Este projeto faz referência a pacotes do NuGet que não estão presentes neste computador. Use a Restauração de Pacotes do NuGet para baixá-los.  Para obter mais informações, consulte http://go.microsoft.com/fwlink/?LinkID=322105. O arquivo ausente é {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
   </Target>
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

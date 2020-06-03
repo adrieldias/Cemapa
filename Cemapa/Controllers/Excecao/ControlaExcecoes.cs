@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Web.Script.Serialization;
 
 namespace Cemapa.Models
 {    
@@ -20,86 +21,74 @@ namespace Cemapa.Models
 
         public ExcecaoContextual(DbEntityValidationException exception)
         {
-            try
+            //Quando criamos uma exceção contextualizada, o construtor recebe a exceção padrão
+            //e colhe alguns dados, como a linha em que foi gerado o erro, e em que arquivo.
+                
+            StackFrame frame = new StackTrace(exception, true).GetFrames().LastOrDefault();
+
+            if (frame != null)
             {
-                //Quando criamos uma exceção contextualizada, o construtor recebe a exceção padrão
-                //e colhe alguns dados, como a linha em que foi gerado o erro, e em que arquivo.
-                
-                StackFrame frame = new StackTrace(exception, true).GetFrames().LastOrDefault();
-
-                if (frame != null)
+                Local = new Posicao
                 {
-                    Local = new Posicao
-                    {
-                        Linha = frame.GetFileLineNumber(),
-                        Coluna = frame.GetFileColumnNumber(),
-                        Codigo = frame.GetFileName().Split(Path.DirectorySeparatorChar).Last()
-                    };
-                }
-                
-                //Busca por exceções internas para adiciona-las às chaves contextuais.
-                //Tais chaves armazenam informações sobre o erro, ajudando na busca pela resolução.
-
-                Exception inner = exception.InnerException;
-
-                while (inner != null)
-                {
-                    ChavesContextuais.Add(inner.Message);
-                    inner = inner.InnerException;
-                }
-                
-                foreach (DbEntityValidationResult entValidations in exception.EntityValidationErrors)
-                {
-                    foreach (DbValidationError validation in entValidations.ValidationErrors)
-                    {
-                        ChavesContextuais.Add(validation.ErrorMessage);
-                    }
-                }
-
-                Excecao = exception;
+                    Linha = frame.GetFileLineNumber(),
+                    Coluna = frame.GetFileColumnNumber(),
+                    Codigo = frame.GetFileName().Split(Path.DirectorySeparatorChar).Last()
+                };
             }
-            catch (Exception ex)
+                
+            //Busca por exceções internas para adiciona-las às chaves contextuais.
+            //Tais chaves armazenam informações sobre o erro, ajudando na busca pela resolução.
+
+            Exception inner = exception.InnerException;
+
+            while (inner != null)
             {
-                throw new Exception(ex.Message);
+                ChavesContextuais.Add(inner.Message);
+                inner = inner.InnerException;
             }
+                
+            foreach (DbEntityValidationResult entValidations in exception.EntityValidationErrors)
+            {
+                foreach (DbValidationError validation in entValidations.ValidationErrors)
+                {
+                    ChavesContextuais.Add(validation.ErrorMessage);
+                }
+            }
+
+            Excecao = exception;
         }
 
         public ExcecaoContextual(Exception exception)
         {
-            try
+            //Quando criamos uma exceção contextualizada, o construtor recebe a exceção padrão
+            //e colhe alguns dados, como a linha em que foi gerado o erro, e em que arquivo.
+
+            StackTrace trace = new StackTrace(exception, true);
+
+            if (trace.FrameCount > 0)
             {
-                //Quando criamos uma exceção contextualizada, o construtor recebe a exceção padrão
-                //e colhe alguns dados, como a linha em que foi gerado o erro, e em que arquivo.
+                StackFrame frame = trace.GetFrames().LastOrDefault();
 
-                StackFrame frame = new StackTrace(exception, true).GetFrames().LastOrDefault();
-
-                if (frame != null)
+                Local = new Posicao
                 {
-                    Local = new Posicao
-                    {
-                        Linha = frame.GetFileLineNumber(),
-                        Coluna = frame.GetFileColumnNumber(),
-                        Codigo = frame.GetFileName().Split(Path.DirectorySeparatorChar).Last()
-                    };
-                }
-
-                //Busca por exceções internas para adiciona-las às chaves contextuais.
-                //Tais chaves armazenam informações sobre o erro, ajudando na busca pela resolução.
-
-                Exception inner = exception.InnerException;
-
-                while (inner != null)
-                {
-                    ChavesContextuais.Add(inner.Message);
-                    inner = inner.InnerException;
-                }
-
-                Excecao = exception;
+                    Linha = frame.GetFileLineNumber(),
+                    Coluna = frame.GetFileColumnNumber(),
+                    Codigo = frame.GetFileName().Split(Path.DirectorySeparatorChar).Last()
+                };
             }
-            catch (Exception ex)
+
+            //Busca por exceções internas para adiciona-las às chaves contextuais.
+            //Tais chaves armazenam informações sobre o erro, ajudando na busca pela resolução.
+
+            Exception inner = exception.InnerException;
+
+            while (inner != null)
             {
-                throw new Exception(ex.Message);
+                ChavesContextuais.Add(inner.Message);
+                inner = inner.InnerException;
             }
+
+            Excecao = exception;
         }
     }
 
@@ -114,13 +103,12 @@ namespace Cemapa.Models
     // depois escreve-las todas de uma vez.
     // Utilizado para armazenar diversos erros e retorna-los ao fim da execução.
 
-    public static class ControladorExcecoes
+    public class ControladorExcecoes
     {
-        private static List<ExcecaoContextual> Excecoes = new List<ExcecaoContextual>();
-        private static bool PrintsAmigaveis = false;
-        private static List<string> Filtros  = new List<string>
+        private readonly List<ExcecaoContextual> Excecoes = new List<ExcecaoContextual>();
+        private bool PrintsAmigaveis = false;
+        private readonly List<string> Filtros  = new List<string>
         {
-            "Internal Server Error",
             "A task was canceled",
             "Gateway Time-out",
             "Too Many Requests",
@@ -128,199 +116,171 @@ namespace Cemapa.Models
             "The remote name could not be resolved"
         };
 
-        public static void ErrosPersonalizados(bool pa)
+        public void ErrosPersonalizados(bool pa)
         {
             PrintsAmigaveis = pa;
         }
 
-        public static string Printa()
+        public string Printa()
         {
-            try
+            if (!SemExcecoes())
             {
-                if (!SemExcecoes())
+                List<string> erros = new List<string>();
+                int index = 1;
+
+                foreach (ExcecaoContextual exContext in Excecoes)
                 {
-                    List<string> erros = new List<string>();
-                    int index = 1;
+                    StringBuilder MensagemFinal = new StringBuilder($"({index})");
 
-                    foreach (ExcecaoContextual exContext in Excecoes)
+                    if (PrintsAmigaveis)
                     {
-                        StringBuilder MensagemFinal = new StringBuilder($"({index})");
-
-                        if (PrintsAmigaveis)
+                        if (exContext.Local != null)
                         {
-                            if (exContext.Local != null)
-                            {
-                                MensagemFinal.Append($"{exContext.Local.Codigo}:{exContext.Local.Linha}");
-                                MensagemFinal.Append(", ");
-                            }
-
-                            MensagemFinal.Append($"{exContext.Excecao.Message.Replace(Environment.NewLine, String.Empty).RemoveEnd()}");
-
-                            if (exContext.ChavesContextuais.Count > 0)
-                            {
-                                MensagemFinal.Append(", ");
-                                MensagemFinal.Append($"{string.Join(", ", exContext.ChavesContextuais).Replace(Environment.NewLine, String.Empty).RemoveEnd()}");
-                            }
-                        }
-                        else
-                        {
-                            if (exContext.Local != null)
-                            {
-                                MensagemFinal.Append($"{exContext.Local.Codigo}:({exContext.Local.Linha},{exContext.Local.Linha})");
-                                MensagemFinal.Append(", ");
-                            }
-
-                            MensagemFinal.Append($"{exContext.Excecao.Message}");
-
-                            if (exContext.ChavesContextuais.Count > 0)
-                            {
-                                MensagemFinal.Append(", ");
-                                MensagemFinal.Append($"{string.Join(", ", exContext.ChavesContextuais)}");
-                            }
+                            MensagemFinal.Append($"{exContext.Local.Codigo}:{exContext.Local.Linha}");
+                            MensagemFinal.Append(", ");
                         }
 
-                        erros.Add(MensagemFinal.ToString());
-                        index++;
+                        MensagemFinal.Append($"{exContext.Excecao.Message.Replace(Environment.NewLine, String.Empty).RemoveEnd()}");
+
+                        if (exContext.ChavesContextuais.Count > 0)
+                        {
+                            MensagemFinal.Append(", ");
+                            MensagemFinal.Append($"{string.Join(", ", exContext.ChavesContextuais).Replace(Environment.NewLine, String.Empty).RemoveEnd()}");
+                        }
                     }
-
-                    return String.Format("[{0}]", string.Join(",", erros));
-                }
-                else
-                {
-                    return null;
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
-
-        public static Dictionary<string, List<string>> FormatoJson(string mensagemPai)
-        {
-            try
-            {
-                if (!SemExcecoes())
-                {
-                    List<string> erros = new List<string>();
-
-                    foreach (ExcecaoContextual exContext in Excecoes)
+                    else
                     {
-                        StringBuilder MensagemFinal = new StringBuilder();
-
-                        if (PrintsAmigaveis)
+                        if (exContext.Local != null)
                         {
-                            if (exContext.Local != null)
-                            {
-                                MensagemFinal.Append($"{exContext.Local.Codigo}:{exContext.Local.Linha}");
-                                MensagemFinal.Append(", ");
-                            }
-
-                            MensagemFinal.Append($"{exContext.Excecao.Message.Replace(Environment.NewLine, String.Empty).RemoveEnd()}");
-
-                            if (exContext.ChavesContextuais.Count > 0)
-                            {
-                                MensagemFinal.Append(", ");
-                                MensagemFinal.Append($"{string.Join(", ", exContext.ChavesContextuais).Replace(Environment.NewLine, String.Empty).RemoveEnd()}");
-                            }
-                        }
-                        else
-                        {
-                            if (exContext.Local != null)
-                            {
-                                MensagemFinal.Append($"{exContext.Local.Codigo}:({exContext.Local.Linha},{exContext.Local.Linha})");
-                                MensagemFinal.Append(", ");
-                            }
-
-                            MensagemFinal.Append($"{exContext.Excecao.Message}");
-
-                            if (exContext.ChavesContextuais.Count > 0)
-                            {
-                                MensagemFinal.Append(", ");
-                                MensagemFinal.Append($"{string.Join(", ", exContext.ChavesContextuais)}");
-                            }
+                            MensagemFinal.Append($"{exContext.Local.Codigo}:({exContext.Local.Linha},{exContext.Local.Linha})");
+                            MensagemFinal.Append(", ");
                         }
 
-                        erros.Add(MensagemFinal.ToString());
-                    }
+                        MensagemFinal.Append($"{exContext.Excecao.Message}");
 
-                    return new Dictionary<string, List<string>>()
-                    {
-                        { mensagemPai, erros }
-                    };                    
-                }
-                else
-                {
-                    return new Dictionary<string, List<string>>();
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
-        
-        public static void Adiciona(DbEntityValidationException except, List<string> Referencias = null)
-        {
-            try
-            {
-                if (Referencias == null)
-                {
-                    Referencias = new List<string>();
-                }
-
-                if (!Filtros.Exists(filtro => except.Message.Contains(filtro)))
-                {
-                    ExcecaoContextual exContx = new ExcecaoContextual(except);
-
-                    foreach (string referencia in Referencias)
-                    {
-                        if (!Filtros.Exists(filtro => filtro == referencia))
+                        if (exContext.ChavesContextuais.Count > 0)
                         {
-                            exContx.ChavesContextuais.Add(referencia);
+                            MensagemFinal.Append(", ");
+                            MensagemFinal.Append($"{string.Join(", ", exContext.ChavesContextuais)}");
                         }
                     }
 
-                    Excecoes.Add(exContx);
+                    erros.Add(MensagemFinal.ToString());
+                    index++;
                 }
+
+                return String.Format("[{0}]", string.Join(",", erros));
             }
-            catch (Exception ex)
+            else
             {
-                throw new Exception(ex.Message);
+                return null;
             }
         }
 
-        public static void Adiciona(Exception except, List<string> Referencias = null)
+        public Dictionary<string, List<string>> FormatoJson(string mensagemPai)
         {
-            try
+            if (!SemExcecoes())
             {
-                if (Referencias == null)
-                {
-                    Referencias = new List<string>();
-                }
+                List<string> erros = new List<string>();
 
-                if (!Filtros.Exists(filtro => except.Message.Contains(filtro)))
+                foreach (ExcecaoContextual exContext in Excecoes)
                 {
-                    ExcecaoContextual exContx = new ExcecaoContextual(except);
+                    StringBuilder MensagemFinal = new StringBuilder();
 
-                    foreach (string referencia in Referencias)
+                    if (PrintsAmigaveis)
                     {
-                        if (!Filtros.Exists(filtro => filtro == referencia))
+                        if (exContext.Local != null)
                         {
-                            exContx.ChavesContextuais.Add(referencia);
+                            MensagemFinal.Append($"{exContext.Local.Codigo}:{exContext.Local.Linha}");
+                            MensagemFinal.Append(", ");
+                        }
+
+                        MensagemFinal.Append($"{exContext.Excecao.Message.Replace(Environment.NewLine, String.Empty).RemoveEnd()}");
+
+                        if (exContext.ChavesContextuais.Count > 0)
+                        {
+                            MensagemFinal.Append(", ");
+                            MensagemFinal.Append($"{string.Join(", ", exContext.ChavesContextuais).Replace(Environment.NewLine, String.Empty).RemoveEnd()}");
+                        }
+                    }
+                    else
+                    {
+                        if (exContext.Local != null)
+                        {
+                            MensagemFinal.Append($"{exContext.Local.Codigo}:({exContext.Local.Linha},{exContext.Local.Linha})");
+                            MensagemFinal.Append(", ");
+                        }
+
+                        MensagemFinal.Append($"{exContext.Excecao.Message}");
+
+                        if (exContext.ChavesContextuais.Count > 0)
+                        {
+                            MensagemFinal.Append(", ");
+                            MensagemFinal.Append($"{string.Join(", ", exContext.ChavesContextuais)}");
                         }
                     }
 
-                    Excecoes.Add(exContx);
+                    erros.Add(MensagemFinal.ToString());
                 }
+
+                return new Dictionary<string, List<string>>()
+                {
+                    { mensagemPai, erros }
+                };                    
             }
-            catch (Exception ex)
+            else
             {
-                throw new Exception(ex.Message);
+                return new Dictionary<string, List<string>>();
             }
         }
 
-        public static bool SemExcecoes()
+        public void Adiciona(DbEntityValidationException except, List<string> Referencias = null)
+        {
+            if (Referencias == null)
+            {
+                Referencias = new List<string>();
+            }
+
+            if (!Filtros.Exists(filtro => except.Message.Contains(filtro)))
+            {
+                ExcecaoContextual exContx = new ExcecaoContextual(except);
+
+                foreach (string referencia in Referencias)
+                {
+                    if (!Filtros.Exists(filtro => filtro == referencia))
+                    {
+                        exContx.ChavesContextuais.Add(referencia);
+                    }
+                }
+
+                Excecoes.Add(exContx);
+            }
+        }
+
+        public void Adiciona(Exception except, List<string> Referencias = null)
+        {
+            if (Referencias == null)
+            {
+                Referencias = new List<string>();
+            }
+
+            if (!Filtros.Exists(filtro => except.Message.Contains(filtro)))
+            {
+                ExcecaoContextual exContx = new ExcecaoContextual(except);
+
+                foreach (string referencia in Referencias)
+                {
+                    if (!Filtros.Exists(filtro => filtro == referencia))
+                    {
+                        exContx.ChavesContextuais.Add(referencia);
+                    }
+                }
+
+                Excecoes.Add(exContx);
+            }
+        }
+
+        public bool SemExcecoes()
         {
             if (Excecoes.Count > 0)
                 return false;
@@ -328,7 +288,7 @@ namespace Cemapa.Models
                 return true;
         }
 
-        public static void Limpa()
+        public void Limpa()
         {
             Excecoes.Clear();
         }

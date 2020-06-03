@@ -14,12 +14,102 @@ using Cemapa.Controllers.UtilsServidor;
 using Cemapa.Controllers.Http;
 using Cemapa.Controllers.Email;
 
+using ActionFromUsuario = Cemapa.Models.Skyhub.Action;
+
 namespace Cemapa.Controllers
 {
     public class SincronizarSkyhubController : ApiController
     {
         private readonly Entities db = new Entities();
+        private readonly ControladorExcecoes Manipulador = new ControladorExcecoes();
         private readonly Uri SkyhubUri = new Uri("https://api.skyhub.com.br");
+        
+        [HttpGet]
+        public async Task<HttpResponseMessage> AtualizarURLs(int codFilial, int codProduto = 0)
+        {
+            try
+            {
+                //Começa a busca pela URL do produto.
+                //A URL do produto é o link completo onde o produto esta sendo exibido na loja online.
+                
+                if (codFilial == 0)
+                {
+                    throw new ArgumentNullException("codFilial", "Filial não informada");
+                }
+
+                if (codProduto == 0)
+                {
+                    throw new ArgumentNullException("codProduto", "Produto não informado");
+                }
+
+                //Busca pela configuração informada para se conectar com a API.
+
+                TB_CONFIGURACAO_SKYHUB configuracao = GetConfiguracao(codFilial);
+
+                ConfiguracaoEstaOK(configuracao);
+
+                //Irá buscar pelo produto específicado para atualizar a URL.
+
+                TB_PRODUTO_SKYHUB produto = GetProdutoSkyhub(codProduto);
+
+                if (produto != null)
+                {
+                    HttpClient Http = new HttpClient
+                    {
+                        BaseAddress = SkyhubUri
+                    };
+
+                    Http.DefaultRequestHeaders.Clear();
+                    Http.DefaultRequestHeaders.Accept.Clear();
+                    Http.DefaultRequestHeaders.Add("X-User-Email", configuracao.DESC_USUARIO_EMAIL);
+                    Http.DefaultRequestHeaders.Add("X-Api-Key", configuracao.DESC_TOKEN_INTEGRACAO);
+                    Http.DefaultRequestHeaders.Add("X-Accountmanager-Key", configuracao.DESC_TOKEN_ACCOUNT);
+                    Http.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                    //Busca pelas URLS em todos os canais da skyhub.
+
+                    HttpResponseMessage response = await Http.GetAsync($"/urls/products/{produto.COD_PRODUTO}").Result.Status200OrDie();
+
+                    ProdutoSkyhub produtoSkyhub = await response.Content.ReadAsAsync<ProdutoSkyhub>();
+
+                    if (produtoSkyhub != null)
+                    {
+                        Channel Americanas = produtoSkyhub.channels.Find(x => x.name == "Lojas Americanas");
+                        Channel Submarino = produtoSkyhub.channels.Find(x => x.name == "Submarino");
+                        Channel Shoptime = produtoSkyhub.channels.Find(x => x.name == "Shoptime");
+
+                        produto.URL_AMERICANAS = Americanas != null ? Americanas.href : "";
+                        produto.URL_SUBMARINO = Submarino != null ? Submarino.href : "";
+                        produto.URL_SHOPTIME = Shoptime != null ? Shoptime.href : "";
+
+                        db.Entry(produto).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
+                    else
+                    {
+                        throw new InvalidOperationException($"Produto não encontrado no marketplace({codProduto})");
+                    }
+                }
+                else
+                {
+                    throw new InvalidOperationException($"Produto não encontrado no sistema({codProduto})");
+                }
+
+                return Request.CreateResponse(
+                    HttpStatusCode.OK,
+                    $"As URLs foram atualizadas"
+                );
+            }
+            catch (Exception except)
+            {
+                Manipulador.Adiciona(except);
+
+                return Request.CreateResponse(
+                    HttpStatusCode.InternalServerError,
+                    Manipulador.FormatoJson($"Urls não atualizadas")
+                );
+            }
+        }
 
         [HttpGet]
         public async Task<HttpResponseMessage> AtualizarStatusConexao(int codFilial, int codProduto = 0)
@@ -31,9 +121,7 @@ namespace Cemapa.Controllers
                 //Esse status é importante para quem usa o sistema ter uma idéia dos produtos que estão ok e os que precisam de atenção.
 
                 int wTotalAlterados = 0;
-
-                ControladorExcecoes.Limpa();
-
+                
                 //Busca todas as configurações ativas para se conectar com a API.
 
                 List<TB_CONFIGURACAO_SKYHUB> configuracoesSkyhub = GetConfiguracoes();
@@ -61,7 +149,7 @@ namespace Cemapa.Controllers
                         
                         try
                         {
-                            TB_PRODUTO_SKYHUB wProdutoAtualizar = GetProdutosSkyhubPorCodigoProduto(codProduto);
+                            TB_PRODUTO_SKYHUB wProdutoAtualizar = GetProdutoSkyhub(codProduto);
 
                             HttpResponseMessage response = await Http.GetAsync($"/products/{wProdutoAtualizar.COD_PRODUTO}").Result.Status200OrDie();
 
@@ -74,23 +162,20 @@ namespace Cemapa.Controllers
                             if (associacao == null)
                             {
                                 wProdutoAtualizar.DESC_CONEXAO_MARKETPLACE = "unknow";
-
-                                db.Entry(wProdutoAtualizar).State = EntityState.Modified;
-                                db.SaveChanges();
                             }
                             else
                             {
                                 wProdutoAtualizar.DESC_CONEXAO_MARKETPLACE = associacao.status;
-
-                                db.Entry(wProdutoAtualizar).State = EntityState.Modified;
-                                db.SaveChanges();
                             }
+
+                            db.Entry(wProdutoAtualizar).State = EntityState.Modified;
+                            db.SaveChanges();
 
                             wTotalAlterados++;
                         }
                         catch (Exception except)
                         {
-                            ControladorExcecoes.Adiciona(except);
+                            Manipulador.Adiciona(except);
                         }
                     }
                     else
@@ -130,7 +215,7 @@ namespace Cemapa.Controllers
                             }
                             catch (Exception except)
                             {
-                                ControladorExcecoes.Adiciona(except, new List<string> { $"Filial: {configuracaoSkyhub.COD_FILIAL}", $"Produto: {wProdutoAtualizar.COD_PRODUTO}" });
+                                Manipulador.Adiciona(except, new List<string> { $"Filial: {configuracaoSkyhub.COD_FILIAL}", $"Produto: {wProdutoAtualizar.COD_PRODUTO}" });
                             }
                         }
                     }
@@ -139,7 +224,7 @@ namespace Cemapa.Controllers
                 //Biblioteca ControlaExcecoes armazenou todos os erros ocorridos, caso não ocorra nenhum erro,
                 //então o método SemExcecoes retornará verdadeiro.
 
-                if (ControladorExcecoes.SemExcecoes())
+                if (Manipulador.SemExcecoes())
                 {
                     return Request.CreateResponse(
                         HttpStatusCode.OK,
@@ -150,17 +235,17 @@ namespace Cemapa.Controllers
                 {
                     return Request.CreateResponse(
                         HttpStatusCode.InternalServerError,
-                        ControladorExcecoes.FormatoJson($"Nem todos os status de conexão foram atualizados. Atualizados: {wTotalAlterados}")
+                        Manipulador.FormatoJson($"Nem todos os status de conexão foram atualizados. Atualizados: {wTotalAlterados}")
                     );
                 }
             }
             catch (Exception except)
             {
-                ControladorExcecoes.Adiciona(except);
+                Manipulador.Adiciona(except);
 
                 return Request.CreateResponse(
                     HttpStatusCode.InternalServerError,
-                    ControladorExcecoes.FormatoJson($"Não foi possível começar a atualização")
+                    Manipulador.FormatoJson($"Não foi possível começar a atualização")
                 );
             }
         }
@@ -280,11 +365,11 @@ namespace Cemapa.Controllers
             }
             catch (Exception except)
             {
-                ControladorExcecoes.Adiciona(except);
+                Manipulador.Adiciona(except);
 
                 return Request.CreateResponse(
                     HttpStatusCode.InternalServerError,
-                    ControladorExcecoes.FormatoJson($"Erro ao buscar etiquetas")
+                    Manipulador.FormatoJson($"Erro ao buscar etiquetas")
                 );
             }
         }
@@ -367,11 +452,11 @@ namespace Cemapa.Controllers
             }
             catch (Exception except)
             {
-                ControladorExcecoes.Adiciona(except);
+                Manipulador.Adiciona(except);
 
                 return Request.CreateResponse(
                     HttpStatusCode.InternalServerError,
-                    ControladorExcecoes.FormatoJson($"Não foi possível começar a atualização")
+                    Manipulador.FormatoJson($"Não foi possível começar a atualização")
                 );
             }
         }
@@ -439,11 +524,11 @@ namespace Cemapa.Controllers
             }
             catch (Exception except)
             {
-                ControladorExcecoes.Adiciona(except);
+                Manipulador.Adiciona(except);
 
                 return Request.CreateResponse(
                     HttpStatusCode.InternalServerError,
-                    ControladorExcecoes.FormatoJson($"Não foi possível começar a atualização")
+                    Manipulador.FormatoJson($"Não foi possível começar a atualização")
                 );
             }
         }
@@ -494,11 +579,11 @@ namespace Cemapa.Controllers
             }
             catch (Exception except)
             {
-                ControladorExcecoes.Adiciona(except);
+                Manipulador.Adiciona(except);
 
                 return Request.CreateResponse(
                     HttpStatusCode.InternalServerError,
-                    ControladorExcecoes.FormatoJson($"Não foi possível começar a atualização")
+                    Manipulador.FormatoJson($"Não foi possível começar a atualização")
                 );
             }
         }
@@ -581,11 +666,11 @@ namespace Cemapa.Controllers
             }
             catch (Exception except)
             {
-                ControladorExcecoes.Adiciona(except);
+                Manipulador.Adiciona(except);
 
                 return Request.CreateResponse(
                     HttpStatusCode.InternalServerError,
-                    ControladorExcecoes.FormatoJson($"Não foi possível começar a atualização")
+                    Manipulador.FormatoJson($"Não foi possível começar a atualização")
                 );
             }
         }
@@ -598,10 +683,10 @@ namespace Cemapa.Controllers
                 int wTotalCancelados = 0;
                 int wTotalCriados = 0;
                 int wTotalAlterados = 0;
-
-                ControladorExcecoes.Limpa();
-                ControladorExcecoes.ErrosPersonalizados(true);
+                
+                Manipulador.ErrosPersonalizados(true);
                 HttpResponseMessage response;
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
                 List<TB_CONFIGURACAO_SKYHUB> configuracoesSkyhub = GetConfiguracoes();
 
@@ -809,14 +894,14 @@ namespace Cemapa.Controllers
                     }
                     catch (Exception except)
                     {
-                        ControladorExcecoes.Adiciona(except, new List<string> { $"Filial: {configuracaoSkyhub.COD_FILIAL}" });
+                        Manipulador.Adiciona(except, new List<string> { $"Filial: {configuracaoSkyhub.COD_FILIAL}" });
                     }
                 }
 
                 //Biblioteca ControlaExcecoes armazenou todos os erros ocorridos, caso não ocorra nenhum erro,
                 //então o método SemExcecoes retornará verdadeiro.
 
-                if (ControladorExcecoes.SemExcecoes())
+                if (Manipulador.SemExcecoes())
                 {
                     return Request.CreateResponse(
                         HttpStatusCode.OK,
@@ -827,17 +912,155 @@ namespace Cemapa.Controllers
                 {
                     return Request.CreateResponse(
                         HttpStatusCode.InternalServerError,
-                        ControladorExcecoes.FormatoJson($"Nem todos os pedidos foram sincronizados. Criados: {wTotalCriados}, Cancelados: {wTotalCancelados}, Alterados: {wTotalAlterados}")
+                        Manipulador.FormatoJson($"Nem todos os pedidos foram sincronizados. Criados: {wTotalCriados}, Cancelados: {wTotalCancelados}, Alterados: {wTotalAlterados}")
                     );
                 }
             }
             catch (Exception except)
             {
-                ControladorExcecoes.Adiciona(except);
+                Manipulador.Adiciona(except);
 
                 return Request.CreateResponse(
                     HttpStatusCode.InternalServerError,
-                    ControladorExcecoes.FormatoJson($"Não foi possível começar a sincronização")
+                    Manipulador.FormatoJson($"Não foi possível começar a sincronização")
+                );
+            }
+        }
+
+        [HttpGet]
+        public async Task<HttpResponseMessage> SincronizaInfosProdutos()
+        {
+            try
+            {
+                int totalAtualizados = 0;
+
+                Manipulador.ErrosPersonalizados(true);
+                HttpResponseMessage response;
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+
+                HttpClient Http = new HttpClient
+                {
+                    BaseAddress = SkyhubUri
+                };
+                
+                //Busca produtos que ainda não conectaram na skyhub.
+                //A skyhub tem um sistema de conexão de produtos, após cria-los é necessários conecta-los.
+                //Antigamente isso era feito entrando no site da skyhub.
+
+                List<TB_PRODUTO_SKYHUB> produtosSkyhub = GetProdutosNaoConectados();
+                
+                if (produtosSkyhub.Count > 0)
+                {
+                    List<TB_CONFIGURACAO_SKYHUB> configuracoesSkyhub = GetConfiguracoes();
+
+                    //Busca todas as configurações ativas para se conectar com a API.
+
+                    foreach (var configuracaoSkyhub in configuracoesSkyhub)
+                    {
+                        try
+                        {
+                            //Verifica e valida as configurações de autenticação.
+
+                            ConfiguracaoEstaOK(configuracaoSkyhub);
+                            await ValidaAutenticacao(configuracaoSkyhub);
+
+                            Http.DefaultRequestHeaders.Clear();
+                            Http.DefaultRequestHeaders.Accept.Clear();
+                            Http.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                            Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", configuracaoSkyhub.DESC_SKYHUB_TOKEN);
+                            
+                            ActionFromUsuario action = new ActionFromUsuario
+                            {
+                                sale_system = "B2W",
+                                type = "link"
+                            };
+
+                            produtosSkyhub.ForEach(x => action.skus.Add(x.COD_PRODUTO));
+                            
+                            //Realiza a ultima chamada para conectar efetivamente os skus enviados.
+
+                            await Http.PostAsJsonAsync("/rehub/product_actions", action).Result.Status200OrDie();
+
+                            //Agora é preciso buscar os produtos para verificar se os status mudaram.
+
+                            Http.DefaultRequestHeaders.Clear();
+                            Http.DefaultRequestHeaders.Accept.Clear();
+                            Http.DefaultRequestHeaders.Add("X-User-Email", configuracaoSkyhub.DESC_USUARIO_EMAIL);
+                            Http.DefaultRequestHeaders.Add("X-Api-Key", configuracaoSkyhub.DESC_TOKEN_INTEGRACAO);
+                            Http.DefaultRequestHeaders.Add("X-Accountmanager-Key", configuracaoSkyhub.DESC_TOKEN_ACCOUNT);
+                            Http.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                            foreach (TB_PRODUTO_SKYHUB produtoSkyhub in produtosSkyhub)
+                            {
+                                try
+                                {
+                                    response = await Http.GetAsync($"/products/{produtoSkyhub.COD_PRODUTO}").Result.Status200OrDie();
+
+                                    ProdutoSkyhub produtoApi = await response.Content.ReadAsAsync<ProdutoSkyhub>();
+
+                                    //Busca pela chave platform, que contenha o valor B2W, para buscar seu status e atualizar o campo no banco
+
+                                    Association associacao = produtoApi.associations.Find(x => x.platform.Contains("B2W"));
+
+                                    if (associacao == null)
+                                    {
+                                        produtoSkyhub.DESC_CONEXAO_MARKETPLACE = "unknow";
+                                    }
+                                    else
+                                    {
+                                        produtoSkyhub.DESC_CONEXAO_MARKETPLACE = associacao.status;
+                                    }
+
+                                    db.Entry(produtoSkyhub).State = EntityState.Modified;
+                                    db.SaveChanges();
+                                    
+                                    if (produtoSkyhub.DESC_CONEXAO_MARKETPLACE != "linked")
+                                    {
+                                        throw new InvalidOperationException($"Falhou ao conectar({produtoSkyhub.DESC_CONEXAO_MARKETPLACE})");
+                                    }
+                                    else
+                                    {
+                                        totalAtualizados++;
+                                    }
+                                }
+                                catch (Exception except)
+                                {
+                                    Manipulador.Adiciona(except, new List<string> { $"Filial: {configuracaoSkyhub.COD_FILIAL}, Produto: {produtoSkyhub.COD_PRODUTO}" });
+                                }
+                            }
+                        }
+                        catch (Exception except)
+                        {
+                            Manipulador.Adiciona(except, new List<string> { $"Filial: {configuracaoSkyhub.COD_FILIAL}" });
+                        }
+                    }
+                }
+
+                //Biblioteca ControlaExcecoes armazenou todos os erros ocorridos, caso não ocorra nenhum erro,
+                //então o método SemExcecoes retornará verdadeiro.
+
+                if (Manipulador.SemExcecoes())
+                {
+                    return Request.CreateResponse(
+                        HttpStatusCode.OK,
+                        $"Os produtos estão atualizados. Atualizados: {totalAtualizados}"
+                    );
+                }
+                else
+                {
+                    return Request.CreateResponse(
+                        HttpStatusCode.InternalServerError,
+                        Manipulador.FormatoJson($"Nem todos os produtos foram atualizados. Atualizados: {totalAtualizados}")
+                    );
+                }
+            }
+            catch (Exception except)
+            {
+                Manipulador.Adiciona(except);
+
+                return Request.CreateResponse(
+                    HttpStatusCode.InternalServerError,
+                    Manipulador.FormatoJson($"Não foi possível atualizar as informações dos produtos")
                 );
             }
         }
@@ -851,9 +1074,9 @@ namespace Cemapa.Controllers
                 int totalCriados = 0;
                 int totalDeletados = 0;
 
-                ControladorExcecoes.Limpa();
-                ControladorExcecoes.ErrosPersonalizados(true);
+                Manipulador.ErrosPersonalizados(true);
                 HttpResponseMessage response;
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
                 //Busca sincronizações de produtos pendentes (campo IND_SINCRONIZADO esteja igual a "N") na tabela TB_SINCRONIZACAO_SKYHUB.
 
@@ -1114,6 +1337,10 @@ namespace Cemapa.Controllers
                                                     break;
                                                 case "POST":
                                                     {
+                                                        //Após adicionar o produto na skyhub, é necessário realizar outras chamadas para
+                                                        //conectar efetivamente o produto às lojas da B2W. Essa possibilidade foi adicionado muito tempo
+                                                        //depois que a api principal deles foi terminada. Antes disso tinha que conectar pelo site.
+
                                                         await Http.PostAsJsonAsync("/products", products).Result.Status200OrDie();
                                                         totalCriados++;
                                                     }
@@ -1131,7 +1358,7 @@ namespace Cemapa.Controllers
                                         }
                                         catch (Exception except)
                                         {
-                                            ControladorExcecoes.Adiciona(except, new List<string> { $"Filial: {configuracaoSkyhub.COD_FILIAL}", $"Produto: {produtoSkyhub.COD_PRODUTO}" });
+                                            Manipulador.Adiciona(except, new List<string> { $"Filial: {configuracaoSkyhub.COD_FILIAL}", $"Produto: {produtoSkyhub.COD_PRODUTO}" });
                                         }
                                     }
                                 }
@@ -1147,20 +1374,20 @@ namespace Cemapa.Controllers
                             }
                             catch (Exception except)
                             {
-                                ControladorExcecoes.Adiciona(except, new List<string> { $"Filial: {configuracaoSkyhub.COD_FILIAL}", $"Sincronização: {sincronizacaoSkyhub.COD_SINCRONIZACAO_SKYHUB}" });
+                                Manipulador.Adiciona(except, new List<string> { $"Filial: {configuracaoSkyhub.COD_FILIAL}", $"Sincronização: {sincronizacaoSkyhub.COD_SINCRONIZACAO_SKYHUB}" });
                             }
                         }
                     }
                     catch (Exception except)
                     {
-                        ControladorExcecoes.Adiciona(except, new List<string> { $"Sincronização: {sincronizacaoSkyhub.COD_SINCRONIZACAO_SKYHUB}" });
+                        Manipulador.Adiciona(except, new List<string> { $"Sincronização: {sincronizacaoSkyhub.COD_SINCRONIZACAO_SKYHUB}" });
                     }
                 }
 
                 //Biblioteca ControlaExcecoes armazenou todos os erros ocorridos, caso não ocorra nenhum erro,
                 //então o método SemExcecoes retornará verdadeiro.
 
-                if (ControladorExcecoes.SemExcecoes())
+                if (Manipulador.SemExcecoes())
                 {
                     return Request.CreateResponse(
                         HttpStatusCode.OK,
@@ -1171,17 +1398,17 @@ namespace Cemapa.Controllers
                 {
                     return Request.CreateResponse(
                         HttpStatusCode.InternalServerError,
-                        ControladorExcecoes.FormatoJson($"Nem todos os pedidos foram sincronizados. Criados: {totalCriados}, Atualizados: {totalAtualizados}, Removidos: {totalDeletados}")
+                        Manipulador.FormatoJson($"Nem todos os pedidos foram sincronizados. Criados: {totalCriados}, Atualizados: {totalAtualizados}, Removidos: {totalDeletados}")
                     );
                 }
             }
             catch (Exception except)
             {
-                ControladorExcecoes.Adiciona(except);
+                Manipulador.Adiciona(except);
 
                 return Request.CreateResponse(
                     HttpStatusCode.InternalServerError,
-                    ControladorExcecoes.FormatoJson($"Não foi possível começar a sincronização")
+                    Manipulador.FormatoJson($"Não foi possível começar a sincronização")
                 );
             }
         }
@@ -1213,14 +1440,14 @@ namespace Cemapa.Controllers
                     select produtoSkyhub).ToList();
         }
 
-        private TB_PRODUTO_SKYHUB GetProdutosSkyhubPorCodigoProduto(int codProduto)
+        public TB_PRODUTO_SKYHUB GetProdutoSkyhub(int codProduto)
         {
             return (from produtoSkyhub in db.TB_PRODUTO_SKYHUB
                     where (produtoSkyhub.COD_PRODUTO == codProduto)
                     select produtoSkyhub).FirstOrDefault();
         }
 
-        private TB_CONFIGURACAO_SKYHUB GetConfiguracao(int codFilial)
+        public TB_CONFIGURACAO_SKYHUB GetConfiguracao(int codFilial)
         {
             return (from configuracaoSkyhub in db.TB_CONFIGURACAO_SKYHUB
                     where configuracaoSkyhub.IND_ATIVO == "S" && configuracaoSkyhub.COD_FILIAL == codFilial
@@ -1234,6 +1461,26 @@ namespace Cemapa.Controllers
                     select sincronizacaoSkyhub).ToList();
         }
 
+        private List<TB_PRODUTO_SKYHUB> GetProdutosNaoConectados()
+        {
+            return (from ProdutoSkyhub in db.TB_PRODUTO_SKYHUB
+                    where ProdutoSkyhub.DESC_CONEXAO_MARKETPLACE != "linked"
+                    select ProdutoSkyhub).ToList();
+        }
+
+        private List<TB_PRODUTO_SKYHUB> GetProdutoSemUrls()
+        {
+            return (from ProdutoSkyhub in db.TB_PRODUTO_SKYHUB
+                    where
+                        ProdutoSkyhub.URL_AMERICANAS == null ||
+                        ProdutoSkyhub.URL_SUBMARINO == null ||
+                        ProdutoSkyhub.URL_SHOPTIME == null ||
+                        ProdutoSkyhub.URL_AMERICANAS == "" ||
+                        ProdutoSkyhub.URL_SUBMARINO == "" ||
+                        ProdutoSkyhub.URL_SHOPTIME == ""
+                    select ProdutoSkyhub).ToList();
+        }
+
         private TB_PRODUTO InfosProduto(TB_PRODUTO_SKYHUB produtoSkyhub)
         {
             TB_PRODUTO wProduto = (from dbProduto in db.TB_PRODUTO
@@ -1241,6 +1488,14 @@ namespace Cemapa.Controllers
                                    select dbProduto).First();
             return wProduto;
 
+        }
+
+        private TB_PEDIDO_CAB GetPedidoPorMarketplace(Order ordem)
+        {
+            TB_PEDIDO_CAB wPedido = (from p in db.TB_PEDIDO_CAB
+                                     where (p.COD_PEDIDO_MARKETPLACE == ordem.code)
+                                     select p).FirstOrDefault();
+            return wPedido;
         }
 
         private decimal TotalEstoque(TB_CONFIGURACAO_SKYHUB configuracaoSkyhub, TB_PRODUTO_SKYHUB produtoSkyhub)
@@ -1303,14 +1558,6 @@ namespace Cemapa.Controllers
                 throw new ArgumentException($"Configuração skyhub: token inválido, filial: {configuracaoSkyhub.COD_FILIAL}");
             if (String.IsNullOrEmpty(configuracaoSkyhub.DESC_USUARIO_EMAIL))
                 throw new ArgumentException($"Configuração skyhub: e-mail inválido, filial: {configuracaoSkyhub.COD_FILIAL}");
-        }
-        
-        private TB_PEDIDO_CAB GetPedidoPorMarketplace(Order ordem)
-        {
-            TB_PEDIDO_CAB wPedido = (from p in db.TB_PEDIDO_CAB
-                                     where (p.COD_PEDIDO_MARKETPLACE == ordem.code)
-                                     select p).FirstOrDefault();
-            return wPedido;
         }
 
         private TB_CADASTRO SelecionaComprador(Order ordem, TB_CONFIGURACAO_SKYHUB configuracao)
@@ -1527,6 +1774,49 @@ namespace Cemapa.Controllers
             {
                 Console.WriteLine("Erro ao enviar e-mail mas e daí?");
             }
+        }
+        
+        private async Task ValidaAutenticacao(TB_CONFIGURACAO_SKYHUB configuracaoSkyhub)
+        {
+            if (!TokenEstaOK(configuracaoSkyhub))
+            {
+                
+                HttpClient Http = new HttpClient
+                {
+                    BaseAddress = SkyhubUri
+                };
+
+                Auth autenticacao = new Auth
+                {
+                    user_email = configuracaoSkyhub.DESC_USUARIO_EMAIL,
+                    api_key = configuracaoSkyhub.DESC_TOKEN_INTEGRACAO
+                };
+
+                HttpResponseMessage response = await Http.PostAsJsonAsync("/auth", autenticacao).Result.Status200OrDie();
+
+                Token token = await response.Content.ReadAsAsync<Token>();
+                
+                configuracaoSkyhub.DESC_SKYHUB_TOKEN = token.token;
+                configuracaoSkyhub.DT_TOKEN_SKYHUB = DateTime.Now;
+                db.SaveChanges();
+            }
+        }
+
+        private bool TokenEstaOK(TB_CONFIGURACAO_SKYHUB configuracaoSkyhub)
+        {
+            if(String.IsNullOrEmpty(configuracaoSkyhub.DESC_SKYHUB_TOKEN))
+            {
+                return false;
+            }
+
+            DateTime dataExpiracao = Convert.ToDateTime(configuracaoSkyhub.DT_TOKEN_SKYHUB).AddSeconds(21600);
+
+            if (DateTime.Now < dataExpiracao)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

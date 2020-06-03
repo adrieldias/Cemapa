@@ -22,11 +22,11 @@ namespace Cemapa.Models
     
         public int COD_PEDIDO_CAB { get; set; }
         public Nullable<int> COD_FILIAL { get; set; }
-        public int COD_OPERACAO { get; set; }
+        public Nullable<int> COD_OPERACAO { get; set; }
         public Nullable<int> COD_VENDEDOR { get; set; }
         public Nullable<int> COD_CADASTRO { get; set; }
         public Nullable<int> NUM_PEDIDO { get; set; }
-        public System.DateTime DT_EMISSAO { get; set; }
+        public Nullable<System.DateTime> DT_EMISSAO { get; set; }
         public Nullable<decimal> VAL_DESCONTO { get; set; }
         public Nullable<System.DateTime> DT_ENTREGA { get; set; }
         public Nullable<System.DateTime> DT_FATURAMENTO { get; set; }
@@ -40,15 +40,15 @@ namespace Cemapa.Models
         public Nullable<long> COD_PRODUTO { get; set; }
         public Nullable<decimal> QT_QUANTIDADE { get; set; }
         public Nullable<int> COD_USUARIO { get; set; }
-        public Nullable<byte> NR_DIAS_CHEQUE { get; set; }
-        public Nullable<byte> NR_DIAS_CHEQUE1 { get; set; }
-        public Nullable<byte> NR_DIAS_CHEQUE2 { get; set; }
-        public Nullable<byte> NR_DIAS_CHEQUE3 { get; set; }
+        public Nullable<short> NR_DIAS_CHEQUE { get; set; }
+        public Nullable<short> NR_DIAS_CHEQUE1 { get; set; }
+        public Nullable<short> NR_DIAS_CHEQUE2 { get; set; }
+        public Nullable<short> NR_DIAS_CHEQUE3 { get; set; }
         public Nullable<int> COD_PRAZO_VENCIMENTO { get; set; }
         public string IND_TIPO_FRETE { get; set; }
         public Nullable<int> COD_CULTURA { get; set; }
         public Nullable<System.DateTime> DT_ENTREGA_PRORROGADA { get; set; }
-        public Nullable<byte> NR_DIAS_CHEQUE4 { get; set; }
+        public Nullable<short> NR_DIAS_CHEQUE4 { get; set; }
         public Nullable<int> COD_MENSAGEM { get; set; }
         public Nullable<int> COD_DEPARTAMENTO { get; set; }
         public Nullable<int> COD_BANCO_AGENCIA { get; set; }
@@ -88,23 +88,15 @@ namespace Cemapa.Models
         public string STEP_SINCRONIZACAO { get; set; }
         public Nullable<decimal> VAL_DESPESAS { get; set; }
         public string IND_SINC_MAX_ROTEIRIZADOR { get; set; }
-        public string COD_PEDIDO_MARKETPLACE { get; set; }
         public string DESC_SITUACAO_MARKETPLACE { get; set; }
+        public string COD_PEDIDO_MARKETPLACE { get; set; }
+        public string DESC_SITUACAO_SKYHUB { get; set; }
         public Nullable<decimal> VAL_FRETE_MARKETPLACE { get; set; }
     
-        public virtual TB_BANCO_AGENCIA TB_BANCO_AGENCIA { get; set; }
-        public virtual TB_CADASTRO TB_CADASTRO { get; set; }
-        public virtual TB_CADASTRO TB_CADASTRO1 { get; set; }
-        public virtual TB_CONTA_CORRENTE TB_CONTA_CORRENTE { get; set; }
-        public virtual TB_CULTURA TB_CULTURA { get; set; }
-        public virtual TB_DEPARTAMENTO TB_DEPARTAMENTO { get; set; }
-        public virtual TB_FILIAL TB_FILIAL { get; set; }
-        public virtual TB_MENSAGEM TB_MENSAGEM { get; set; }
-        public virtual TB_OPERACAO TB_OPERACAO { get; set; }
-        public virtual TB_PRAZO_VENCIMENTO TB_PRAZO_VENCIMENTO { get; set; }
-        public virtual TB_VENDEDOR TB_VENDEDOR { get; set; }
-        public virtual TB_PRODUTO TB_PRODUTO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TB_PEDIDO_ITEM> TB_PEDIDO_ITEM { get; set; }
+        public virtual TB_CADASTRO TB_CADASTRO { get; set; }
+        public virtual TB_CADASTRO TB_CADASTRO1 { get; set; }
+        public virtual TB_PRODUTO TB_PRODUTO { get; set; }
     }
 }
