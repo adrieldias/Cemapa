@@ -6,7 +6,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Web.Script.Serialization;
 
 namespace Cemapa.Models
 {    
@@ -111,7 +110,6 @@ namespace Cemapa.Models
         {
             "A task was canceled",
             "Gateway Time-out",
-            "Too Many Requests",
             "The request was aborted: Could not create SSL/TLS secure channel",
             "The remote name could not be resolved"
         };

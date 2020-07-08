@@ -25,8 +25,6 @@ namespace Cemapa.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<TB_CONFIGURACAO_SKYHUB> TB_CONFIGURACAO_SKYHUB { get; set; }
-        public virtual DbSet<TB_PRODUTO_CATEGORIA_SKYHUB> TB_PRODUTO_CATEGORIA_SKYHUB { get; set; }
         public virtual DbSet<TB_SEQUENCIA> TB_SEQUENCIA { get; set; }
         public virtual DbSet<TB_SINCRONIZACAO_SKYHUB> TB_SINCRONIZACAO_SKYHUB { get; set; }
         public virtual DbSet<TB_CIDADE> TB_CIDADE { get; set; }
@@ -35,10 +33,12 @@ namespace Cemapa.Models
         public virtual DbSet<TB_PEDIDO_CAB> TB_PEDIDO_CAB { get; set; }
         public virtual DbSet<TB_PEDIDO_ITEM> TB_PEDIDO_ITEM { get; set; }
         public virtual DbSet<TB_EMAIL> TB_EMAIL { get; set; }
-        public virtual DbSet<TB_PRODUTO_SKYHUB> TB_PRODUTO_SKYHUB { get; set; }
         public virtual DbSet<TB_CADASTRO> TB_CADASTRO { get; set; }
         public virtual DbSet<TB_ESTOQUE> TB_ESTOQUE { get; set; }
         public virtual DbSet<TB_CLASSE> TB_CLASSE { get; set; }
         public virtual DbSet<TB_PRODUTO> TB_PRODUTO { get; set; }
+        public virtual DbSet<TB_PRODUTO_SKYHUB> TB_PRODUTO_SKYHUB { get; set; }
+        public virtual DbSet<TB_PRODUTO_SKYHUB_URL> TB_PRODUTO_SKYHUB_URL { get; set; }
+        public virtual DbSet<TB_CONFIGURACAO_SKYHUB> TB_CONFIGURACAO_SKYHUB { get; set; }
     }
 }

@@ -74,11 +74,11 @@ namespace Cemapa.Models.Skyhub
 
     public class Payment
     {
-        public double value { get; set; }
+        public double? value { get; set; }
         public object transaction_date { get; set; }
         public object status { get; set; }
         public Sefaz sefaz { get; set; }
-        public int parcels { get; set; }
+        public int? parcels { get; set; }
         public string method { get; set; }
         public string description { get; set; }
         public string card_issuer { get; set; }

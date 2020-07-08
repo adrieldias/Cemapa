@@ -35,8 +35,6 @@ namespace Cemapa.Models
         public string DESC_LOCALIZACAO { get; set; }
         public string DESC_HASH_MD5 { get; set; }
         public Nullable<decimal> VL_CUSTO_COMISSAO { get; set; }
-        public Nullable<decimal> QT_ESTOQUE_CONTADO { get; set; }
-        public Nullable<decimal> QT_ESTOQUE_ARDUINO { get; set; }
     
         public virtual TB_PRODUTO TB_PRODUTO { get; set; }
     }

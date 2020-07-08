@@ -9,29 +9,33 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using Cemapa.Models;
 using Cemapa.Models.Skyhub;
+using Cemapa.Models.Imgur;
 using System.Text.RegularExpressions;
 using Cemapa.Controllers.UtilsServidor;
 using Cemapa.Controllers.Http;
 using Cemapa.Controllers.Email;
 
 using ActionFromUsuario = Cemapa.Models.Skyhub.Action;
+using TokenFromSkyhub = Cemapa.Models.Skyhub.Token;
 
 namespace Cemapa.Controllers
 {
     public class SincronizarSkyhubController : ApiController
     {
         private readonly Entities db = new Entities();
-        private readonly ControladorExcecoes Manipulador = new ControladorExcecoes();
         private readonly Uri SkyhubUri = new Uri("https://api.skyhub.com.br");
-        
+        private readonly ControladorExcecoes Manipulador = new ControladorExcecoes();
+
         [HttpGet]
         public async Task<HttpResponseMessage> AtualizarURLs(int codFilial, int codProduto = 0)
         {
             try
             {
+                Manipulador.Limpa();
+
                 //Começa a busca pela URL do produto.
                 //A URL do produto é o link completo onde o produto esta sendo exibido na loja online.
-                
+
                 if (codFilial == 0)
                 {
                     throw new ArgumentNullException("codFilial", "Filial não informada");
@@ -43,7 +47,7 @@ namespace Cemapa.Controllers
                 }
 
                 //Busca pela configuração informada para se conectar com a API.
-
+                
                 TB_CONFIGURACAO_SKYHUB configuracao = GetConfiguracao(codFilial);
 
                 ConfiguracaoEstaOK(configuracao);
@@ -78,11 +82,31 @@ namespace Cemapa.Controllers
                         Channel Submarino = produtoSkyhub.channels.Find(x => x.name == "Submarino");
                         Channel Shoptime = produtoSkyhub.channels.Find(x => x.name == "Shoptime");
 
-                        produto.URL_AMERICANAS = Americanas != null ? Americanas.href : "";
-                        produto.URL_SUBMARINO = Submarino != null ? Submarino.href : "";
-                        produto.URL_SHOPTIME = Shoptime != null ? Shoptime.href : "";
+                        TB_PRODUTO_SKYHUB_URL url = GetProdutoSkyhubUrl(produto.COD_PRODUTO_SKYHUB, configuracao.COD_FILIAL);
 
-                        db.Entry(produto).State = EntityState.Modified;
+                        if (url != null)
+                        {
+                            url.URL_AMERICANAS = Americanas != null ? Americanas.href : null;
+                            url.URL_SUBMARINO = Submarino != null ? Submarino.href : null;
+                            url.URL_SHOPTIME = Shoptime != null ? Shoptime.href : null;
+                            db.Entry(url).State = EntityState.Modified;
+                        }
+                        else
+                        {
+                            int wCodigoUrl = db.Database.SqlQuery<int>("SELECT SQPRODUTO_SKYHUB_URL.NEXTVAL FROM DUAL").First();
+
+                            url = new TB_PRODUTO_SKYHUB_URL
+                            {
+                                COD_PRODUTO_SKYHUB_URL = wCodigoUrl,
+                                COD_FILIAL = configuracao.COD_FILIAL,
+                                COD_PRODUTO_SKYHUB = produto.COD_PRODUTO_SKYHUB,
+                                URL_AMERICANAS = Americanas != null ? Americanas.href : null,
+                                URL_SUBMARINO = Submarino != null ? Submarino.href : null,
+                                URL_SHOPTIME = Shoptime != null ? Shoptime.href : null
+                            };
+                            db.Entry(url).State = EntityState.Added;
+                        }
+                        
                         db.SaveChanges();
                     }
                     else
@@ -97,7 +121,7 @@ namespace Cemapa.Controllers
 
                 return Request.CreateResponse(
                     HttpStatusCode.OK,
-                    $"As URLs foram atualizadas"
+                    $"As URLs foram atualizadas."
                 );
             }
             catch (Exception except)
@@ -116,12 +140,14 @@ namespace Cemapa.Controllers
         {
             try
             {
+                Manipulador.Limpa();
+
                 //Começa a busca pela sincronização do status de conexão.
                 //O status de conexão é o status de um produto que esta na skyhub e mostra se ele está ou não conectado com a b2w.
                 //Esse status é importante para quem usa o sistema ter uma idéia dos produtos que estão ok e os que precisam de atenção.
 
                 int wTotalAlterados = 0;
-                
+
                 //Busca todas as configurações ativas para se conectar com a API.
 
                 List<TB_CONFIGURACAO_SKYHUB> configuracoesSkyhub = GetConfiguracoes();
@@ -262,6 +288,8 @@ namespace Cemapa.Controllers
                 string wCodigoPlp = null;
                 int wMaximoIteracoes = 10;
 
+                Manipulador.Limpa();
+
                 if (codFilial == 0)
                 {
                     throw new ArgumentNullException("codFilial", "Filial não informada");
@@ -383,6 +411,8 @@ namespace Cemapa.Controllers
 
             try
             {
+                Manipulador.Limpa();
+
                 if (codFilial == 0)
                 {
                     throw new ArgumentNullException("codFilial", "Filial não informada");
@@ -466,6 +496,8 @@ namespace Cemapa.Controllers
         {
             try
             {
+                Manipulador.Limpa();
+
                 if (codFilial == 0)
                 {
                     throw new ArgumentNullException("codFilial", "Filial não informada");
@@ -540,6 +572,8 @@ namespace Cemapa.Controllers
             
             try
             {
+                Manipulador.Limpa();
+
                 if (codFilial == 0)
                 {
                     throw new FormatException("Filial não informada");
@@ -595,6 +629,8 @@ namespace Cemapa.Controllers
 
             try
             {
+                Manipulador.Limpa();
+
                 if (chaveNFE.Length != 44)
                 {
                     throw new ArgumentNullException("chaveNFE", "Chave da NFE inválida");
@@ -680,6 +716,8 @@ namespace Cemapa.Controllers
         {
             try
             {
+                Manipulador.Limpa();
+
                 int wTotalCancelados = 0;
                 int wTotalCriados = 0;
                 int wTotalAlterados = 0;
@@ -932,8 +970,11 @@ namespace Cemapa.Controllers
         {
             try
             {
+                Manipulador.Limpa();
+
                 int totalAtualizados = 0;
 
+                Manipulador.Limpa();
                 Manipulador.ErrosPersonalizados(true);
                 HttpResponseMessage response;
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
@@ -942,14 +983,14 @@ namespace Cemapa.Controllers
                 {
                     BaseAddress = SkyhubUri
                 };
-                
+
                 //Busca produtos que ainda não conectaram na skyhub.
                 //A skyhub tem um sistema de conexão de produtos, após cria-los é necessários conecta-los.
                 //Antigamente isso era feito entrando no site da skyhub.
 
-                List<TB_PRODUTO_SKYHUB> produtosSkyhub = GetProdutosNaoConectados();
-                
-                if (produtosSkyhub.Count > 0)
+                List<TB_PRODUTO_SKYHUB> produtosNaoConectados = GetProdutosNaoConectados();
+
+                if (produtosNaoConectados.Count > 0)
                 {
                     List<TB_CONFIGURACAO_SKYHUB> configuracoesSkyhub = GetConfiguracoes();
 
@@ -975,7 +1016,7 @@ namespace Cemapa.Controllers
                                 type = "link"
                             };
 
-                            produtosSkyhub.ForEach(x => action.skus.Add(x.COD_PRODUTO));
+                            produtosNaoConectados.ForEach(x => action.skus.Add(x.COD_PRODUTO));
                             
                             //Realiza a ultima chamada para conectar efetivamente os skus enviados.
 
@@ -990,7 +1031,7 @@ namespace Cemapa.Controllers
                             Http.DefaultRequestHeaders.Add("X-Accountmanager-Key", configuracaoSkyhub.DESC_TOKEN_ACCOUNT);
                             Http.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                            foreach (TB_PRODUTO_SKYHUB produtoSkyhub in produtosSkyhub)
+                            foreach (TB_PRODUTO_SKYHUB produtoSkyhub in produtosNaoConectados)
                             {
                                 try
                                 {
@@ -1074,6 +1115,7 @@ namespace Cemapa.Controllers
                 int totalCriados = 0;
                 int totalDeletados = 0;
 
+                Manipulador.Limpa();
                 Manipulador.ErrosPersonalizados(true);
                 HttpResponseMessage response;
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
@@ -1134,7 +1176,7 @@ namespace Cemapa.Controllers
                                             {
                                                 sku = produtoSkyhub.COD_PRODUTO,
                                                 name = produtoSkyhub.DESC_PRODUTO,
-                                                description = produtoSkyhub.DESC_DESCRICAO,
+                                                description = produtoSkyhub.DESC_INFORMACOES_ADICIONAIS,
                                                 status = produtoSkyhub.DESC_STATUS,
                                                 qty = Convert.ToInt32(wTotalEstoque),
                                                 weight = Convert.ToDouble(produtoSkyhub.VAL_PESO),
@@ -1169,15 +1211,12 @@ namespace Cemapa.Controllers
                                             ProdutoSku.AddSpecificationsCustom("Aparelhos compatíveis", produtoSkyhub.ESP_APARELHOSCOMPATIVEIS);
                                             ProdutoSku.AddSpecificationsCustom("Conteúdo da embalagem", produtoSkyhub.ESP_CONTEUDODAEMBALAGEM);
                                             ProdutoSku.AddSpecificationsCustom("Cor", produtoSkyhub.ESP_COR);
-                                            ProdutoSku.AddSpecificationsCustom("Cor - ficha técnica", produtoSkyhub.ESP_CORFICHATECNICA);
                                             ProdutoSku.AddSpecificationsCustom("Data de Lançamento no Mercado", produtoSkyhub.ESP_DATADELANCAMENTONOMERCADO);
-                                            ProdutoSku.AddSpecificationsCustom("Dimensões Embalagem - cm (AxLxP)", produtoSkyhub.ESP_DIMENSOESEMBALAGEM);
                                             ProdutoSku.AddSpecificationsCustom("Dimensões Produto - cm (AxLxP)", produtoSkyhub.ESP_DIMENSOESPRODUTO);
                                             ProdutoSku.AddSpecificationsCustom("Fabricante", produtoSkyhub.ESP_FABRICANTE);
                                             ProdutoSku.AddSpecificationsCustom("Garantia do Fornecedor", produtoSkyhub.ESP_GARANTIADEFORNECEDOR);
                                             ProdutoSku.AddSpecificationsCustom("Mais informações", produtoSkyhub.ESP_MAISINFORMACOES);
                                             ProdutoSku.AddSpecificationsCustom("Manual", produtoSkyhub.ESP_MANUAL);
-                                            ProdutoSku.AddSpecificationsCustom("Marca", produtoSkyhub.ESP_MARCA);
                                             ProdutoSku.AddSpecificationsCustom("Material/Composição", produtoSkyhub.ESP_MATERIALCOMPOSICAO);
                                             ProdutoSku.AddSpecificationsCustom("Modelo", produtoSkyhub.ESP_MODELO);
                                             ProdutoSku.AddSpecificationsCustom("Peso liq. da embalagem c/ produto (Kg)", produtoSkyhub.ESP_PESOLIQDAEMBALAGEMCPRODUTO);
@@ -1189,10 +1228,66 @@ namespace Cemapa.Controllers
                                             ProdutoSku.AddSpecificationsCustom("Vídeo", produtoSkyhub.ESP_VIDEO);
                                             ProdutoSku.AddSpecificationsCustom("Voltagem", produtoSkyhub.ESP_VOLTAGEM);
 
+                                            //Upload de imagens pelo Imgur
+                                            
+                                            UploadImgur Imgur = new UploadImgur();
+
+                                            Imgur.Carrega(produtoSkyhub.IMAGEM_1);
+                                            Imgur.Carrega(produtoSkyhub.IMAGEM_2);
+                                            Imgur.Carrega(produtoSkyhub.IMAGEM_3);
+                                            Imgur.Carrega(produtoSkyhub.IMAGEM_4);
+
+                                            await Imgur.Configura(
+                                                configuracaoSkyhub.IMGUR_CLIENT_ID,
+                                                configuracaoSkyhub.IMGUR_SECRET,
+                                                configuracaoSkyhub.IMGUR_REFRESH_TOKEN,
+                                                configuracaoSkyhub.IMGUR_ACCESS_TOKEN,
+                                                Convert.ToDateTime(configuracaoSkyhub.IMGUR_DT_ACCESS_TOKEN)
+                                            );
+
+                                            if ((Imgur.AccessToken() != null) && (Imgur.AccessToken().DataRegistro != configuracaoSkyhub.IMGUR_DT_ACCESS_TOKEN))
+                                            {
+                                                configuracaoSkyhub.IMGUR_ACCESS_TOKEN = Imgur.AccessToken().OAuth.AccessToken;
+                                                configuracaoSkyhub.IMGUR_DT_ACCESS_TOKEN = Imgur.AccessToken().DataRegistro;
+                                                db.Entry(configuracaoSkyhub).State = EntityState.Modified;
+                                                db.SaveChanges();
+                                            }
+                                            
+                                            await Imgur.Sobe();
+
+                                            if (Imgur.FoiEnviado(produtoSkyhub.IMAGEM_1))
+                                            {
+                                                produtoSkyhub.DESC_LINK_IMAGEM_1 = Imgur.Link(produtoSkyhub.IMAGEM_1);
+                                                produtoSkyhub.IMAGEM_1 =  new byte[0];
+                                            }
+
+                                            if (Imgur.FoiEnviado(produtoSkyhub.IMAGEM_2))
+                                            {
+                                                produtoSkyhub.DESC_LINK_IMAGEM_2 = Imgur.Link(produtoSkyhub.IMAGEM_2);
+                                                produtoSkyhub.IMAGEM_2 = new byte[0];
+                                            }
+
+                                            if (Imgur.FoiEnviado(produtoSkyhub.IMAGEM_3))
+                                            {
+                                                produtoSkyhub.DESC_LINK_IMAGEM_3 = Imgur.Link(produtoSkyhub.IMAGEM_3);
+                                                produtoSkyhub.IMAGEM_3 = new byte[0];
+                                            }
+
+                                            if (Imgur.FoiEnviado(produtoSkyhub.IMAGEM_4))
+                                            {
+                                                produtoSkyhub.DESC_LINK_IMAGEM_4 = Imgur.Link(produtoSkyhub.IMAGEM_4);
+                                                produtoSkyhub.IMAGEM_4 = new byte[0];
+                                            }
+
+                                            db.Entry(produtoSkyhub).State = EntityState.Modified;
+                                            db.SaveChanges();
+                                            
                                             ProdutoSku.AddImagesCustom(produtoSkyhub.DESC_LINK_IMAGEM_1);
                                             ProdutoSku.AddImagesCustom(produtoSkyhub.DESC_LINK_IMAGEM_2);
                                             ProdutoSku.AddImagesCustom(produtoSkyhub.DESC_LINK_IMAGEM_3);
                                             ProdutoSku.AddImagesCustom(produtoSkyhub.DESC_LINK_IMAGEM_4);
+
+                                            //Variações
 
                                             List<TB_PRODUTO_SKYHUB> variacoes = GetVariacoes(produtoSkyhub);
 
@@ -1223,15 +1318,12 @@ namespace Cemapa.Controllers
                                                 wProdutoVariacao.AddSpecificationsCustom("Aparelhos compatíveis", variacao.ESP_APARELHOSCOMPATIVEIS);
                                                 wProdutoVariacao.AddSpecificationsCustom("Conteúdo da embalagem", variacao.ESP_CONTEUDODAEMBALAGEM);
                                                 wProdutoVariacao.AddSpecificationsCustom("Cor", variacao.ESP_COR);
-                                                wProdutoVariacao.AddSpecificationsCustom("Cor - ficha técnica", variacao.ESP_CORFICHATECNICA);
                                                 wProdutoVariacao.AddSpecificationsCustom("Data de Lançamento no Mercado", variacao.ESP_DATADELANCAMENTONOMERCADO);
-                                                wProdutoVariacao.AddSpecificationsCustom("Dimensões Embalagem - cm (AxLxP)", variacao.ESP_DIMENSOESEMBALAGEM);
                                                 wProdutoVariacao.AddSpecificationsCustom("Dimensões Produto - cm (AxLxP)", variacao.ESP_DIMENSOESPRODUTO);
                                                 wProdutoVariacao.AddSpecificationsCustom("Fabricante", variacao.ESP_FABRICANTE);
                                                 wProdutoVariacao.AddSpecificationsCustom("Garantia do Fornecedor", variacao.ESP_GARANTIADEFORNECEDOR);
                                                 wProdutoVariacao.AddSpecificationsCustom("Mais informações", variacao.ESP_MAISINFORMACOES);
                                                 wProdutoVariacao.AddSpecificationsCustom("Manual", variacao.ESP_MANUAL);
-                                                wProdutoVariacao.AddSpecificationsCustom("Marca", variacao.ESP_MARCA);
                                                 wProdutoVariacao.AddSpecificationsCustom("Material/Composição", variacao.ESP_MATERIALCOMPOSICAO);
                                                 wProdutoVariacao.AddSpecificationsCustom("Modelo", variacao.ESP_MODELO);
                                                 wProdutoVariacao.AddSpecificationsCustom("Peso liq. da embalagem c/ produto (Kg)", variacao.ESP_PESOLIQDAEMBALAGEMCPRODUTO);
@@ -1327,14 +1419,6 @@ namespace Cemapa.Controllers
                                                         }
                                                     }
                                                     break;
-                                                case "DELETE":
-                                                    {
-                                                        Resposta.Status404Previsto();
-                                                        await Http.DeleteAsync("/products/" + ProdutoSku.sku).Result.Status200OrDie();
-                                                        totalDeletados++;
-
-                                                    }
-                                                    break;
                                                 case "POST":
                                                     {
                                                         //Após adicionar o produto na skyhub, é necessário realizar outras chamadas para
@@ -1365,11 +1449,36 @@ namespace Cemapa.Controllers
                                 else
                                 {
                                     //Caso não tenha sido encontrado nenhum registro da tabela TB_PRODUTO_SKYHUB referente a sincronização atual,
-                                    //então o produto deve ser apagado da API também, ignorando o método pedido pela sincronização.
+                                    //então o produto deve ser apagado da API também, ignorando o método solicitado pela sincronização.
                                     
+                                    //Para deletar um produto, primeiro é necessário desconecta-lo das lojas.
+                                        
+                                    await ValidaAutenticacao(configuracaoSkyhub);
+                                    Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", configuracaoSkyhub.DESC_SKYHUB_TOKEN);
+
+                                    ActionFromUsuario action = new ActionFromUsuario
+                                    {
+                                        sale_system = "B2W",
+                                        type = "unlink",
+                                        skus = { sincronizacaoSkyhub.COD_PRODUTO }
+                                    };
+                                                                            
+                                    await Http.PostAsJsonAsync("/rehub/product_actions", action).Result.Status200OrDie();
+                                    
+                                    Http.DefaultRequestHeaders.Clear();
+                                    Http.DefaultRequestHeaders.Accept.Clear();
+                                    Http.DefaultRequestHeaders.Add("X-User-Email", configuracaoSkyhub.DESC_USUARIO_EMAIL);
+                                    Http.DefaultRequestHeaders.Add("X-Api-Key", configuracaoSkyhub.DESC_TOKEN_INTEGRACAO);
+                                    Http.DefaultRequestHeaders.Add("X-Accountmanager-Key", configuracaoSkyhub.DESC_TOKEN_ACCOUNT);
+                                    Http.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
                                     Resposta.Status404Previsto();
                                     await Http.DeleteAsync("/products/" + sincronizacaoSkyhub.COD_PRODUTO).Result.Status200OrDie();
                                     totalDeletados++;
+
+                                    sincronizacaoSkyhub.DT_SINCRONIZACAO = DateTime.Now;
+                                    sincronizacaoSkyhub.IND_SINCRONIZADO = "S";
+                                    db.SaveChanges();
                                 }
                             }
                             catch (Exception except)
@@ -1398,7 +1507,7 @@ namespace Cemapa.Controllers
                 {
                     return Request.CreateResponse(
                         HttpStatusCode.InternalServerError,
-                        Manipulador.FormatoJson($"Nem todos os pedidos foram sincronizados. Criados: {totalCriados}, Atualizados: {totalAtualizados}, Removidos: {totalDeletados}")
+                        Manipulador.FormatoJson($"Nem todos os produtos foram sincronizados. Criados: {totalCriados}, Atualizados: {totalAtualizados}, Removidos: {totalDeletados}")
                     );
                 }
             }
@@ -1439,12 +1548,19 @@ namespace Cemapa.Controllers
             return (from produtoSkyhub in db.TB_PRODUTO_SKYHUB
                     select produtoSkyhub).ToList();
         }
-
+        
         public TB_PRODUTO_SKYHUB GetProdutoSkyhub(int codProduto)
         {
             return (from produtoSkyhub in db.TB_PRODUTO_SKYHUB
                     where (produtoSkyhub.COD_PRODUTO == codProduto)
                     select produtoSkyhub).FirstOrDefault();
+        }
+
+        public TB_PRODUTO_SKYHUB_URL GetProdutoSkyhubUrl(int codProdutoSkyhub, int codFilial)
+        {
+            return (from produtoSkyhubUrl in db.TB_PRODUTO_SKYHUB_URL
+                    where (produtoSkyhubUrl.COD_PRODUTO_SKYHUB == codProdutoSkyhub && produtoSkyhubUrl.COD_FILIAL == codFilial)
+                    select produtoSkyhubUrl).FirstOrDefault();
         }
 
         public TB_CONFIGURACAO_SKYHUB GetConfiguracao(int codFilial)
@@ -1468,17 +1584,17 @@ namespace Cemapa.Controllers
                     select ProdutoSkyhub).ToList();
         }
 
-        private List<TB_PRODUTO_SKYHUB> GetProdutoSemUrls()
+        private List<TB_PRODUTO_SKYHUB> GetProdutosFaltandoUrl()
         {
-            return (from ProdutoSkyhub in db.TB_PRODUTO_SKYHUB
-                    where
-                        ProdutoSkyhub.URL_AMERICANAS == null ||
-                        ProdutoSkyhub.URL_SUBMARINO == null ||
-                        ProdutoSkyhub.URL_SHOPTIME == null ||
-                        ProdutoSkyhub.URL_AMERICANAS == "" ||
-                        ProdutoSkyhub.URL_SUBMARINO == "" ||
-                        ProdutoSkyhub.URL_SHOPTIME == ""
-                    select ProdutoSkyhub).ToList();
+            return (from produto in db.TB_PRODUTO_SKYHUB select produto).ToList().FindAll(
+                x => x.TB_PRODUTO_SKYHUB_URL.FirstOrDefault() == null ||
+                x.TB_PRODUTO_SKYHUB_URL.FirstOrDefault().URL_AMERICANAS == null ||
+                x.TB_PRODUTO_SKYHUB_URL.FirstOrDefault().URL_SUBMARINO == null ||
+                x.TB_PRODUTO_SKYHUB_URL.FirstOrDefault().URL_SHOPTIME == null ||
+                x.TB_PRODUTO_SKYHUB_URL.FirstOrDefault().URL_AMERICANAS == "" ||
+                x.TB_PRODUTO_SKYHUB_URL.FirstOrDefault().URL_SUBMARINO == "" ||
+                x.TB_PRODUTO_SKYHUB_URL.FirstOrDefault().URL_SHOPTIME == ""
+            );
         }
 
         private TB_PRODUTO InfosProduto(TB_PRODUTO_SKYHUB produtoSkyhub)
@@ -1522,8 +1638,8 @@ namespace Cemapa.Controllers
                 throw new ArgumentException($"Produto marketplace: comprimento inválida, produto: {produtoSkyhub.COD_PRODUTO}");
             if (produtoSkyhub.VAL_LARGURA < 0)
                 throw new ArgumentException($"Produto marketplace: Altura inválida, produto: {produtoSkyhub.COD_PRODUTO}");
-            if (String.IsNullOrEmpty(produtoSkyhub.DESC_DESCRICAO))
-                throw new ArgumentException($"Produto marketplace: ficha técnica inválida, produto: {produtoSkyhub.COD_PRODUTO}");
+            if (String.IsNullOrEmpty(produtoSkyhub.DESC_INFORMACOES_ADICIONAIS))
+                throw new ArgumentException($"Produto marketplace: informações adicionais inválida, produto: {produtoSkyhub.COD_PRODUTO}");
             if (String.IsNullOrEmpty(produtoSkyhub.DESC_MARCA))
                 throw new ArgumentException($"Produto marketplace: marca inválida, produto: {produtoSkyhub.COD_PRODUTO}");
             if (String.IsNullOrEmpty(produtoSkyhub.DESC_PRODUTO))
@@ -1794,7 +1910,7 @@ namespace Cemapa.Controllers
 
                 HttpResponseMessage response = await Http.PostAsJsonAsync("/auth", autenticacao).Result.Status200OrDie();
 
-                Token token = await response.Content.ReadAsAsync<Token>();
+                TokenFromSkyhub token = await response.Content.ReadAsAsync<TokenFromSkyhub>();
                 
                 configuracaoSkyhub.DESC_SKYHUB_TOKEN = token.token;
                 configuracaoSkyhub.DT_TOKEN_SKYHUB = DateTime.Now;

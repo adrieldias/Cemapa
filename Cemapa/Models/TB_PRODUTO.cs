@@ -21,8 +21,8 @@ namespace Cemapa.Models
             this.TB_PEDIDO_CAB = new HashSet<TB_PEDIDO_CAB>();
             this.TB_PEDIDO_ITEM = new HashSet<TB_PEDIDO_ITEM>();
             this.TB_PEDIDO_ITEM1 = new HashSet<TB_PEDIDO_ITEM>();
-            this.TB_PRODUTO_SKYHUB = new HashSet<TB_PRODUTO_SKYHUB>();
             this.TB_SINCRONIZACAO_SKYHUB = new HashSet<TB_SINCRONIZACAO_SKYHUB>();
+            this.TB_PRODUTO_SKYHUB = new HashSet<TB_PRODUTO_SKYHUB>();
         }
     
         public long COD_PRODUTO { get; set; }
@@ -110,7 +110,6 @@ namespace Cemapa.Models
         public string IND_SUBST_TRIB { get; set; }
         public string IND_ARREDONDAMENTO_TRUNCAMENTO { get; set; }
         public string IND_PROD_PROPRIA_TERCEIRO { get; set; }
-        public string IND_MARCENARIA { get; set; }
         public Nullable<short> IND_QTD_ETIQUETAS { get; set; }
         public string DESC_HASH_MD5 { get; set; }
         public Nullable<decimal> PERC_MARGEM_MINIMA { get; set; }
@@ -153,10 +152,10 @@ namespace Cemapa.Models
         public virtual ICollection<TB_PEDIDO_ITEM> TB_PEDIDO_ITEM { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TB_PEDIDO_ITEM> TB_PEDIDO_ITEM1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TB_PRODUTO_SKYHUB> TB_PRODUTO_SKYHUB { get; set; }
         public virtual TB_TRIBUTACAO TB_TRIBUTACAO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TB_SINCRONIZACAO_SKYHUB> TB_SINCRONIZACAO_SKYHUB { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TB_PRODUTO_SKYHUB> TB_PRODUTO_SKYHUB { get; set; }
     }
 }

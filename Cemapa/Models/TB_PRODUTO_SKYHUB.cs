@@ -17,7 +17,7 @@ namespace Cemapa.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public TB_PRODUTO_SKYHUB()
         {
-            this.TB_PRODUTO_CATEGORIA_SKYHUB = new HashSet<TB_PRODUTO_CATEGORIA_SKYHUB>();
+            this.TB_PRODUTO_SKYHUB_URL = new HashSet<TB_PRODUTO_SKYHUB_URL>();
         }
     
         public int COD_PRODUTO_SKYHUB { get; set; }
@@ -39,15 +39,12 @@ namespace Cemapa.Models
         public string ESP_APARELHOSCOMPATIVEIS { get; set; }
         public string ESP_CONTEUDODAEMBALAGEM { get; set; }
         public string ESP_COR { get; set; }
-        public string ESP_CORFICHATECNICA { get; set; }
         public string ESP_DATADELANCAMENTONOMERCADO { get; set; }
-        public string ESP_DIMENSOESEMBALAGEM { get; set; }
         public string ESP_DIMENSOESPRODUTO { get; set; }
         public string ESP_FABRICANTE { get; set; }
         public string ESP_GARANTIADEFORNECEDOR { get; set; }
         public string ESP_MAISINFORMACOES { get; set; }
         public string ESP_MANUAL { get; set; }
-        public string ESP_MARCA { get; set; }
         public string ESP_MATERIALCOMPOSICAO { get; set; }
         public string ESP_MODELO { get; set; }
         public string ESP_PESOLIQDAEMBALAGEMCPRODUTO { get; set; }
@@ -61,13 +58,14 @@ namespace Cemapa.Models
         public Nullable<decimal> VAL_PESO { get; set; }
         public string DESC_CONEXAO_MARKETPLACE { get; set; }
         public string COD_CATEGORIA_ML { get; set; }
-        public string URL_SUBMARINO { get; set; }
-        public string URL_SHOPTIME { get; set; }
-        public string URL_AMERICANAS { get; set; }
-        public string URL_MLIVRE { get; set; }
+        public byte[] IMAGEM_1 { get; set; }
+        public byte[] IMAGEM_2 { get; set; }
+        public byte[] IMAGEM_3 { get; set; }
+        public byte[] IMAGEM_4 { get; set; }
+        public string DESC_INFORMACOES_ADICIONAIS { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TB_PRODUTO_CATEGORIA_SKYHUB> TB_PRODUTO_CATEGORIA_SKYHUB { get; set; }
         public virtual TB_PRODUTO TB_PRODUTO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TB_PRODUTO_SKYHUB_URL> TB_PRODUTO_SKYHUB_URL { get; set; }
     }
 }

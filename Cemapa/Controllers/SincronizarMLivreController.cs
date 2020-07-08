@@ -11,6 +11,7 @@ using Cemapa.Models;
 using Cemapa.Models.MercadoLivre.Usuario;
 using Cemapa.Models.MercadoLivre.Products;
 using Cemapa.Models.MercadoLivre.Orders;
+using Cemapa.Models.Imgur;
 using System.Data.Entity;
 using Cemapa.Controllers.UtilsServidor;
 using System.IO;
@@ -36,14 +37,16 @@ namespace Cemapa.Controllers
     {
         private OAuth Autenticacao = new OAuth();
         private readonly Entities db = new Entities();
-        private readonly ControladorExcecoes Manipulador = new ControladorExcecoes();
         private readonly Uri MlivreUri = new Uri("https://api.mercadolibre.com");
+        private readonly ControladorExcecoes Manipulador = new ControladorExcecoes();
 
         [HttpGet]
         public async Task<HttpResponseMessage> AtualizarURLs(int codFilial, int codProduto = 0)
         {
             try
             {
+                Manipulador.Limpa();
+
                 //Começa a busca pela URL do produto.
                 //A URL do produto é o link completo onde o produto esta sendo exibido na loja online.
                 
@@ -94,9 +97,37 @@ namespace Cemapa.Controllers
                     {
                         response = await Http.GetAsync($"/items/{search.results.First()}").Result.Status200OrDie();
 
-                        ItemFromProducts produtoSkyhub = await response.Content.ReadAsAsync<ItemFromProducts>();
+                        ItemFromProducts produtoML = await response.Content.ReadAsAsync<ItemFromProducts>();
 
-                        produto.URL_MLIVRE = produtoSkyhub.permalink;
+                        if (produtoML != null)
+                        {
+                            TB_PRODUTO_SKYHUB_URL url = GetProdutoSkyhubUrl(produto.COD_PRODUTO_SKYHUB, configuracao.COD_FILIAL);
+
+                            if (url != null)
+                            {
+                                url.URL_MLIVRE = produtoML.permalink;
+                                db.Entry(url).State = EntityState.Modified;
+                            }
+                            else
+                            {
+                                int wCodigoUrl = db.Database.SqlQuery<int>("SELECT SQPRODUTO_SKYHUB_URL.NEXTVAL FROM DUAL").First();
+
+                                url = new TB_PRODUTO_SKYHUB_URL
+                                {
+                                    COD_PRODUTO_SKYHUB_URL = wCodigoUrl,
+                                    COD_FILIAL = configuracao.COD_FILIAL,
+                                    COD_PRODUTO_SKYHUB = produto.COD_PRODUTO_SKYHUB,
+                                    URL_MLIVRE = produtoML.permalink
+                                };
+                                db.Entry(url).State = EntityState.Added;
+                            }
+
+                            db.SaveChanges();
+                        }
+                        else
+                        {
+                            throw new InvalidOperationException($"Produto não encontrado no marketplace({codProduto})");
+                        }
 
                         db.Entry(produto).State = EntityState.Modified;
                         db.SaveChanges();
@@ -113,7 +144,7 @@ namespace Cemapa.Controllers
 
                 return Request.CreateResponse(
                     HttpStatusCode.OK,
-                    $"As URLs foram atualizadas"
+                    $"As URLs foram atualizadas."
                 );
             }
             catch (Exception except)
@@ -150,8 +181,10 @@ namespace Cemapa.Controllers
         {
             try
             {
+                Manipulador.Limpa();
+
                 //Este método busca código do envio do pedido informado e então baixa um pdf da etiqueta.
-                
+
                 if (codFilial == 0)
                 {
                     throw new ArgumentNullException("codFilial", "Filial não informada");
@@ -234,9 +267,11 @@ namespace Cemapa.Controllers
             //Busca pelo pedido no mercadolivre, e atualiza o status para o sistema.
             //Esse método deve acontecer automatico quando ocorrem os sincronismos.
             //É uma segunda opção caso algum dia não esteja sincronizando devido a algum problema.
-
+            
             try
             {
+                Manipulador.Limpa();
+
                 if (codFilial == 0)
                 {
                     throw new ArgumentNullException("codFilial", "Filial não informada");
@@ -336,6 +371,8 @@ namespace Cemapa.Controllers
         {
             try
             {
+                Manipulador.Limpa();
+
                 //Este método retorna o JSON completo do pedido como ele está na B2W
 
                 if (codFilial == 0)
@@ -399,6 +436,8 @@ namespace Cemapa.Controllers
         {
             try
             {
+                Manipulador.Limpa();
+
                 int wTotalCancelados = 0;
                 int wTotalCriados = 0;
                 int wTotalAlterados = 0;
@@ -632,6 +671,8 @@ namespace Cemapa.Controllers
         {
             try
             {
+                Manipulador.Limpa();
+
                 int totalAtualizados = 0;
                 int totalCriados = 0;
                 int totalDeletados = 0;
@@ -642,7 +683,7 @@ namespace Cemapa.Controllers
                 };
                 
                 Http.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
+                
                 Manipulador.ErrosPersonalizados(true);
                 HttpResponseMessage response;
                 NameValueCollection parametros = HttpUtility.ParseQueryString(String.Empty);
@@ -703,13 +744,66 @@ namespace Cemapa.Controllers
                                             //À pedido do Cesar 19/02/2020, usar o valor de atacado.
 
                                             produtoML.price = wInfosProduto.VAL_ATACADO > 0 ? Convert.ToDouble(wInfosProduto.VAL_ATACADO) : Convert.ToDouble(wInfosProduto.VAL_VAREJO);
-                                            
+
+                                            //Upload de imagens pelo Imgur
+
+                                            UploadImgur Imgur = new UploadImgur();
+
+                                            Imgur.Carrega(produtoSkyhub.IMAGEM_1);
+                                            Imgur.Carrega(produtoSkyhub.IMAGEM_2);
+                                            Imgur.Carrega(produtoSkyhub.IMAGEM_3);
+                                            Imgur.Carrega(produtoSkyhub.IMAGEM_4);
+
+                                            await Imgur.Configura(
+                                                configuracaoSkyhub.IMGUR_CLIENT_ID,
+                                                configuracaoSkyhub.IMGUR_SECRET,
+                                                configuracaoSkyhub.IMGUR_REFRESH_TOKEN,
+                                                configuracaoSkyhub.IMGUR_ACCESS_TOKEN,
+                                                Convert.ToDateTime(configuracaoSkyhub.IMGUR_DT_ACCESS_TOKEN)
+                                            );
+
+                                            if ((Imgur.AccessToken() != null) && (Imgur.AccessToken().DataRegistro != configuracaoSkyhub.IMGUR_DT_ACCESS_TOKEN))
+                                            {
+                                                configuracaoSkyhub.IMGUR_ACCESS_TOKEN = Imgur.AccessToken().OAuth.AccessToken;
+                                                configuracaoSkyhub.IMGUR_DT_ACCESS_TOKEN = Imgur.AccessToken().DataRegistro;
+                                                db.Entry(configuracaoSkyhub).State = EntityState.Modified;
+                                                db.SaveChanges();
+                                            }
+
+                                            await Imgur.Sobe();
+
+                                            if (Imgur.FoiEnviado(produtoSkyhub.IMAGEM_1))
+                                            {
+                                                produtoSkyhub.DESC_LINK_IMAGEM_1 = Imgur.Link(produtoSkyhub.IMAGEM_1);
+                                                produtoSkyhub.IMAGEM_1 = new byte[0];
+                                            }
+
+                                            if (Imgur.FoiEnviado(produtoSkyhub.IMAGEM_2))
+                                            {
+                                                produtoSkyhub.DESC_LINK_IMAGEM_2 = Imgur.Link(produtoSkyhub.IMAGEM_2);
+                                                produtoSkyhub.IMAGEM_2 = new byte[0];
+                                            }
+
+                                            if (Imgur.FoiEnviado(produtoSkyhub.IMAGEM_3))
+                                            {
+                                                produtoSkyhub.DESC_LINK_IMAGEM_3 = Imgur.Link(produtoSkyhub.IMAGEM_3);
+                                                produtoSkyhub.IMAGEM_3 = new byte[0];
+                                            }
+
+                                            if (Imgur.FoiEnviado(produtoSkyhub.IMAGEM_4))
+                                            {
+                                                produtoSkyhub.DESC_LINK_IMAGEM_4 = Imgur.Link(produtoSkyhub.IMAGEM_4);
+                                                produtoSkyhub.IMAGEM_4 = new byte[0];
+                                            }
+
                                             produtoML.AddImagesCustom(new Picture(produtoSkyhub.DESC_LINK_IMAGEM_1));
                                             produtoML.AddImagesCustom(new Picture(produtoSkyhub.DESC_LINK_IMAGEM_2));
                                             produtoML.AddImagesCustom(new Picture(produtoSkyhub.DESC_LINK_IMAGEM_3));
                                             produtoML.AddImagesCustom(new Picture(produtoSkyhub.DESC_LINK_IMAGEM_4));
 
-                                            produtoML.AddAttributesCustom(new Models.MercadoLivre.Products.Attribute("BRAND", produtoSkyhub.ESP_MARCA));
+                                            //Atributos
+
+                                            produtoML.AddAttributesCustom(new Models.MercadoLivre.Products.Attribute("BRAND", produtoSkyhub.DESC_MARCA));
                                             produtoML.AddAttributesCustom(new Models.MercadoLivre.Products.Attribute("COLOR", produtoSkyhub.ESP_COR));
                                             produtoML.AddAttributesCustom(new Models.MercadoLivre.Products.Attribute("MODEL", produtoSkyhub.ESP_MODELO));
                                             produtoML.AddAttributesCustom(new Models.MercadoLivre.Products.Attribute("VOLTAGE", produtoSkyhub.ESP_VOLTAGEM));
@@ -772,7 +866,7 @@ namespace Cemapa.Controllers
                                                             //Se não existir tal produto no mercadolivre com o sku buscado anteriormente, então ele deve ser criado.
 
                                                             produtoML.title = produtoSkyhub.DESC_PRODUTO;
-                                                            produtoML.description = new Description(produtoSkyhub.DESC_DESCRICAO);
+                                                            produtoML.description = new Description(produtoSkyhub.DESC_INFORMACOES_ADICIONAIS);
                                                             produtoML.warranty = produtoSkyhub.ESP_GARANTIADEFORNECEDOR;
                                                             produtoML.category_id = produtoSkyhub.COD_CATEGORIA_ML;
                                                             produtoML.buying_mode = "buy_it_now";
@@ -795,31 +889,12 @@ namespace Cemapa.Controllers
                                                         }
                                                     }
                                                     break;
-                                                case "DELETE":
-                                                    {
-                                                        //Se o compilador chegou neste trecho do código, indica que temos uma solicitação para
-                                                        //deletar o produto da API, porém, o produto ainda permanece no sistema, então desta forma
-                                                        //apenas pausamos o anuncio para não ocorrer eventuais problemas.
-
-                                                        produtoML.status = "paused";
-
-                                                        if (search.results.Count > 0)
-                                                        {
-                                                            parametros.Clear();
-                                                            parametros["access_token"] = Autenticacao.access_token;
-
-                                                            await Http.PutAsJsonAsync($"/items/{search.results.First()}{parametros.ToString()}", StringUtils.ObjetoJsonFormatado(produtoML)).Result.Status200OrDie();
-
-                                                            totalDeletados++;
-                                                        }
-                                                    }
-                                                    break;
                                                 case "POST":
                                                     {
                                                         if (search.results.Count == 0)
                                                         {
                                                             produtoML.title = produtoSkyhub.DESC_PRODUTO;
-                                                            produtoML.description = new Description(produtoSkyhub.DESC_DESCRICAO);
+                                                            produtoML.description = new Description(produtoSkyhub.DESC_INFORMACOES_ADICIONAIS);
                                                             produtoML.warranty = produtoSkyhub.ESP_GARANTIADEFORNECEDOR;
                                                             produtoML.category_id = produtoSkyhub.COD_CATEGORIA_ML;
                                                             produtoML.buying_mode = "buy_it_now";
@@ -974,6 +1049,174 @@ namespace Cemapa.Controllers
                 return Request.CreateResponse(
                     HttpStatusCode.InternalServerError,
                     Manipulador.FormatoJson($"Não foi possível começar a sincronização")
+                );
+            }
+        }
+
+        [HttpGet]
+        public async Task<HttpResponseMessage> DownloadArquivoCategorias()
+        {
+            try
+            {
+                Manipulador.Limpa();
+
+                //Este método busca todas as categorias atualizadas no Mercadolivre e às processa
+                //para gerar um arquivo txt de categorias no nosso formato.
+
+                HttpClient Http = new HttpClient
+                {
+                    BaseAddress = MlivreUri
+                };
+
+                Http.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage response = await Http.GetAsync($"/sites/MLB/categories/all?withAttributes=false").Result.Status200OrDie();
+
+                List<Categoria> catFinais = new List<Categoria>();
+                List<Dictionary<string, string>> idsCategoria = new List<Dictionary<string, string>>();
+
+                string jsonText = StringUtils.Unzip(await response.Content.ReadAsByteArrayAsync());
+
+                Dictionary<string, Category> categorysResponse = JsonConvert.DeserializeObject<Dictionary<string, Category>>(jsonText);
+
+                foreach (KeyValuePair<string, Category> category in categorysResponse)
+                {
+                    Dictionary<string, string> idCategoria = new Dictionary<string, string>();
+
+                    List<string> names = new List<string>();
+
+                    foreach (PathFromRoot item in category.Value.path_from_root)
+                    {
+                        names.Add(item.name);
+                    }
+
+                    idCategoria.Add(category.Key, String.Join(" > ", names));
+
+                    idsCategoria.Add(idCategoria);
+
+                    if (category.Value.path_from_root.Count == 1)
+                    {
+                        catFinais.Add(
+                            new Categoria
+                            {
+                                id = category.Value.id,
+                                descricao = category.Value.name
+                            }
+                        );
+                    }
+                }
+
+                foreach (Categoria catFinal in catFinais)
+                {
+                    foreach (KeyValuePair<string, Category> category in categorysResponse)
+                    {
+                        if (category.Key == catFinal.id)
+                        {
+                            foreach (ChildrenCategory filho1 in category.Value.children_categories)
+                            {
+                                catFinal.filhos.Add(
+                                    new Categoria
+                                    {
+                                        id = filho1.id,
+                                        descricao = filho1.name
+                                    }
+                                );
+                            }
+                        }
+                    }
+
+                    foreach (Categoria catFinal2 in catFinal.filhos)
+                    {
+                        foreach (KeyValuePair<string, Category> category in categorysResponse)
+                        {
+                            if (category.Key == catFinal2.id)
+                            {
+                                foreach (ChildrenCategory filho2 in category.Value.children_categories)
+                                {
+                                    catFinal2.filhos.Add(
+                                        new Categoria
+                                        {
+                                            id = filho2.id,
+                                            descricao = filho2.name
+                                        }
+                                    );
+                                }
+                            }
+                        }
+
+                        foreach (Categoria catFinal3 in catFinal2.filhos)
+                        {
+                            foreach (KeyValuePair<string, Category> category in categorysResponse)
+                            {
+                                if (category.Key == catFinal3.id)
+                                {
+                                    foreach (ChildrenCategory filho3 in category.Value.children_categories)
+                                    {
+                                        catFinal3.filhos.Add(
+                                            new Categoria
+                                            {
+                                                id = filho3.id,
+                                                descricao = filho3.name
+                                            }
+                                        );
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                MemoryStream stream = new MemoryStream();
+
+                StreamWriter sw = new StreamWriter(stream);
+
+                foreach (Categoria cat1 in catFinais)
+                {
+                    sw.WriteLine($">>{cat1.descricao}");
+                    foreach (Categoria cat2 in cat1.filhos)
+                    {
+                        sw.WriteLine($">>>>{cat2.descricao}");
+                        foreach (Categoria cat3 in cat2.filhos)
+                        {
+                            sw.WriteLine($">>>>>>{cat3.descricao}");
+                            foreach (Categoria cat4 in cat3.filhos)
+                            {
+                                sw.WriteLine($">>>>>>>>{cat4.descricao}");
+                                sw.Flush();
+                            }
+                        }
+                    }
+                }
+
+                sw.WriteLine($"#===#");
+
+                foreach (Dictionary<string, string> ids in idsCategoria)
+                {
+                    foreach (KeyValuePair<string, string> id in ids)
+                    {
+                        sw.WriteLine($"{id.Key}###{id.Value}");
+                        sw.Flush();
+                    }
+                }
+
+                HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK)
+                {
+                    Content = new ByteArrayContent(stream.ToArray())
+                };
+
+                result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment") { FileName = "CategoriasSkyhub.txt" };
+                result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+
+                sw.Close();
+                stream.Close();
+
+                return result;
+            }
+            catch (Exception exception)
+            {
+                return Request.CreateResponse(
+                    HttpStatusCode.InternalServerError,
+                    $"Não foi possível atualizar arquivo de configurações. {exception.Message}"
                 );
             }
         }
@@ -1239,6 +1482,13 @@ namespace Cemapa.Controllers
                     where configuracaoSkyhub.IND_ATIVO == "S" && configuracaoSkyhub.COD_FILIAL == codFilial
                     select configuracaoSkyhub).FirstOrDefault();
         }
+        
+        public TB_PRODUTO_SKYHUB_URL GetProdutoSkyhubUrl(int codProdutoSkyhub, int codFilial)
+        {
+            return (from produtoSkyhubUrl in db.TB_PRODUTO_SKYHUB_URL
+                    where (produtoSkyhubUrl.COD_PRODUTO_SKYHUB == codProdutoSkyhub && produtoSkyhubUrl.COD_FILIAL == codFilial)
+                    select produtoSkyhubUrl).FirstOrDefault();
+        }
 
         private decimal TotalEstoque(TB_CONFIGURACAO_SKYHUB configuracaoSkyhub, TB_PRODUTO_SKYHUB produtoSkyhub)
         {
@@ -1263,8 +1513,8 @@ namespace Cemapa.Controllers
                 throw new ArgumentException($"Produto marketplace: comprimento inválida, produto: {produtoSkyhub.COD_PRODUTO}");
             if (produtoSkyhub.VAL_LARGURA < 0)
                 throw new ArgumentException($"Produto marketplace: Altura inválida, produto: {produtoSkyhub.COD_PRODUTO}");
-            if (String.IsNullOrEmpty(produtoSkyhub.DESC_DESCRICAO))
-                throw new ArgumentException($"Produto marketplace: ficha técnica inválida, produto: {produtoSkyhub.COD_PRODUTO}");
+            if (String.IsNullOrEmpty(produtoSkyhub.DESC_INFORMACOES_ADICIONAIS))
+                throw new ArgumentException($"Produto marketplace: informações adicionais inválida, produto: {produtoSkyhub.COD_PRODUTO}");
             if (String.IsNullOrEmpty(produtoSkyhub.DESC_MARCA))
                 throw new ArgumentException($"Produto marketplace: marca inválida, produto: {produtoSkyhub.COD_PRODUTO}");
             if (String.IsNullOrEmpty(produtoSkyhub.DESC_PRODUTO))
@@ -1403,170 +1653,5 @@ namespace Cemapa.Controllers
             }
         }
 
-        [HttpGet]
-        public async Task<HttpResponseMessage> DownloadArquivoCategorias()
-        {
-            try
-            {
-                //Este método busca todas as categorias atualizadas no Mercadolivre e às processa
-                //para gerar um arquivo txt de categorias no nosso formato.
-
-                HttpClient Http = new HttpClient
-                {
-                    BaseAddress = MlivreUri
-                };
-                
-                Http.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-                HttpResponseMessage response = await Http.GetAsync($"/sites/MLB/categories/all?withAttributes=false").Result.Status200OrDie();
-
-                List<Categoria> catFinais = new List<Categoria>();
-                List<Dictionary<string, string>> idsCategoria = new List<Dictionary<string, string>>();
-
-                string jsonText = StringUtils.Unzip(await response.Content.ReadAsByteArrayAsync());
-
-                Dictionary<string, Category> categorysResponse = JsonConvert.DeserializeObject<Dictionary<string, Category>>(jsonText);
-
-                foreach (KeyValuePair<string, Category> category in categorysResponse)
-                {
-                    Dictionary<string, string> idCategoria = new Dictionary<string, string>();
-
-                    List<string> names = new List<string>();
-
-                    foreach (PathFromRoot item in category.Value.path_from_root)
-                    {
-                        names.Add(item.name);
-                    }
-
-                    idCategoria.Add(category.Key, String.Join(" > ", names));
-
-                    idsCategoria.Add(idCategoria);
-
-                    if (category.Value.path_from_root.Count == 1)
-                    {
-                        catFinais.Add(
-                            new Categoria
-                            {
-                                id = category.Value.id,
-                                descricao = category.Value.name
-                            }
-                        );
-                    }
-                }
-
-                foreach (Categoria catFinal in catFinais)
-                {
-                    foreach (KeyValuePair<string, Category> category in categorysResponse)
-                    {
-                        if (category.Key == catFinal.id)
-                        {
-                            foreach (ChildrenCategory filho1 in category.Value.children_categories)
-                            {
-                                catFinal.filhos.Add(
-                                    new Categoria
-                                    {
-                                        id = filho1.id,
-                                        descricao = filho1.name
-                                    }
-                                );
-                            }
-                        }
-                    }
-
-                    foreach (Categoria catFinal2 in catFinal.filhos)
-                    {
-                        foreach (KeyValuePair<string, Category> category in categorysResponse)
-                        {
-                            if (category.Key == catFinal2.id)
-                            {
-                                foreach (ChildrenCategory filho2 in category.Value.children_categories)
-                                {
-                                    catFinal2.filhos.Add(
-                                        new Categoria
-                                        {
-                                            id = filho2.id,
-                                            descricao = filho2.name
-                                        }
-                                    );
-                                }
-                            }
-                        }
-
-                        foreach (Categoria catFinal3 in catFinal2.filhos)
-                        {
-                            foreach (KeyValuePair<string, Category> category in categorysResponse)
-                            {
-                                if (category.Key == catFinal3.id)
-                                {
-                                    foreach (ChildrenCategory filho3 in category.Value.children_categories)
-                                    {
-                                        catFinal3.filhos.Add(
-                                            new Categoria
-                                            {
-                                                id = filho3.id,
-                                                descricao = filho3.name
-                                            }
-                                        );
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-
-                MemoryStream stream = new MemoryStream();
-
-                StreamWriter sw = new StreamWriter(stream);
-
-                foreach (Categoria cat1 in catFinais)
-                {
-                    sw.WriteLine($">>{cat1.descricao}");
-                    foreach (Categoria cat2 in cat1.filhos)
-                    {
-                        sw.WriteLine($">>>>{cat2.descricao}");
-                        foreach (Categoria cat3 in cat2.filhos)
-                        {
-                            sw.WriteLine($">>>>>>{cat3.descricao}");
-                            foreach (Categoria cat4 in cat3.filhos)
-                            {
-                                sw.WriteLine($">>>>>>>>{cat4.descricao}");
-                                sw.Flush();
-                            }
-                        }
-                    }
-                }
-
-                sw.WriteLine($"#===#");
-
-                foreach (Dictionary<string, string> ids in idsCategoria)
-                {
-                    foreach (KeyValuePair<string, string> id in ids)
-                    {
-                        sw.WriteLine($"{id.Key}###{id.Value}");
-                        sw.Flush();
-                    }
-                }
-
-                HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK)
-                {
-                    Content = new ByteArrayContent(stream.ToArray())
-                };
-
-                result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment") { FileName = "CategoriasSkyhub.txt" };
-                result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
-
-                sw.Close();
-                stream.Close();
-
-                return result;
-            }
-            catch (Exception exception)
-            {
-                return Request.CreateResponse(
-                    HttpStatusCode.InternalServerError,
-                    $"Não foi possível atualizar arquivo de configurações. {exception.Message}"
-                );
-            }
-        }
     }
 }

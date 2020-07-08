@@ -34,8 +34,6 @@ namespace Cemapa.Models
         public Nullable<int> COD_MENSAGEM { get; set; }
         public string IND_AREA { get; set; }
         public string IND_SITUACAO { get; set; }
-        public Nullable<decimal> PERC_MARGEM_VAREJO { get; set; }
-        public Nullable<decimal> PERC_MARGEM_ATACADO { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TB_PRODUTO> TB_PRODUTO { get; set; }

@@ -55,6 +55,9 @@
     <Reference Include="HttpParamsUtility, Version=2.0.10.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\HttpParamsUtility.2.0.10\lib\netstandard2.0\HttpParamsUtility.dll</HintPath>
     </Reference>
+    <Reference Include="Imgur.API, Version=4.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Imgur.API.4.0.1\lib\net45\Imgur.API.dll</HintPath>
+    </Reference>
     <Reference Include="MercadoLibreSdk, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MercadoLibreSdk.2.0.0\lib\netstandard2.0\MercadoLibreSdk.dll</HintPath>
     </Reference>
@@ -168,6 +171,7 @@
     <Compile Include="Controllers\SincronizarMLivreController.cs" />
     <Compile Include="Controllers\SincronizarSkyhubController.cs" />
     <Compile Include="Controllers\UtilsServidor\StringUtils.cs" />
+    <Compile Include="Controllers\VariadosController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -223,10 +227,10 @@
     <Compile Include="Models\TB_PRODUTO.cs">
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\TB_PRODUTO_CATEGORIA_SKYHUB.cs">
+    <Compile Include="Models\TB_PRODUTO_SKYHUB.cs">
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\TB_PRODUTO_SKYHUB.cs">
+    <Compile Include="Models\TB_PRODUTO_SKYHUB_URL.cs">
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TB_SEQUENCIA.cs">
@@ -238,6 +242,7 @@
     <Compile Include="Models\TB_TRIBUTACAO.cs">
       <DependentUpon>Dados.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\UploadImgur.cs" />
     <Compile Include="Models\UsuarioMLivre.cs" />
     <Compile Include="Models\UsuarioSkyhub.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

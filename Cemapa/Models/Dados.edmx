@@ -18,8 +18,8 @@
           <Property Name="COD_RAMO" Type="number" Precision="6" Scale="0" />
           <Property Name="COD_ESTADO" Type="char" MaxLength="2" />
           <Property Name="NOME" Type="varchar2" MaxLength="60" Nullable="false" />
-          <Property Name="DESC_ENDERECO" Type="varchar2" MaxLength="60" Nullable="false" />
-          <Property Name="DESC_CIDADE" Type="varchar2" MaxLength="30" Nullable="false" />
+          <Property Name="DESC_ENDERECO" Type="varchar2" MaxLength="60" />
+          <Property Name="DESC_CIDADE" Type="varchar2" MaxLength="30" />
           <Property Name="DESC_CEP" Type="varchar2" MaxLength="10" />
           <Property Name="NUM_CGC_CPF" Type="varchar2" MaxLength="18" />
           <Property Name="NUM_INSCRICAO" Type="varchar2" MaxLength="20" />
@@ -90,19 +90,19 @@
           <Property Name="DESC_INSCRICAO_INSS" Type="varchar2" MaxLength="15" />
           <Property Name="DESC_CARTEIRA" Type="varchar2" MaxLength="15" />
           <Property Name="DT_EXPEDICAO_CARTEIRA" Type="date" />
-          <Property Name="IND_LIBERA_VENDA" Type="char" MaxLength="3" />
           <Property Name="COD_VENDEDOR_PREPOSTO" Type="number" Precision="6" Scale="0" />
-          <Property Name="IND_REGIME_ESPECIAL" Type="char" MaxLength="3" />
           <Property Name="COD_CIDADE" Type="number" Precision="6" Scale="0" />
+          <Property Name="IND_LIBERA_VENDA" Type="char" MaxLength="3" />
+          <Property Name="IND_REGIME_ESPECIAL" Type="char" MaxLength="3" />
           <Property Name="DESC_HOBBIE" Type="varchar2" MaxLength="40" />
           <Property Name="DESC_DESTRITO" Type="varchar2" MaxLength="30" />
-          <Property Name="DESC_AGENCIA" Type="varchar2" MaxLength="7" />
           <Property Name="DESC_CONTA_CORRENTE" Type="varchar2" MaxLength="10" />
           <Property Name="COD_OPERACAO_CC1" Type="number" Precision="6" Scale="0" />
           <Property Name="COD_OPERACAO_CC2" Type="number" Precision="6" Scale="0" />
           <Property Name="DESC_PLACA" Type="varchar2" MaxLength="8" />
           <Property Name="PERC_DESCONTO" Type="number" Precision="5" Scale="2" />
           <Property Name="IND_LIBERA_BLOQUETO" Type="char" MaxLength="3" />
+          <Property Name="DT_CONSULTA_SINTREGA" Type="date" />
           <Property Name="DT_CONSULTA_SINTEGRA" Type="date" />
           <Property Name="DESC_PROFISSAO_CONJUGE" Type="varchar2" MaxLength="30" />
           <Property Name="DT_NASCIMENTO_CONJUGE" Type="date" />
@@ -112,10 +112,11 @@
           <Property Name="DESC_EMPRESA" Type="varchar2" MaxLength="30" />
           <Property Name="DESC_FONE_EMPRESA" Type="varchar2" MaxLength="12" />
           <Property Name="DESC_TEMPO" Type="varchar2" MaxLength="10" />
-          <Property Name="VAL_SALARIO" Type="number" Precision="11" Scale="2" />
           <Property Name="DESC_PLACA_CARRETA1" Type="varchar2" MaxLength="8" />
           <Property Name="DESC_PLACA_CARRETA2" Type="varchar2" MaxLength="8" />
           <Property Name="DESC_BAIRRO_COBRANCA" Type="varchar2" MaxLength="20" />
+          <Property Name="VAL_SALARIO" Type="number" Precision="11" Scale="2" />
+          <Property Name="DESC_AGENCIA" Type="varchar2" MaxLength="7" />
           <Property Name="DESC_GARANTIAS" Type="varchar2" MaxLength="10" />
           <Property Name="NOME_AUTORIZADO1" Type="varchar2" MaxLength="100" />
           <Property Name="NOME_AUTORIZADO2" Type="varchar2" MaxLength="100" />
@@ -123,17 +124,18 @@
           <Property Name="DESC_CPF_AUTORIZADO1" Type="varchar2" MaxLength="11" />
           <Property Name="DESC_CPF_AUTORIZADO2" Type="varchar2" MaxLength="11" />
           <Property Name="DESC_CPF_AUTORIZADO3" Type="varchar2" MaxLength="11" />
+          <Property Name="DESC_OUTRAS_GRANTIAS" Type="varchar2" MaxLength="20" />
           <Property Name="DESC_GARANTIAS_OUTRAS" Type="varchar2" MaxLength="20" />
-          <Property Name="DESC_COMPLEMENTO_SINTEGRA" Type="varchar2" MaxLength="14" />
-          <Property Name="DT_SEPROCADO" Type="date" />
-          <Property Name="PERC_META" Type="number" Precision="5" Scale="2" />
-          <Property Name="COD_PRAZO_VENCIMENTO" Type="number" Precision="6" Scale="0" />
-          <Property Name="IND_SOJICULTOR_PARTICIPANTE" Type="char" MaxLength="3" />
           <Property Name="NUM_DIA_VISITA" Type="number" Precision="1" Scale="0" />
           <Property Name="DESC_FREQUENCIA_VISITA" Type="char" MaxLength="1" />
           <Property Name="NUM_HORA_VISITA" Type="number" Precision="4" Scale="0" />
           <Property Name="NUM_DIA_VENCTO" Type="number" Precision="2" Scale="0" />
           <Property Name="NOME_TITULAR" Type="varchar2" MaxLength="30" />
+          <Property Name="DT_SEPROCADO" Type="date" />
+          <Property Name="PERC_META" Type="number" Precision="5" Scale="2" />
+          <Property Name="COD_PRAZO_VENCIMENTO" Type="number" Precision="6" Scale="0" />
+          <Property Name="IND_SOJICULTOR_PARTICIPANTE" Type="char" MaxLength="3" />
+          <Property Name="DESC_COMPLEMENTO_SINTEGRA" Type="varchar2" MaxLength="15" />
           <Property Name="DESC_CRC" Type="varchar2" MaxLength="10" />
           <Property Name="DESC_SUFRAMA" Type="varchar2" MaxLength="9" />
           <Property Name="DESC_QUALIFICACAO" Type="varchar2" MaxLength="100" />
@@ -176,8 +178,6 @@
           <Property Name="DESC_NRO_REG_ESTADUAL" Type="varchar2" MaxLength="25" />
           <Property Name="IND_SINC_MAX_ROTEIRIZADOR" Type="char" MaxLength="1" />
           <Property Name="COD_FILIAL" Type="number" Precision="6" Scale="0" />
-          <Property Name="DESC_E_MAIL_CONJUGE" Type="varchar2" MaxLength="40" />
-          <Property Name="DESC_TELEFONE_CONJUGE" Type="varchar2" MaxLength="12" />
         </EntityType>
         <EntityType Name="TB_CIDADE">
           <Key>
@@ -210,14 +210,13 @@
           <Property Name="COD_MENSAGEM" Type="number" Precision="6" Scale="0" />
           <Property Name="IND_AREA" Type="char" MaxLength="3" />
           <Property Name="IND_SITUACAO" Type="varchar2" MaxLength="7" />
-          <Property Name="PERC_MARGEM_VAREJO" Type="number" Precision="5" Scale="2" />
-          <Property Name="PERC_MARGEM_ATACADO" Type="number" Precision="5" Scale="2" />
         </EntityType>
         <EntityType Name="TB_CONFIGURACAO_SKYHUB">
           <Key>
             <PropertyRef Name="COD_CONFIGURACAO_SKYHUB" />
           </Key>
           <Property Name="COD_CONFIGURACAO_SKYHUB" Type="number" Precision="6" Scale="0" Nullable="false" />
+          <Property Name="COD_FILIAL" Type="number" Precision="6" Scale="0" Nullable="false" />
           <Property Name="IND_ATIVO" Type="char" MaxLength="1" />
           <Property Name="DESC_USUARIO_EMAIL" Type="varchar2" MaxLength="40" />
           <Property Name="DESC_TOKEN_INTEGRACAO" Type="varchar2" MaxLength="30" />
@@ -231,7 +230,6 @@
           <Property Name="COD_LOTE_TIPO" Type="number" Precision="6" Scale="0" />
           <Property Name="IND_TIPO_PAGAMENTO" Type="varchar2" MaxLength="12" />
           <Property Name="COD_VENDEDOR" Type="number" Precision="6" Scale="0" />
-          <Property Name="COD_FILIAL" Type="number" Precision="6" Scale="0" Nullable="false" />
           <Property Name="COD_REGIAO" Type="number" Precision="6" Scale="0" />
           <Property Name="DESC_ML_CLIENT_ID" Type="varchar2" MaxLength="16" />
           <Property Name="DESC_ML_CLIENT_SECRET" Type="varchar2" MaxLength="32" />
@@ -242,6 +240,11 @@
           <Property Name="DT_ULTIMA_ATUALIZACAO_ML" Type="date" />
           <Property Name="DESC_SKYHUB_TOKEN" Type="clob" />
           <Property Name="DT_TOKEN_SKYHUB" Type="date" />
+          <Property Name="IMGUR_CLIENT_ID" Type="varchar2" MaxLength="20" />
+          <Property Name="IMGUR_SECRET" Type="varchar2" MaxLength="45" />
+          <Property Name="IMGUR_REFRESH_TOKEN" Type="varchar2" MaxLength="45" />
+          <Property Name="IMGUR_ACCESS_TOKEN" Type="varchar2" MaxLength="45" />
+          <Property Name="IMGUR_DT_ACCESS_TOKEN" Type="date" />
         </EntityType>
         <EntityType Name="TB_EMAIL">
           <Key>
@@ -294,8 +297,6 @@
           <Property Name="DESC_LOCALIZACAO" Type="varchar2" MaxLength="10" />
           <Property Name="DESC_HASH_MD5" Type="varchar2" MaxLength="32" />
           <Property Name="VL_CUSTO_COMISSAO" Type="number" Precision="11" Scale="4" />
-          <Property Name="QT_ESTOQUE_CONTADO" Type="number" Precision="11" Scale="3" />
-          <Property Name="QT_ESTOQUE_ARDUINO" Type="number" Precision="11" Scale="3" />
         </EntityType>
         <EntityType Name="TB_PEDIDO_CAB">
           <Key>
@@ -317,7 +318,7 @@
           <Property Name="PERC_COMISSAO" Type="number" Precision="6" Scale="2" />
           <Property Name="DESC_COMPLEMENTO_OBS2" Type="varchar2" MaxLength="100" />
           <Property Name="DT_VENCIMENTO" Type="date" />
-          <Property Name="IND_TIPO_PAGAMENTO" Type="varchar2" MaxLength="12" />
+          <Property Name="IND_TIPO_PAGAMENTO" Type="varchar2" MaxLength="10" />
           <Property Name="COD_PRODUTO" Type="number" Precision="13" Scale="0" />
           <Property Name="QT_QUANTIDADE" Type="number" Precision="9" Scale="2" />
           <Property Name="COD_USUARIO" Type="number" Precision="6" Scale="0" />
@@ -349,7 +350,6 @@
           <Property Name="PERC_ISSQN" Type="number" Precision="5" Scale="2" />
           <Property Name="VAL_TOTAL" Type="number" Precision="11" Scale="2" />
           <Property Name="VAL_ADIANTAMENTO" Type="number" Precision="11" Scale="2" />
-          <Property Name="COD_SERIE" Type="varchar2" MaxLength="3" />
           <Property Name="DESC_VEICULO" Type="varchar2" MaxLength="100" />
           <Property Name="DESC_TECIDO" Type="varchar2" MaxLength="100" />
           <Property Name="DESC_FORMA_PAGAMENTO" Type="varchar2" MaxLength="100" />
@@ -357,7 +357,7 @@
           <Property Name="COD_CADASTRO_TRANSPORTADORA" Type="number" Precision="6" Scale="0" />
           <Property Name="DESC_CHASSI" Type="varchar2" MaxLength="50" />
           <Property Name="NUM_ORDEM_COMPRA" Type="varchar2" MaxLength="20" />
-          <Property Name="DESC_SAFRA" Type="varchar2" MaxLength="10" />
+          <Property Name="DESC_SAFRA" Type="varchar2" MaxLength="15" />
           <Property Name="COD_VENDEDOR_PREPOSTO" Type="number" Precision="6" Scale="0" />
           <Property Name="DT_USUARIO" Type="date" />
           <Property Name="COD_PEDIDO_WEB" Type="number" Precision="9" Scale="0" />
@@ -367,12 +367,13 @@
           <Property Name="IND_CONSUMIDOR_FINAL" Type="char" MaxLength="1" />
           <Property Name="COD_VEICULO" Type="number" Precision="6" Scale="0" />
           <Property Name="STEP_SINCRONIZACAO" Type="varchar2" MaxLength="15" />
+          <Property Name="COD_SERIE" Type="varchar2" MaxLength="3" />
           <Property Name="VAL_DESPESAS" Type="number" Precision="11" Scale="2" />
           <Property Name="IND_SINC_MAX_ROTEIRIZADOR" Type="char" MaxLength="1" />
-          <Property Name="DESC_SITUACAO_MARKETPLACE" Type="varchar2" MaxLength="30" />
           <Property Name="COD_PEDIDO_MARKETPLACE" Type="varchar2" MaxLength="60" />
-          <Property Name="DESC_SITUACAO_SKYHUB" Type="varchar2" MaxLength="30" />
+          <Property Name="DESC_SITUACAO_MARKETPLACE" Type="varchar2" MaxLength="30" />
           <Property Name="VAL_FRETE_MARKETPLACE" Type="number" Precision="6" Scale="2" />
+          <Property Name="DESC_SITUACAO_SKYHUB" Type="varchar2" MaxLength="30" />
         </EntityType>
         <EntityType Name="TB_PEDIDO_ITEM">
           <Key>
@@ -466,6 +467,7 @@
           <Property Name="COD_LOTE_TIPO" Type="number" Precision="6" Scale="0" />
           <Property Name="COD_NBM_SH" Type="varchar2" MaxLength="12" />
           <Property Name="IND_SUBSTITUICAO_RJ" Type="char" MaxLength="1" />
+          <Property Name="PERC_MARGEM" Type="number" Precision="5" Scale="2" />
           <Property Name="PERC_MARGEM_VAREJO" Type="number" Precision="5" Scale="2" />
           <Property Name="PERC_MARGEM_ATACADO" Type="number" Precision="5" Scale="2" />
           <Property Name="QT_TECIDO" Type="number" Precision="5" Scale="2" />
@@ -478,8 +480,8 @@
           <Property Name="QT_PESO_CAIXA_MIN" Type="number" Precision="5" Scale="2" />
           <Property Name="QT_PESO_CAIXA_MAX" Type="number" Precision="5" Scale="2" />
           <Property Name="NUM_DIAS_VALIDADE" Type="number" Precision="3" Scale="0" />
-          <Property Name="COD_CULTURA" Type="number" Precision="6" Scale="0" />
           <Property Name="IND_PESO_PADRAO" Type="varchar2" MaxLength="1" />
+          <Property Name="COD_CULTURA" Type="number" Precision="6" Scale="0" />
           <Property Name="DESC_SECAO" Type="varchar2" MaxLength="50" />
           <Property Name="DESC_BOQUETA" Type="varchar2" MaxLength="50" />
           <Property Name="DESC_OBSERVACAO" Type="varchar2" MaxLength="500" />
@@ -502,11 +504,10 @@
           <Property Name="COD_CST_COFINS_SAIDA" Type="varchar2" MaxLength="2" />
           <Property Name="COD_ATIVIDADE_CONTRIB" Type="number" Precision="8" Scale="0" />
           <Property Name="IND_SUBST_TRIB" Type="char" MaxLength="3" />
-          <Property Name="IND_ARREDONDAMENTO_TRUNCAMENTO" Type="char" MaxLength="1" />
           <Property Name="IND_PROD_PROPRIA_TERCEIRO" Type="char" MaxLength="1" />
-          <Property Name="IND_MARCENARIA" Type="varchar2" MaxLength="3" />
           <Property Name="IND_QTD_ETIQUETAS" Type="number" Precision="1" Scale="0" />
           <Property Name="DESC_HASH_MD5" Type="varchar2" MaxLength="32" />
+          <Property Name="IND_ARREDONDAMENTO_TRUNCAMENTO" Type="char" MaxLength="1" />
           <Property Name="PERC_MARGEM_MINIMA" Type="number" Precision="5" Scale="2" />
           <Property Name="IND_PRECO_VENDA_ETIQUETA" Type="char" MaxLength="1" />
           <Property Name="PERC_MIXGN" Type="number" Precision="6" Scale="4" />
@@ -516,7 +517,6 @@
           <Property Name="DESC_UNIDADE_DOSAGEM_RECEITA" Type="varchar2" MaxLength="5" />
           <Property Name="NUM_EMBALAGEM_RECEITA" Type="number" Precision="9" Scale="5" />
           <Property Name="COD_CEST" Type="varchar2" MaxLength="15" />
-          <Property Name="IND_NIR_SYNC_SITE" Type="varchar2" MaxLength="2" />
           <Property Name="COD_ROYALTIES" Type="number" Precision="6" Scale="0" />
           <Property Name="IND_SOLADO" Type="varchar2" MaxLength="15" />
           <Property Name="IND_BICO" Type="varchar2" MaxLength="15" />
@@ -527,9 +527,9 @@
           <Property Name="PERC_GNI" Type="number" Precision="7" Scale="4" />
           <Property Name="IND_ESCALA_RELEVANTE" Type="char" MaxLength="1" />
           <Property Name="DESC_CNPJ_FABRICANTE" Type="varchar2" MaxLength="20" />
+          <Property Name="IND_NIR_SYNC_SITE" Type="char" MaxLength="1" />
           <Property Name="IND_SINC_MAX_ROTEIRIZADOR" Type="char" MaxLength="1" />
           <Property Name="PERC_COMISSAO_PRODUCAO" Type="number" Precision="5" Scale="2" />
-          <Property Name="PERC_MARGEM" Type="number" Precision="5" Scale="2" />
           <Property Name="DESC_COD_BENEFICIO_FISCAL" Type="varchar2" MaxLength="20" />
           <Property Name="COD_BENEF_FISCAL_REDUCAO" Type="varchar2" MaxLength="10" />
           <Property Name="COD_BENEF_FISCAL_ISENCAO" Type="varchar2" MaxLength="10" />
@@ -537,14 +537,6 @@
           <Property Name="COD_BENEF_FISCAL_SUSPENSAO" Type="varchar2" MaxLength="10" />
           <Property Name="COD_BENEF_FISCAL_DIFERIMENTO" Type="varchar2" MaxLength="10" />
           <Property Name="COD_MATERIA_PRIMA" Type="number" Precision="6" Scale="0" />
-        </EntityType>
-        <EntityType Name="TB_PRODUTO_CATEGORIA_SKYHUB">
-          <Key>
-            <PropertyRef Name="COD_PRODUTO_CATEGORIA_SKYHUB" />
-          </Key>
-          <Property Name="COD_PRODUTO_CATEGORIA_SKYHUB" Type="number" Precision="6" Scale="0" Nullable="false" />
-          <Property Name="COD_PRODUTO_SKYHUB" Type="number" Precision="6" Scale="0" Nullable="false" />
-          <Property Name="DESC_CATEGORIA" Type="varchar2" MaxLength="150" />
         </EntityType>
         <EntityType Name="TB_PRODUTO_SKYHUB">
           <Key>
@@ -569,15 +561,12 @@
           <Property Name="ESP_APARELHOSCOMPATIVEIS" Type="varchar2" MaxLength="30" />
           <Property Name="ESP_CONTEUDODAEMBALAGEM" Type="varchar2" MaxLength="30" />
           <Property Name="ESP_COR" Type="varchar2" MaxLength="30" />
-          <Property Name="ESP_CORFICHATECNICA" Type="varchar2" MaxLength="30" />
           <Property Name="ESP_DATADELANCAMENTONOMERCADO" Type="varchar2" MaxLength="30" />
-          <Property Name="ESP_DIMENSOESEMBALAGEM" Type="varchar2" MaxLength="30" />
           <Property Name="ESP_DIMENSOESPRODUTO" Type="varchar2" MaxLength="30" />
           <Property Name="ESP_FABRICANTE" Type="varchar2" MaxLength="30" />
           <Property Name="ESP_GARANTIADEFORNECEDOR" Type="varchar2" MaxLength="30" />
           <Property Name="ESP_MAISINFORMACOES" Type="varchar2" MaxLength="30" />
           <Property Name="ESP_MANUAL" Type="varchar2" MaxLength="30" />
-          <Property Name="ESP_MARCA" Type="varchar2" MaxLength="30" />
           <Property Name="ESP_MATERIALCOMPOSICAO" Type="varchar2" MaxLength="30" />
           <Property Name="ESP_MODELO" Type="varchar2" MaxLength="30" />
           <Property Name="ESP_PESOLIQDAEMBALAGEMCPRODUTO" Type="varchar2" MaxLength="30" />
@@ -591,6 +580,19 @@
           <Property Name="VAL_PESO" Type="number" Precision="6" Scale="2" />
           <Property Name="DESC_CONEXAO_MARKETPLACE" Type="varchar2" MaxLength="10" />
           <Property Name="COD_CATEGORIA_ML" Type="varchar2" MaxLength="10" />
+          <Property Name="IMAGEM_1" Type="blob" />
+          <Property Name="IMAGEM_2" Type="blob" />
+          <Property Name="IMAGEM_3" Type="blob" />
+          <Property Name="IMAGEM_4" Type="blob" />
+          <Property Name="DESC_INFORMACOES_ADICIONAIS" Type="clob" />
+        </EntityType>
+        <EntityType Name="TB_PRODUTO_SKYHUB_URL">
+          <Key>
+            <PropertyRef Name="COD_PRODUTO_SKYHUB_URL" />
+          </Key>
+          <Property Name="COD_PRODUTO_SKYHUB_URL" Type="number" Precision="6" Scale="0" Nullable="false" />
+          <Property Name="COD_PRODUTO_SKYHUB" Type="number" Precision="6" Scale="0" Nullable="false" />
+          <Property Name="COD_FILIAL" Type="number" Precision="6" Scale="0" Nullable="false" />
           <Property Name="URL_SUBMARINO" Type="varchar2" MaxLength="100" />
           <Property Name="URL_SHOPTIME" Type="varchar2" MaxLength="100" />
           <Property Name="URL_AMERICANAS" Type="varchar2" MaxLength="100" />
@@ -640,208 +642,6 @@
           <Property Name="DESC_CSOSN_NC" Type="varchar2" MaxLength="3" />
           <Property Name="DESC_OBSERVACAO_NC" Type="varchar2" MaxLength="200" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'SISTEMA.SMCLIENT_FOLDER_MAP_V' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'SISTEMA.SMCLIENT_INSTALLATION_V' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'SISTEMA.SMCLIENT_ONLY_FOLDER_V' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'SISTEMA.SMCLIENT_V' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'SISTEMA.SMFOLDER_V' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'SISTEMA.SMHOST_FOLDER_MAP_V' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'SISTEMA.SMHOST_ONLY_FOLDER_V' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'SISTEMA.SMHOST_V' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'SISTEMA.SMINSTALLATION_V' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'SISTEMA.SMINSTALLED_PRODUCT_V' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'SISTEMA.SMP_AD_ADDRESSES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'SISTEMA.SMP_AD_DISCOVERED_NODES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'SISTEMA.SMP_AD_NODES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'SISTEMA.SMP_AD_PARMS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'SISTEMA.SMP_AUTO_DISCOVERY_ITEM' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'SISTEMA.SMP_AUTO_DISCOVERY_PARMS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'SISTEMA.SMP_BLOB' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'SISTEMA.SMP_BRM_ACTIVE_JOB' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="SMP_BRM_ACTIVE_JOB">
-          <Property Name="JOBID" Type="varchar2" MaxLength="32" />
-          <Property Name="TARGETDB" Type="varchar2" MaxLength="32" />
-          <Property Name="JOBNAME" Type="varchar2" MaxLength="32" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'SISTEMA.SMP_BRM_CHANNEL_DEVICE' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="SMP_BRM_CHANNEL_DEVICE">
-          <Property Name="CHANNELNAME" Type="varchar2" MaxLength="32" />
-          <Property Name="FORMATSTRING" Type="varchar2" MaxLength="256" />
-          <Property Name="FORMATDEST" Type="varchar2" MaxLength="256" />
-          <Property Name="CHANNELDEVICE" Type="varchar2" MaxLength="8" />
-          <Property Name="DEVICENAME" Type="varchar2" MaxLength="32" />
-          <Property Name="DEVICETYPE" Type="varchar2" MaxLength="32" />
-          <Property Name="PARAMETERS" Type="varchar2" MaxLength="32" />
-          <Property Name="LIMITSIZE" Type="varchar2" MaxLength="8" />
-          <Property Name="READRATE" Type="varchar2" MaxLength="8" />
-          <Property Name="OPENFILES" Type="varchar2" MaxLength="8" />
-          <Property Name="DBNAME" Type="varchar2" MaxLength="32" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'SISTEMA.SMP_BRM_DEFAULT_CHANNEL' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="SMP_BRM_DEFAULT_CHANNEL">
-          <Property Name="CHANNELNAME" Type="varchar2" MaxLength="32" />
-          <Property Name="DBNAME" Type="varchar2" MaxLength="32" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'SISTEMA.SMP_BRM_RC_CONNECT_STRING' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="SMP_BRM_RC_CONNECT_STRING">
-          <Property Name="DBNAME" Type="varchar2" MaxLength="32" />
-          <Property Name="USERNAME" Type="varchar2" MaxLength="255" />
-          <Property Name="PASSWORD" Type="raw" MaxLength="255" />
-          <Property Name="SERVICE" Type="varchar2" MaxLength="255" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'SISTEMA.SMP_BRM_SAVED_JOB' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="SMP_BRM_SAVED_JOB">
-          <Property Name="JOBNAME" Type="varchar2" MaxLength="32" />
-          <Property Name="JOBDESCRIPTION" Type="varchar2" MaxLength="32" />
-          <Property Name="DBNAME" Type="varchar2" MaxLength="32" />
-          <Property Name="JOBTYPE" Type="varchar2" MaxLength="32" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'SISTEMA.SMP_BRM_TEMP_SCRIPTS' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="SMP_BRM_TEMP_SCRIPTS">
-          <Property Name="JOBID" Type="varchar2" MaxLength="32" />
-          <Property Name="TCLSCRIPT" Type="varchar2" MaxLength="512" />
-          <Property Name="RMANSCRIPT" Type="varchar2" MaxLength="512" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'SISTEMA.SMP_CREDENTIALS' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="SMP_CREDENTIALS">
-          <Property Name="SERVICE_TYPE" Type="number" Precision="38" Scale="0" />
-          <Property Name="SERVICE_NAME" Type="varchar2" MaxLength="255" />
-          <Property Name="USERNAME" Type="varchar2" MaxLength="255" />
-          <Property Name="PASSWORD" Type="raw" MaxLength="255" />
-          <Property Name="ROLE" Type="varchar2" MaxLength="10" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'SISTEMA.SMP_EBU_ACTIVE_JOB' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="SMP_EBU_ACTIVE_JOB">
-          <Property Name="JOBID" Type="varchar2" MaxLength="32" />
-          <Property Name="TARGETDB" Type="varchar2" MaxLength="32" />
-          <Property Name="JOBNAME" Type="varchar2" MaxLength="32" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'SISTEMA.SMP_EBU_SAVED_JOB' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="SMP_EBU_SAVED_JOB">
-          <Property Name="JOBNAME" Type="varchar2" MaxLength="32" />
-          <Property Name="JOBDESCRIPTION" Type="varchar2" MaxLength="32" />
-          <Property Name="DBNAME" Type="varchar2" MaxLength="32" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'SISTEMA.SMP_JOB' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'SISTEMA.SMP_JOB_HISTORY' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="SMP_JOB_HISTORY">
-          <Property Name="ID" Type="number" Precision="38" Scale="0" />
-          <Property Name="OWNER" Type="varchar2" MaxLength="32" />
-          <Property Name="NAME" Type="varchar2" MaxLength="32" />
-          <Property Name="TYPE" Type="number" Precision="38" Scale="0" />
-          <Property Name="AGENT_JOB_ID" Type="number" Precision="38" Scale="0" />
-          <Property Name="STATUS" Type="number" Precision="38" Scale="0" />
-          <Property Name="TIMESTAMP" Type="date" />
-          <Property Name="DESTINATION" Type="varchar2" MaxLength="100" />
-          <Property Name="TOTAL_PARAMS" Type="number" Precision="38" Scale="0" />
-          <Property Name="PARAMETERS" Type="varchar2" MaxLength="512" />
-          <Property Name="OUTPUT_DATA" Type="number" Precision="38" Scale="0" />
-          <Property Name="EXECUTION" Type="number" Precision="38" Scale="0" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'SISTEMA.SMP_JOB_INSTANCE' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="SMP_JOB_INSTANCE">
-          <Property Name="ID" Type="number" Precision="38" Scale="0" />
-          <Property Name="OWNER" Type="varchar2" MaxLength="32" />
-          <Property Name="AGENT_JOB_ID" Type="number" Precision="38" Scale="0" />
-          <Property Name="NODE" Type="varchar2" MaxLength="80" />
-          <Property Name="DESTINATION" Type="varchar2" MaxLength="512" />
-          <Property Name="DESTINATION_TYPE" Type="number" Precision="38" Scale="0" />
-          <Property Name="STATUS" Type="number" Precision="38" Scale="0" />
-          <Property Name="NEXT_EXECUTION" Type="date" />
-          <Property Name="PARAMETERS" Type="varchar2" MaxLength="1024" />
-          <Property Name="GROUP_NAME" Type="varchar2" MaxLength="64" />
-          <Property Name="STATE" Type="varchar2" MaxLength="8" />
-          <Property Name="EXECUTION" Type="number" Precision="38" Scale="0" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'SISTEMA.SMP_JOB_LIBRARY' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="SMP_JOB_LIBRARY">
-          <Property Name="OWNER" Type="varchar2" MaxLength="32" />
-          <Property Name="LIBNAME" Type="varchar2" MaxLength="64" />
-          <Property Name="JOBNAME" Type="varchar2" MaxLength="64" />
-          <Property Name="DESTINATIONTYPE" Type="number" Precision="38" Scale="0" />
-          <Property Name="JOBID" Type="number" Precision="38" Scale="0" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'SISTEMA.SMP_JOB_TASK_INSTANCE' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="SMP_JOB_TASK_INSTANCE">
-          <Property Name="ID" Type="number" Precision="38" Scale="0" />
-          <Property Name="OWNER" Type="varchar2" MaxLength="32" />
-          <Property Name="TASK_LEVEL" Type="number" Precision="38" Scale="0" />
-          <Property Name="TASK_SEQUENCE" Type="number" Precision="38" Scale="0" />
-          <Property Name="CLSID" Type="varchar2" MaxLength="128" />
-          <Property Name="DISPLAY_NAME" Type="varchar2" MaxLength="80" />
-          <Property Name="LENGTH" Type="number" Precision="38" Scale="0" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'SISTEMA.SMP_LONG_TEXT' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="SMP_LONG_TEXT">
-          <Property Name="OWNER" Type="varchar2" MaxLength="32" />
-          <Property Name="ID" Type="number" Precision="38" Scale="0" />
-          <Property Name="LEN" Type="number" Precision="38" Scale="0" />
-          <Property Name="DATA" Type="long" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'SISTEMA.SMP_SERVICE_DATA' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'SISTEMA.SMP_SERVICE_GROUP_DEFN' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'SISTEMA.SMP_SERVICE_GROUP_ITEM' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'SISTEMA.SMP_SERVICE_ITEM' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'SISTEMA.SMP_UPDATESERVICES_CALLED' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'SISTEMA.SMP_VAB_ACTIVE_JOB' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="SMP_VAB_ACTIVE_JOB">
-          <Property Name="JOBID" Type="varchar2" MaxLength="32" />
-          <Property Name="TARGETDB" Type="varchar2" MaxLength="32" />
-          <Property Name="JOBNAME" Type="varchar2" MaxLength="32" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'SISTEMA.SMP_VAB_SAVED_JOB' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="SMP_VAB_SAVED_JOB">
-          <Property Name="JOBNAME" Type="varchar2" MaxLength="32" />
-          <Property Name="JOBDESCRIPTION" Type="varchar2" MaxLength="32" />
-          <Property Name="DBNAME" Type="varchar2" MaxLength="32" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'SISTEMA.SMP_VAR_LIST_DATABASES' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="SMP_VAR_LIST_DATABASES">
-          <Property Name="DBNAME" Type="varchar2" MaxLength="32" />
-          <Property Name="USERC" Type="varchar2" MaxLength="32" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'SISTEMA.SMPRODUCT_V' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <Association Name="FK_CADASTROXCIDADE">
           <End Role="TB_CIDADE" Type="Self.TB_CIDADE" Multiplicity="0..1" />
           <End Role="TB_CADASTRO" Type="Self.TB_CADASTRO" Multiplicity="*" />
@@ -851,18 +651,6 @@ warning 6002: The table/view 'SISTEMA.SMPRODUCT_V' does not have a primary key d
             </Principal>
             <Dependent Role="TB_CADASTRO">
               <PropertyRef Name="COD_CIDADE" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CAT_SKYXPROD_SKY">
-          <End Role="TB_PRODUTO_SKYHUB" Type="Self.TB_PRODUTO_SKYHUB" Multiplicity="1" />
-          <End Role="TB_PRODUTO_CATEGORIA_SKYHUB" Type="Self.TB_PRODUTO_CATEGORIA_SKYHUB" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TB_PRODUTO_SKYHUB">
-              <PropertyRef Name="COD_PRODUTO_SKYHUB" />
-            </Principal>
-            <Dependent Role="TB_PRODUTO_CATEGORIA_SKYHUB">
-              <PropertyRef Name="COD_PRODUTO_SKYHUB" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -899,18 +687,6 @@ warning 6002: The table/view 'SISTEMA.SMPRODUCT_V' does not have a primary key d
             </Principal>
             <Dependent Role="TB_PEDIDO_CAB">
               <PropertyRef Name="COD_CADASTRO" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PEDIDO_ITEMXPEDIDO_CAB">
-          <End Role="TB_PEDIDO_CAB" Type="Self.TB_PEDIDO_CAB" Multiplicity="0..1" />
-          <End Role="TB_PEDIDO_ITEM" Type="Self.TB_PEDIDO_ITEM" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TB_PEDIDO_CAB">
-              <PropertyRef Name="COD_PEDIDO_CAB" />
-            </Principal>
-            <Dependent Role="TB_PEDIDO_ITEM">
-              <PropertyRef Name="COD_PEDIDO_CAB" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -959,6 +735,18 @@ warning 6002: The table/view 'SISTEMA.SMPRODUCT_V' does not have a primary key d
             </Principal>
             <Dependent Role="TB_PEDIDO_CAB">
               <PropertyRef Name="COD_PRODUTO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PROD_SKY_URLXPROD_SKY">
+          <End Role="TB_PRODUTO_SKYHUB" Type="Self.TB_PRODUTO_SKYHUB" Multiplicity="1" />
+          <End Role="TB_PRODUTO_SKYHUB_URL" Type="Self.TB_PRODUTO_SKYHUB_URL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_PRODUTO_SKYHUB">
+              <PropertyRef Name="COD_PRODUTO_SKYHUB" />
+            </Principal>
+            <Dependent Role="TB_PRODUTO_SKYHUB_URL">
+              <PropertyRef Name="COD_PRODUTO_SKYHUB" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1021,18 +809,14 @@ warning 6002: The table/view 'SISTEMA.SMPRODUCT_V' does not have a primary key d
           <EntitySet Name="TB_PEDIDO_CAB" EntityType="Self.TB_PEDIDO_CAB" Schema="SISTEMA" store:Type="Tables" />
           <EntitySet Name="TB_PEDIDO_ITEM" EntityType="Self.TB_PEDIDO_ITEM" Schema="SISTEMA" store:Type="Tables" />
           <EntitySet Name="TB_PRODUTO" EntityType="Self.TB_PRODUTO" Schema="SISTEMA" store:Type="Tables" />
-          <EntitySet Name="TB_PRODUTO_CATEGORIA_SKYHUB" EntityType="Self.TB_PRODUTO_CATEGORIA_SKYHUB" Schema="SISTEMA" store:Type="Tables" />
           <EntitySet Name="TB_PRODUTO_SKYHUB" EntityType="Self.TB_PRODUTO_SKYHUB" Schema="SISTEMA" store:Type="Tables" />
+          <EntitySet Name="TB_PRODUTO_SKYHUB_URL" EntityType="Self.TB_PRODUTO_SKYHUB_URL" Schema="SISTEMA" store:Type="Tables" />
           <EntitySet Name="TB_SEQUENCIA" EntityType="Self.TB_SEQUENCIA" Schema="SISTEMA" store:Type="Tables" />
           <EntitySet Name="TB_SINCRONIZACAO_SKYHUB" EntityType="Self.TB_SINCRONIZACAO_SKYHUB" Schema="SISTEMA" store:Type="Tables" />
           <EntitySet Name="TB_TRIBUTACAO" EntityType="Self.TB_TRIBUTACAO" Schema="SISTEMA" store:Type="Tables" />
           <AssociationSet Name="FK_CADASTROXCIDADE" Association="Self.FK_CADASTROXCIDADE">
             <End Role="TB_CIDADE" EntitySet="TB_CIDADE" />
             <End Role="TB_CADASTRO" EntitySet="TB_CADASTRO" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CAT_SKYXPROD_SKY" Association="Self.FK_CAT_SKYXPROD_SKY">
-            <End Role="TB_PRODUTO_SKYHUB" EntitySet="TB_PRODUTO_SKYHUB" />
-            <End Role="TB_PRODUTO_CATEGORIA_SKYHUB" EntitySet="TB_PRODUTO_CATEGORIA_SKYHUB" />
           </AssociationSet>
           <AssociationSet Name="FK_EMAIL_NOTXCONF_SKYHUB" Association="Self.FK_EMAIL_NOTXCONF_SKYHUB">
             <End Role="TB_CONFIGURACAO_SKYHUB" EntitySet="TB_CONFIGURACAO_SKYHUB" />
@@ -1045,10 +829,6 @@ warning 6002: The table/view 'SISTEMA.SMPRODUCT_V' does not have a primary key d
           <AssociationSet Name="FK_PEDIDO_CABXCADASTRO" Association="Self.FK_PEDIDO_CABXCADASTRO">
             <End Role="TB_CADASTRO" EntitySet="TB_CADASTRO" />
             <End Role="TB_PEDIDO_CAB" EntitySet="TB_PEDIDO_CAB" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PEDIDO_ITEMXPEDIDO_CAB" Association="Self.FK_PEDIDO_ITEMXPEDIDO_CAB">
-            <End Role="TB_PEDIDO_CAB" EntitySet="TB_PEDIDO_CAB" />
-            <End Role="TB_PEDIDO_ITEM" EntitySet="TB_PEDIDO_ITEM" />
           </AssociationSet>
           <AssociationSet Name="FK_PEDIDO_ITEMXPRODUTO" Association="Self.FK_PEDIDO_ITEMXPRODUTO">
             <End Role="TB_PRODUTO" EntitySet="TB_PRODUTO" />
@@ -1065,6 +845,10 @@ warning 6002: The table/view 'SISTEMA.SMPRODUCT_V' does not have a primary key d
           <AssociationSet Name="FK_PEDIDOXPRODUTO" Association="Self.FK_PEDIDOXPRODUTO">
             <End Role="TB_PRODUTO" EntitySet="TB_PRODUTO" />
             <End Role="TB_PEDIDO_CAB" EntitySet="TB_PEDIDO_CAB" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PROD_SKY_URLXPROD_SKY" Association="Self.FK_PROD_SKY_URLXPROD_SKY">
+            <End Role="TB_PRODUTO_SKYHUB" EntitySet="TB_PRODUTO_SKYHUB" />
+            <End Role="TB_PRODUTO_SKYHUB_URL" EntitySet="TB_PRODUTO_SKYHUB_URL" />
           </AssociationSet>
           <AssociationSet Name="FK_PROD_SKYXPRODUTO" Association="Self.FK_PROD_SKYXPRODUTO">
             <End Role="TB_PRODUTO" EntitySet="TB_PRODUTO" />
@@ -1088,17 +872,11 @@ warning 6002: The table/view 'SISTEMA.SMPRODUCT_V' does not have a primary key d
     <edmx:ConceptualModels>
       <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="TB_CONFIGURACAO_SKYHUB" EntityType="Model.TB_CONFIGURACAO_SKYHUB" />
-          <EntitySet Name="TB_PRODUTO_CATEGORIA_SKYHUB" EntityType="Model.TB_PRODUTO_CATEGORIA_SKYHUB" />
           <EntitySet Name="TB_SEQUENCIA" EntityType="Model.TB_SEQUENCIA" />
           <EntitySet Name="TB_SINCRONIZACAO_SKYHUB" EntityType="Model.TB_SINCRONIZACAO_SKYHUB" />
           <EntitySet Name="TB_CIDADE" EntityType="Model.TB_CIDADE" />
           <EntitySet Name="TB_EMAIL_NOTIFICACAO" EntityType="Model.TB_EMAIL_NOTIFICACAO" />
           <EntitySet Name="TB_TRIBUTACAO" EntityType="Model.TB_TRIBUTACAO" />
-          <AssociationSet Name="FK_EMAIL_NOTXCONF_SKYHUB" Association="Model.FK_EMAIL_NOTXCONF_SKYHUB">
-            <End Role="TB_CONFIGURACAO_SKYHUB" EntitySet="TB_CONFIGURACAO_SKYHUB" />
-            <End Role="TB_EMAIL_NOTIFICACAO" EntitySet="TB_EMAIL_NOTIFICACAO" />
-          </AssociationSet>
           <EntitySet Name="TB_PEDIDO_CAB" EntityType="Model.TB_PEDIDO_CAB" />
           <EntitySet Name="TB_PEDIDO_ITEM" EntityType="Model.TB_PEDIDO_ITEM" />
           <AssociationSet Name="FK_PEDIDO_ITEMXPEDIDO_CAB" Association="Model.FK_PEDIDO_ITEMXPEDIDO_CAB">
@@ -1106,11 +884,6 @@ warning 6002: The table/view 'SISTEMA.SMPRODUCT_V' does not have a primary key d
             <End Role="TB_PEDIDO_ITEM" EntitySet="TB_PEDIDO_ITEM" />
           </AssociationSet>
           <EntitySet Name="TB_EMAIL" EntityType="Model.TB_EMAIL" />
-          <EntitySet Name="TB_PRODUTO_SKYHUB" EntityType="Model.TB_PRODUTO_SKYHUB" />
-          <AssociationSet Name="FK_CAT_SKYXPROD_SKY" Association="Model.FK_CAT_SKYXPROD_SKY">
-            <End Role="TB_PRODUTO_SKYHUB" EntitySet="TB_PRODUTO_SKYHUB" />
-            <End Role="TB_PRODUTO_CATEGORIA_SKYHUB" EntitySet="TB_PRODUTO_CATEGORIA_SKYHUB" />
-          </AssociationSet>
           <EntitySet Name="TB_CADASTRO" EntityType="Model.TB_CADASTRO" />
           <EntitySet Name="TB_ESTOQUE" EntityType="Model.TB_ESTOQUE" />
           <AssociationSet Name="FK_CADASTROXCIDADE" Association="Model.FK_CADASTROXCIDADE">
@@ -1147,10 +920,6 @@ warning 6002: The table/view 'SISTEMA.SMPRODUCT_V' does not have a primary key d
             <End Role="TB_PRODUTO" EntitySet="TB_PRODUTO" />
             <End Role="TB_PEDIDO_ITEM" EntitySet="TB_PEDIDO_ITEM" />
           </AssociationSet>
-          <AssociationSet Name="FK_PROD_SKYXPRODUTO" Association="Model.FK_PROD_SKYXPRODUTO">
-            <End Role="TB_PRODUTO" EntitySet="TB_PRODUTO" />
-            <End Role="TB_PRODUTO_SKYHUB" EntitySet="TB_PRODUTO_SKYHUB" />
-          </AssociationSet>
           <AssociationSet Name="FK_PRODUTOXTRIBUTACAO" Association="Model.FK_PRODUTOXTRIBUTACAO">
             <End Role="TB_TRIBUTACAO" EntitySet="TB_TRIBUTACAO" />
             <End Role="TB_PRODUTO" EntitySet="TB_PRODUTO" />
@@ -1159,47 +928,22 @@ warning 6002: The table/view 'SISTEMA.SMPRODUCT_V' does not have a primary key d
             <End Role="TB_PRODUTO" EntitySet="TB_PRODUTO" />
             <End Role="TB_SINCRONIZACAO_SKYHUB" EntitySet="TB_SINCRONIZACAO_SKYHUB" />
           </AssociationSet>
+          <EntitySet Name="TB_PRODUTO_SKYHUB" EntityType="Model.TB_PRODUTO_SKYHUB" />
+          <EntitySet Name="TB_PRODUTO_SKYHUB_URL" EntityType="Model.TB_PRODUTO_SKYHUB_URL" />
+          <AssociationSet Name="FK_PROD_SKYXPRODUTO" Association="Model.FK_PROD_SKYXPRODUTO">
+            <End Role="TB_PRODUTO" EntitySet="TB_PRODUTO" />
+            <End Role="TB_PRODUTO_SKYHUB" EntitySet="TB_PRODUTO_SKYHUB" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PROD_SKY_URLXPROD_SKY" Association="Model.FK_PROD_SKY_URLXPROD_SKY">
+            <End Role="TB_PRODUTO_SKYHUB" EntitySet="TB_PRODUTO_SKYHUB" />
+            <End Role="TB_PRODUTO_SKYHUB_URL" EntitySet="TB_PRODUTO_SKYHUB_URL" />
+          </AssociationSet>
+          <EntitySet Name="TB_CONFIGURACAO_SKYHUB" EntityType="Model.TB_CONFIGURACAO_SKYHUB" />
+          <AssociationSet Name="FK_EMAIL_NOTXCONF_SKYHUB" Association="Model.FK_EMAIL_NOTXCONF_SKYHUB">
+            <End Role="TB_CONFIGURACAO_SKYHUB" EntitySet="TB_CONFIGURACAO_SKYHUB" />
+            <End Role="TB_EMAIL_NOTIFICACAO" EntitySet="TB_EMAIL_NOTIFICACAO" />
+          </AssociationSet>
           </EntityContainer>
-        <EntityType Name="TB_CONFIGURACAO_SKYHUB">
-          <Key>
-            <PropertyRef Name="COD_CONFIGURACAO_SKYHUB" />
-          </Key>
-          <Property Name="COD_CONFIGURACAO_SKYHUB" Type="Int32" Nullable="false" />
-          <Property Name="IND_ATIVO" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="DESC_USUARIO_EMAIL" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
-          <Property Name="DESC_TOKEN_INTEGRACAO" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="DESC_TOKEN_ACCOUNT" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="COD_OPERACAO" Type="Int32" />
-          <Property Name="COD_CLASS_CADASTRO" Type="Int32" />
-          <Property Name="COD_RAMO_FISICA" Type="Int32" />
-          <Property Name="COD_RAMO_JURIDICA" Type="Int32" />
-          <Property Name="COD_TIPO_CADASTRO" Type="Int32" />
-          <Property Name="COD_DEPARTAMENTO" Type="Int32" />
-          <Property Name="COD_LOTE_TIPO" Type="Int32" />
-          <Property Name="IND_TIPO_PAGAMENTO" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
-          <Property Name="COD_VENDEDOR" Type="Int32" />
-          <Property Name="COD_FILIAL" Type="Int32" Nullable="false" />
-          <Property Name="COD_REGIAO" Type="Int32" />
-          <Property Name="DESC_ML_CLIENT_ID" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
-          <Property Name="DESC_ML_CLIENT_SECRET" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
-          <Property Name="IND_ML_ATIVO" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="DESC_ACCESS_TOKEN_ML" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="DESC_USER_ID_ML" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="DT_ACCESS_TOKEN_ML" Type="DateTime" />
-          <Property Name="DT_ULTIMA_ATUALIZACAO_ML" Type="DateTime" />
-          <NavigationProperty Name="TB_EMAIL_NOTIFICACAO" Relationship="Model.FK_EMAIL_NOTXCONF_SKYHUB" FromRole="TB_CONFIGURACAO_SKYHUB" ToRole="TB_EMAIL_NOTIFICACAO" />
-          <Property Name="DESC_SKYHUB_TOKEN" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="DT_TOKEN_SKYHUB" Type="DateTime" />
-        </EntityType>
-        <EntityType Name="TB_PRODUTO_CATEGORIA_SKYHUB">
-          <Key>
-            <PropertyRef Name="COD_PRODUTO_CATEGORIA_SKYHUB" />
-          </Key>
-          <Property Name="COD_PRODUTO_CATEGORIA_SKYHUB" Type="Int32" Nullable="false" />
-          <Property Name="COD_PRODUTO_SKYHUB" Type="Int32" Nullable="false" />
-          <Property Name="DESC_CATEGORIA" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="TB_PRODUTO_SKYHUB" Relationship="Model.FK_CAT_SKYXPROD_SKY" FromRole="TB_PRODUTO_CATEGORIA_SKYHUB" ToRole="TB_PRODUTO_SKYHUB" />
-        </EntityType>
         <EntityType Name="TB_SEQUENCIA">
           <Key>
             <PropertyRef Name="NOME_SEQUENCIA" />
@@ -1269,18 +1013,6 @@ warning 6002: The table/view 'SISTEMA.SMPRODUCT_V' does not have a primary key d
           <Property Name="DESC_OBSERVACAO_NC" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="TB_PRODUTO" Relationship="Model.FK_PRODUTOXTRIBUTACAO" FromRole="TB_TRIBUTACAO" ToRole="TB_PRODUTO" />
         </EntityType>
-        <Association Name="FK_EMAIL_NOTXCONF_SKYHUB">
-          <End Type="Model.TB_CONFIGURACAO_SKYHUB" Role="TB_CONFIGURACAO_SKYHUB" Multiplicity="1" />
-          <End Type="Model.TB_EMAIL_NOTIFICACAO" Role="TB_EMAIL_NOTIFICACAO" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TB_CONFIGURACAO_SKYHUB">
-              <PropertyRef Name="COD_CONFIGURACAO_SKYHUB" />
-            </Principal>
-            <Dependent Role="TB_EMAIL_NOTIFICACAO">
-              <PropertyRef Name="COD_CONFIGURACAO_SKYHUB" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="TB_PEDIDO_CAB">
           <Key>
             <PropertyRef Name="COD_PEDIDO_CAB" />
@@ -1433,70 +1165,6 @@ warning 6002: The table/view 'SISTEMA.SMPRODUCT_V' does not have a primary key d
           <Property Name="QTD_COTA" Type="Int16" />
           <Property Name="IND_SSL" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
         </EntityType>
-        <EntityType Name="TB_PRODUTO_SKYHUB">
-          <Key>
-            <PropertyRef Name="COD_PRODUTO_SKYHUB" />
-          </Key>
-          <Property Name="COD_PRODUTO_SKYHUB" Type="Int32" Nullable="false" />
-          <Property Name="COD_PRODUTO" Type="Int64" Nullable="false" />
-          <Property Name="DESC_PRODUTO" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="DESC_DESCRICAO" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="DESC_STATUS" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="DESC_MARCA" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="VAL_ALTURA" Type="Decimal" Precision="6" Scale="2" />
-          <Property Name="VAL_LARGURA" Type="Decimal" Precision="6" Scale="2" />
-          <Property Name="VAL_COMPRIMENTO" Type="Decimal" Precision="6" Scale="2" />
-          <Property Name="COD_PRODUTO_SKYHUB_PAI" Type="Int32" />
-          <Property Name="DESC_CATEGORIA" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="DESC_LINK_IMAGEM_1" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="DESC_LINK_IMAGEM_2" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="DESC_LINK_IMAGEM_3" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="DESC_LINK_IMAGEM_4" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="ESP_ALIMENTACAO" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="ESP_APARELHOSCOMPATIVEIS" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="ESP_CONTEUDODAEMBALAGEM" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="ESP_COR" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="ESP_CORFICHATECNICA" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="ESP_DATADELANCAMENTONOMERCADO" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="ESP_DIMENSOESEMBALAGEM" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="ESP_DIMENSOESPRODUTO" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="ESP_FABRICANTE" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="ESP_GARANTIADEFORNECEDOR" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="ESP_MAISINFORMACOES" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="ESP_MANUAL" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="ESP_MARCA" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="ESP_MATERIALCOMPOSICAO" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="ESP_MODELO" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="ESP_PESOLIQDAEMBALAGEMCPRODUTO" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="ESP_PESOLIQDOPRODUTO" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="ESP_RECURSOSFUNCIONALIDADES" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="ESP_REFERENCIADOMODELO" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="ESP_SAC" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="ESP_TAMANHO" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="ESP_VIDEO" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="ESP_VOLTAGEM" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="VAL_PESO" Type="Decimal" Precision="6" Scale="2" />
-          <Property Name="DESC_CONEXAO_MARKETPLACE" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="COD_CATEGORIA_ML" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="URL_SUBMARINO" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="URL_SHOPTIME" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="URL_AMERICANAS" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="URL_MLIVRE" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="TB_PRODUTO_CATEGORIA_SKYHUB" Relationship="Model.FK_CAT_SKYXPROD_SKY" FromRole="TB_PRODUTO_SKYHUB" ToRole="TB_PRODUTO_CATEGORIA_SKYHUB" />
-          <NavigationProperty Name="TB_PRODUTO" Relationship="Model.FK_PROD_SKYXPRODUTO" FromRole="TB_PRODUTO_SKYHUB" ToRole="TB_PRODUTO" />
-        </EntityType>
-        <Association Name="FK_CAT_SKYXPROD_SKY">
-          <End Type="Model.TB_PRODUTO_SKYHUB" Role="TB_PRODUTO_SKYHUB" Multiplicity="1" />
-          <End Type="Model.TB_PRODUTO_CATEGORIA_SKYHUB" Role="TB_PRODUTO_CATEGORIA_SKYHUB" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TB_PRODUTO_SKYHUB">
-              <PropertyRef Name="COD_PRODUTO_SKYHUB" />
-            </Principal>
-            <Dependent Role="TB_PRODUTO_CATEGORIA_SKYHUB">
-              <PropertyRef Name="COD_PRODUTO_SKYHUB" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="TB_CADASTRO">
           <Key>
             <PropertyRef Name="COD_CADASTRO" />
@@ -1668,8 +1336,6 @@ warning 6002: The table/view 'SISTEMA.SMPRODUCT_V' does not have a primary key d
           <Property Name="DESC_NRO_REG_ESTADUAL" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
           <Property Name="IND_SINC_MAX_ROTEIRIZADOR" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="COD_FILIAL" Type="Int32" />
-          <Property Name="DESC_E_MAIL_CONJUGE" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
-          <Property Name="DESC_TELEFONE_CONJUGE" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="TB_CIDADE" Relationship="Model.FK_CADASTROXCIDADE" FromRole="TB_CADASTRO" ToRole="TB_CIDADE" />
           <NavigationProperty Name="TB_PEDIDO_CAB" Relationship="Model.FK_PEDIDO_CABXCADASTRO" FromRole="TB_CADASTRO" ToRole="TB_PEDIDO_CAB" />
           <NavigationProperty Name="TB_PEDIDO_CAB1" Relationship="Model.FK_PEDIDOXCADASTROTRANSP" FromRole="TB_CADASTRO" ToRole="TB_PEDIDO_CAB" />
@@ -1701,8 +1367,6 @@ warning 6002: The table/view 'SISTEMA.SMPRODUCT_V' does not have a primary key d
           <Property Name="DESC_LOCALIZACAO" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="DESC_HASH_MD5" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
           <Property Name="VL_CUSTO_COMISSAO" Type="Decimal" Precision="11" Scale="4" />
-          <Property Name="QT_ESTOQUE_CONTADO" Type="Decimal" Precision="11" Scale="3" />
-          <Property Name="QT_ESTOQUE_ARDUINO" Type="Decimal" Precision="11" Scale="3" />
           <NavigationProperty Name="TB_PRODUTO" Relationship="Model.FK_ESTOQUEXPRODUTO" FromRole="TB_ESTOQUE" ToRole="TB_PRODUTO" />
         </EntityType>
         <Association Name="FK_CADASTROXCIDADE">
@@ -1759,8 +1423,6 @@ warning 6002: The table/view 'SISTEMA.SMPRODUCT_V' does not have a primary key d
           <Property Name="COD_MENSAGEM" Type="Int32" />
           <Property Name="IND_AREA" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
           <Property Name="IND_SITUACAO" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
-          <Property Name="PERC_MARGEM_VAREJO" Type="Decimal" Precision="5" Scale="2" />
-          <Property Name="PERC_MARGEM_ATACADO" Type="Decimal" Precision="5" Scale="2" />
           <NavigationProperty Name="TB_PRODUTO" Relationship="Model.FK_PRODUTOXCLASSE" FromRole="TB_CLASSE" ToRole="TB_PRODUTO" />
         </EntityType>
         <EntityType Name="TB_PRODUTO">
@@ -1852,7 +1514,6 @@ warning 6002: The table/view 'SISTEMA.SMPRODUCT_V' does not have a primary key d
           <Property Name="IND_SUBST_TRIB" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
           <Property Name="IND_ARREDONDAMENTO_TRUNCAMENTO" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="IND_PROD_PROPRIA_TERCEIRO" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="IND_MARCENARIA" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
           <Property Name="IND_QTD_ETIQUETAS" Type="Int16" />
           <Property Name="DESC_HASH_MD5" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
           <Property Name="PERC_MARGEM_MINIMA" Type="Decimal" Precision="5" Scale="2" />
@@ -1890,9 +1551,9 @@ warning 6002: The table/view 'SISTEMA.SMPRODUCT_V' does not have a primary key d
           <NavigationProperty Name="TB_PEDIDO_CAB" Relationship="Model.FK_PEDIDOXPRODUTO" FromRole="TB_PRODUTO" ToRole="TB_PEDIDO_CAB" />
           <NavigationProperty Name="TB_PEDIDO_ITEM" Relationship="Model.FK_PEDIDO_ITEMXPRODUTO" FromRole="TB_PRODUTO" ToRole="TB_PEDIDO_ITEM" />
           <NavigationProperty Name="TB_PEDIDO_ITEM1" Relationship="Model.FK_PEDIDO_ITEMXPRODUTO1" FromRole="TB_PRODUTO" ToRole="TB_PEDIDO_ITEM" />
-          <NavigationProperty Name="TB_PRODUTO_SKYHUB" Relationship="Model.FK_PROD_SKYXPRODUTO" FromRole="TB_PRODUTO" ToRole="TB_PRODUTO_SKYHUB" />
           <NavigationProperty Name="TB_TRIBUTACAO" Relationship="Model.FK_PRODUTOXTRIBUTACAO" FromRole="TB_PRODUTO" ToRole="TB_TRIBUTACAO" />
           <NavigationProperty Name="TB_SINCRONIZACAO_SKYHUB" Relationship="Model.FK_SINC_SKYXPRODUTO" FromRole="TB_PRODUTO" ToRole="TB_SINCRONIZACAO_SKYHUB" />
+          <NavigationProperty Name="TB_PRODUTO_SKYHUB" Relationship="Model.FK_PROD_SKYXPRODUTO" FromRole="TB_PRODUTO" ToRole="TB_PRODUTO_SKYHUB" />
         </EntityType>
         <Association Name="FK_PRODUTOXCLASSE">
           <End Type="Model.TB_CLASSE" Role="TB_CLASSE" Multiplicity="1" />
@@ -1954,18 +1615,6 @@ warning 6002: The table/view 'SISTEMA.SMPRODUCT_V' does not have a primary key d
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_PROD_SKYXPRODUTO">
-          <End Type="Model.TB_PRODUTO" Role="TB_PRODUTO" Multiplicity="1" />
-          <End Type="Model.TB_PRODUTO_SKYHUB" Role="TB_PRODUTO_SKYHUB" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TB_PRODUTO">
-              <PropertyRef Name="COD_PRODUTO" />
-            </Principal>
-            <Dependent Role="TB_PRODUTO_SKYHUB">
-              <PropertyRef Name="COD_PRODUTO" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_PRODUTOXTRIBUTACAO">
           <End Type="Model.TB_TRIBUTACAO" Role="TB_TRIBUTACAO" Multiplicity="1" />
           <End Type="Model.TB_PRODUTO" Role="TB_PRODUTO" Multiplicity="*" />
@@ -1990,52 +1639,147 @@ warning 6002: The table/view 'SISTEMA.SMPRODUCT_V' does not have a primary key d
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="TB_PRODUTO_SKYHUB">
+          <Key>
+            <PropertyRef Name="COD_PRODUTO_SKYHUB" />
+          </Key>
+          <Property Name="COD_PRODUTO_SKYHUB" Type="Int32" Nullable="false" />
+          <Property Name="COD_PRODUTO" Type="Int64" Nullable="false" />
+          <Property Name="DESC_PRODUTO" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_DESCRICAO" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_STATUS" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_MARCA" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="VAL_ALTURA" Type="Decimal" Precision="6" Scale="2" />
+          <Property Name="VAL_LARGURA" Type="Decimal" Precision="6" Scale="2" />
+          <Property Name="VAL_COMPRIMENTO" Type="Decimal" Precision="6" Scale="2" />
+          <Property Name="COD_PRODUTO_SKYHUB_PAI" Type="Int32" />
+          <Property Name="DESC_CATEGORIA" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_LINK_IMAGEM_1" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_LINK_IMAGEM_2" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_LINK_IMAGEM_3" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_LINK_IMAGEM_4" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="ESP_ALIMENTACAO" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ESP_APARELHOSCOMPATIVEIS" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ESP_CONTEUDODAEMBALAGEM" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ESP_COR" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ESP_DATADELANCAMENTONOMERCADO" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ESP_DIMENSOESPRODUTO" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ESP_FABRICANTE" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ESP_GARANTIADEFORNECEDOR" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ESP_MAISINFORMACOES" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ESP_MANUAL" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ESP_MATERIALCOMPOSICAO" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ESP_MODELO" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ESP_PESOLIQDAEMBALAGEMCPRODUTO" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ESP_PESOLIQDOPRODUTO" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ESP_RECURSOSFUNCIONALIDADES" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ESP_REFERENCIADOMODELO" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ESP_SAC" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ESP_TAMANHO" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ESP_VIDEO" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ESP_VOLTAGEM" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="VAL_PESO" Type="Decimal" Precision="6" Scale="2" />
+          <Property Name="DESC_CONEXAO_MARKETPLACE" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="COD_CATEGORIA_ML" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="IMAGEM_1" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="IMAGEM_2" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="IMAGEM_3" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="IMAGEM_4" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="DESC_INFORMACOES_ADICIONAIS" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TB_PRODUTO" Relationship="Model.FK_PROD_SKYXPRODUTO" FromRole="TB_PRODUTO_SKYHUB" ToRole="TB_PRODUTO" />
+          <NavigationProperty Name="TB_PRODUTO_SKYHUB_URL" Relationship="Model.FK_PROD_SKY_URLXPROD_SKY" FromRole="TB_PRODUTO_SKYHUB" ToRole="TB_PRODUTO_SKYHUB_URL" />
+        </EntityType>
+        <EntityType Name="TB_PRODUTO_SKYHUB_URL">
+          <Key>
+            <PropertyRef Name="COD_PRODUTO_SKYHUB_URL" />
+          </Key>
+          <Property Name="COD_PRODUTO_SKYHUB_URL" Type="Int32" Nullable="false" />
+          <Property Name="COD_PRODUTO_SKYHUB" Type="Int32" Nullable="false" />
+          <Property Name="COD_FILIAL" Type="Int32" Nullable="false" />
+          <Property Name="URL_SUBMARINO" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="URL_SHOPTIME" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="URL_AMERICANAS" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="URL_MLIVRE" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TB_PRODUTO_SKYHUB" Relationship="Model.FK_PROD_SKY_URLXPROD_SKY" FromRole="TB_PRODUTO_SKYHUB_URL" ToRole="TB_PRODUTO_SKYHUB" />
+        </EntityType>
+        <Association Name="FK_PROD_SKYXPRODUTO">
+          <End Type="Model.TB_PRODUTO" Role="TB_PRODUTO" Multiplicity="1" />
+          <End Type="Model.TB_PRODUTO_SKYHUB" Role="TB_PRODUTO_SKYHUB" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_PRODUTO">
+              <PropertyRef Name="COD_PRODUTO" />
+            </Principal>
+            <Dependent Role="TB_PRODUTO_SKYHUB">
+              <PropertyRef Name="COD_PRODUTO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PROD_SKY_URLXPROD_SKY">
+          <End Type="Model.TB_PRODUTO_SKYHUB" Role="TB_PRODUTO_SKYHUB" Multiplicity="1" />
+          <End Type="Model.TB_PRODUTO_SKYHUB_URL" Role="TB_PRODUTO_SKYHUB_URL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_PRODUTO_SKYHUB">
+              <PropertyRef Name="COD_PRODUTO_SKYHUB" />
+            </Principal>
+            <Dependent Role="TB_PRODUTO_SKYHUB_URL">
+              <PropertyRef Name="COD_PRODUTO_SKYHUB" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="TB_CONFIGURACAO_SKYHUB">
+          <Key>
+            <PropertyRef Name="COD_CONFIGURACAO_SKYHUB" />
+          </Key>
+          <Property Name="COD_CONFIGURACAO_SKYHUB" Type="Int32" Nullable="false" />
+          <Property Name="COD_FILIAL" Type="Int32" Nullable="false" />
+          <Property Name="IND_ATIVO" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="DESC_USUARIO_EMAIL" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_TOKEN_INTEGRACAO" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_TOKEN_ACCOUNT" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="COD_OPERACAO" Type="Int32" />
+          <Property Name="COD_CLASS_CADASTRO" Type="Int32" />
+          <Property Name="COD_RAMO_FISICA" Type="Int32" />
+          <Property Name="COD_RAMO_JURIDICA" Type="Int32" />
+          <Property Name="COD_TIPO_CADASTRO" Type="Int32" />
+          <Property Name="COD_DEPARTAMENTO" Type="Int32" />
+          <Property Name="COD_LOTE_TIPO" Type="Int32" />
+          <Property Name="IND_TIPO_PAGAMENTO" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="COD_VENDEDOR" Type="Int32" />
+          <Property Name="COD_REGIAO" Type="Int32" />
+          <Property Name="DESC_ML_CLIENT_ID" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_ML_CLIENT_SECRET" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="IND_ML_ATIVO" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="DESC_ACCESS_TOKEN_ML" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="DESC_USER_ID_ML" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="DT_ACCESS_TOKEN_ML" Type="DateTime" />
+          <Property Name="DT_ULTIMA_ATUALIZACAO_ML" Type="DateTime" />
+          <Property Name="DESC_SKYHUB_TOKEN" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="DT_TOKEN_SKYHUB" Type="DateTime" />
+          <Property Name="IMGUR_CLIENT_ID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="IMGUR_SECRET" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="IMGUR_REFRESH_TOKEN" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="IMGUR_ACCESS_TOKEN" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="IMGUR_DT_ACCESS_TOKEN" Type="DateTime" />
+          <NavigationProperty Name="TB_EMAIL_NOTIFICACAO" Relationship="Model.FK_EMAIL_NOTXCONF_SKYHUB" FromRole="TB_CONFIGURACAO_SKYHUB" ToRole="TB_EMAIL_NOTIFICACAO" />
+        </EntityType>
+        <Association Name="FK_EMAIL_NOTXCONF_SKYHUB">
+          <End Type="Model.TB_CONFIGURACAO_SKYHUB" Role="TB_CONFIGURACAO_SKYHUB" Multiplicity="1" />
+          <End Type="Model.TB_EMAIL_NOTIFICACAO" Role="TB_EMAIL_NOTIFICACAO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_CONFIGURACAO_SKYHUB">
+              <PropertyRef Name="COD_CONFIGURACAO_SKYHUB" />
+            </Principal>
+            <Dependent Role="TB_EMAIL_NOTIFICACAO">
+              <PropertyRef Name="COD_CONFIGURACAO_SKYHUB" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="Entities">
-          <EntitySetMapping Name="TB_CONFIGURACAO_SKYHUB">
-            <EntityTypeMapping TypeName="Model.TB_CONFIGURACAO_SKYHUB">
-              <MappingFragment StoreEntitySet="TB_CONFIGURACAO_SKYHUB">
-                <ScalarProperty Name="DT_TOKEN_SKYHUB" ColumnName="DT_TOKEN_SKYHUB" />
-                <ScalarProperty Name="DESC_SKYHUB_TOKEN" ColumnName="DESC_SKYHUB_TOKEN" />
-                <ScalarProperty Name="DT_ULTIMA_ATUALIZACAO_ML" ColumnName="DT_ULTIMA_ATUALIZACAO_ML" />
-                <ScalarProperty Name="DT_ACCESS_TOKEN_ML" ColumnName="DT_ACCESS_TOKEN_ML" />
-                <ScalarProperty Name="DESC_USER_ID_ML" ColumnName="DESC_USER_ID_ML" />
-                <ScalarProperty Name="DESC_ACCESS_TOKEN_ML" ColumnName="DESC_ACCESS_TOKEN_ML" />
-                <ScalarProperty Name="IND_ML_ATIVO" ColumnName="IND_ML_ATIVO" />
-                <ScalarProperty Name="DESC_ML_CLIENT_SECRET" ColumnName="DESC_ML_CLIENT_SECRET" />
-                <ScalarProperty Name="DESC_ML_CLIENT_ID" ColumnName="DESC_ML_CLIENT_ID" />
-                <ScalarProperty Name="COD_REGIAO" ColumnName="COD_REGIAO" />
-                <ScalarProperty Name="COD_FILIAL" ColumnName="COD_FILIAL" />
-                <ScalarProperty Name="COD_VENDEDOR" ColumnName="COD_VENDEDOR" />
-                <ScalarProperty Name="IND_TIPO_PAGAMENTO" ColumnName="IND_TIPO_PAGAMENTO" />
-                <ScalarProperty Name="COD_LOTE_TIPO" ColumnName="COD_LOTE_TIPO" />
-                <ScalarProperty Name="COD_DEPARTAMENTO" ColumnName="COD_DEPARTAMENTO" />
-                <ScalarProperty Name="COD_TIPO_CADASTRO" ColumnName="COD_TIPO_CADASTRO" />
-                <ScalarProperty Name="COD_RAMO_JURIDICA" ColumnName="COD_RAMO_JURIDICA" />
-                <ScalarProperty Name="COD_RAMO_FISICA" ColumnName="COD_RAMO_FISICA" />
-                <ScalarProperty Name="COD_CLASS_CADASTRO" ColumnName="COD_CLASS_CADASTRO" />
-                <ScalarProperty Name="COD_OPERACAO" ColumnName="COD_OPERACAO" />
-                <ScalarProperty Name="DESC_TOKEN_ACCOUNT" ColumnName="DESC_TOKEN_ACCOUNT" />
-                <ScalarProperty Name="DESC_TOKEN_INTEGRACAO" ColumnName="DESC_TOKEN_INTEGRACAO" />
-                <ScalarProperty Name="DESC_USUARIO_EMAIL" ColumnName="DESC_USUARIO_EMAIL" />
-                <ScalarProperty Name="IND_ATIVO" ColumnName="IND_ATIVO" />
-                <ScalarProperty Name="COD_CONFIGURACAO_SKYHUB" ColumnName="COD_CONFIGURACAO_SKYHUB" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TB_PRODUTO_CATEGORIA_SKYHUB">
-            <EntityTypeMapping TypeName="Model.TB_PRODUTO_CATEGORIA_SKYHUB">
-              <MappingFragment StoreEntitySet="TB_PRODUTO_CATEGORIA_SKYHUB">
-                <ScalarProperty Name="DESC_CATEGORIA" ColumnName="DESC_CATEGORIA" />
-                <ScalarProperty Name="COD_PRODUTO_SKYHUB" ColumnName="COD_PRODUTO_SKYHUB" />
-                <ScalarProperty Name="COD_PRODUTO_CATEGORIA_SKYHUB" ColumnName="COD_PRODUTO_CATEGORIA_SKYHUB" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="TB_SEQUENCIA">
             <EntityTypeMapping TypeName="Model.TB_SEQUENCIA">
               <MappingFragment StoreEntitySet="TB_SEQUENCIA">
@@ -2241,62 +1985,9 @@ warning 6002: The table/view 'SISTEMA.SMPRODUCT_V' does not have a primary key d
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="TB_PRODUTO_SKYHUB">
-            <EntityTypeMapping TypeName="Model.TB_PRODUTO_SKYHUB">
-              <MappingFragment StoreEntitySet="TB_PRODUTO_SKYHUB">
-                <ScalarProperty Name="URL_MLIVRE" ColumnName="URL_MLIVRE" />
-                <ScalarProperty Name="URL_AMERICANAS" ColumnName="URL_AMERICANAS" />
-                <ScalarProperty Name="URL_SHOPTIME" ColumnName="URL_SHOPTIME" />
-                <ScalarProperty Name="URL_SUBMARINO" ColumnName="URL_SUBMARINO" />
-                <ScalarProperty Name="COD_CATEGORIA_ML" ColumnName="COD_CATEGORIA_ML" />
-                <ScalarProperty Name="DESC_CONEXAO_MARKETPLACE" ColumnName="DESC_CONEXAO_MARKETPLACE" />
-                <ScalarProperty Name="VAL_PESO" ColumnName="VAL_PESO" />
-                <ScalarProperty Name="ESP_VOLTAGEM" ColumnName="ESP_VOLTAGEM" />
-                <ScalarProperty Name="ESP_VIDEO" ColumnName="ESP_VIDEO" />
-                <ScalarProperty Name="ESP_TAMANHO" ColumnName="ESP_TAMANHO" />
-                <ScalarProperty Name="ESP_SAC" ColumnName="ESP_SAC" />
-                <ScalarProperty Name="ESP_REFERENCIADOMODELO" ColumnName="ESP_REFERENCIADOMODELO" />
-                <ScalarProperty Name="ESP_RECURSOSFUNCIONALIDADES" ColumnName="ESP_RECURSOSFUNCIONALIDADES" />
-                <ScalarProperty Name="ESP_PESOLIQDOPRODUTO" ColumnName="ESP_PESOLIQDOPRODUTO" />
-                <ScalarProperty Name="ESP_PESOLIQDAEMBALAGEMCPRODUTO" ColumnName="ESP_PESOLIQDAEMBALAGEMCPRODUTO" />
-                <ScalarProperty Name="ESP_MODELO" ColumnName="ESP_MODELO" />
-                <ScalarProperty Name="ESP_MATERIALCOMPOSICAO" ColumnName="ESP_MATERIALCOMPOSICAO" />
-                <ScalarProperty Name="ESP_MARCA" ColumnName="ESP_MARCA" />
-                <ScalarProperty Name="ESP_MANUAL" ColumnName="ESP_MANUAL" />
-                <ScalarProperty Name="ESP_MAISINFORMACOES" ColumnName="ESP_MAISINFORMACOES" />
-                <ScalarProperty Name="ESP_GARANTIADEFORNECEDOR" ColumnName="ESP_GARANTIADEFORNECEDOR" />
-                <ScalarProperty Name="ESP_FABRICANTE" ColumnName="ESP_FABRICANTE" />
-                <ScalarProperty Name="ESP_DIMENSOESPRODUTO" ColumnName="ESP_DIMENSOESPRODUTO" />
-                <ScalarProperty Name="ESP_DIMENSOESEMBALAGEM" ColumnName="ESP_DIMENSOESEMBALAGEM" />
-                <ScalarProperty Name="ESP_DATADELANCAMENTONOMERCADO" ColumnName="ESP_DATADELANCAMENTONOMERCADO" />
-                <ScalarProperty Name="ESP_CORFICHATECNICA" ColumnName="ESP_CORFICHATECNICA" />
-                <ScalarProperty Name="ESP_COR" ColumnName="ESP_COR" />
-                <ScalarProperty Name="ESP_CONTEUDODAEMBALAGEM" ColumnName="ESP_CONTEUDODAEMBALAGEM" />
-                <ScalarProperty Name="ESP_APARELHOSCOMPATIVEIS" ColumnName="ESP_APARELHOSCOMPATIVEIS" />
-                <ScalarProperty Name="ESP_ALIMENTACAO" ColumnName="ESP_ALIMENTACAO" />
-                <ScalarProperty Name="DESC_LINK_IMAGEM_4" ColumnName="DESC_LINK_IMAGEM_4" />
-                <ScalarProperty Name="DESC_LINK_IMAGEM_3" ColumnName="DESC_LINK_IMAGEM_3" />
-                <ScalarProperty Name="DESC_LINK_IMAGEM_2" ColumnName="DESC_LINK_IMAGEM_2" />
-                <ScalarProperty Name="DESC_LINK_IMAGEM_1" ColumnName="DESC_LINK_IMAGEM_1" />
-                <ScalarProperty Name="DESC_CATEGORIA" ColumnName="DESC_CATEGORIA" />
-                <ScalarProperty Name="COD_PRODUTO_SKYHUB_PAI" ColumnName="COD_PRODUTO_SKYHUB_PAI" />
-                <ScalarProperty Name="VAL_COMPRIMENTO" ColumnName="VAL_COMPRIMENTO" />
-                <ScalarProperty Name="VAL_LARGURA" ColumnName="VAL_LARGURA" />
-                <ScalarProperty Name="VAL_ALTURA" ColumnName="VAL_ALTURA" />
-                <ScalarProperty Name="DESC_MARCA" ColumnName="DESC_MARCA" />
-                <ScalarProperty Name="DESC_STATUS" ColumnName="DESC_STATUS" />
-                <ScalarProperty Name="DESC_DESCRICAO" ColumnName="DESC_DESCRICAO" />
-                <ScalarProperty Name="DESC_PRODUTO" ColumnName="DESC_PRODUTO" />
-                <ScalarProperty Name="COD_PRODUTO" ColumnName="COD_PRODUTO" />
-                <ScalarProperty Name="COD_PRODUTO_SKYHUB" ColumnName="COD_PRODUTO_SKYHUB" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="TB_CADASTRO">
             <EntityTypeMapping TypeName="Model.TB_CADASTRO">
               <MappingFragment StoreEntitySet="TB_CADASTRO">
-                <ScalarProperty Name="DESC_TELEFONE_CONJUGE" ColumnName="DESC_TELEFONE_CONJUGE" />
-                <ScalarProperty Name="DESC_E_MAIL_CONJUGE" ColumnName="DESC_E_MAIL_CONJUGE" />
                 <ScalarProperty Name="COD_FILIAL" ColumnName="COD_FILIAL" />
                 <ScalarProperty Name="IND_SINC_MAX_ROTEIRIZADOR" ColumnName="IND_SINC_MAX_ROTEIRIZADOR" />
                 <ScalarProperty Name="DESC_NRO_REG_ESTADUAL" ColumnName="DESC_NRO_REG_ESTADUAL" />
@@ -2470,8 +2161,6 @@ warning 6002: The table/view 'SISTEMA.SMPRODUCT_V' does not have a primary key d
           <EntitySetMapping Name="TB_ESTOQUE">
             <EntityTypeMapping TypeName="Model.TB_ESTOQUE">
               <MappingFragment StoreEntitySet="TB_ESTOQUE">
-                <ScalarProperty Name="QT_ESTOQUE_ARDUINO" ColumnName="QT_ESTOQUE_ARDUINO" />
-                <ScalarProperty Name="QT_ESTOQUE_CONTADO" ColumnName="QT_ESTOQUE_CONTADO" />
                 <ScalarProperty Name="VL_CUSTO_COMISSAO" ColumnName="VL_CUSTO_COMISSAO" />
                 <ScalarProperty Name="DESC_HASH_MD5" ColumnName="DESC_HASH_MD5" />
                 <ScalarProperty Name="DESC_LOCALIZACAO" ColumnName="DESC_LOCALIZACAO" />
@@ -2499,8 +2188,6 @@ warning 6002: The table/view 'SISTEMA.SMPRODUCT_V' does not have a primary key d
           <EntitySetMapping Name="TB_CLASSE">
             <EntityTypeMapping TypeName="Model.TB_CLASSE">
               <MappingFragment StoreEntitySet="TB_CLASSE">
-                <ScalarProperty Name="PERC_MARGEM_ATACADO" ColumnName="PERC_MARGEM_ATACADO" />
-                <ScalarProperty Name="PERC_MARGEM_VAREJO" ColumnName="PERC_MARGEM_VAREJO" />
                 <ScalarProperty Name="IND_SITUACAO" ColumnName="IND_SITUACAO" />
                 <ScalarProperty Name="IND_AREA" ColumnName="IND_AREA" />
                 <ScalarProperty Name="COD_MENSAGEM" ColumnName="COD_MENSAGEM" />
@@ -2553,7 +2240,6 @@ warning 6002: The table/view 'SISTEMA.SMPRODUCT_V' does not have a primary key d
                 <ScalarProperty Name="PERC_MARGEM_MINIMA" ColumnName="PERC_MARGEM_MINIMA" />
                 <ScalarProperty Name="DESC_HASH_MD5" ColumnName="DESC_HASH_MD5" />
                 <ScalarProperty Name="IND_QTD_ETIQUETAS" ColumnName="IND_QTD_ETIQUETAS" />
-                <ScalarProperty Name="IND_MARCENARIA" ColumnName="IND_MARCENARIA" />
                 <ScalarProperty Name="IND_PROD_PROPRIA_TERCEIRO" ColumnName="IND_PROD_PROPRIA_TERCEIRO" />
                 <ScalarProperty Name="IND_ARREDONDAMENTO_TRUNCAMENTO" ColumnName="IND_ARREDONDAMENTO_TRUNCAMENTO" />
                 <ScalarProperty Name="IND_SUBST_TRIB" ColumnName="IND_SUBST_TRIB" />
@@ -2639,6 +2325,104 @@ warning 6002: The table/view 'SISTEMA.SMPRODUCT_V' does not have a primary key d
                 <ScalarProperty Name="COD_TRIBUTACAO" ColumnName="COD_TRIBUTACAO" />
                 <ScalarProperty Name="COD_CLASSE" ColumnName="COD_CLASSE" />
                 <ScalarProperty Name="COD_PRODUTO" ColumnName="COD_PRODUTO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TB_PRODUTO_SKYHUB">
+            <EntityTypeMapping TypeName="Model.TB_PRODUTO_SKYHUB">
+              <MappingFragment StoreEntitySet="TB_PRODUTO_SKYHUB">
+                <ScalarProperty Name="DESC_INFORMACOES_ADICIONAIS" ColumnName="DESC_INFORMACOES_ADICIONAIS" />
+                <ScalarProperty Name="IMAGEM_4" ColumnName="IMAGEM_4" />
+                <ScalarProperty Name="IMAGEM_3" ColumnName="IMAGEM_3" />
+                <ScalarProperty Name="IMAGEM_2" ColumnName="IMAGEM_2" />
+                <ScalarProperty Name="IMAGEM_1" ColumnName="IMAGEM_1" />
+                <ScalarProperty Name="COD_CATEGORIA_ML" ColumnName="COD_CATEGORIA_ML" />
+                <ScalarProperty Name="DESC_CONEXAO_MARKETPLACE" ColumnName="DESC_CONEXAO_MARKETPLACE" />
+                <ScalarProperty Name="VAL_PESO" ColumnName="VAL_PESO" />
+                <ScalarProperty Name="ESP_VOLTAGEM" ColumnName="ESP_VOLTAGEM" />
+                <ScalarProperty Name="ESP_VIDEO" ColumnName="ESP_VIDEO" />
+                <ScalarProperty Name="ESP_TAMANHO" ColumnName="ESP_TAMANHO" />
+                <ScalarProperty Name="ESP_SAC" ColumnName="ESP_SAC" />
+                <ScalarProperty Name="ESP_REFERENCIADOMODELO" ColumnName="ESP_REFERENCIADOMODELO" />
+                <ScalarProperty Name="ESP_RECURSOSFUNCIONALIDADES" ColumnName="ESP_RECURSOSFUNCIONALIDADES" />
+                <ScalarProperty Name="ESP_PESOLIQDOPRODUTO" ColumnName="ESP_PESOLIQDOPRODUTO" />
+                <ScalarProperty Name="ESP_PESOLIQDAEMBALAGEMCPRODUTO" ColumnName="ESP_PESOLIQDAEMBALAGEMCPRODUTO" />
+                <ScalarProperty Name="ESP_MODELO" ColumnName="ESP_MODELO" />
+                <ScalarProperty Name="ESP_MATERIALCOMPOSICAO" ColumnName="ESP_MATERIALCOMPOSICAO" />
+                <ScalarProperty Name="ESP_MANUAL" ColumnName="ESP_MANUAL" />
+                <ScalarProperty Name="ESP_MAISINFORMACOES" ColumnName="ESP_MAISINFORMACOES" />
+                <ScalarProperty Name="ESP_GARANTIADEFORNECEDOR" ColumnName="ESP_GARANTIADEFORNECEDOR" />
+                <ScalarProperty Name="ESP_FABRICANTE" ColumnName="ESP_FABRICANTE" />
+                <ScalarProperty Name="ESP_DIMENSOESPRODUTO" ColumnName="ESP_DIMENSOESPRODUTO" />
+                <ScalarProperty Name="ESP_DATADELANCAMENTONOMERCADO" ColumnName="ESP_DATADELANCAMENTONOMERCADO" />
+                <ScalarProperty Name="ESP_COR" ColumnName="ESP_COR" />
+                <ScalarProperty Name="ESP_CONTEUDODAEMBALAGEM" ColumnName="ESP_CONTEUDODAEMBALAGEM" />
+                <ScalarProperty Name="ESP_APARELHOSCOMPATIVEIS" ColumnName="ESP_APARELHOSCOMPATIVEIS" />
+                <ScalarProperty Name="ESP_ALIMENTACAO" ColumnName="ESP_ALIMENTACAO" />
+                <ScalarProperty Name="DESC_LINK_IMAGEM_4" ColumnName="DESC_LINK_IMAGEM_4" />
+                <ScalarProperty Name="DESC_LINK_IMAGEM_3" ColumnName="DESC_LINK_IMAGEM_3" />
+                <ScalarProperty Name="DESC_LINK_IMAGEM_2" ColumnName="DESC_LINK_IMAGEM_2" />
+                <ScalarProperty Name="DESC_LINK_IMAGEM_1" ColumnName="DESC_LINK_IMAGEM_1" />
+                <ScalarProperty Name="DESC_CATEGORIA" ColumnName="DESC_CATEGORIA" />
+                <ScalarProperty Name="COD_PRODUTO_SKYHUB_PAI" ColumnName="COD_PRODUTO_SKYHUB_PAI" />
+                <ScalarProperty Name="VAL_COMPRIMENTO" ColumnName="VAL_COMPRIMENTO" />
+                <ScalarProperty Name="VAL_LARGURA" ColumnName="VAL_LARGURA" />
+                <ScalarProperty Name="VAL_ALTURA" ColumnName="VAL_ALTURA" />
+                <ScalarProperty Name="DESC_MARCA" ColumnName="DESC_MARCA" />
+                <ScalarProperty Name="DESC_STATUS" ColumnName="DESC_STATUS" />
+                <ScalarProperty Name="DESC_DESCRICAO" ColumnName="DESC_DESCRICAO" />
+                <ScalarProperty Name="DESC_PRODUTO" ColumnName="DESC_PRODUTO" />
+                <ScalarProperty Name="COD_PRODUTO" ColumnName="COD_PRODUTO" />
+                <ScalarProperty Name="COD_PRODUTO_SKYHUB" ColumnName="COD_PRODUTO_SKYHUB" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TB_PRODUTO_SKYHUB_URL">
+            <EntityTypeMapping TypeName="Model.TB_PRODUTO_SKYHUB_URL">
+              <MappingFragment StoreEntitySet="TB_PRODUTO_SKYHUB_URL">
+                <ScalarProperty Name="URL_MLIVRE" ColumnName="URL_MLIVRE" />
+                <ScalarProperty Name="URL_AMERICANAS" ColumnName="URL_AMERICANAS" />
+                <ScalarProperty Name="URL_SHOPTIME" ColumnName="URL_SHOPTIME" />
+                <ScalarProperty Name="URL_SUBMARINO" ColumnName="URL_SUBMARINO" />
+                <ScalarProperty Name="COD_FILIAL" ColumnName="COD_FILIAL" />
+                <ScalarProperty Name="COD_PRODUTO_SKYHUB" ColumnName="COD_PRODUTO_SKYHUB" />
+                <ScalarProperty Name="COD_PRODUTO_SKYHUB_URL" ColumnName="COD_PRODUTO_SKYHUB_URL" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TB_CONFIGURACAO_SKYHUB">
+            <EntityTypeMapping TypeName="Model.TB_CONFIGURACAO_SKYHUB">
+              <MappingFragment StoreEntitySet="TB_CONFIGURACAO_SKYHUB">
+                <ScalarProperty Name="IMGUR_DT_ACCESS_TOKEN" ColumnName="IMGUR_DT_ACCESS_TOKEN" />
+                <ScalarProperty Name="IMGUR_ACCESS_TOKEN" ColumnName="IMGUR_ACCESS_TOKEN" />
+                <ScalarProperty Name="IMGUR_REFRESH_TOKEN" ColumnName="IMGUR_REFRESH_TOKEN" />
+                <ScalarProperty Name="IMGUR_SECRET" ColumnName="IMGUR_SECRET" />
+                <ScalarProperty Name="IMGUR_CLIENT_ID" ColumnName="IMGUR_CLIENT_ID" />
+                <ScalarProperty Name="DT_TOKEN_SKYHUB" ColumnName="DT_TOKEN_SKYHUB" />
+                <ScalarProperty Name="DESC_SKYHUB_TOKEN" ColumnName="DESC_SKYHUB_TOKEN" />
+                <ScalarProperty Name="DT_ULTIMA_ATUALIZACAO_ML" ColumnName="DT_ULTIMA_ATUALIZACAO_ML" />
+                <ScalarProperty Name="DT_ACCESS_TOKEN_ML" ColumnName="DT_ACCESS_TOKEN_ML" />
+                <ScalarProperty Name="DESC_USER_ID_ML" ColumnName="DESC_USER_ID_ML" />
+                <ScalarProperty Name="DESC_ACCESS_TOKEN_ML" ColumnName="DESC_ACCESS_TOKEN_ML" />
+                <ScalarProperty Name="IND_ML_ATIVO" ColumnName="IND_ML_ATIVO" />
+                <ScalarProperty Name="DESC_ML_CLIENT_SECRET" ColumnName="DESC_ML_CLIENT_SECRET" />
+                <ScalarProperty Name="DESC_ML_CLIENT_ID" ColumnName="DESC_ML_CLIENT_ID" />
+                <ScalarProperty Name="COD_REGIAO" ColumnName="COD_REGIAO" />
+                <ScalarProperty Name="COD_VENDEDOR" ColumnName="COD_VENDEDOR" />
+                <ScalarProperty Name="IND_TIPO_PAGAMENTO" ColumnName="IND_TIPO_PAGAMENTO" />
+                <ScalarProperty Name="COD_LOTE_TIPO" ColumnName="COD_LOTE_TIPO" />
+                <ScalarProperty Name="COD_DEPARTAMENTO" ColumnName="COD_DEPARTAMENTO" />
+                <ScalarProperty Name="COD_TIPO_CADASTRO" ColumnName="COD_TIPO_CADASTRO" />
+                <ScalarProperty Name="COD_RAMO_JURIDICA" ColumnName="COD_RAMO_JURIDICA" />
+                <ScalarProperty Name="COD_RAMO_FISICA" ColumnName="COD_RAMO_FISICA" />
+                <ScalarProperty Name="COD_CLASS_CADASTRO" ColumnName="COD_CLASS_CADASTRO" />
+                <ScalarProperty Name="COD_OPERACAO" ColumnName="COD_OPERACAO" />
+                <ScalarProperty Name="DESC_TOKEN_ACCOUNT" ColumnName="DESC_TOKEN_ACCOUNT" />
+                <ScalarProperty Name="DESC_TOKEN_INTEGRACAO" ColumnName="DESC_TOKEN_INTEGRACAO" />
+                <ScalarProperty Name="DESC_USUARIO_EMAIL" ColumnName="DESC_USUARIO_EMAIL" />
+                <ScalarProperty Name="IND_ATIVO" ColumnName="IND_ATIVO" />
+                <ScalarProperty Name="COD_FILIAL" ColumnName="COD_FILIAL" />
+                <ScalarProperty Name="COD_CONFIGURACAO_SKYHUB" ColumnName="COD_CONFIGURACAO_SKYHUB" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
